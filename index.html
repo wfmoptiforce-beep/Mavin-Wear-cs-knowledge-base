@@ -47,14 +47,19 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Clean SOP Presentation */
+    /* Clean SOP Card */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
     .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-code-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
     .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
-    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 14px 16px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
+    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
     
+    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
+    
+    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); margin: 15px 0; font-size: 13px; }
+    .meta-item strong { color: var(--primary); }
+
     .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
     .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
     .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
@@ -112,7 +117,7 @@
 
   <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, policy, defect type, or keyword..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, cheat sheet, defect policy, or keyword..." onkeyup="handleGlobalSearch()">
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
       ⏳ Connecting and loading procedures from Google Sheets...
@@ -298,7 +303,7 @@
           resolve({ headers: [], rows: [] });
           return;
         }
-        const headers = json.table.cols.map(c => (c ? c.label || '' : ''));
+        const headers = json.table.cols.map(c => (c ? (c.label || '').trim() : ''));
         const rows = json.table.rows.map(r => {
           const rowObj = {};
           r.c.forEach((cell, idx) => {
@@ -327,7 +332,7 @@
     ]);
   }
 
-  // Smart Parser for Mavin Wear KB Sheet
+  // Intelligent Semantic Parser for Mavin Wear Knowledge Base
   async function fetchLiveKnowledgeBase() {
     const loading = document.getElementById('kbLoadingState');
     const grid = document.getElementById('categoryGrid');
@@ -337,46 +342,74 @@
       masterKnowledgeBase = [];
 
       result.rows.forEach((row, idx) => {
-        const values = Object.values(row).map(v => String(v).trim()).filter(Boolean);
-        if (values.length === 0) return;
+        const rawValues = Object.values(row).map(v => String(v).trim()).filter(Boolean);
+        if (rawValues.length === 0) return;
 
-        // استخراج الأعمدة بذكاء
-        const title = row['Title'] || row['title'] || row['Name'] || row['Document Title'] || values[1] || values[0] || `SOP #${idx+1}`;
-        const code = row['Code'] || row['ID'] || row['SOP ID'] || values[0] || `MV-${idx+1}`;
-        const category = row['Category'] || row['Department'] || row['Type'] || (title.toLowerCase().includes('handbook') ? 'Handbook & Operations' : 'General SOPs');
-        const system = row['System'] || row['Partner'] || (values.join(' ').includes('Bosta') ? 'Bosta System' : 'CS Portal');
-        const description = row['Description'] || row['Summary'] || row['Overview'] || values.find(v => v.length > 30) || '';
-        
-        // تنظيف الخطوات: إزالة الميتاداتا والأرقام العشوائية
-        let steps = [];
-        if (row['Steps'] || row['Procedure'] || row['Action']) {
-          const rawSteps = String(row['Steps'] || row['Procedure'] || row['Action']);
-          steps = rawSteps.split(/\r?\n|\|/).map(s => s.trim()).filter(s => s.length > 5 && !s.includes('MV-') && !s.includes('Handbook'));
+        // 1. استخراج الكود الرسمي
+        let code = row['Code'] || row['ID'] || row['SOP ID'] || '';
+        if (!code) {
+          const codeMatch = rawValues.join(' ').match(/MV-\d+/i);
+          code = codeMatch ? codeMatch[0].toUpperCase() : `MV-${String(idx + 1).padStart(3, '0')}`;
         }
 
-        // إذا لم تكن هناك خطوات منفصلة، نأخذ الجمل المفيدة فقط
-        if (steps.length === 0) {
-          steps = values.filter(v => 
-            v.length > 15 && 
-            !v.includes('MV-') && 
-            !v.includes('V1') && 
-            !v.includes('Google Doc') && 
-            !v.includes('Intermediate') &&
-            v !== title && 
-            v !== description
+        // 2. استخراج العنوان النظيف
+        let title = row['Title'] || row['Document Title'] || row['Name'] || '';
+        if (!title) {
+          const candidate = rawValues.find(v => 
+            v.length > 5 && v.length < 70 && 
+            !v.startsWith('MV-') && 
+            !v.includes('http') && 
+            !v.includes('|')
           );
+          title = candidate || `Document ${code}`;
         }
 
-        const reply = row['Canned Reply'] || row['Response'] || row['Canned_Response'] || '';
+        // 3. استخراج القسم/الفئة
+        let category = row['Category'] || row['Department'] || row['Type'] || '';
+        if (!category) {
+          const tLow = (title + ' ' + rawValues.join(' ')).toLowerCase();
+          if (tLow.includes('handbook')) category = 'Handbooks';
+          else if (tLow.includes('cheat sheet')) category = 'Cheat Sheets';
+          else if (tLow.includes('bosta') || tLow.includes('shipping') || tLow.includes('courier')) category = 'Shipping & Courier';
+          else if (tLow.includes('refund') || tLow.includes('paymob') || tLow.includes('payment')) category = 'Payments & Refunds';
+          else if (tLow.includes('defect') || tLow.includes('quality')) category = 'Defects & Quality';
+          else category = 'Operations SOPs';
+        }
+
+        // 4. استخراج النظام
+        let system = row['System'] || row['Partner'] || '';
+        if (!system) {
+          const sLow = rawValues.join(' ').toLowerCase();
+          if (sLow.includes('bosta') && sLow.includes('shopify')) system = 'Bosta + Shopify';
+          else if (sLow.includes('bosta')) system = 'Bosta Operations';
+          else if (sLow.includes('paymob')) system = 'Paymob Gateway';
+          else if (sLow.includes('shopify')) system = 'Shopify Store';
+          else system = 'Mavin CS Portal';
+        }
+
+        // 5. استخراج الوصف النظيف
+        let description = row['Description'] || row['Summary'] || row['Overview'] || '';
+        if (!description) {
+          description = rawValues.find(v => 
+            v.length > 35 && 
+            !v.includes('|') && 
+            !v.startsWith('MV-') && 
+            v !== title
+          ) || 'Operational guideline and workflow standard for Mavin Wear.';
+        }
+
+        // 6. استخراج المسؤول ومستوى الصعوبة
+        const role = row['Role'] || row['Owner'] || (rawValues.join(' ').includes('Team Lead') ? 'CS Team Lead' : 'CS Operations');
+        const updateDate = row['Last Updated'] || 'Active V1';
 
         masterKnowledgeBase.push({
           code: code,
           title: title,
           category: category,
           system: system,
-          description: description,
-          steps: steps,
-          canned_reply: reply
+          role: role,
+          updateDate: updateDate,
+          description: description
         });
       });
 
@@ -395,6 +428,7 @@
     if (c.includes('exchange') || c.includes('size')) return '🔄';
     if (c.includes('ship') || c.includes('bosta') || c.includes('courier')) return '🚚';
     if (c.includes('handbook')) return '📖';
+    if (c.includes('cheat sheet')) return '⚡';
     return '📑';
   }
 
@@ -403,7 +437,7 @@
     const categoriesMap = {};
 
     data.forEach(item => {
-      const cat = item.category || 'General SOPs';
+      const cat = item.category || 'Operations SOPs';
       if (!categoriesMap[cat]) {
         categoriesMap[cat] = {
           icon: getCategoryIcon(cat),
@@ -421,7 +455,7 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">Structured operational workflows and handbooks.</div>
+            <div class="cat-desc">Structured operational guidelines, workflows & handbooks.</div>
           </div>
           <span class="cat-badge">📂 ${info.count} Document(s) ➔</span>
         </div>
@@ -431,49 +465,35 @@
 
   function openCategory(encodedCatName) {
     const catName = decodeURIComponent(encodedCatName);
-    const items = masterKnowledgeBase.filter(i => (i.category || 'General SOPs') === catName);
+    const items = masterKnowledgeBase.filter(i => (i.category || 'Operations SOPs') === catName);
     
     document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${items.length} SOP Workflow(s) Available`;
+    document.getElementById('currentCategorySubtitle').innerText = `${items.length} Official Document(s) Available`;
 
     const container = document.getElementById('sopsContainer');
     container.innerHTML = items.map(item => `
       <div class="sop-card">
         <div class="sop-header">
           <div>
-            <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
+            <span class="sop-code-badge">${item.code}</span>
             <h3 class="sop-title">${item.title}</h3>
           </div>
           <div class="sop-tags">
             <span class="sop-tag">🖥️ ${item.system}</span>
+            <span class="sop-tag">👤 ${item.role}</span>
           </div>
         </div>
 
-        ${item.description ? `
-          <div class="sop-desc-box">
-            <strong>📋 Overview & Policy:</strong><br>${item.description}
-          </div>
-        ` : ''}
+        <div class="sop-desc-box">
+          <strong style="color:var(--primary); font-size:15px;">📋 Document Purpose & Summary:</strong><br>
+          <div style="margin-top:6px; color:#334155;">${item.description}</div>
+        </div>
 
-        ${item.steps.length > 0 ? `
-          <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 Operational Guidelines & Steps:</div>
-          <div class="steps-timeline">
-            ${item.steps.map((step, idx) => `
-              <div class="step-box">
-                <div class="step-number">${idx + 1}</div>
-                <div class="step-content">${step}</div>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-
-        ${item.canned_reply ? `
-          <div class="canned-box">
-            <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Canned Reply</button>
-            <strong style="color:#166534;">💬 Approved Response:</strong><br>
-            <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
-          </div>
-        ` : ''}
+        <div class="meta-grid">
+          <div class="meta-item"><strong>Status:</strong> Active Standard</div>
+          <div class="meta-item"><strong>Target Scope:</strong> Customer Support & Operations</div>
+          <div class="meta-item"><strong>System Dependency:</strong> ${item.system}</div>
+        </div>
       </div>
     `).join('');
 
@@ -641,9 +661,9 @@
     const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
+      (i.code && i.code.toLowerCase().includes(q)) ||
       (i.description && i.description.toLowerCase().includes(q)) ||
-      (i.steps && i.steps.some(s => s.toLowerCase().includes(q))) ||
-      (i.canned_reply && i.canned_reply.toLowerCase().includes(q))
+      (i.system && i.system.toLowerCase().includes(q))
     );
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
@@ -651,18 +671,18 @@
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
+      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No documents found matching your search.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <div style="font-size:12px; font-weight:bold; color:var(--accent);">${item.code}</div>
+              <span class="sop-code-badge">${item.code}</span>
               <h3 class="sop-title">${item.title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
           </div>
-          ${item.description ? `<div class="sop-desc-box">${item.description}</div>` : ''}
+          <div class="sop-desc-box">${item.description}</div>
         </div>
       `).join('');
     }
@@ -702,11 +722,6 @@
       document.getElementById('logsSection').style.display = 'block';
       loadLogs();
     }
-  }
-
-  function copyText(txt) {
-    navigator.clipboard.writeText(txt);
-    alert('✅ Approved canned response copied to clipboard!');
   }
 
   // Escalation Form
