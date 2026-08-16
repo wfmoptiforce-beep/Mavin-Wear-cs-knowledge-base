@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | Operations, SOPs & Agent Refund Portal</title>
+  <title>Mavin Wear | CS Operations & Live Refund Portal</title>
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -24,7 +24,7 @@
     }
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-    .container { max-width: 1100px; margin: 0 auto; }
+    .container { max-width: 1200px; margin: 0 auto; }
     
     .header { text-align: center; margin-bottom: 25px; }
     .brand-title { font-size: 28px; font-weight: 800; color: var(--primary); }
@@ -49,12 +49,12 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Sub-filters inside Category */
+    /* Sub-filters */
     .sub-filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .sub-filter-btn { padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted); transition: 0.2s; }
     .sub-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* Structured SOP & Step-by-Step Styling */
+    /* SOP Cards */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
@@ -64,30 +64,26 @@
     .step-box { display: flex; gap: 15px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: flex-start; }
     .step-number { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
     .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
-    .step-content strong { color: var(--primary); }
     
     .callout-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 6px; font-size: 13.5px; color: #92400e; margin: 15px 0; }
     .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
-    /* Refund Portal Lookups */
+    /* Refund Portal Banner & Table */
     .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
     .portal-search-row { display: flex; gap: 10px; margin-top: 15px; }
-    .portal-search-input { flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
-    .status-pill { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-    .status-success { background: #dcfce7; color: #166534; }
-    .status-pending { background: #fef9c3; color: #854d0e; }
-    .status-failed { background: #fee2e2; color: #991b1b; }
-
-    /* Escalation Form & Logs */
+    .portal-search-input { flex: 1; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; font-weight: bold; color: var(--primary); }
+    
+    /* Escalation Form */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
     input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
     .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
     .submit-btn:hover { background: #1e293b; }
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
-    th { background: #f8fafc; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -95,7 +91,7 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Cloud Knowledge Base, Step-by-Step SOPs & Agent Refund Portal</div>
+    <div class="brand-sub">Live Google Sheet Sync, Step-by-Step SOPs & Agent Refund Portal</div>
   </div>
 
   <div class="top-actions">
@@ -107,60 +103,51 @@
     </div>
     <div>
       <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn accent">
-        📊 Open Full Refund Sheet ↗
+        📊 Open Master Sheet ↗
       </a>
     </div>
   </div>
 
   <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any issue (e.g. Cash refund, Paymob, InstaPay, damaged fabric, courier delay)..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, issue, return policy, or defect type..." onkeyup="handleGlobalSearch()">
     <div class="category-grid" id="categoryGrid"></div>
   </div>
 
   <!-- 2. AGENT REFUND PORTAL VIEW -->
   <div id="refundPortalSection" style="display:none;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
         <h2 style="margin:0; color:var(--primary);">🔍 Mavin Refunds — Agent Portal</h2>
-        <span style="font-size:13px; color:var(--muted);">Live lookup for customer refunds, order amounts, and payout statuses.</span>
+        <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">Loading records from live Google Sheet...</span>
       </div>
-      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+      <div style="display:flex; gap:8px;">
+        <button class="nav-btn" onclick="fetchLiveGoogleSheetData()">🔄 Refresh Sheet Data</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+      </div>
     </div>
 
     <div class="portal-banner">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-          <strong style="color:var(--primary); font-size:15px;">Search Customer Refund Record</strong>
-          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Filter instantly by Order #, Customer Phone, Ticket #, or Customer Name.</div>
+          <strong style="color:var(--primary); font-size:15px;">Universal Multi-Field Search</strong>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Order #, Phone, Customer Name, Ticket #, Wallet Number, or Notes.</div>
         </div>
-        <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" style="font-size:13px; font-weight:bold; color:var(--accent); text-decoration:none;">
-          📂 Open Master Google Sheet ↗
-        </a>
+        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records loaded</span>
       </div>
 
       <div class="portal-search-row">
-        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Order # (e.g. 143157), Phone, or Name..." onkeyup="searchRefunds()">
-        <button class="nav-btn primary" onclick="searchRefunds()">Search Record</button>
+        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type anything to search (e.g. 010..., #143..., Sarah, InstaPay, Cancelled)..." onkeyup="searchRefunds()">
       </div>
     </div>
 
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
       <table id="refundsTable">
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Ticket #</th>
-            <th>Customer Name</th>
-            <th>Phone / Wallet</th>
-            <th>Amount (EGP)</th>
-            <th>Channel</th>
-            <th>Status</th>
-            <th>Action / Note</th>
-          </tr>
+        <thead id="refundsTableHead">
+          <!-- Dynamic Headers -->
         </thead>
         <tbody id="refundsTableBody">
-          <!-- Rendered dynamically -->
+          <!-- Dynamic Rows -->
         </tbody>
       </table>
     </div>
@@ -251,11 +238,86 @@
 </div>
 
 <script>
-  const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
-  const client = (window.supabase) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+  // Google Sheet Public CSV Link
+  const GOOGLE_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
+  const GOOGLE_SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-  // Master Knowledge Base with All Channels
+  let sheetRawHeaders = [];
+  let sheetRefundRecords = [];
+
+  // 1. جلب كل بيانات الشيت لايف ومباشرة
+  async function fetchLiveGoogleSheetData() {
+    const statusText = document.getElementById('sheetRecordStatus');
+    const counter = document.getElementById('recordCounter');
+    statusText.innerText = '⏳ Connecting and fetching all rows from Google Sheet...';
+
+    try {
+      const response = await fetch(GOOGLE_SHEET_CSV_URL);
+      const csvText = await response.text();
+
+      Papa.parse(csvText, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          if (results.data && results.data.length > 0) {
+            sheetRefundRecords = results.data;
+            sheetRawHeaders = results.meta.fields || Object.keys(results.data[0]);
+
+            statusText.innerText = `✅ Live Sync Active — ${sheetRefundRecords.length} records retrieved.`;
+            counter.innerText = `${sheetRefundRecords.length} records ready`;
+            renderRefundTable(sheetRefundRecords);
+          } else {
+            statusText.innerText = '⚠️ Sheet is empty or private.';
+          }
+        },
+        error: function(err) {
+          statusText.innerText = '❌ CSV parse error: ' + err.message;
+        }
+      });
+    } catch(err) {
+      statusText.innerText = '❌ Fetch error: ' + err.message;
+    }
+  }
+
+  // 2. البحث الشامل في كل الأعمدة والحقول
+  function searchRefunds() {
+    const q = document.getElementById('refundSearchInput').value.toLowerCase().trim();
+    if (!q) {
+      renderRefundTable(sheetRefundRecords);
+      return;
+    }
+
+    const filtered = sheetRefundRecords.filter(row => {
+      return Object.values(row).some(val => 
+        String(val || '').toLowerCase().includes(q)
+      );
+    });
+
+    renderRefundTable(filtered);
+  }
+
+  // 3. عرض جدول الريفوند ديناميكياً
+  function renderRefundTable(data) {
+    const thead = document.getElementById('refundsTableHead');
+    const tbody = document.getElementById('refundsTableBody');
+
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:30px; color:var(--muted);">No matching refund records found.</td></tr>';
+      return;
+    }
+
+    // بناء الهيدر من أعمدة الشيت الحقيقية
+    if (sheetRawHeaders.length > 0) {
+      thead.innerHTML = `<tr>${sheetRawHeaders.map(h => `<th>${h}</th>`).join('')}</tr>`;
+      tbody.innerHTML = data.map(row => `
+        <tr>
+          ${sheetRawHeaders.map(h => `<td>${row[h] !== undefined ? row[h] : ''}</td>`).join('')}
+        </tr>
+      `).join('');
+    }
+  }
+
+  // Master Knowledge Base
   let masterKnowledgeBase = [
     {
       category: "Payments & Refunds",
@@ -267,7 +329,7 @@
       steps: [
         "<strong>Step 1 — Confirm QC Approval:</strong> Verify warehouse notification that returned item arrived in original condition with tags.",
         "<strong>Step 2 — Request Payout Details:</strong> Ask the customer for preferred transfer channel (InstaPay IPA/Mobile or Vodafone Cash / Orange Money).",
-        "<strong>Step 3 — Search / Log in Agent Portal:</strong> Check the <strong>Agent Refund Portal</strong> to ensure no duplicate payout was submitted.",
+        "<strong>Step 3 — Search / Log in Agent Portal:</strong> Open the <strong>Agent Refund Portal</strong> to verify and log payout details without duplicate records.",
         "<strong>Step 4 — Provide Transfer Confirmation:</strong> Once Finance processes payout (SLA: 2-3 business days), share transfer reference code."
       ],
       canned_reply: "Hello! Your returned item has passed our warehouse inspection. We have queued your cash refund via (InstaPay / Mobile Wallet). The transfer will be completed within 2-3 business days, and we will share the transaction receipt with you."
@@ -361,14 +423,6 @@
       ],
       canned_reply: "Thank you for contacting Mavin Wear Operations. We are reviewing your inquiry with highest priority."
     }
-  ];
-
-  // Sample Portal Data & Live Cache
-  let refundPortalData = [
-    { order_number: "#143157", ticket_number: "#TK-902", customer_name: "Sarah Ahmed", phone: "01098765432", amount: "850.00", channel: "Paymob Visa", status: "Completed", note: "Refunded via Paymob - Txn: #891234" },
-    { order_number: "#143098", ticket_number: "#TK-884", customer_name: "Nouran Ezzat", phone: "01123456789", amount: "1,200.00", channel: "InstaPay", status: "Processing", note: "QC passed, queued for Finance batch" },
-    { order_number: "#142850", ticket_number: "#TK-840", customer_name: "Mariam Fathy", phone: "01234567890", amount: "650.00", channel: "Vodafone Cash", status: "Completed", note: "Transferred to 01011223344" },
-    { order_number: "#142711", ticket_number: "#TK-791", customer_name: "Dina Khaled", phone: "01555667788", amount: "920.00", channel: "Store Credit", status: "Issued", note: "Voucher Code: CR-142711-920" }
   ];
 
   function renderHomeCategories(data) {
@@ -473,46 +527,6 @@
     `).join('');
   }
 
-  // Search in Agent Refund Portal
-  function searchRefunds() {
-    const q = document.getElementById('refundSearchInput').value.toLowerCase().trim();
-    const filtered = refundPortalData.filter(r => 
-      r.order_number.toLowerCase().includes(q) ||
-      r.ticket_number.toLowerCase().includes(q) ||
-      r.customer_name.toLowerCase().includes(q) ||
-      r.phone.toLowerCase().includes(q) ||
-      r.channel.toLowerCase().includes(q) ||
-      r.status.toLowerCase().includes(q)
-    );
-    renderRefundTable(filtered);
-  }
-
-  function renderRefundTable(data) {
-    const tbody = document.getElementById('refundsTableBody');
-    if (!data || data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--muted); padding:20px;">No refund records found matching query.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = data.map(r => {
-      let statusClass = 'status-pending';
-      if (r.status.toLowerCase().includes('completed') || r.status.toLowerCase().includes('issued')) statusClass = 'status-success';
-      if (r.status.toLowerCase().includes('failed') || r.status.toLowerCase().includes('rejected')) statusClass = 'status-failed';
-
-      return `
-        <tr>
-          <td><strong>${r.order_number}</strong></td>
-          <td>${r.ticket_number}</td>
-          <td>${r.customer_name}</td>
-          <td>${r.phone}</td>
-          <td><strong>${r.amount}</strong></td>
-          <td>${r.channel}</td>
-          <td><span class="status-pill ${statusClass}">${r.status}</span></td>
-          <td>${r.note}</td>
-        </tr>
-      `;
-    }).join('');
-  }
-
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
@@ -560,7 +574,9 @@
     hideAllSections();
     if (name === 'refundPortal') {
       document.getElementById('refundPortalSection').style.display = 'block';
-      renderRefundTable(refundPortalData);
+      if (sheetRefundRecords.length === 0) {
+        fetchLiveGoogleSheetData();
+      }
     }
     if (name === 'escalation') document.getElementById('escalationSection').style.display = 'block';
     if (name === 'logs') {
@@ -592,37 +608,20 @@
     records.unshift(data);
     localStorage.setItem('mavin_escalations', JSON.stringify(records));
 
-    if (client) {
-      try { await client.from('product_escalations').insert([data]); } catch(e){}
-    }
-
     alert('✅ Escalation successfully submitted and recorded!');
     document.getElementById('escForm').reset();
   });
 
-  async function loadLogs() {
+  function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Fetching database records...</td></tr>';
-    
-    let allRecords = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    if (client) {
-      try {
-        const { data } = await client.from('product_escalations').select('*').order('id', { ascending: false });
-        if (data && data.length > 0) {
-          const keys = new Set(allRecords.map(r => r.order_number + "_" + r.ticket_number));
-          data.forEach(d => {
-            if (!keys.has(d.order_number + "_" + d.ticket_number)) allRecords.push(d);
-          });
-        }
-      } catch(e){}
-    }
+    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
 
-    if (allRecords.length === 0) {
+    if (records.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No records logged yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = allRecords.map(r => `
+    tbody.innerHTML = records.map(r => `
       <tr>
         <td><strong>${r.order_number}</strong></td>
         <td>${r.ticket_number}</td>
@@ -647,8 +646,9 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Initial Startup
+  // Initialize
   goToHome();
+  fetchLiveGoogleSheetData();
 </script>
 </body>
 </html>
