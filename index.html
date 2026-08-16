@@ -3,169 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Operations & QA Intelligence Hub</title>
+  <title>MAVIN | Operations & QA Intelligence Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
     :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --accent-light: #eff6ff;
-      --bg: #f8fafc;
+      --primary: #09090b;
+      --primary-hover: #18181b;
+      --accent: #000000;
+      --accent-light: #f4f4f5;
+      --bg: #ffffff;
       --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --purple: #8b5cf6;
-      --text: #1e293b;
-      --muted: #64748b;
+      --border: #e4e4e7;
+      --border-dark: #27272a;
+      --success: #166534;
+      --success-bg: #f0fdf4;
+      --warning: #854d0e;
+      --warning-bg: #fefce8;
+      --danger: #991b1b;
+      --danger-bg: #fef2f2;
+      --text: #09090b;
+      --muted: #71717a;
     }
     * { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px; -webkit-font-smoothing: antialiased; }
     .container { max-width: 1250px; margin: 0 auto; }
     
-    .header { text-align: center; margin-bottom: 25px; }
-    .brand-title { font-size: 28px; font-weight: 800; color: var(--primary); }
-    .brand-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    /* Brand Header with MAVIN Logo */
+    .header { text-align: center; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .brand-logo-wrap { display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+    .brand-logo-text { font-size: 38px; font-weight: 900; letter-spacing: 12px; color: var(--primary); text-transform: uppercase; line-height: 1; font-family: "Helvetica Neue", Arial, sans-serif; }
+    .brand-sub { font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
     
-    .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
-    .role-tag { background: #e0e7ff; color: #3730a3; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    /* Top Bar & Navigation */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+    .role-tag { background: var(--accent-light); color: var(--primary); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
     
-    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 13.5px; text-decoration: none; }
-    .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
-    .nav-btn.primary { background: var(--primary); color: white; border: none; }
-    .nav-btn.primary:hover { background: #1e293b; }
-    .nav-btn.accent { background: var(--accent); color: white; border: none; }
-    .nav-btn.accent:hover { background: #1d4ed8; }
-    .nav-btn.qa-btn { background: var(--purple); color: white; border: none; }
+    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; color: var(--primary); cursor: pointer; transition: all 0.15s ease; font-size: 13px; text-decoration: none; }
+    .nav-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .nav-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+    .nav-btn.primary:hover { background: #27272a; border-color: #27272a; }
+    .nav-btn.accent { background: #18181b; color: white; border-color: #18181b; }
+    .nav-btn.accent:hover { background: #27272a; }
+    .nav-btn.qa-btn { background: #000000; color: white; border-color: #000000; }
 
-    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 6px; font-size: 14.5px; background: white; margin-bottom: 20px; transition: border-color 0.2s; }
+    .search-box:focus { outline: none; border-color: var(--primary); }
 
     /* Category Cards Grid */
-    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-bottom: 25px; }
-    .cat-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
-    .cat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: var(--accent); }
-    .cat-icon { font-size: 32px; margin-bottom: 12px; }
-    .cat-name { font-size: 18px; font-weight: 700; color: var(--primary); margin: 0 0 6px 0; }
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 25px; }
+    .cat-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 22px; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; }
+    .cat-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .cat-icon { font-size: 26px; margin-bottom: 12px; }
+    .cat-name { font-size: 17px; font-weight: 800; color: var(--primary); margin: 0 0 6px 0; letter-spacing: -0.2px; }
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
-    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
+    .cat-badge { font-size: 11.5px; font-weight: 700; color: var(--primary); background: var(--accent-light); padding: 5px 12px; border-radius: 4px; align-self: flex-start; border: 1px solid var(--border); }
 
-    .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    /* Clean SOP Presentation */
+    .sop-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 20px; }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
-    .sop-code-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
+    .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-code-badge { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-bottom: 6px; letter-spacing: 0.5px; }
     .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
+    .sop-tag { display: inline-block; font-size: 11.5px; font-weight: 700; background: var(--accent-light); color: var(--primary); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+    .sop-desc-box { background: var(--accent-light); border-left: 3px solid var(--primary); padding: 14px 16px; border-radius: 4px; font-size: 13.5px; color: #27272a; line-height: 1.6; margin: 15px 0; }
 
     .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
-    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
-    .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
-    .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
+    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; align-items: flex-start; }
+    .step-number { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+    .step-content { font-size: 13.5px; line-height: 1.6; color: #27272a; flex: 1; }
 
-    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
-    .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
-    .copy-btn:hover { background: #059669; }
+    .canned-box { background: var(--accent-light); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 16px; border-radius: 6px; margin-top: 15px; position: relative; }
+    .copy-btn { background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; float: right; font-size: 11.5px; font-weight: 700; }
+    .copy-btn:hover { background: #27272a; }
 
-    .dt-wrapper { background: white; border-radius: 14px; border: 1px solid var(--border); padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; }
+    /* Interactive Decision Wizard */
+    .dt-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border); padding: 28px; margin-bottom: 25px; }
     .dt-top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
-    .dt-breadcrumb { font-size: 13.5px; color: var(--muted); font-weight: 600; }
-    .dt-breadcrumb span { color: var(--accent); }
-    .lang-toggle { display: flex; background: #f1f5f9; border-radius: 8px; padding: 3px; }
-    .lang-btn { border: none; padding: 6px 14px; border-radius: 6px; font-size: 12.5px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
-    .lang-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .dt-breadcrumb { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .dt-breadcrumb span { color: var(--primary); }
+    .lang-toggle { display: flex; background: var(--accent-light); border-radius: 6px; padding: 2px; border: 1px solid var(--border); }
+    .lang-btn { border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
+    .lang-btn.active { background: var(--primary); color: white; }
 
-    .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
-    .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .dt-prompt { font-size: 19px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+    .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
     
-    .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-    .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
-    .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
-    .dt-card-hint { font-size: 13px; color: var(--muted); line-height: 1.4; }
-    .dt-card-action { font-size: 12px; font-weight: bold; color: var(--accent); align-self: flex-end; }
+    .dt-card-btn { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 18px; cursor: pointer; text-align: left; transition: all 0.15s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+    .dt-card-btn:hover { border-color: var(--primary); background: var(--accent-light); transform: translateY(-2px); }
+    .dt-card-title { font-size: 15px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+    .dt-card-hint { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+    .dt-card-action { font-size: 11.5px; font-weight: 700; color: var(--primary); align-self: flex-end; }
 
-    .dt-resolution-card { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; padding: 24px; margin-top: 15px; }
-    .res-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .dt-resolution-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-top: 15px; }
+    .res-badge { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
     .res-grid-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 15px 0; }
-    .res-info-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .res-info-card { background: var(--accent-light); border: 1px solid var(--border); border-radius: 4px; padding: 12px; }
     .res-info-label { font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase; }
-    .res-info-val { font-size: 15px; font-weight: bold; color: var(--primary); margin-top: 4px; }
+    .res-info-val { font-size: 14.5px; font-weight: 800; color: var(--primary); margin-top: 4px; }
 
-    .res-block { background: white; border: 1px solid var(--border); border-left: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
-    .res-block strong { color: var(--primary); font-size: 14px; }
-    .res-block div { margin-top: 6px; font-size: 15px; color: #334155; line-height: 1.5; }
+    .res-block { background: var(--accent-light); border: 1px solid var(--border); border-left: 3px solid var(--primary); padding: 14px; border-radius: 4px; margin: 12px 0; }
+    .res-block strong { color: var(--primary); font-size: 13.5px; }
+    .res-block div { margin-top: 6px; font-size: 14px; color: #27272a; line-height: 1.5; }
 
-    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 12px; transition: 0.2s; }
-    .scenario-item:hover { border-color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
-    .sc-quote { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-    .sc-explain { font-size: 13.5px; color: #334155; margin-bottom: 12px; line-height: 1.5; }
+    /* 63 Scenarios Styling */
+    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 12px; transition: 0.15s; }
+    .scenario-item:hover { border-color: var(--primary); }
+    .sc-quote { font-size: 14.5px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .sc-explain { font-size: 13px; color: #3f3f46; margin-bottom: 12px; line-height: 1.5; }
     .sc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sc-tag-reason { background: #eff6ff; color: #1d4ed8; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-    .sc-tag-res { background: #f0fdf4; color: #166534; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .sc-tag-reason { background: var(--accent-light); color: var(--primary); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); }
+    .sc-tag-res { background: #18181b; color: white; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
 
-    .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    /* Refund Portal Banner & Table */
+    .portal-banner { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
     .portal-search-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-    .portal-search-input { flex: 1; min-width: 250px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; }
-    .tab-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-    .tab-pill-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #bfdbfe; background: white; color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .tab-pill-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .portal-search-input { flex: 1; min-width: 250px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white; }
+    .tab-pills { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tab-pill-btn { padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border); background: white; color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+    .tab-pill-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
-    th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12.5px; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: middle; }
+    th { background: var(--accent-light); font-weight: 700; color: var(--primary); white-space: nowrap; }
 
-    /* Dynamic Status Badges for Refund/Exchange table */
-    .status-pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; text-align: center; }
-    .status-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
-    .status-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-    .status-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
-    .status-info { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    /* Refined Status Badges */
+    .status-pill { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-align: center; }
+    .status-success { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+    .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
+    .status-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+    .status-info { background: var(--accent-light); color: var(--primary); border: 1px solid var(--border); }
 
-    /* QA Form Styles (English Only) */
-    .qa-header-card { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border-radius: 14px; padding: 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-    .qa-score-circle { background: white; color: #4f46e5; width: 100px; height: 100px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-    .qa-score-circle span { font-size: 11px; font-weight: bold; color: var(--muted); }
+    /* QA Form (Monochrome Minimalist) */
+    .qa-header-card { background: #000000; color: white; border-radius: 8px; padding: 22px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+    .qa-score-circle { background: white; color: var(--primary); width: 85px; height: 85px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; }
+    .qa-score-circle span { font-size: 10px; font-weight: bold; color: var(--muted); }
 
-    .qa-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; text-align: left; }
-    .qa-section-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
-    .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; }
-    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
-    .fatal-banner { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 10px; padding: 15px; margin-bottom: 16px; text-align: left; }
+    .qa-section { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 16px; text-align: left; }
+    .qa-section-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; background: var(--accent-light); padding: 12px; border-radius: 4px; border: 1px solid var(--border); }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .fatal-banner { background: var(--danger-bg); border: 1px solid #fca5a5; border-radius: 6px; padding: 15px; margin-bottom: 16px; text-align: left; }
 
-    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; }
-    .status-approved { background: #dcfce7; color: #166534; }
-    .status-rejected { background: #fee2e2; color: #991b1b; }
-    .status-pending { background: #fef3c7; color: #854d0e; }
+    .status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .status-approved { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
+    .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .modal-content { background: white; border-radius: 14px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: white; border-radius: 8px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
 
-    /* Forms English Labels & Inputs */
-    label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; text-align: left; }
-    input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; text-align: left; }
-    .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-    .submit-btn:hover { background: #1e293b; }
-    .submit-btn.purple { background: var(--purple); }
-    .submit-btn.purple:hover { background: #7c3aed; }
+    /* Forms Inputs */
+    label { display: block; margin-top: 12px; font-weight: 700; font-size: 13px; text-align: left; color: var(--primary); }
+    input, select, textarea { width: 100%; padding: 10px 12px; margin-top: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 13.5px; text-align: left; background: white; color: var(--primary); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    .submit-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 700; margin-top: 20px; cursor: pointer; transition: background 0.15s; }
+    .submit-btn:hover { background: #27272a; }
   </style>
 </head>
 <body>
 <div class="container">
   
+  <!-- Header with MAVIN Logo -->
   <div class="header">
-    <div class="brand-title">👗 Mavin Wear Operations & QA Intelligence Hub</div>
-    <div class="brand-sub">Decision Engine, SOP Protocols, Clean Refund Portal & QA Evaluation System</div>
+    <div class="brand-logo-wrap">
+      <svg width="220" height="42" viewBox="0 0 260 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- M -->
+        <path d="M10 42V6H20.5L34 26.5L47.5 6H58V42H48V19L36.5 36.5H31.5L20 19V42H10Z" fill="#09090B"/>
+        <!-- Λ (A without bar) -->
+        <path d="M72 42L91 6H101L120 42H109L96 17L83 42H72Z" fill="#09090B"/>
+        <!-- V -->
+        <path d="M132 6H143L156 31L169 6H180L161 42H151L132 6Z" fill="#09090B"/>
+        <!-- I -->
+        <path d="M198 6H208V42H198V6Z" fill="#09090B"/>
+        <!-- N -->
+        <path d="M224 42V6H234L250 29V6H260V42H250L234 19V42H224Z" fill="#09090B"/>
+      </svg>
+    </div>
+    <div class="brand-sub">Operations, Decision Engine & QA Intelligence Hub</div>
   </div>
 
   <!-- User Session Header -->
   <div class="top-bar">
     <div class="user-badge">
       <span>👤 Active User:</span>
-      <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:5px 10px; font-weight:bold; margin:0;">
+      <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:4px 8px; font-weight:bold; margin:0;">
         <option value="agent@mavinwear.com">Support Agent (General CS)</option>
         <option value="nourtamer2005@gmail.com">Nour Tamer (Escalation Reviewer)</option>
         <option value="nanielshazly4@gmail.com">Nani El Shazly (Escalation Reviewer)</option>
@@ -188,17 +213,17 @@
     <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 QA Evaluation Logs</button>
   </div>
 
-  <!-- 1. HOME VIEW (Categories) -->
+  <!-- 1. HOME VIEW (Bilingual Knowledge Base) -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. One Touch, Ticket First, 10% Store Credit, Bosta, Duplicate Refund)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. One Touch, Flag Ticket, 10% Store Credit, Bosta, Duplicate Refund)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
       </div>
     </div>
     
-    <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
+    <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:6px; border:1px solid var(--border);">
       ⏳ Connecting and loading procedures from Google Sheets...
     </div>
 
@@ -209,8 +234,8 @@
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🌳 Official Decision Tree Engine</h2>
-        <span style="font-size:13px; color:var(--muted);">Structured from the Mavin Wear Master Decision Tree Map.</span>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">🌳 Official Decision Tree Engine</h2>
+        <span style="font-size:13px; color:var(--muted);">Structured from the MAVIN Master Decision Tree Map.</span>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="nav-btn" onclick="resetDecisionTree()">🔄 Restart Scenario</button>
@@ -234,8 +259,8 @@
 
       <div id="dtFinalView" style="display:none;">
         <div class="dt-resolution-card">
-          <span class="res-badge">✅ Recommended Official Resolution</span>
-          <h3 id="resTitle" style="margin:0 0 10px 0; font-size:19px; color:var(--primary);"></h3>
+          <span class="res-badge">Recommended Official Resolution</span>
+          <h3 id="resTitle" style="margin:0 0 10px 0; font-size:18px; color:var(--primary);"></h3>
 
           <div class="res-grid-info">
             <div class="res-info-card">
@@ -244,19 +269,19 @@
             </div>
             <div class="res-info-card">
               <div class="res-info-label">Resolution Code</div>
-              <div class="res-info-val" id="resResolutionBadge" style="color:var(--accent);"></div>
+              <div class="res-info-val" id="resResolutionBadge"></div>
             </div>
           </div>
 
           <div class="res-block">
-            <strong>📋 Action to Take:</strong>
+            <strong>Action to Take:</strong>
             <div id="resActionText"></div>
           </div>
 
           <div class="canned-box" id="resReplyBox">
-            <button class="copy-btn" onclick="copyReplyText()">📋 Copy Canned Reply</button>
-            <strong style="color:#166534;">💬 Approved Customer Response:</strong>
-            <div id="resReplyText" style="margin-top:6px; color:#14532d; font-size:14px; line-height:1.5;"></div>
+            <button class="copy-btn" onclick="copyReplyText()">📋 Copy Response</button>
+            <strong style="color:var(--primary);">Approved Customer Response:</strong>
+            <div id="resReplyText" style="margin-top:6px; color:#27272a; font-size:13.5px; line-height:1.5;"></div>
           </div>
 
           <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:20px;">🔄 Start Another Case</button>
@@ -265,11 +290,11 @@
     </div>
   </div>
 
-  <!-- 3. REAL CUSTOMER SCENARIOS -->
+  <!-- 3. REAL CUSTOMER SCENARIOS (63 Cases) -->
   <div id="scenariosSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🗣️ Real Customer Scenarios & Tone Guide</h2>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">🗣️ Real Customer Scenarios & Tone Guide</h2>
         <span style="font-size:13px; color:var(--muted);">63 actual scenarios, root-cause analysis, and operational tagging.</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
@@ -287,7 +312,7 @@
   <div id="refundPortalSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🔍 Agent Return, Exchange & Refund Portal</h2>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">🔍 Agent Return, Exchange & Refund Portal</h2>
         <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">Loading multi-tab records...</span>
       </div>
       <div style="display:flex; gap:8px;">
@@ -302,10 +327,10 @@
     <div class="portal-banner">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-          <strong style="color:var(--primary); font-size:15px;">Universal Multi-Tab Search (Clean Columns & Live Status)</strong>
-          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Name, Fitting Issue, or SKU.</div>
+          <strong style="color:var(--primary); font-size:14px;">Universal Multi-Tab Search (Clean Columns & Live Status)</strong>
+          <div style="font-size:12.5px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Customer Name, Fitting Issue, or SKU.</div>
         </div>
-        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records loaded</span>
+        <span id="recordCounter" style="font-weight:bold; font-size:12px; color:var(--primary); background:white; padding:4px 8px; border-radius:4px; border:1px solid var(--border);">0 records</span>
       </div>
 
       <div class="portal-search-row">
@@ -315,7 +340,7 @@
       <div class="tab-pills" id="tabPillsContainer"></div>
     </div>
 
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
+    <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
       <table id="refundsTable">
         <thead id="refundsTableHead"></thead>
         <tbody id="refundsTableBody"></tbody>
@@ -338,10 +363,10 @@
   <!-- 6. ESCALATION FORM VIEW (English Only) -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
+      <h2 style="margin:0; color:var(--primary); font-size:22px;">🚨 CS Product Escalation Form</h2>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-    <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border); text-align:left;">
+    <div style="background:white; padding:25px; border-radius:8px; border:1px solid var(--border); text-align:left;">
       <form id="escForm">
         <label>Order Number:</label>
         <input type="text" id="order_number" placeholder="e.g. #10852" required>
@@ -379,16 +404,16 @@
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">📊 Escalation Records & Case Review</h2>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">📊 Escalation Records & Case Review</h2>
         <span style="font-size:13px; color:var(--muted);">Authorized reviewers can validate actions, approve resolutions, and add comments.</span>
       </div>
       <div style="display:flex; gap:10px;">
-        <button class="nav-btn" onclick="exportToExcel()" style="background:#10b981; color:white; border:none;">📥 Export to Excel</button>
+        <button class="nav-btn" onclick="exportToExcel()" style="background:#18181b; color:white; border-color:#18181b;">📥 Export to Excel</button>
         <button class="nav-btn" onclick="loadLogs()">🔄 Refresh</button>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
+    <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
       <table id="logsTable">
         <thead>
           <tr>
@@ -412,7 +437,7 @@
   <div id="qualityFormSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--purple);">⭐ Quality Assurance (QA) Smart Audit Form</h2>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">⭐ Quality Assurance (QA) Smart Audit Form</h2>
         <span style="font-size:13px; color:var(--muted);">Dynamic scoring engine with Fatal flags, One-Touch delivery & Multi-Tool Investigation.</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
@@ -421,9 +446,9 @@
     <!-- Live Score Banner -->
     <div class="qa-header-card">
       <div>
-        <h3 style="margin:0; font-size:22px;">Audit Scorecard Performance</h3>
-        <div id="qaGradeText" style="font-size:15px; margin-top:6px; opacity:0.95;">Grade: Excellent (100%) ⭐⭐⭐</div>
-        <div id="qaFatalText" style="font-size:13px; margin-top:4px; font-weight:bold; color:#fef08a;"></div>
+        <h3 style="margin:0; font-size:20px; font-weight:800;">Audit Scorecard Performance</h3>
+        <div id="qaGradeText" style="font-size:14px; margin-top:6px; opacity:0.95;">Grade: Excellent (100%) ⭐⭐⭐</div>
+        <div id="qaFatalText" style="font-size:12.5px; margin-top:4px; font-weight:bold; color:#fef08a;"></div>
       </div>
       <div class="qa-score-circle">
         <span id="qaLivePercentage">100%</span>
@@ -441,7 +466,7 @@
           </div>
           <div>
             <label>Auditor Name / Email:</label>
-            <input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f8fafc;">
+            <input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f4f4f5;">
           </div>
           <div>
             <label>Ticket / Chat Reference #:</label>
@@ -467,17 +492,17 @@
 
       <!-- Critical Failures / Fatals -->
       <div class="fatal-banner">
-        <strong style="color:#991b1b; font-size:15px;">⚠️ Critical Business & End-User Parameters (Auto-Fail):</strong>
+        <strong style="color:var(--danger); font-size:14px;">⚠️ Critical Business & End-User Parameters (Auto-Fail):</strong>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px; margin-top:10px;">
           <div>
-            <label style="color:#991b1b;">End-User Critical (Wrong info / Misleading SLA dates):</label>
+            <label style="color:var(--danger);">End-User Critical (Wrong info / Misleading SLA dates):</label>
             <select id="qa_end_user_critical" onchange="calculateQAScore()">
               <option value="no">No Fatal - Correct Information & Dates</option>
               <option value="yes">Fatal Fail (Misleading info / Wrong SLA date ❌)</option>
             </select>
           </div>
           <div>
-            <label style="color:#991b1b;">Business Critical (Policy breach / Financial loss - Score 3 or 0):</label>
+            <label style="color:var(--danger);">Business Critical (Policy breach / Financial loss - Score 3 or 0):</label>
             <select id="qa_business_critical" onchange="calculateQAScore()">
               <option value="3">Score 3 - Protected Business & Policy Compliant</option>
               <option value="0">Score 0 - Policy Breach / Unauthorized Financial Loss ❌</option>
@@ -518,13 +543,13 @@
       <!-- 2. 5-Tool Investigation -->
       <div class="qa-section">
         <div class="qa-section-title">🔍 2. Independent Investigation Across All 5 Platforms (20 Pts)</div>
-        <div style="font-size:13px; color:var(--muted); margin-bottom:8px;">Did the agent independently verify the case across all platforms before responding?</div>
+        <div style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">Did the agent independently verify the case across all platforms before responding?</div>
         <div class="check-grid">
-          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify (Orders, Tags & Discounts)</label>
-          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias (History & Conversation)</label>
-          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack (Internal Team Notes)</label>
-          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta (AWB & Courier Status)</label>
-          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 Estbdal & Refund Sheets (SKU/Duplicate Check)</label>
+          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify (Orders & Tags)</label>
+          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias (History & Chats)</label>
+          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack (Team Notes)</label>
+          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta (AWB & Courier)</label>
+          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 Estbdal & Refund Sheets (SKU/Duplicate)</label>
         </div>
       </div>
 
@@ -540,7 +565,7 @@
             </select>
           </div>
           <div>
-            <label>One-Touch Resolution Efficiency (Solved completely in 1st touch?):</label>
+            <label>One-Touch Resolution Efficiency (Solved in 1st touch?):</label>
             <select id="qa_one_touch" onchange="calculateQAScore()">
               <option value="10">Yes (10/10) - Complete solution in 1st response</option>
               <option value="5">Partial (5/10) - Minor follow-up required</option>
@@ -583,7 +608,7 @@
         <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths, One Touch gaps, and coaching points..." required></textarea>
       </div>
 
-      <button type="submit" class="submit-btn purple">📤 Submit QA Evaluation & Email Report to Agent</button>
+      <button type="submit" class="submit-btn">📤 Submit QA Evaluation & Email Report to Agent</button>
     </form>
   </div>
 
@@ -591,16 +616,16 @@
   <div id="qualityLogsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--purple);">📈 Quality Assurance Evaluation Records</h2>
+        <h2 style="margin:0; color:var(--primary); font-size:22px;">📈 Quality Assurance Evaluation Records</h2>
         <span style="font-size:13px; color:var(--muted);">History of all agent audits, scores, and feedback.</span>
       </div>
       <div style="display:flex; gap:10px;">
-        <button class="nav-btn" onclick="exportQAToExcel()" style="background:#10b981; color:white; border:none;">📥 Export QA Excel</button>
+        <button class="nav-btn" onclick="exportQAToExcel()" style="background:#18181b; color:white; border-color:#18181b;">📥 Export QA Excel</button>
         <button class="nav-btn" onclick="loadQALogs()">🔄 Refresh</button>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
+    <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
       <table id="qaLogsTable">
         <thead>
           <tr>
@@ -623,7 +648,7 @@
   <div class="modal-overlay" id="reviewModal">
     <div class="modal-content">
       <h3 style="margin-top:0; color:var(--primary);">📝 Review & Validate Escalation Case</h3>
-      <div id="modalCaseDetails" style="background:#f8fafc; padding:12px; border-radius:8px; margin-bottom:15px; font-size:13.5px; line-height:1.5;"></div>
+      <div id="modalCaseDetails" style="background:var(--accent-light); padding:12px; border-radius:4px; margin-bottom:15px; font-size:13px; line-height:1.5; border:1px solid var(--border);"></div>
 
       <label>Case Resolution Decision:</label>
       <select id="modal_review_status">
@@ -837,11 +862,11 @@
     const indicator = document.getElementById('roleIndicator');
 
     if (ESCALATION_REVIEWERS.includes(currentUser)) {
-      indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534;">✅ Escalation Reviewer (Validation Access)</span>';
+      indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534; border-color:#86efac;">✅ Escalation Reviewer (Validation Access)</span>';
     } else if (QA_SPECIALISTS.includes(currentUser)) {
-      indicator.innerHTML = '<span class="role-tag" style="background:#f3e8ff; color:#6b21a8;">⭐ QA Specialist (Full Audit Access)</span>';
+      indicator.innerHTML = '<span class="role-tag" style="background:#000000; color:#ffffff; border-color:#000000;">⭐ QA Specialist (Full Audit Access)</span>';
     } else {
-      indicator.innerHTML = '<span class="role-tag">General CS Agent</span>';
+      indicator.innerHTML = '<span class="role-tag">General CS Access</span>';
     }
     loadLogs();
   }
@@ -985,14 +1010,14 @@
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
+              <div style="font-size:12px; font-weight:bold; color:var(--primary); margin-bottom:4px;">${item.code}</div>
               <h3 class="sop-title">${title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
           </div>
           <div class="sop-desc-box">${desc}</div>
           ${steps && steps.length > 0 ? `
-            <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 ${currentHomeLang === 'en' ? 'Operational Guidelines & Steps:' : 'الإجراءات وخطوات التنفيذ:'}</div>
+            <div style="font-size:13.5px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 ${currentHomeLang === 'en' ? 'Operational Guidelines & Steps:' : 'الإجراءات وخطوات التنفيذ:'}</div>
             <div class="steps-timeline">
               ${steps.map((step, idx) => `
                 <div class="step-box">
@@ -1005,8 +1030,8 @@
           ${item.canned_reply ? `
             <div class="canned-box">
               <button class="copy-btn" onclick="copyReplyTextDirect('${item.canned_reply.replace(/'/g, "\\'")}')">📋 ${currentHomeLang === 'en' ? 'Copy Reply' : 'نسخ الرد'}</button>
-              <strong style="color:#166534;">💬 ${currentHomeLang === 'en' ? 'Approved Response:' : 'نص الرد المعتمد:'}</strong><br>
-              <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
+              <strong style="color:var(--primary);">💬 ${currentHomeLang === 'en' ? 'Approved Response:' : 'نص الرد المعتمد:'}</strong><br>
+              <span style="font-size:13px; color:#27272a; display:block; margin-top:4px;">${item.canned_reply}</span>
             </div>
           ` : ''}
         </div>
@@ -1059,7 +1084,7 @@
     const scenarios = EMBEDDED_DT_TREE.filter(c => c[catKey] === selectedDTCategory);
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الطلب المحدد'}
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--primary); text-decoration:underline;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الطلب المحدد'}
     `;
     document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What specific action / scenario does the customer have?' : 'ما هي حالة أو طلب العميل بالتحديد؟';
 
@@ -1086,8 +1111,8 @@
     document.getElementById('dtFinalView').style.display = 'block';
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ 
-      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--accent); text-decoration:none;">${item[actionKey]}</a> ➔ 
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--primary); text-decoration:underline;">${selectedDTCategory}</a> ➔ 
+      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--primary); text-decoration:underline;">${item[actionKey]}</a> ➔ 
       <span>Step 3 (Resolution)</span>
     `;
 
@@ -1126,7 +1151,7 @@
 
     pillContainer.innerHTML = categories.map(cat => `
       <button class="tab-pill-btn ${cat === currentScenarioCategory ? 'active' : ''}" onclick="switchScenarioCategory('${cat}')">
-        📂 ${cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
+        📁 ${cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
       </button>
     `).join('');
 
@@ -1157,13 +1182,13 @@
 
     const container = document.getElementById('scenariosContainer');
     if (data.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">No matching customer scenarios found.</div>';
+      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:6px; border:1px solid var(--border);">No matching customer scenarios found.</div>';
       return;
     }
 
     container.innerHTML = data.map((item, idx) => `
       <div class="scenario-item">
-        <div style="font-size:11.5px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.source} • Case #${idx+1}</div>
+        <div style="font-size:11px; font-weight:bold; color:var(--primary); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px;">${item.source} • Case #${idx+1}</div>
         <div class="sc-quote">${item.scenario}</div>
         <div class="sc-explain"><strong>Analysis & Action:</strong> ${item.explanation}</div>
         <div class="sc-tags">
@@ -1273,7 +1298,7 @@
     renderPortalTable(headers, displayRecords);
   }
 
-  // Format Dynamic Status Badges
+  // Format Dynamic Status Badges (Green for Success, Yellow for Pending, Red for Cancelled)
   function formatStatusCell(value) {
     if (!value) return '';
     const v = String(value).toLowerCase();
@@ -1299,7 +1324,7 @@
 
     if (!data || data.length === 0) {
       thead.innerHTML = '';
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:35px; color:var(--muted); font-size:15px;">No matching records found in selected tab.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:35px; color:var(--muted); font-size:14px;">No matching records found in selected tab.</td></tr>';
       return;
     }
 
@@ -1310,10 +1335,9 @@
     tbody.innerHTML = data.slice(0, 150).map(row => `
       <tr>
         ${validHeaders.map(h => {
-          if (h === 'Source Tab') return `<td><span style="background:#eff6ff; color:#1d4ed8; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11px;">${row._sourceTab}</span></td>`;
+          if (h === 'Source Tab') return `<td><span style="background:var(--accent-light); color:var(--primary); padding:3px 6px; border-radius:4px; font-weight:bold; font-size:11px; border:1px solid var(--border);">${row._sourceTab}</span></td>`;
           const cellVal = row[h] !== undefined ? row[h] : '';
           
-          // Check if column is a status/action/result column
           const isStatusCol = h.toLowerCase().includes('status') || h.toLowerCase().includes('state') || h.toLowerCase().includes('حالة') || h.toLowerCase().includes('action') || h.toLowerCase().includes('نتيجة');
           if (isStatusCol) {
             return `<td>${formatStatusCell(cellVal)}</td>`;
@@ -1449,7 +1473,7 @@
     qaRecords.unshift(auditRecord);
     localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
 
-    const subject = encodeURIComponent(`[Mavin QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
+    const subject = encodeURIComponent(`[MAVIN QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
     const body = encodeURIComponent(
       `Hello,\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
       `--------------------------------------------------\n` +
@@ -1469,7 +1493,7 @@
       `• Clear SLA Stated: ${auditRecord.slaStated}\n` +
       `• Resolved Ticket Closure SLA (2-3h): ${auditRecord.closureSla}\n\n` +
       `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
-      `Best regards,\nMavin Wear Quality Assurance Team`
+      `Best regards,\nMAVIN Quality Assurance Team`
     );
 
     window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
@@ -1494,8 +1518,8 @@
         <td>${r.date}</td>
         <td><strong>${r.agent_email}</strong></td>
         <td>${r.ticket_ref}</td>
-        <td><span style="font-size:11.5px; background:#eff6ff; color:#1d4ed8; padding:2px 6px; border-radius:4px;">${r.attribution}</span></td>
-        <td><strong style="color:var(--purple); font-size:14px;">${r.score}</strong></td>
+        <td><span style="font-size:11px; background:var(--accent-light); color:var(--primary); padding:2px 6px; border-radius:4px; border:1px solid var(--border);">${r.attribution}</span></td>
+        <td><strong style="color:var(--primary); font-size:14px;">${r.score}</strong></td>
         <td>${r.grade}</td>
         <td>${r.auditor_email}</td>
         <td>${r.feedback}</td>
@@ -1509,7 +1533,7 @@
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "QA_Evaluations");
-    XLSX.writeFile(wb, "Mavin_Wear_QA_Evaluations.xlsx");
+    XLSX.writeFile(wb, "MAVIN_QA_Evaluations.xlsx");
   }
 
   function handleGlobalSearch() {
@@ -1651,7 +1675,7 @@
           <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
           <td>
             ${isReviewer ? `
-              <button class="nav-btn primary" style="padding:4px 8px; font-size:12px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
+              <button class="nav-btn primary" style="padding:4px 8px; font-size:11.5px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
             ` : `
               <span style="font-size:11.5px; color:var(--muted);">View Only</span>
             `}
@@ -1667,7 +1691,7 @@
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Escalations");
-    XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
+    XLSX.writeFile(wb, "MAVIN_Escalations.xlsx");
   }
 
   // Startup Initializers
