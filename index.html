@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Live Database Hub</title>
+  <title>Mavin Wear | CS Smart Operations Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -50,7 +50,7 @@
 
     .sop-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .sop-title { font-size: 17px; font-weight: 700; color: var(--primary); margin: 0 0 10px 0; }
-    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 250px; overflow-y: auto; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
+    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
@@ -70,7 +70,7 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Cloud-Powered Knowledge Base & Escalation System</div>
+    <div class="brand-sub">Smart Knowledge Base & Multi-File Parser</div>
   </div>
 
   <div class="top-actions">
@@ -80,8 +80,9 @@
       <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
     </div>
     <div>
-      <input type="file" id="fileUploader" accept=".zip, .docx, .xlsx, .xls, .csv, .txt" style="display:none" onchange="handleUploadAndSync(event)">
-      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">☁️ Sync New Files to Database</button>
+      <!-- Multiple selection enabled -->
+      <input type="file" id="fileUploader" multiple accept=".zip, .docx, .xlsx, .xls, .csv, .txt, .json" style="display:none" onchange="handleSmartMultiUpload(event)">
+      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">📂 Upload Multiple Files / Folder</button>
     </div>
   </div>
 
@@ -91,10 +92,10 @@
     
     <div class="status-bar">
       <div>
-        <strong style="color:var(--accent); font-size:14px;">☁️ Cloud Database Status</strong>
-        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Connecting to SQL database...</div>
+        <strong style="color:var(--accent); font-size:14px;">📁 Knowledge Base Status</strong>
+        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Connecting to database...</div>
       </div>
-      <span id="docCountBadge" style="font-size:12px; font-weight:bold; color:var(--success);">● Live Sync</span>
+      <span id="docCountBadge" style="font-size:12px; font-weight:bold; color:var(--success);">● Active</span>
     </div>
 
     <div class="category-grid" id="categoryGrid"></div>
@@ -184,41 +185,11 @@
 </div>
 
 <script>
-  // Supabase Client Setup
   const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
   const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
   const client = (window.supabase) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
   let documentsStore = [];
-
-  // 1. جلب البيانات تلقائياً من جدول قاعدة البيانات
-  async function fetchKnowledgeBaseFromDB() {
-    const statusText = document.getElementById('statusText');
-    try {
-      if (client) {
-        const { data, error } = await client.from('knowledge_base').select('*').order('id', { ascending: true });
-        if (data && data.length > 0) {
-          documentsStore = data;
-          statusText.innerText = `Connected to SQL database (${data.length} live SOPs loaded).`;
-          renderHomeCategories(documentsStore);
-          return;
-        }
-      }
-    } catch (err) {
-      console.warn("DB fetch failed, loading default fallback", err);
-    }
-
-    // Fallback if empty or offline
-    documentsStore = [
-      { category: "Defects & Quality", icon: "👗", title: "Damaged or Defective Item Received", content: "Collect clear photo/video evidence of the defect and courier AWB label. Log an escalation ticket to dispatch a free immediate replacement.", canned_reply: "Hello! We sincerely apologize for receiving the item in this condition. We have arranged a free immediate replacement order for you." },
-      { category: "Exchanges & Sizes", icon: "🔄", title: "Size Exchange Policy & Workflow", content: "Verify customer measurements with our standard size chart. Confirm warehouse inventory for requested size and issue an exchange order (SLA: 2-4 business days).", canned_reply: "Hello! We would be glad to help you exchange the size. The requested size is confirmed in stock and your exchange ticket has been dispatched." },
-      { category: "Shipping & Courier", icon: "🚚", title: "Delayed Delivery & Tracking Investigation", content: "Track shipment on courier portal. If delivery exceeds 48h past SLA, immediately raise a priority investigation flag to logistics.", canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today." },
-      { category: "Refunds & Returns", icon: "💳", title: "Customer Return & Refund SOP", content: "Check that item meets return criteria (tags intact, unworn). Once warehouse inspection approves the return, process refund within 3-5 business days.", canned_reply: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly." },
-      { category: "Operations & KPIs", icon: "📊", title: "CS Response SLAs & Quality Standards", content: "First Response Time (FRT) < 15 minutes. CSAT target > 90%. All product defects must be logged in the escalation database daily.", canned_reply: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority." }
-    ];
-    statusText.innerText = `Default knowledge base active (${documentsStore.length} procedures).`;
-    renderHomeCategories(documentsStore);
-  }
 
   function autoCategorize(fileName, text) {
     const combined = (fileName + " " + text).toLowerCase();
@@ -240,65 +211,93 @@
     return { category: "General SOPs & Guidelines", icon: "📑" };
   }
 
-  // 2. رفع ملفات وحفظها في قاعدة البيانات السحابية مباشرة
-  async function handleUploadAndSync(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+  // Multi-file smart reader
+  async function handleSmartMultiUpload(e) {
+    const files = Array.from(e.target.files);
+    if (!files || files.length === 0) return;
 
-    document.getElementById('statusText').innerText = `⏳ Parsing and saving "${file.name}" to database...`;
-    const newDocs = [];
+    document.getElementById('statusText').innerText = `⏳ Parsing ${files.length} selected files...`;
+    let parsedDocs = [];
 
-    try {
-      if (file.name.endsWith('.zip')) {
-        const zip = await JSZip.loadAsync(file);
-        const filePromises = [];
-
-        zip.forEach((relativePath, zipEntry) => {
-          if (!zipEntry.dir && !relativePath.includes('__MACOSX')) {
-            filePromises.push((async () => {
+    for (const file of files) {
+      try {
+        if (file.name.endsWith('.zip')) {
+          const zip = await JSZip.loadAsync(file);
+          for (const relativePath of Object.keys(zip.files)) {
+            const zipEntry = zip.files[relativePath];
+            if (!zipEntry.dir && !relativePath.includes('__MACOSX')) {
               const name = zipEntry.name.split('/').pop();
               if (name.endsWith('.docx')) {
                 const arrayBuffer = await zipEntry.async('arraybuffer');
                 const result = await mammoth.extractRawText({ arrayBuffer });
                 if (result.value.trim()) {
-                  const catInfo = autoCategorize(name, result.value);
-                  newDocs.push({
-                    category: catInfo.category,
-                    icon: catInfo.icon,
-                    title: name.replace('.docx', ''),
-                    content: result.value.trim()
-                  });
+                  const cat = autoCategorize(name, result.value);
+                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: name.replace('.docx', ''), content: result.value.trim() });
                 }
+              } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+                const arrayBuffer = await zipEntry.async('arraybuffer');
+                const wb = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+                wb.SheetNames.forEach(s => {
+                  const rows = XLSX.utils.sheet_to_json(wb.Sheets[s], { header: 1 });
+                  const formatted = rows.map(r => r.join(' | ')).join('\n');
+                  if (formatted.trim()) {
+                    const cat = autoCategorize(s + " " + name, formatted);
+                    parsedDocs.push({ category: cat.category, icon: cat.icon, title: `${name} (${s})`, content: formatted });
+                  }
+                });
               } else if (name.endsWith('.txt') || name.endsWith('.csv') || name.endsWith('.md')) {
                 const text = await zipEntry.async('string');
                 if (text.trim()) {
-                  const catInfo = autoCategorize(name, text);
-                  newDocs.push({
-                    category: catInfo.category,
-                    icon: catInfo.icon,
-                    title: name,
-                    content: text.trim()
-                  });
+                  const cat = autoCategorize(name, text);
+                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: name, content: text.trim() });
                 }
               }
-            })());
+            }
           }
-        });
-        await Promise.all(filePromises);
-      }
-
-      if (newDocs.length > 0) {
-        // حفظ في Supabase
-        if (client) {
-          await client.from('knowledge_base').insert(newDocs);
+        } else if (file.name.endsWith('.docx')) {
+          const arrayBuffer = await file.arrayBuffer();
+          const result = await mammoth.extractRawText({ arrayBuffer });
+          if (result.value.trim()) {
+            const cat = autoCategorize(file.name, result.value);
+            parsedDocs.push({ category: cat.category, icon: cat.icon, title: file.name.replace('.docx', ''), content: result.value.trim() });
+          }
+        } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+          const arrayBuffer = await file.arrayBuffer();
+          const wb = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+          wb.SheetNames.forEach(sheetName => {
+            const sheet = wb.Sheets[sheetName];
+            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            const formatted = rows.filter(r => r.length > 0).map(r => r.join(' | ')).join('\n');
+            if (formatted.trim()) {
+              const cat = autoCategorize(sheetName + " " + file.name, formatted);
+              parsedDocs.push({
+                category: cat.category,
+                icon: cat.icon,
+                title: `${file.name.replace(/\.[^/.]+$/, "")} - ${sheetName}`,
+                content: formatted
+              });
+            }
+          });
+        } else {
+          const text = await file.text();
+          if (text.trim()) {
+            const cat = autoCategorize(file.name, text);
+            parsedDocs.push({ category: cat.category, icon: cat.icon, title: file.name, content: text.trim() });
+          }
         }
-        await fetchKnowledgeBaseFromDB();
-        alert(`🎉 Successfully saved ${newDocs.length} SOPs into SQL Database!`);
-      } else {
-        alert('⚠️ No readable files found in upload.');
+      } catch (err) {
+        console.error("Error reading file:", file.name, err);
       }
-    } catch (err) {
-      alert('❌ Upload error: ' + err.message);
+    }
+
+    if (parsedDocs.length > 0) {
+      documentsStore = parsedDocs;
+      localStorage.setItem('mavin_kb_store', JSON.stringify(parsedDocs));
+      document.getElementById('statusText').innerText = `✅ Successfully organized ${parsedDocs.length} items from ${files.length} file(s)!`;
+      goToHome();
+      alert(`🎉 Successfully organized ${parsedDocs.length} procedures and files!`);
+    } else {
+      alert('⚠️ Could not extract text from the selected files. Please check file format.');
     }
   }
 
@@ -487,8 +486,25 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Load from Database on Startup
-  fetchKnowledgeBaseFromDB();
+  // Load Saved KB or Defaults
+  const saved = localStorage.getItem('mavin_kb_store');
+  if (saved) {
+    try {
+      documentsStore = JSON.parse(saved);
+      document.getElementById('statusText').innerText = `Loaded saved Knowledge Base (${documentsStore.length} items).`;
+    } catch(e) {}
+  } else {
+    documentsStore = [
+      { category: "Defects & Quality", icon: "👗", title: "Damaged or Defective Item Received", content: "Collect clear photo/video evidence of the defect and courier AWB label. Log an escalation ticket to dispatch a free immediate replacement.", canned_reply: "Hello! We sincerely apologize for receiving the item in this condition. We have arranged a free immediate replacement order for you." },
+      { category: "Exchanges & Sizes", icon: "🔄", title: "Size Exchange Policy & Workflow", content: "Verify customer measurements with our standard size chart. Confirm warehouse inventory for requested size and issue an exchange order (SLA: 2-4 business days).", canned_reply: "Hello! We would be glad to help you exchange the size. The requested size is confirmed in stock and your exchange ticket has been dispatched." },
+      { category: "Shipping & Courier", icon: "🚚", title: "Delayed Delivery & Tracking Investigation", content: "Track shipment on courier portal. If delivery exceeds 48h past SLA, immediately raise a priority investigation flag to logistics.", canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today." },
+      { category: "Refunds & Returns", icon: "💳", title: "Customer Return & Refund SOP", content: "Check that item meets return criteria (tags intact, unworn). Once warehouse inspection approves the return, process refund within 3-5 business days.", canned_reply: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly." },
+      { category: "Operations & KPIs", icon: "📊", title: "CS Response SLAs & Quality Standards", content: "First Response Time (FRT) < 15 minutes. CSAT target > 90%. All product defects must be logged in the escalation database daily.", canned_reply: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority." }
+    ];
+    document.getElementById('statusText').innerText = `Default knowledge base active (${documentsStore.length} procedures).`;
+  }
+
+  goToHome();
 </script>
 </body>
 </html>
