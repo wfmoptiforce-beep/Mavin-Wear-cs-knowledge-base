@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | مركز العمليات ودليل الجودة التشغيلي</title>
+  <title>Mavin Wear | CS Operations & QA Intelligence Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -23,7 +23,7 @@
       --muted: #64748b;
     }
     * { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; text-align: right; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
     .container { max-width: 1250px; margin: 0 auto; }
     
     .header { text-align: center; margin-bottom: 25px; }
@@ -43,8 +43,9 @@
     .nav-btn.accent:hover { background: #1d4ed8; }
     .nav-btn.qa-btn { background: var(--purple); color: white; border: none; }
 
-    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); text-align: right; }
+    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
+    /* Category Cards Grid */
     .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-bottom: 25px; }
     .cat-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
     .cat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: var(--accent); }
@@ -59,15 +60,15 @@
     .sop-code-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
     .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
     .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .sop-desc-box { background: #f8fafc; border-right: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
+    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
 
     .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
     .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
     .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
     .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
 
-    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-right: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
-    .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: left; font-size: 12px; font-weight: bold; }
+    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
+    .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
     .dt-wrapper { background: white; border-radius: 14px; border: 1px solid var(--border); padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; }
@@ -81,11 +82,11 @@
     .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
     .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
     
-    .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: right; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+    .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
     .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
     .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
     .dt-card-hint { font-size: 13px; color: var(--muted); line-height: 1.4; }
-    .dt-card-action { font-size: 12px; font-weight: bold; color: var(--accent); align-self: flex-start; }
+    .dt-card-action { font-size: 12px; font-weight: bold; color: var(--accent); align-self: flex-end; }
 
     .dt-resolution-card { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; padding: 24px; margin-top: 15px; }
     .res-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
@@ -94,7 +95,7 @@
     .res-info-label { font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase; }
     .res-info-val { font-size: 15px; font-weight: bold; color: var(--primary); margin-top: 4px; }
 
-    .res-block { background: white; border: 1px solid var(--border); border-right: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
+    .res-block { background: white; border: 1px solid var(--border); border-left: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
     .res-block strong { color: var(--primary); font-size: 14px; }
     .res-block div { margin-top: 6px; font-size: 15px; color: #334155; line-height: 1.5; }
 
@@ -108,24 +109,32 @@
 
     .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
     .portal-search-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-    .portal-search-input { flex: 1; min-width: 250px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; text-align: right; }
+    .portal-search-input { flex: 1; min-width: 250px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; }
     .tab-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
     .tab-pill-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #bfdbfe; background: white; color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .tab-pill-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: right; vertical-align: top; }
+    th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
     th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
 
+    /* Dynamic Status Badges for Refund/Exchange table */
+    .status-pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; text-align: center; }
+    .status-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .status-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .status-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .status-info { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+
+    /* QA Form Styles (English Only) */
     .qa-header-card { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border-radius: 14px; padding: 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
     .qa-score-circle { background: white; color: #4f46e5; width: 100px; height: 100px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
     .qa-score-circle span { font-size: 11px; font-weight: bold; color: var(--muted); }
 
-    .qa-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .qa-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; text-align: left; }
     .qa-section-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
     .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; }
-    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
-    .fatal-banner { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 10px; padding: 15px; margin-bottom: 16px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+    .fatal-banner { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 10px; padding: 15px; margin-bottom: 16px; text-align: left; }
 
     .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; }
     .status-approved { background: #dcfce7; color: #166534; }
@@ -133,10 +142,11 @@
     .status-pending { background: #fef3c7; color: #854d0e; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .modal-content { background: white; border-radius: 14px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); text-align: right; }
+    .modal-content { background: white; border-radius: 14px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
 
-    label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
-    input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; text-align: right; }
+    /* Forms English Labels & Inputs */
+    label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; text-align: left; }
+    input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; text-align: left; }
     .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
     .submit-btn:hover { background: #1e293b; }
     .submit-btn.purple { background: var(--purple); }
@@ -147,153 +157,159 @@
 <div class="container">
   
   <div class="header">
-    <div class="brand-title">👗 Mavin Wear | مركز العمليات ودليل الجودة التشغيلي</div>
-    <div class="brand-sub">محرك القرارات، بروتوكولات الفحص، معايير الجودة، وبوابة التتبع المباشرة</div>
+    <div class="brand-title">👗 Mavin Wear Operations & QA Intelligence Hub</div>
+    <div class="brand-sub">Decision Engine, SOP Protocols, Clean Refund Portal & QA Evaluation System</div>
   </div>
 
-  <!-- شريط المستخدم والجلسة -->
+  <!-- User Session Header -->
   <div class="top-bar">
     <div class="user-badge">
-      <span>👤 المستخدم الحالي:</span>
+      <span>👤 Active User:</span>
       <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:5px 10px; font-weight:bold; margin:0;">
-        <option value="agent@mavinwear.com">ممثل خدمة العملاء (CS Agent)</option>
-        <option value="nourtamer2005@gmail.com">نور تامر (Escalation Reviewer)</option>
-        <option value="nanielshazly4@gmail.com">ناني الشاذلي (Escalation Reviewer)</option>
-        <option value="Rehabmohamed881@gmail.com">رحاب محمد (Quality Specialist)</option>
+        <option value="agent@mavinwear.com">Support Agent (General CS)</option>
+        <option value="nourtamer2005@gmail.com">Nour Tamer (Escalation Reviewer)</option>
+        <option value="nanielshazly4@gmail.com">Nani El Shazly (Escalation Reviewer)</option>
+        <option value="Rehabmohamed881@gmail.com">Rehab Mohamed (Quality Specialist)</option>
       </select>
     </div>
     <div id="roleIndicator">
-      <span class="role-tag">صلاحية عامة</span>
+      <span class="role-tag">General CS Access</span>
     </div>
   </div>
 
   <div class="top-actions">
-    <button class="nav-btn primary" onclick="goToHome()">🏠 الرئيسية</button>
-    <button class="nav-btn" onclick="showSection('decisionTree')">🌳 شجرة القرارات التفاعلية</button>
-    <button class="nav-btn" onclick="showSection('scenarios')">🗣️ 63 سيناريو وتوجيه</button>
-    <button class="nav-btn" onclick="showSection('refundPortal')">🔍 بوابة الاستبدال والاسترداد</button>
-    <button class="nav-btn" onclick="showSection('escalation')">🚨 نموذج تصعيد المشاكل</button>
-    <button class="nav-btn" onclick="showSection('logs')">📊 سجلات التصعيد والمراجعة</button>
-    <button class="nav-btn qa-btn" id="btnQAForm" onclick="showSection('qualityForm')">⭐ نموذج تقييم الجودة</button>
-    <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 سجل تقييمات الـ QA</button>
+    <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
+    <button class="nav-btn" onclick="showSection('decisionTree')">🌳 Interactive Decision Tree</button>
+    <button class="nav-btn" onclick="showSection('scenarios')">🗣️ 63 Customer Scenarios</button>
+    <button class="nav-btn" onclick="showSection('refundPortal')">🔍 Agent Return/Refund Portal</button>
+    <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
+    <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records & Review</button>
+    <button class="nav-btn qa-btn" id="btnQAForm" onclick="showSection('qualityForm')">⭐ Quality Audit Form</button>
+    <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 QA Evaluation Logs</button>
   </div>
 
-  <!-- 1. الرئيسية وقاعدة المعرفة -->
+  <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 ابحث في إجراءات التشغيل (مثل: فتح التذكرة أولاً، التحقيق الذاتي، إغلاق التذاكر، رصيد المتجر، بوسطة)..." onkeyup="handleGlobalSearch()">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. One Touch, Ticket First, 10% Store Credit, Bosta, Duplicate Refund)..." onkeyup="handleGlobalSearch()">
+      <div class="lang-toggle">
+        <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
+        <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
+      </div>
+    </div>
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
-      ⏳ جارٍ الاتصال وتحميل الإجراءات المعتمدة...
+      ⏳ Connecting and loading procedures from Google Sheets...
     </div>
 
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
   </div>
 
-  <!-- 2. شجرة القرارات -->
+  <!-- 2. INTERACTIVE DECISION TREE WIZARD -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🌳 محرك شجرة القرارات المعتمد</h2>
-        <span style="font-size:13px; color:var(--muted);">مستخرج ومحدث بناءً على خريطة قرارات Mavin Wear الرسمية.</span>
+        <h2 style="margin:0; color:var(--primary);">🌳 Official Decision Tree Engine</h2>
+        <span style="font-size:13px; color:var(--muted);">Structured from the Mavin Wear Master Decision Tree Map.</span>
       </div>
       <div style="display:flex; gap:8px;">
-        <button class="nav-btn" onclick="resetDecisionTree()">🔄 إعادة ضبط السيناريو</button>
-        <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+        <button class="nav-btn" onclick="resetDecisionTree()">🔄 Restart Scenario</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
 
     <div class="dt-wrapper">
       <div class="dt-top-controls">
         <div class="dt-breadcrumb" id="dtBreadcrumbs">
-          <span>الخطوة 1</span> ➔ اختر القسم الرئيسي للمشكلة
+          <span>Step 1</span> ➔ Select Main Category
         </div>
         <div class="lang-toggle">
-          <button id="btnLangAr" class="lang-btn active" onclick="setDTLanguage('ar')">العربية</button>
-          <button id="btnLangEn" class="lang-btn" onclick="setDTLanguage('en')">English</button>
+          <button id="btnLangEn" class="lang-btn active" onclick="setDTLanguage('en')">English</button>
+          <button id="btnLangAr" class="lang-btn" onclick="setDTLanguage('ar')">العربية</button>
         </div>
       </div>
 
-      <div class="dt-prompt" id="dtPromptTitle">اختر القسم الرئيسي للمشكلة:</div>
+      <div class="dt-prompt" id="dtPromptTitle">Select Customer Inquiry Category:</div>
       <div class="dt-grid" id="dtOptionsGrid"></div>
 
       <div id="dtFinalView" style="display:none;">
         <div class="dt-resolution-card">
-          <span class="res-badge">✅ الإجراء المعتمد والحل النهائي</span>
+          <span class="res-badge">✅ Recommended Official Resolution</span>
           <h3 id="resTitle" style="margin:0 0 10px 0; font-size:19px; color:var(--primary);"></h3>
 
           <div class="res-grid-info">
             <div class="res-info-card">
-              <div class="res-info-label">سبب الاتصال (Contact Reason)</div>
+              <div class="res-info-label">Contact Reason</div>
               <div class="res-info-val" id="resReasonBadge"></div>
             </div>
             <div class="res-info-card">
-              <div class="res-info-label">كود الحل (Resolution)</div>
+              <div class="res-info-label">Resolution Code</div>
               <div class="res-info-val" id="resResolutionBadge" style="color:var(--accent);"></div>
             </div>
           </div>
 
           <div class="res-block">
-            <strong>📋 الإجراء الواجب تنفيذه:</strong>
+            <strong>📋 Action to Take:</strong>
             <div id="resActionText"></div>
           </div>
 
           <div class="canned-box" id="resReplyBox">
-            <button class="copy-btn" onclick="copyReplyText()">📋 نسخ الرد المعتمد</button>
-            <strong style="color:#166534;">💬 الرد المعتمد لإرساله للعميل:</strong>
+            <button class="copy-btn" onclick="copyReplyText()">📋 Copy Canned Reply</button>
+            <strong style="color:#166534;">💬 Approved Customer Response:</strong>
             <div id="resReplyText" style="margin-top:6px; color:#14532d; font-size:14px; line-height:1.5;"></div>
           </div>
 
-          <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:20px;">🔄 بدء حالة جديدة</button>
+          <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:20px;">🔄 Start Another Case</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. السيناريوهات الواقعية -->
+  <!-- 3. REAL CUSTOMER SCENARIOS -->
   <div id="scenariosSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🗣️ السيناريوهات الواقعية ودليل التحليل الجذري</h2>
-        <span style="font-size:13px; color:var(--muted);">63 سيناريو عملي، بروتوكولات الفحص الذاتي، والتصنيف السليم للتذاكر.</span>
+        <h2 style="margin:0; color:var(--primary);">🗣️ Real Customer Scenarios & Tone Guide</h2>
+        <span style="font-size:13px; color:var(--muted);">63 actual scenarios, root-cause analysis, and operational tagging.</span>
       </div>
-      <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
 
     <div class="portal-banner">
-      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 ابحث في كلام وسيناريوهات العملاء (مثل: فتح التذكرة أولاً، الـ 24 ساعة، استفسار شحن، تأخر تحويل)..." onkeyup="filterScenarios()">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Flag Ticket, 10% bonus, Compression Tee, delayed order)..." onkeyup="filterScenarios()">
       <div class="tab-pills" id="scenarioCategoryPills"></div>
     </div>
 
     <div id="scenariosContainer"></div>
   </div>
 
-  <!-- 4. بوابة الاسترداد والاستبدال -->
+  <!-- 4. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW (Clean Headers & Colored Status) -->
   <div id="refundPortalSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🔍 بوابة الاستبدال والاسترداد المباشرة (Multi-Tab)</h2>
-        <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">جارٍ قراءة البيانات الحية...</span>
+        <h2 style="margin:0; color:var(--primary);">🔍 Agent Return, Exchange & Refund Portal</h2>
+        <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">Loading multi-tab records...</span>
       </div>
       <div style="display:flex; gap:8px;">
-        <button class="nav-btn" onclick="fetchLiveRefundPortal()">🔄 تحديث كافة الجداول</button>
+        <button class="nav-btn" onclick="fetchLiveRefundPortal()">🔄 Refresh All Tabs</button>
         <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 الشيت الأصلي ↗
+          📊 Master Sheet ↗
         </a>
-        <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
 
     <div class="portal-banner">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-          <strong style="color:var(--primary); font-size:15px;">البحث الشامل في جميع التابات</strong>
-          <div style="font-size:13px; color:var(--muted); margin-top:2px;">ابحث برقم الهاتف (مثل: 01061350023)، رقم الطلب (مثل: 150773)، الاسم، أو كود الموديل SKU.</div>
+          <strong style="color:var(--primary); font-size:15px;">Universal Multi-Tab Search (Clean Columns & Live Status)</strong>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Name, Fitting Issue, or SKU.</div>
         </div>
-        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 سجل جاهز</span>
+        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records loaded</span>
       </div>
 
       <div class="portal-search-row">
-        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="اكتب رقم الطلب، الهاتف، الاسم، أو الملاحظات للبحث الفوري..." onkeyup="filterPortalRecords()">
+        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Phone, Order #, Customer Name, SKU, or Status to search..." onkeyup="filterPortalRecords()">
       </div>
 
       <div class="tab-pills" id="tabPillsContainer"></div>
@@ -307,84 +323,84 @@
     </div>
   </div>
 
-  <!-- 5. صفحة تفاصيل الدليل -->
+  <!-- 5. DETAIL VIEW (SOP View) -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
       <div>
-        <h2 id="currentCategoryTitle" style="margin:0; color:var(--primary);">عنوان القسم</h2>
-        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">الإجراءات المعتمدة وخطوات العمل</span>
+        <h2 id="currentCategoryTitle" style="margin:0; color:var(--primary);">Category Title</h2>
+        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Interactive Workflows</span>
       </div>
-      <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 6. نموذج تصعيد المشاكل -->
+  <!-- 6. ESCALATION FORM VIEW (English Only) -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h2 style="margin:0; color:var(--primary);">🚨 نموذج تصعيد مشاكل المنتجات والعمليات</h2>
-      <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+      <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-    <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border);">
+    <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border); text-align:left;">
       <form id="escForm">
-        <label>رقم الطلب (Order Number):</label>
-        <input type="text" id="order_number" placeholder="مثال: #10852" required>
+        <label>Order Number:</label>
+        <input type="text" id="order_number" placeholder="e.g. #10852" required>
 
-        <label>رقم التذكرة (Ticket Number):</label>
-        <input type="text" id="ticket_number" placeholder="مثال: #TK-304" required>
+        <label>Ticket Number:</label>
+        <input type="text" id="ticket_number" placeholder="e.g. #TK-304" required>
 
-        <label>اسم العميل:</label>
+        <label>Customer Name:</label>
         <input type="text" id="customer_name" required>
 
-        <label>سبب الاتصال والتصعيد:</label>
-        <input type="text" id="contact_reason" placeholder="مثال: عيب إنتاج / استبدال مقاس / تأخر تحويل / مشكلة شحن" required>
+        <label>Contact Reason:</label>
+        <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Size Exchange / COD Refund / Transfer Delay" required>
 
-        <label>تاريخ إنشاء التذكرة:</label>
+        <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
 
-        <label>هل استلم العميل الشحنة؟</label>
+        <label>Did the customer receive the order?</label>
         <select id="received_order">
-          <option value="false">لا</option>
-          <option value="true">نعم</option>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
         </select>
 
-        <label>تاريخ التسليم (إن وُجد):</label>
+        <label>Delivered Date (if applicable):</label>
         <input type="date" id="delivered_date">
 
-        <label>ملخص الحالة والإجراء بعد الفحص الذاتي (Shopify, Gorgias, Slack, Bosta, Estbdal):</label>
-        <textarea id="case_summary" rows="3" placeholder="اشرح تفاصيل المشكلة والإجراء الذي تم اتخاذه..." required></textarea>
+        <label>Case Summary (Action & Investigation Details):</label>
+        <textarea id="case_summary" rows="3" placeholder="Explain details after self-investigation across Shopify, Gorgias, Slack, Bosta, Estbdal & Refund sheet..." required></textarea>
 
-        <button type="submit" class="submit-btn">💾 تسجيل التصعيد في النظام</button>
+        <button type="submit" class="submit-btn">💾 Submit Escalation to Database</button>
       </form>
     </div>
   </div>
 
-  <!-- 7. سجلات التصعيد والمراجعة -->
+  <!-- 7. ESCALATION RECORDS & REVIEW VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">📊 سجلات التصعيد ومراجعة الحالات</h2>
-        <span style="font-size:13px; color:var(--muted);">صلاحية خاصة للمراجعين المعتمدين لاعتماد الحلول وإضافة الملاحظات.</span>
+        <h2 style="margin:0; color:var(--primary);">📊 Escalation Records & Case Review</h2>
+        <span style="font-size:13px; color:var(--muted);">Authorized reviewers can validate actions, approve resolutions, and add comments.</span>
       </div>
       <div style="display:flex; gap:10px;">
-        <button class="nav-btn" onclick="exportToExcel()" style="background:#10b981; color:white; border:none;">📥 تصدير إلى Excel</button>
-        <button class="nav-btn" onclick="loadLogs()">🔄 تحديث</button>
-        <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+        <button class="nav-btn" onclick="exportToExcel()" style="background:#10b981; color:white; border:none;">📥 Export to Excel</button>
+        <button class="nav-btn" onclick="loadLogs()">🔄 Refresh</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
       <table id="logsTable">
         <thead>
           <tr>
-            <th>رقم الطلب</th>
-            <th>رقم التذكرة</th>
-            <th>العميل</th>
-            <th>السبب</th>
-            <th>التاريخ</th>
-            <th>ملخص الإجراء</th>
-            <th>حالة المراجعة</th>
-            <th>ملاحظات المراجع</th>
-            <th>الإجراء</th>
+            <th>Order #</th>
+            <th>Ticket #</th>
+            <th>Customer</th>
+            <th>Reason</th>
+            <th>Date</th>
+            <th>Summary</th>
+            <th>Review Status</th>
+            <th>Reviewer Notes</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -392,210 +408,210 @@
     </div>
   </div>
 
-  <!-- 8. نموذج تقييم الجودة الذكي -->
+  <!-- 8. ADVANCED QUALITY AUDIT FORM VIEW (English Only) -->
   <div id="qualityFormSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--purple);">⭐ نموذج تقييم الجودة الذكي (QA Audit)</h2>
-        <span style="font-size:13px; color:var(--muted);">حساب فوري للدرجة، ضبط قواعد الإخفاق الحرج (Fatal)، وإرسال التقرير بالبريد للأيجنت تلقائياً.</span>
+        <h2 style="margin:0; color:var(--purple);">⭐ Quality Assurance (QA) Smart Audit Form</h2>
+        <span style="font-size:13px; color:var(--muted);">Dynamic scoring engine with Fatal flags, One-Touch delivery & Multi-Tool Investigation.</span>
       </div>
-      <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
 
-    <!-- كارت النتيجة اللحظية -->
+    <!-- Live Score Banner -->
     <div class="qa-header-card">
       <div>
-        <h3 style="margin:0; font-size:22px;">نتيجة تقييم جودة المحادثة</h3>
-        <div id="qaGradeText" style="font-size:15px; margin-top:6px; opacity:0.95;">التقدير: أداء ممتاز (100%) ⭐⭐⭐</div>
+        <h3 style="margin:0; font-size:22px;">Audit Scorecard Performance</h3>
+        <div id="qaGradeText" style="font-size:15px; margin-top:6px; opacity:0.95;">Grade: Excellent (100%) ⭐⭐⭐</div>
         <div id="qaFatalText" style="font-size:13px; margin-top:4px; font-weight:bold; color:#fef08a;"></div>
       </div>
       <div class="qa-score-circle">
         <span id="qaLivePercentage">100%</span>
-        <span>الدرجة</span>
+        <span>SCORE</span>
       </div>
     </div>
 
     <form id="qaForm">
       <div class="qa-section">
-        <div class="qa-section-title">📌 بيانات التقييم وممثل الخدمة المسؤول</div>
+        <div class="qa-section-title">📌 Interaction & Agent Identification</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:15px;">
           <div>
-            <label>بريد ممثل الخدمة (آخر أيجنت تعامل مع الحالة):</label>
+            <label>Agent Name / Email (Last Agent Responsible):</label>
             <input type="email" id="qa_agent_email" placeholder="agent@mavinwear.com" required>
           </div>
           <div>
-            <label>مسؤول الجودة (Auditor):</label>
+            <label>Auditor Name / Email:</label>
             <input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f8fafc;">
           </div>
           <div>
-            <label>رقم التذكرة / المحادثة:</label>
-            <input type="text" id="qa_ticket_ref" placeholder="مثال: #TK-9801" required>
+            <label>Ticket / Chat Reference #:</label>
+            <input type="text" id="qa_ticket_ref" placeholder="e.g. #TK-9801" required>
           </div>
           <div>
-            <label>تحديد مسؤولية الخطأ الجذري (Root Cause Attribution):</label>
+            <label>Root Cause Attribution:</label>
             <select id="qa_attribution">
-              <option value="Agent Related">خطأ يرجع لممثل الخدمة (Agent Related)</option>
-              <option value="Contacted Customer Before Opening/Flagging Ticket">تواصل مع العميل قبل فتح التذكرة وعمل Flag ⚠️</option>
-              <option value="Missing Order Number in Sheet">إغفال تسجيل رقم الطلب بالشيت ⚠️</option>
-              <option value="Missed One-Touch Resolution">إغفال الحل الكامل من أول رد (Missed One-Touch)</option>
-              <option value="Unclosed Resolved Ticket SLA Breach">ترك تذكرة محلولة مفتوحة لأكثر من ساعتين إلى ٣ ساعات</option>
-              <option value="Blindly Followed Previous Agent">الاعتماد الأعمى على رد سابق بدون فحص ذاتي ❌</option>
-              <option value="Production / Quality Issue">عيب تصنيع / إنتاج (Production Defect)</option>
-              <option value="Refund System Update / Delay">تأخير تحديث نظام التحويلات البنكية</option>
-              <option value="Non-Agent Related - Courier">خطأ يرجع لشركة الشحن (Courier)</option>
-              <option value="Non-Agent Related - Warehouse">خطأ يرجع للمخزن والتحضير (Warehouse)</option>
+              <option value="Agent Related">Agent Related</option>
+              <option value="Contacted Customer Before Opening/Flagging Ticket">Contacted Customer Before Opening/Flagging Ticket ⚠️</option>
+              <option value="Missing Order Number in Sheet">Missing Order Number in Sheet ⚠️</option>
+              <option value="Missed One-Touch Resolution">Missed One-Touch Resolution</option>
+              <option value="Unclosed Resolved Ticket SLA Breach">Unclosed Resolved Ticket (> 2-3 hours) ⚠️</option>
+              <option value="Blindly Followed Previous Agent">Blindly Followed Previous Agent (No self-check) ❌</option>
+              <option value="Production / Quality Issue">Production / Factory Defect</option>
+              <option value="Refund System Update / Delay">Refund System Update Delay</option>
+              <option value="Non-Agent Related - Courier">Non-Agent Related (Courier)</option>
+              <option value="Non-Agent Related - Warehouse">Non-Agent Related (Warehouse)</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- الإخفاقات الحرجة -->
+      <!-- Critical Failures / Fatals -->
       <div class="fatal-banner">
-        <strong style="color:#991b1b; font-size:15px;">⚠️ معايير الإخفاق الحرج الفوري (Auto-Fail):</strong>
+        <strong style="color:#991b1b; font-size:15px;">⚠️ Critical Business & End-User Parameters (Auto-Fail):</strong>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px; margin-top:10px;">
           <div>
-            <label style="color:#991b1b;">معيار العميل الحرج (إعطاء معلومة خاطئة أو ميعاد تسليم مضلل):</label>
+            <label style="color:#991b1b;">End-User Critical (Wrong info / Misleading SLA dates):</label>
             <select id="qa_end_user_critical" onchange="calculateQAScore()">
-              <option value="no">لا يوجد خطأ حرج - المعلومات والمواعيد سليمة</option>
-              <option value="yes">إخفاق حرج (معلومة خاطئة أو ميعاد مضلل للعميل ❌ تصفير السكور)</option>
+              <option value="no">No Fatal - Correct Information & Dates</option>
+              <option value="yes">Fatal Fail (Misleading info / Wrong SLA date ❌)</option>
             </select>
           </div>
           <div>
-            <label style="color:#991b1b;">معيار العمل الحرج (تأثير مالي / خرق سياسات الشركة - 3 أو 0):</label>
+            <label style="color:#991b1b;">Business Critical (Policy breach / Financial loss - Score 3 or 0):</label>
             <select id="qa_business_critical" onchange="calculateQAScore()">
-              <option value="3">درجة 3 - الالتزام التام بسياسات وحماية الشركة</option>
-              <option value="0">درجة 0 - خرق سياسة الشركة أو تسبب في خسارة مالية ❌</option>
+              <option value="3">Score 3 - Protected Business & Policy Compliant</option>
+              <option value="0">Score 0 - Policy Breach / Unauthorized Financial Loss ❌</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- 1. فهم المشكلة وترتيب الخطوات -->
+      <!-- 1. Issue Understanding & Ticket Protocol -->
       <div class="qa-section">
-        <div class="qa-section-title">🧠 1. فهم المشكلة والالتزام ببروتوكول فتح التذاكر</div>
+        <div class="qa-section-title">🧠 1. Issue Understanding & Ticket Protocol</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
-            <label>هل تم فتح التذكرة و Flag المشكلة قبل مراسلة العميل؟</label>
+            <label>Did the agent open ticket & flag issue BEFORE contacting customer?</label>
             <select id="qa_ticket_first" onchange="calculateQAScore()">
-              <option value="10">نعم (10/10) - تم فتح التذكرة أولاً لضمان الـ 24 ساعة</option>
-              <option value="0">لا (0/10) - تم إرسال رسالة للعميل قبل فتح التذكرة</option>
+              <option value="10">Yes (10/10) - Opened & Flagged ticket first (24h SLA protected)</option>
+              <option value="0">No (0/10) - Contacted customer before opening/flagging ticket</option>
             </select>
           </div>
           <div>
-            <label>هل فَهِم ممثل الخدمة احتياج ومطلب العميل الفعلي بدقة؟</label>
+            <label>Did the agent understand the customer's root issue correctly?</label>
             <select id="qa_understand" onchange="calculateQAScore()">
-              <option value="10">نعم (10/10) - تشخيص دقيق للسبب الجذري</option>
-              <option value="0">لا (0/10) - سوء فهم لطلب العميل</option>
+              <option value="10">Yes (10/10) - Accurate diagnostic understanding</option>
+              <option value="0">No (0/10) - Misunderstood customer's root problem</option>
             </select>
           </div>
           <div>
-            <label>هل تجنب تكرار الأسئلة واستخدم أسئلة تشخيصية واضحة؟</label>
+            <label>Were repetitive questions avoided? (Clean diagnostic check):</label>
             <select id="qa_repetitive" onchange="calculateQAScore()">
-              <option value="10">نعم (10/10) - أسئلة واضحة بدون تكرار</option>
-              <option value="0">لا (0/10) - طرح أسئلة مكررة</option>
-              <option value="NA">غير منطبق (N/A - إعادة توزيع الوزن تلقائياً)</option>
+              <option value="10">Yes (10/10) - Clear questions without repetition</option>
+              <option value="0">No (0/10) - Asked repeated fragmented questions</option>
+              <option value="NA">N/A (Not Applicable - Reallocate weight)</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- 2. الفحص الذاتي عبر الأنظمة الخمسة -->
+      <!-- 2. 5-Tool Investigation -->
       <div class="qa-section">
-        <div class="qa-section-title">🔍 2. التحقيق الذاتي المستقل عبر كافة الأنظمة (20 درجة)</div>
-        <div class="criteria-desc">هل قام ممثل الخدمة بالتحقق الذاتي من كافة الأنظمة دون الاعتماد على رد سابق؟</div>
+        <div class="qa-section-title">🔍 2. Independent Investigation Across All 5 Platforms (20 Pts)</div>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:8px;">Did the agent independently verify the case across all platforms before responding?</div>
         <div class="check-grid">
-          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify (الطلبات والخصومات والتاجات)</label>
-          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias (سجل التذاكر والمحادثات)</label>
-          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack (القنوات والملاحظات الداخلية)</label>
-          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta (بيانات العنوان والتتبع المباشر)</label>
-          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 شيتات الاستبدال (تسجيل SKU ورقم الطلب)</label>
+          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify (Orders, Tags & Discounts)</label>
+          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias (History & Conversation)</label>
+          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack (Internal Team Notes)</label>
+          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta (AWB & Courier Status)</label>
+          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 Estbdal & Refund Sheets (SKU/Duplicate Check)</label>
         </div>
       </div>
 
-      <!-- 3. تقديم الحل وكفاءة One-Touch -->
+      <!-- 3. Resolution Delivery & One-Touch -->
       <div class="qa-section">
-        <div class="qa-section-title">🎯 3. تقديم الحل المناسب ومسؤولية الأيجنت الأخير (25 درجة)</div>
+        <div class="qa-section-title">🎯 3. Resolution Delivery & One-Touch Efficiency (25 Pts)</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
-            <label>هل قدم ممثل الخدمة الحل الصحيح المعتمد؟</label>
+            <label>Did the agent deliver the exact right resolution?</label>
             <select id="qa_correct_res" onchange="calculateQAScore()">
-              <option value="15">نعم (15/15) - حل دقيق ومطابق للسياسة</option>
-              <option value="0">لا (0/15) - إجراء خاطئ أو وعد غير مصرح به</option>
+              <option value="15">Yes (15/15) - Delivered correct approved resolution</option>
+              <option value="0">No (0/15) - Incorrect action or wrong resolution</option>
             </select>
           </div>
           <div>
-            <label>كفاءة الـ One-Touch (هل حُلّت المشكلة بالكامل من أول رد؟):</label>
+            <label>One-Touch Resolution Efficiency (Solved completely in 1st touch?):</label>
             <select id="qa_one_touch" onchange="calculateQAScore()">
-              <option value="10">نعم (10/10) - حل شامل وكامل من أول رد</option>
-              <option value="5">جزئي (5/10) - تطلب متابعة بسيطة</option>
-              <option value="0">لا (0/10) - تجزئة للحل ورسائل متقطعة غير مبررة</option>
+              <option value="10">Yes (10/10) - Complete solution in 1st response</option>
+              <option value="5">Partial (5/10) - Minor follow-up required</option>
+              <option value="0">No (0/10) - Unnecessary fragmented back-and-forth</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- 4. إجراءات التصعيد وإغلاق التذاكر -->
+      <!-- 4. Escalation Process, SLA & Closure -->
       <div class="qa-section">
-        <div class="qa-section-title">⏱️ 4. الالتزام بالمواعيد وإغلاق التذاكر المحلولة (12 درجة)</div>
+        <div class="qa-section-title">⏱️ 4. Escalation Process, SLA & Ticket Closure (12 Pts)</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
-            <label>اتباع مسار التصعيد الصحيح:</label>
+            <label>Escalation Process followed correctly?</label>
             <select id="qa_esc_process" onchange="calculateQAScore()">
-              <option value="4">نعم (4/4) - مسار تصعيد سليم</option>
-              <option value="0">لا (0/4) - تصعيد خاطئ أو غير مبرر</option>
+              <option value="4">Yes (4/4) - Correct escalation path</option>
+              <option value="0">No (0/4) - Wrong escalation or unnecessary tag</option>
             </select>
           </div>
           <div>
-            <label>ذكر الـ SLA والمهلة الزمنية بوضوح تام للعميل:</label>
+            <label>Clear SLA stated explicitly to customer?</label>
             <select id="qa_sla_stated" onchange="calculateQAScore()">
-              <option value="4">نعم (4/4) - تم توضيح الميعاد بدقة</option>
-              <option value="0">لا (0/4) - ميعاد مبهم أو مفقود</option>
+              <option value="4">Yes (4/4) - Mentioned exact SLA clearly</option>
+              <option value="0">No (0/4) - Vague or missing SLA</option>
             </select>
           </div>
           <div>
-            <label>إغلاق التذكرة المحلولة خلال ساعتين إلى ٣ ساعات:</label>
+            <label>Resolved Ticket Closure SLA (Closed within 2–3 hours?):</label>
             <select id="qa_closure_sla" onchange="calculateQAScore()">
-              <option value="4">نعم (4/4) - تم إغلاق التذكرة بعد حلها في الوقت المحدد</option>
-              <option value="0">لا (0/4) - تُركت التذكرة المحلولة معلقة لأكثر من ٣ ساعات</option>
+              <option value="4">Yes (4/4) - Closed within 2-3h after resolution</option>
+              <option value="0">No (0/4) - Left resolved ticket open >3 hours</option>
             </select>
           </div>
         </div>
       </div>
 
       <div class="qa-section">
-        <label>ملاحظات مسؤول الجودة وخطة التوجيه (Coaching Notes):</label>
-        <textarea id="qa_feedback" rows="3" placeholder="اكتب نقاط القوة والنقاط الواجب تحسينها وتطويرها..." required></textarea>
+        <label>Auditor Detailed Feedback & Coaching Action Plan:</label>
+        <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths, One Touch gaps, and coaching points..." required></textarea>
       </div>
 
-      <button type="submit" class="submit-btn purple">📤 اعتماد التقييم وإرسال التقرير تلقائياً عبر البريد للأيجنت</button>
+      <button type="submit" class="submit-btn purple">📤 Submit QA Evaluation & Email Report to Agent</button>
     </form>
   </div>
 
-  <!-- 9. سجل تقييمات الجودة -->
+  <!-- 9. QA EVALUATION LOGS VIEW -->
   <div id="qualityLogsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--purple);">📈 سجل تقييمات الجودة والتقارير المعتمدة</h2>
-        <span style="font-size:13px; color:var(--muted);">أرشيف بكافة عمليات التفتيش والدرجات المسجلة لممثلي الخدمة.</span>
+        <h2 style="margin:0; color:var(--purple);">📈 Quality Assurance Evaluation Records</h2>
+        <span style="font-size:13px; color:var(--muted);">History of all agent audits, scores, and feedback.</span>
       </div>
       <div style="display:flex; gap:10px;">
-        <button class="nav-btn" onclick="exportQAToExcel()" style="background:#10b981; color:white; border:none;">📥 تصدير السجل إلى Excel</button>
-        <button class="nav-btn" onclick="loadQALogs()">🔄 تحديث السجل</button>
-        <button class="nav-btn primary" onclick="goToHome()">🏠 العودة للرئيسية</button>
+        <button class="nav-btn" onclick="exportQAToExcel()" style="background:#10b981; color:white; border:none;">📥 Export QA Excel</button>
+        <button class="nav-btn" onclick="loadQALogs()">🔄 Refresh</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
       <table id="qaLogsTable">
         <thead>
           <tr>
-            <th>التاريخ</th>
-            <th>بريد الأيجنت</th>
-            <th>رقم التذكرة</th>
-            <th>تحديد المسؤولية</th>
-            <th>الدرجة</th>
-            <th>التقدير</th>
-            <th>مسؤول التقييم</th>
-            <th>ملاحظات التوجيه</th>
+            <th>Date</th>
+            <th>Agent Email</th>
+            <th>Ticket Ref</th>
+            <th>Attribution</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Auditor</th>
+            <th>Feedback Notes</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -603,25 +619,25 @@
     </div>
   </div>
 
-  <!-- نافذة مراجعة واعتماد الحالات -->
+  <!-- MODAL: ESCALATION CASE REVIEW -->
   <div class="modal-overlay" id="reviewModal">
     <div class="modal-content">
-      <h3 style="margin-top:0; color:var(--primary);">📝 مراجعة واعتماد حالة التصعيد</h3>
+      <h3 style="margin-top:0; color:var(--primary);">📝 Review & Validate Escalation Case</h3>
       <div id="modalCaseDetails" style="background:#f8fafc; padding:12px; border-radius:8px; margin-bottom:15px; font-size:13.5px; line-height:1.5;"></div>
 
-      <label>قرار المراجعة النهائي:</label>
+      <label>Case Resolution Decision:</label>
       <select id="modal_review_status">
-        <option value="Approved">معتمد - الإجراء سليم تماماً ✅</option>
-        <option value="Rejected">مرفوض - الإجراء غير سليم ويتطلب تعديلاً ❌</option>
-        <option value="Pending">قيد المتابعة والتدقيق ⏳</option>
+        <option value="Approved">Approved (Correct Action ✅)</option>
+        <option value="Rejected">Rejected (Action requires modification ❌)</option>
+        <option value="Pending">Pending (Under investigation ⏳)</option>
       </select>
 
-      <label>ملاحظات وتعليقات المراجع:</label>
-      <textarea id="modal_review_comment" rows="3" placeholder="اكتب تعليقك وتوجيهك بخصوص هذا الإجراء..." required></textarea>
+      <label>Reviewer Feedback & Comments:</label>
+      <textarea id="modal_review_comment" rows="3" placeholder="Write feedback regarding this action..." required></textarea>
 
       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
-        <button class="nav-btn" onclick="closeReviewModal()">إلغاء</button>
-        <button class="nav-btn primary" onclick="saveCaseReview()">حفظ القرار</button>
+        <button class="nav-btn" onclick="closeReviewModal()">Cancel</button>
+        <button class="nav-btn primary" onclick="saveCaseReview()">Save Decision</button>
       </div>
     </div>
   </div>
@@ -633,174 +649,151 @@
   const QA_SPECIALISTS = ["Rehabmohamed881@gmail.com"];
 
   let currentUser = "agent@mavinwear.com";
+  let currentHomeLang = 'en';
 
-  // قاعدة المعرفة التشغيلية الرسمية (باللغة العربية الفصحى المنظمة)
+  // Bilingual Master Knowledge Base SOPs
   const DEFAULT_KNOWLEDGE_BASE = [
     {
       code: "SOP-CORE-02",
-      category: "بروتوكولات إدارة التذاكر وخدمة العملاء",
-      system: "Gorgias + شيتات العمليات اليومية",
-      title: "📌 بروتوكول فتح التذاكر وتتبع مهلة الـ 24 ساعة وإلزامية رقم الطلب",
-      description: "توجيه تنظيمي إلزامي لكافة أعضاء الفريق: يجب الالتزام بالترتيب الصحيح لخطوات العمل؛ فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل، مع تسجيل رقم الطلب بدقة في الشيت وتحديثه على مدار اليوم.",
-      steps: [
-        "<strong>1. فتح التذكرة أولاً:</strong> يجب فتح التذكرة وعمل (Flag) للمشكلة قبل إرسال أي رسالة للعميل، لضمان الالتزام الصارم بمهلة الـ 24 ساعة (SLA).",
-        "<strong>2. إلزامية رقم الطلب (Order Number):</strong> يُمنع منعاً باتاً ترك أي خانة فارغة في الشيت؛ يجب تسجيل رقم الطلب أمام كل حالة بلا استثناء.",
-        "<strong>3. آلية توزيع الطلبات الإضافية:</strong> مراجعة الشيت بانتظام بعد الإشعار، والبدء بفتح التذاكر أولاً، ثم التواصل مع العملاء، والاستمرار في التحديث الدوري للشيت (Live Updates) على مدار اليوم."
+      category_en: "Customer Support & Ticket Operations",
+      category_ar: "بروتوكولات إدارة التذاكر وخدمة العملاء",
+      system: "Gorgias + Operations Sheets",
+      title_en: "📌 Ticket Opening First, 24H SLA & Mandatory Order Number",
+      title_ar: "📌 بروتوكول فتح التذاكر وتتبع مهلة الـ 24 ساعة وإلزامية رقم الطلب",
+      description_en: "Mandatory protocol: Always open the ticket and flag the issue BEFORE reaching out to the customer to maintain 24-hour SLA. All entries in the sheet must include the Order Number without exception.",
+      description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة، مع تسجيل رقم الطلب بدقة في الشيت وتحديثه على مدار اليوم.",
+      steps_en: [
+        "1. Open Ticket First: Open the ticket & flag the issue before contacting customer.",
+        "2. Mandatory Order Number: Ensure the Order Number is filled in the sheet without leaving it blank.",
+        "3. Real-time Sheet Updates: Check sheet in intervals, open tickets first, contact customers, and update sheet status."
       ],
-      canned_reply: "أهلاً بك! تم تسجيل ومتابعة طلبك برقم التذكرة لدينا، وجارٍ استكمال الإجراء وفق الجدول الزمني المعتمد."
+      steps_ar: [
+        "1. فتح التذكرة أولاً وعمل Flag للمشكلة قبل مراسلة العميل لضمان الـ 24 ساعة.",
+        "2. إلزامية ملء خانة رقم الطلب بالشيت وعدم ترك أي خانة فارغة.",
+        "3. متابعة الطلبات الموزعة وفتح التذاكر أولاً ثم التواصل والتحديث الدوري."
+      ],
+      canned_reply: "Hello! We have flagged and logged your ticket in our system. Your inquiry is being processed according to our official turnaround SLA."
     },
     {
       code: "SOP-CORE-01",
-      category: "مبادئ العمل والتشغيل الأساسية",
+      category_en: "Core Operational Principles",
+      category_ar: "مبادئ العمل والتشغيل الأساسية",
       system: "Shopify + Gorgias + Slack + Bosta",
-      title: "🎯 بروتوكول حل التذاكر من أول رد (One Touch Ticket Resolution)",
-      description: "الـ One Touch Ticket هي التذكرة التي يرسل فيها العميل رسالته، ويتمكن ممثل الخدمة من حل المشكلة وإغلاق التذكرة من أول رد كامل وشامل دون الحاجة للرجوع للعميل مجدداً أو انتظار رد إضافي.",
-      steps: [
-        "<strong>1. القراءة المتأنية قبل الرد:</strong> عدم الاستعجال؛ استيعاب المشكلة وتحديد احتياج العميل الدقيق.",
-        "<strong>2. إجراء تحقيق ذاتي شامل (Investigation):</strong> فحص سجلات <strong>Shopify و Gorgias و Slack</strong> قبل كتابة الرد.",
-        "<strong>3. إرسال كافة التفاصيل في رسالة واحدة:</strong> تقديم حل متكامل يشتمل على الإجراء المتخذ والمواعيد بدلاً من تجزئة الرسائل.",
-        "<strong>4. التنفيذ الفوري للحل:</strong> تنفيذ الإجراء فوراً (طلب استبدال، استرداد، تعديل عنوان) دون انتظار رد من العميل.",
-        "<strong>5. الإغلاق السليم:</strong> الهدف ليس مجرد الإغلاق السريع، بل الإغلاق الصحيح والكامل من أول مرة."
+      title_en: "🎯 One Touch Ticket Resolution SOP & Best Practices",
+      title_ar: "🎯 بروتوكول حل التذاكر من أول رد (One Touch Ticket Resolution)",
+      description_en: "A One Touch Ticket is resolved and closed from the very first response without requiring customer follow-up or extra back-and-forth messages.",
+      description_ar: "الـ One Touch Ticket هي التذكرة التي يحل فيها ممثل الخدمة المشكلة ويغلقها من أول رد كامل دون الحاجة للرجوع للعميل.",
+      steps_en: [
+        "1. Read ticket thoroughly before answering.",
+        "2. Conduct complete investigation on Shopify, Gorgias & Slack.",
+        "3. Send all required information and resolution in a single message.",
+        "4. Execute resolution immediately (do not wait for unnecessary customer replies).",
+        "5. Close ticket accurately from the first touch."
       ],
-      canned_reply: "تم فحص تفاصيل طلبكم وتنفيذ الإجراء اللازم فوراً عبر أنظمتنا. تفاصيل الإجراء هي: [...] وموعد الوصول المتوقع هو [...]."
+      steps_ar: [
+        "1. القراءة المتأنية قبل الرد واستيعاب طلب العميل.",
+        "2. التحقيق الشامل عبر Shopify و Gorgias و Slack.",
+        "3. إرسال كافة التفاصيل والحل في رسالة واحدة متكاملة.",
+        "4. التنفيذ الفوري للإجراء دون انتظار رد إضافي.",
+        "5. الإغلاق الصحيح والكامل للتذكرة."
+      ],
+      canned_reply: "Your request has been fully reviewed and processed in our systems. Your order details and tracking updates have been finalized."
     },
     {
       code: "SOP-CORE-00",
-      category: "مبادئ العمل والتشغيل الأساسية",
+      category_en: "Core Operational Principles",
+      category_ar: "مبادئ العمل والتشغيل الأساسية",
       system: "Shopify + Gorgias + Slack + Bosta + Estbdal",
-      title: "⭐ القاعدة الذهبية: التحقيق الذاتي المستقل ومسؤولية الأيجنت الأخير",
-      description: "بروتوكول إلزامي: يجب على كل ممثل خدمة إجراء تحقيقه المستقل والشامل عبر الأنظمة الخمسة (Shopify, Gorgias, Slack, Bosta, Estbdal/Refund Sheets). يُحظر البناء على ردود الزملاء السابقة لاحتمالية ورود الخطأ. ممثل الخدمة الأخير هو المسؤول بالكامل عن صحة الحل.",
-      steps: [
-        "<strong>1. التحقيق الذاتي المستقل:</strong> التحقق من الواقع المباشر بنفسك وعدم الاعتماد الأعمى على الردود السابقة.",
-        "<strong>2. فحص Slack و Gorgias:</strong> مراجعة الملاحظات الداخلية والتصعيدات وسجل التذاكر السابقة.",
-        "<strong>3. فحص Shopify:</strong> مراجعة خط زمني للطلب، المنتجات، الخصومات، وحالة الدفع.",
-        "<strong>4. فحص Bosta:</strong> مراجعة بوليصة الشحن، محاولات التسليم، وملاحظات المندوب.",
-        "<strong>5. فحص أداة الاستبدال (Estbdal):</strong> مراجعة طلبات الاستبدال وأكواد الموديلات (SKU).",
-        "<strong>6. فحص شيتات الاسترداد:</strong> التحقق من عدم وجود إدخالات مكررة واحتساب القيمة الصافية.",
-        "<strong>7. مسؤولية الأيجنت الأخير:</strong> ممثل الخدمة الحالي هو المسؤول الأول والأخير عن إغلاق المشكلة بصورة صحيحة."
+      title_en: "⭐ Golden Rule: Independent Self-Investigation & Last-Agent Ownership",
+      title_ar: "⭐ القاعدة الذهبية: التحقيق الذاتي المستقل ومسؤولية الأيجنت الأخير",
+      description_en: "Every agent must conduct their own complete, independent investigation across all 5 operational platforms (Shopify, Gorgias, Slack, Bosta, Estbdal/Refund Sheets). The LAST handling agent holds 100% full ownership of resolution.",
+      description_ar: "يجب على كل ممثل خدمة إجراء تحقيقه المستقل عبر الأنظمة الخمسة دون الاعتماد على رد سابق. ممثل الخدمة الأخير مسؤول بالكامل.",
+      steps_en: [
+        "1. Conduct Self-Investigation: Never blindly copy previous agent responses.",
+        "2. Check Slack & Gorgias for internal context and history.",
+        "3. Check Shopify for orders, discounts, and payment status.",
+        "4. Check Bosta for live AWB delivery status.",
+        "5. Check Estbdal & Refund Sheets for duplicate entries and SKUs.",
+        "6. Last Agent Ownership: Deliver the complete resolution."
       ],
-      canned_reply: "أقوم حالياً بمراجعة كافة تفاصيل طلبكم وتتبعه عبر كافة أنظمتنا التشغيلية لضمان إتمام الإجراء بأعلى دقة."
+      steps_ar: [
+        "1. التحقيق الذاتي وعدم الاعتماد الأعمى على الردود السابقة.",
+        "2. فحص Slack و Gorgias للسجلات السابقة.",
+        "3. فحص Shopify للطلبات والمدفوعات.",
+        "4. فحص Bosta للشحن والتتبع المباشر.",
+        "5. فحص Estbdal وشيتات الاسترداد لمنع التكرار.",
+        "6. ممثل الخدمة الأخير هو المسؤول الأول عن إغلاق الحالة."
+      ],
+      canned_reply: "I am personally investigating your order details across all our systems to ensure everything is resolved accurately."
     },
     {
       code: "SOP-OPS-08",
-      category: "إجراءات خدمة العملاء والـ SLAs",
+      category_en: "Customer Support & Ticket Operations",
+      category_ar: "إجراءات خدمة العملاء والـ SLAs",
       system: "Ticket Tracker & Inbox",
-      title: "⏱️ مهلة إغلاق التذاكر المحلولة (خلال ساعتين إلى ٣ ساعات كحد أقصى)",
-      description: "توجيه تشغيلي: يجب الحرص على إغلاق أي تذكرة تم حل مشكلتها ومر على حلها من ساعتين إلى ٣ ساعات. يُرجى الاستمرار في متابعة التذاكر المفتوحة وعدم ترك التذاكر المحلولة معلقة في صندوق الوارد.",
-      steps: [
-        "<strong>1. المتابعة المستمرة:</strong> المتابعة الدورية للتذاكر المعينة والتأكد من إنجاز المهام المطلوبة.",
-        "<strong>2. قاعدة الإغلاق (2-3 ساعات):</strong> فور اكتمال حل المشكلة للعميل، يتم إغلاق التذكرة خلال ساعتين إلى ٣ ساعات كحد أقصى.",
-        "<strong>3. نظافة صندوق الوارد:</strong> تفريغ التذاكر المنجزة لضمان دقة مؤشرات الأداء والتقارير الفورية."
+      title_en: "⏱️ Resolved Ticket Closure SLA (Close within 2–3 Hours)",
+      title_ar: "⏱️ مهلة إغلاق التذاكر المحلولة (خلال ساعتين إلى ٣ ساعات كحد أقصى)",
+      description_en: "Close any resolved ticket that has been completed for more than 2–3 hours. Keep following up on open tickets and avoid leaving resolved ones open.",
+      description_ar: "يجب إغلاق أي تذكرة تم حل مشكلتها ومر على حلها ساعتان إلى ٣ ساعات كحد أقصى لضمان نظافة صندوق الوارد.",
+      steps_en: [
+        "1. Follow Up Regularly on open assignments.",
+        "2. 2–3 Hour Closure Rule: Once resolved, close ticket within 2 to 3 hours.",
+        "3. Queue Hygiene: Ensure real-time, clean SLA metrics."
       ],
-      canned_reply: "تم استكمال وحل مشكلتكم بنجاح. نسعد دائماً بخدمتكم في أي وقت!"
-    },
-    {
-      code: "SOP-REF-01",
-      category: "العمليات المالية والاسترداد",
-      system: "Mavin Refund Sheet + Portal",
-      title: "1. منع الإدخالات المكررة في شيت الاسترداد (Duplicate Entries)",
-      description: "بروتوكول بحث إلزامي قبل إضافة أي طلب استرداد مالي لمنع الازدواجية والأخطاء الحسابية.",
-      steps: [
-        "البحث المسبق في شيت الاسترداد باستخدام: رقم الطلب، اسم العميل، رقم الهاتف، وقيمة المبلغ.",
-        "التأكد التام من عدم وجود إدخال مسجل مسبقاً للحالة.",
-        "يُمنع منعاً باتاً تكرار تسجيل الطلب لتفادي تكرار التحويل المالي."
+      steps_ar: [
+        "1. المتابعة المستمرة للتذاكر المفتوحة.",
+        "2. قاعدة الإغلاق: إغلاق التذكرة المحلولة خلال ساعتين إلى ٣ ساعات.",
+        "3. تفريغ التذاكر المنجزة لدقة التقارير."
       ],
-      canned_reply: "جارٍ مراجعة طلب الاسترداد وتدقيقه في سجلاتنا المالية تمهيداً لتنفيذ التحويل."
-    },
-    {
-      code: "SOP-REF-02",
-      category: "العمليات المالية والاسترداد",
-      system: "Shopify + الحاسبة المالية",
-      title: "2. احتساب صافي قيمة الاسترداد المالي مع الخصومات والشحن",
-      description: "الآلية الرسمية لاحتساب المبلغ المسترد بدقة مع مراعاة أكواد الخصم ورسوم الشحن المطبقة.",
-      steps: [
-        "احتساب المبلغ الصافي بخصم قيمة العروض الترويجية المستفاد منها مسبقاً.",
-        "خصم رسوم الشحن في حالات الاسترجاع الناتجة عن رغبة شخصية للعميل (ولا تُخصم في حالات عيوب الصناعة).",
-        "مراجعة المبلغ النهائي والتأكد من مطابقته للفاتورة الفعلية."
-      ],
-      canned_reply: "تم احتساب قيمة المبلغ المسترد بدقة وفق سعر القطعة الفعلي بعد تسوية الخصومات ورسوم الشحن المعتمدة."
-    },
-    {
-      code: "SOP-LOG-03",
-      category: "الشحن والعمليات اللوجستية",
-      system: "Bosta Business Portal",
-      title: "3. تحديث العناوين مباشرة عبر نظام Bosta Business",
-      description: "الإجراء المعتمد لتعديل عناوين التسليم للعملاء أثناء سريان حالة الشحن.",
-      steps: [
-        "يتم إدخال وتعديل بيانات العنوان مباشرة من داخل تفاصيل الطلب على منصة Bosta Business.",
-        "في حال ظهور الشحنة بحالة 'تم الشحن' أو 'في الطريق للعميل'، فإن التعديل المباشر داخل البوليصة يضمن وصول التحديث للمندوب فوراً وتفادي فشل التسليم.",
-        "التأكيد مع العميل على العنوان التفصيلي الجديد ورقم الهاتف البديل."
-      ],
-      canned_reply: "تم تحديث وتثبيت عنوان التسليم الجديد مباشرة عبر منصة الشحن اللوجستية لضمان وصول المندوب بدقة."
-    },
-    {
-      code: "SOP-EXC-04",
-      category: "الاستبدال والمقاسات",
-      system: "Exchange Tool & Sheet",
-      title: "4. تحديد حالة 'قيد التنفيذ' (In Progress) في شيت الاستبدال",
-      description: "المعنى الإجرائي لحالة In Progress في طلبات الاستبدال المتعددة والمتابعات المعلقة.",
-      steps: [
-        "حالة 'In Progress' تعني أن طلب الاستبدال الثاني معلق لعدم اكتمال تسليم واستلام الاستبدال الأول أو لوجود مشكلة جاري تسويتها.",
-        "عدم إرسال أو اعتماد الاستبدال الثاني إلا بعد التأكد من اكتمال الإجراء الأول بنجاح.",
-        "تحديث حالة الشيت فور ورود التحديث التأكيدي."
-      ],
-      canned_reply: "طلب الاستبدال قيد المتابعة حالياً لحين اكتمال تأكيد استلام القطعة البديلة الأولى بالمخزن."
+      canned_reply: "Your issue has been resolved. If you need any further assistance, feel free to reach out anytime!"
     },
     {
       code: "SOP-REF-05",
-      category: "العمليات المالية والاسترداد",
-      system: "Hourly Batch Sync Sheet",
-      title: "5. معالجة الاسترداد وبطاقات الهدايا الدورية (+10% بونص رصيد المتجر)",
-      description: "نظام الفحص الدوري كل ساعة لتنفيذ التحويلات وقسائم الشراء، مع تقديم عرض 10% بونص إضافي في حالات تأخر التحويلات البنكية.",
-      steps: [
-        "لا يتم تنفيذ التحويلات فورياً بمجرد الطلب، بل تتم مراجعة الشيتات على مدار كل ساعة وتنفيذ كافة المرتجعات الناجحة المستلمة بالمخزن.",
-        "تقديم خيار رصيد المتجر الفوري (Store Credit) مضافاً إليه 10% زيادة هدية للعميل في حال رغبته في عدم انتظار مهلة التحويل البنكي (٣ أيام عمل)."
+      category_en: "Refunds & Financial Operations",
+      category_ar: "العمليات المالية والاسترداد",
+      system: "Hourly Sync Sheet",
+      title_en: "5. Refunds & Gift Cards – Batch Sync (+10% Store Credit Bonus)",
+      title_ar: "5. معالجة الاسترداد وبطاقات الهدايا الدورية (+10% بونص رصيد المتجر)",
+      description_en: "Offer 10% Store Credit bonus if customer prefers not to wait for bank transfer updates (SLA 3 business days).",
+      description_ar: "تقديم خيار رصيد المتجر الفوري مضافاً إليه 10% زيادة هدية للعميل في حال عدم رغبته في انتظار التحويل البنكي.",
+      steps_en: [
+        "1. Process refunds in hourly batches upon warehouse confirmation.",
+        "2. Offer immediate Store Credit + 10% bonus for faster turnaround.",
+        "3. Otherwise, transfer completes in 3 business days."
       ],
-      canned_reply: "عميل مافين العزيز، يمكنك استلام المبلغ فوراً كرصيد بالمتجر مضافاً إليه ١٠٪ بونص هدية لأوردراتك القادمة، أو الانتظار حتى اكتمال التحويل البنكي خلال ٣ أيام عمل."
-    },
-    {
-      code: "SOP-EXC-06",
-      category: "الاستبدال والمقاسات",
-      system: "Shopify Inventory & Exchange Sheet",
-      title: "6. إلزامية إدخال اسم القطعة وكود الموديل (SKU) بشيت الاستبدال",
-      description: "بروتوكول الدقة المخزنية لمنع إرسال مقاسات أو منتجات خاطئة في طلبات الاستبدال.",
-      steps: [
-        "يجب تسجيل اسم المنتج وكود الـ SKU الدقيق الخاص به في شيت الاستبدال (مثال: SS26-STEE-M-01).",
-        "الـ SKU عنصر أساسي لمعالجة وتجهيز الطلب بالمخزن ومنع حدوث أي خطأ في التحضير."
+      steps_ar: [
+        "1. تنفيذ المرتجعات بالسجلات كل ساعة فور استلام المخزن.",
+        "2. تقديم رصيد فوري بالمتجر + 10% بونص زيادة هدية.",
+        "3. اكتمال التحويل البنكي خلال ٣ أيام عمل في حال الانتظار."
       ],
-      canned_reply: "تم تسجيل تفاصيل الموديل وكود المقاس المطلوب بدقة لضمان التجهيز والشحن الصحيح."
-    },
-    {
-      code: "SOP-OPS-07",
-      category: "إجراءات خدمة العملاء والـ SLAs",
-      system: "Ticket Tracker Portal",
-      title: "7. المتابعة الدورية على الـ Ticket Tracker",
-      description: "الروتين اليومي لفحص التذاكر المفتوحة وتحديث الحالات وفق أحدث المستجدات.",
-      steps: [
-        "فحص شيت تتبع التذاكر بانتظام على مدار ساعات العمل.",
-        "فتح التذاكر المعنية ومتابعتها وفق آخر تحديث وارد.",
-        "اتخاذ الإجراءات التشغيلية اللازمة بناءً على الحالة الأحدث للتذكرة."
-      ],
-      canned_reply: "نحن نتابع تحديثات تذكرتكم بصفة مستمرة لضمان سرعة الإنجاز."
+      canned_reply: "Dear Mavin family member, you can choose immediate Store Credit with +10% bonus or wait up to 3 business days for bank transfer."
     },
     {
       code: "SOP-PROD-09",
-      category: "جودة الإنتاج وعيوب التصنيع",
+      category_en: "Defects & Production Quality",
+      category_ar: "جودة الإنتاج وعيوب التصنيع",
       system: "CS Portal + Shopify + Bosta",
-      title: "8. بروتوكول عيوب جودة الإنتاج والتصنيع (مثل خياطة وأكمام Compression Tee)",
-      description: "توجيه إلزامي للتعامل مع عيوب الإنتاج المؤكدة: إظهار الاستعداد الكامل للمساعدة، وتحمل المسؤولية، وتقديم حل سلس وعادل دون احتكاك مع العميل.",
-      steps: [
-        "<strong>الخيار الأول (رغبة العميل في الاحتفاظ بالمنتج):</strong> تقديم تعويض / استرداد بنسبة 50% من سعر القطعة فوراً.",
-        "<strong>الخيار الثاني (رغبة العميل في الإرجاع):</strong> استرداد كامل لقيمة المنتج بنسبة 100% فور استلام المرتجع.",
-        "<strong>الخيار الثالث (رغبة العميل في الاستبدال):</strong> تنفيذ استبدال مجاني تماماً بدون أي رسوم شحن، مع توضيح ذلك للعميل بشكل صريح."
+      title_en: "8. Production Quality Protocol (Compression Tee Sewing/Sleeve Flaws)",
+      title_ar: "8. بروتوكول عيوب جودة الإنتاج والتصنيع (مثل خياطة وأكمام Compression Tee)",
+      description_en: "Directive on handling confirmed factory defects: Keep = 50% refund, Return = 100% full refund, Exchange = 100% Free exchange with NO shipping fees.",
+      description_ar: "توجيه إلزامي لعيوب الإنتاج المؤكدة: الاحتفاظ = 50% تعويض، الإرجاع = 100% استرداد كامل، الاستبدال = شحن مجاني 100%.",
+      steps_en: [
+        "Option 1 (Keep): Offer 50% refund compensation.",
+        "Option 2 (Return): 100% full refund once return arrives.",
+        "Option 3 (Exchange): 100% Free exchange with zero shipping fees."
       ],
-      canned_reply: "أهلاً بك! نعتذر بشدة عن عيب التصنيع غير المقصود. يسعدنا تقديم الحلول التالية لرضاكم التام: (1) استرداد 50% كتعويض مع الاحتفاظ بالقطعة، (2) استبدال مجاني 100% بدون أي رسوم شحن، أو (3) إرجاع واسترداد كامل للمبلغ."
+      steps_ar: [
+        "الخيار 1 (الاحتفاظ): تقديم 50% تعويض من سعر القطعة.",
+        "الخيار 2 (الإرجاع): استرداد كامل 100% فور الاستلام.",
+        "الخيار 3 (الاستبدال): استبدال مجاني 100% بدون أي رسوم شحن."
+      ],
+      canned_reply: "Hello! We apologize for this production flaw. We are pleased to offer you: (1) 50% refund compensation to keep it, (2) 100% Free exchange with zero shipping fees, or (3) Full refund upon return."
     }
   ];
 
-  // خريطة شجرة القرارات الرسمية المدمجة
+  // Decision Tree Map Dataset
   const EMBEDDED_DT_TREE = [
-    { category_en: "📌 TICKET PROTOCOL & 24H SLA", category_ar: "📌 بروتوكول فتح التذاكر ومهلة الـ 24 ساعة", action_en: "Always open ticket and flag issue before reaching out to customer ➔ Ensure order number is filled", action_ar: "فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل ➔ والتأكد التام من تسجيل رقم الطلب بالشيت", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "Ticket Flagged / Order Logged", resolution_ar: "Ticket Flagged / Order Logged" },
+    { category_en: "📌 TICKET PROTOCOL & 24H SLA", category_ar: "📌 بروتوكول فتح التذاكر ومهلة الـ 24 ساعة", action_en: "Open ticket and flag issue before reaching out to customer ➔ Ensure order number is filled", action_ar: "فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل ➔ والتأكد التام من تسجيل رقم الطلب بالشيت", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "Ticket Flagged / Order Logged", resolution_ar: "Ticket Flagged / Order Logged" },
     { category_en: "🎯 ONE-TOUCH RESOLUTION & TICKET HYGIENE", category_ar: "🎯 حل الـ One-Touch وإغلاق التذاكر", action_en: "Complete investigation across Shopify, Gorgias, Slack ➔ Deliver full resolution & close ticket within 2-3 hours", action_ar: "تحقيق شامل عبر Shopify و Gorgias و Slack ➔ تقديم حل كامل وشامل وإغلاق التذكرة خلال ٢-٣ ساعات من أول رد", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "One Touch Resolution", resolution_ar: "One Touch Resolution" },
     { category_en: "💳 REFUND DELAYS & STORE CREDIT BONUS", category_ar: "💳 تأخير التحويلات وبونص الـ Store Credit", action_en: "Customer inquiring about cash refund delay ➔ Offer 10% Bonus Store Credit OR 3 Business Days Cash SLA", action_ar: "العميل يستفسر عن تأخر تحويل الكاش ➔ عرض رصيد فوري Store Credit مع 10% زيادة هدية أو الانتظار 3 أيام عمل", reason_en: "Refund not received", reason_ar: "Refund not received", resolution_en: "Offer Store Credit (+10% Bonus)", resolution_ar: "Offer Store Credit (+10% Bonus)" },
     { category_en: "📦 PRODUCT QUALITY & PRODUCTION DEFECTS", category_ar: "📦 جودة المنتج وعيوب الإنتاج والتصنيع", action_en: "Production Defect: Customer wants to KEEP the item ➔ Offer 50% Price Compensation", action_ar: "عيب إنتاج (مثل خياطة/أكمام Compression Tee): العميل يريد الاحتفاظ بالمنتج ➔ تعويض 50% من سعر القطعة", reason_en: "Damaged or Defective Item", reason_ar: "Damaged or Defective Item", resolution_en: "Discount (50% Refund)", resolution_ar: "Discount (50% Refund)" },
@@ -814,16 +807,16 @@
     { category_en: "🛡️ POLICIES", category_ar: "🛡️ السياسات والقوانين", action_en: "Customer wants to open package before paying (Policy refusal)", action_ar: "العميل يسأل عن إمكانية فتح الشحنة قبل الدفع (توضيح سياسة الرفض بلباقة)", reason_en: "Policy", reason_ar: "Policy", resolution_en: "Information Given", resolution_ar: "Information Given" }
   ];
 
-  // 63 سيناريو وتوجيه تشغيلي مدمج
+  // 63 Scenarios Dataset
   const EMBEDDED_SCENARIOS = [
-    { source: "بروتوكول فتح التذاكر وإلزامية رقم الطلب", scenario: "\"عندي طلبات جديدة في الشيت ومحتاج أبدأ أكلم العملاء\"", explanation: "التوجيه الإلزامي: فتح التذكرة أولاً وعمل Flag للمشكلة لضمان الـ 24 ساعة، والتأكد التام من كتابة رقم الطلب بالشيت، ثم التواصل مع العميل وتحديث الشيت دورياً.", reason: "Order Status & Tracking", resolution: "Ticket Flagged / Order Logged" },
-    { source: "حل التذاكر وكفاءة One-Touch", scenario: "\"عايز أعرف الأوردر هيوصل إمتى ورقم البوليصة إيه بالظبط؟\"", explanation: "تحقيق One Touch متكامل: فحص Shopify و Bosta وإرسال رابط التتبع والـ SLA في رسالة واحدة متكاملة وإغلاق التذكرة فوراً.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "إغلاق التذاكر المحلولة (SLA)", scenario: "\"الأوردر وصلني والمشكلة اتحلت شكراً ليكم!\"", explanation: "تم حل التذكرة بالكامل؛ يجب إغلاق التذكرة خلال ساعتين إلى ٣ ساعات كحد أقصى لمنع تراكم التذاكر المحلولة.", reason: "Order Status & Tracking", resolution: "Information Given / Ticket Closed" },
-    { source: "التحقيق الذاتي المستقل", scenario: "\"الزميل اللي قبلي قالي في الشات إن الأوردر هيتسلم النهاردة، ومجاش!\"", explanation: "تطبيق قاعدة التحقيق الذاتي: الخطأ وارد ولا يُبنى على رد الزميل السابق. يتم الفحص فوراً عبر Shopify, Gorgias, Slack, Bosta وتقديم الميعاد الدقيق.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "تأخر التحويلات وبونص المتجر", scenario: "\"الفلوس بتاعت المرتجع اتأخرت ولسه موصلتش لحسابي\"", explanation: "نظراً لتحديثات نظام التحويلات، يتم توضيح مهلة الـ ٣ أيام عمل، مع تقديم خيار رصيد المتجر الفوري مضافاً إليه ١٠٪ بونص زيادة هدية.", reason: "Refund not received", resolution: "Offer Store Credit (+10% Bonus)" },
-    { source: "عيوب جودة الإنتاج والتصنيع", scenario: "\"تيشرت الـ Compression Tee الخياطة والأكمام فيها عيب ومش مظبوطة، وعايز احتفظ بيه بس عوضوني\"", explanation: "عيب إنتاج مؤكد: إظهار الاستعداد الكامل للمساعدة، وتحمل المسؤولية، وتقديم تعويض / استرداد 50% من سعر القطعة فوراً.", reason: "Damaged or Defective Item", resolution: "Discount (50% Refund Compensation)" },
-    { source: "عيوب جودة الإنتاج والتصنيع", scenario: "\"الـ Compression Tee فيه عيب خياطة وعايز أرجعه وأخد فلوسي كاملة\"", explanation: "عيب إنتاج مؤكد: عمل استرداد كامل لقيمة المنتج بنسبة 100% بعد استلام المرتجع.", reason: "Damaged or Defective Item", resolution: "Refund (Full Amount)" },
-    { source: "عيوب جودة الإنتاج والتصنيع", scenario: "\"الـ Compression Tee فيه عيب تصنيع وعايز أبدله بقطعة تانية\"", explanation: "عيب إنتاج مؤكد: استبدال مجاني 100% بدون أي رسوم شحن مع توضيح ذلك للعميل بصورة واضحة.", reason: "Damaged / Wrong Item / Wrong Size", resolution: "Exchange Initiated (100% Free Shipping)" }
+    { source: "Ticket Protocol & 24h SLA", scenario: "\"عندي طلبات جديدة في الشيت ومحتاج أبدأ أكلم العملاء\"", explanation: "التوجيه الإلزامي: فتح التذكرة أولاً وعمل Flag للمشكلة لضمان الـ 24 ساعة، والتأكد التام من كتابة رقم الطلب بالشيت، ثم التواصل مع العميل وتحديث الشيت دورياً.", reason: "Order Status & Tracking", resolution: "Ticket Flagged / Order Logged" },
+    { source: "One-Touch Ticket & Efficiency", scenario: "\"عايز أعرف الأوردر هيوصل إمتى ورقم البوليصة إيه بالظبط؟\"", explanation: "تحقيق One Touch متكامل: فحص Shopify و Bosta وإرسال رابط التتبع والـ SLA في رسالة واحدة متكاملة وإغلاق التذكرة فوراً.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
+    { source: "Ticket Hygiene & Closure SLA", scenario: "\"الأوردر وصلني والمشكلة اتحلت شكراً ليكم!\"", explanation: "تم حل التذكرة بالكامل؛ يجب إغلاق التذكرة خلال ساعتين إلى ٣ ساعات كحد أقصى لمنع تراكم التذاكر المحلولة.", reason: "Order Status & Tracking", resolution: "Information Given / Ticket Closed" },
+    { source: "Investigation & Golden Rule", scenario: "\"الزميل اللي قبلي قالي في الشات إن الأوردر هيتسلم النهاردة، ومجاش!\"", explanation: "تطبيق قاعدة التحقيق الذاتي: الخطأ وارد ولا يُبنى على رد الزميل السابق. يتم الفحص فوراً عبر Shopify, Gorgias, Slack, Bosta وتقديم الميعاد الدقيق.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
+    { source: "Refund System Upgrade & Store Credit Bonus", scenario: "\"الفلوس بتاعت المرتجع اتأخرت ولسه موصلتش لحسابي\"", explanation: "نظراً لتحديثات نظام التحويلات، يتم توضيح مهلة الـ ٣ أيام عمل، مع تقديم خيار رصيد المتجر الفوري مضافاً إليه ١٠٪ بونص زيادة هدية.", reason: "Refund not received", resolution: "Offer Store Credit (+10% Bonus)" },
+    { source: "Production Quality Issues (SOP Directive)", scenario: "\"تيشرت الـ Compression Tee الخياطة والأكمام فيها عيب ومش مظبوطة، وعايز احتفظ بيه بس عوضوني\"", explanation: "عيب إنتاج مؤكد: إظهار الاستعداد الكامل للمساعدة، وتحمل المسؤولية، وتقديم تعويض / استرداد 50% من سعر القطعة فوراً.", reason: "Damaged or Defective Item", resolution: "Discount (50% Refund Compensation)" },
+    { source: "Production Quality Issues (SOP Directive)", scenario: "\"الـ Compression Tee فيه عيب خياطة وعايز أرجعه وأخد فلوسي كاملة\"", explanation: "عيب إنتاج مؤكد: عمل استرداد كامل لقيمة المنتج بنسبة 100% بعد استلام المرتجع.", reason: "Damaged or Defective Item", resolution: "Refund (Full Amount)" },
+    { source: "Production Quality Issues (SOP Directive)", scenario: "\"الـ Compression Tee فيه عيب تصنيع وعايز أبدله بقطعة تانية\"", explanation: "عيب إنتاج مؤكد: استبدال مجاني 100% بدون أي رسوم شحن مع توضيح ذلك للعميل بصورة واضحة.", reason: "Damaged / Wrong Item / Wrong Size", resolution: "Exchange Initiated (100% Free Shipping)" }
   ];
 
   const KB_SHEET_ID = "1f03md-Uhc2yrtucfRbhKyIu63HWsxMm312O4FJj80vk";
@@ -831,7 +824,7 @@
   const REFUND_TABS = ["Export2", "Return & Exch", "Export", "SEARCH"];
 
   let masterKnowledgeBase = [...DEFAULT_KNOWLEDGE_BASE];
-  let currentDTLanguage = 'ar';
+  let currentDTLanguage = 'en';
   let selectedDTCategory = '';
   let allTabRecords = {};
   let currentActiveTab = "All Tabs";
@@ -844,13 +837,20 @@
     const indicator = document.getElementById('roleIndicator');
 
     if (ESCALATION_REVIEWERS.includes(currentUser)) {
-      indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534;">✅ مراجع معتمد للحالات (Validation Access)</span>';
+      indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534;">✅ Escalation Reviewer (Validation Access)</span>';
     } else if (QA_SPECIALISTS.includes(currentUser)) {
-      indicator.innerHTML = '<span class="role-tag" style="background:#f3e8ff; color:#6b21a8;">⭐ مسؤول الجودة والتقييم (QA Specialist)</span>';
+      indicator.innerHTML = '<span class="role-tag" style="background:#f3e8ff; color:#6b21a8;">⭐ QA Specialist (Full Audit Access)</span>';
     } else {
-      indicator.innerHTML = '<span class="role-tag">ممثل خدمة عملاء (General CS)</span>';
+      indicator.innerHTML = '<span class="role-tag">General CS Agent</span>';
     }
     loadLogs();
+  }
+
+  function setHomeLanguage(lang) {
+    currentHomeLang = lang;
+    document.getElementById('btnHomeEn').classList.toggle('active', lang === 'en');
+    document.getElementById('btnHomeAr').classList.toggle('active', lang === 'ar');
+    renderHomeCategories(masterKnowledgeBase);
   }
 
   function fetchGoogleSheetJSON(sheetId, callbackName, sheetName = "") {
@@ -898,12 +898,24 @@
         if (values.length === 0) return;
 
         let code = rowObj['Code'] || values[0] || `MV-${String(idx + 1).padStart(3, '0')}`;
-        let title = rowObj['Title'] || rowObj['Document Title'] || values[1] || `دليل عمل ${code}`;
-        let category = rowObj['Category'] || 'إجراءات العمليات المعتمدة';
+        let title = rowObj['Title'] || rowObj['Document Title'] || values[1] || `Directive ${code}`;
+        let category = rowObj['Category'] || 'Operations Directives';
         let system = rowObj['System'] || 'Mavin CS Portal';
-        let description = rowObj['Description'] || values.find(v => v.length > 30) || 'توجيه وإجراء تشغيلي رسمي.';
+        let description = rowObj['Description'] || values.find(v => v.length > 30) || 'Operational guideline.';
 
-        masterKnowledgeBase.push({ code, title, category, system, description });
+        masterKnowledgeBase.push({
+          code: code,
+          category_en: category,
+          category_ar: category,
+          system: system,
+          title_en: title,
+          title_ar: title,
+          description_en: description,
+          description_ar: description,
+          steps_en: [description],
+          steps_ar: [description],
+          canned_reply: "We are processing your request according to Mavin Wear SOPs."
+        });
       });
 
       loading.style.display = 'none';
@@ -918,12 +930,12 @@
 
   function getCategoryIcon(cat) {
     const c = String(cat).toLowerCase();
-    if (c.includes('تذاكر') || c.includes('ticket') || c.includes('بروتوكول')) return '📌';
-    if (c.includes('استرداد') || c.includes('refund') || c.includes('pay') || c.includes('مالي')) return '💳';
-    if (c.includes('تحقيق') || c.includes('ذهبية') || c.includes('one') || c.includes('مبادئ')) return '⭐';
-    if (c.includes('جودة') || c.includes('إنتاج') || c.includes('defect') || c.includes('تصنيع')) return '📦';
-    if (c.includes('استبدال') || c.includes('مقاس') || c.includes('exchange')) return '🔄';
-    if (c.includes('شحن') || c.includes('توصيل') || c.includes('ship') || c.includes('بوسطة')) return '🚚';
+    if (c.includes('ticket') || c.includes('تذاكر') || c.includes('protocol')) return '📌';
+    if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي')) return '💳';
+    if (c.includes('core') || c.includes('one') || c.includes('golden') || c.includes('مبادئ')) return '⭐';
+    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة')) return '📦';
+    if (c.includes('exchange') || c.includes('size') || c.includes('استبدال')) return '🔄';
+    if (c.includes('ship') || c.includes('delivery') || c.includes('شحن')) return '🚚';
     return '📑';
   }
 
@@ -932,7 +944,7 @@
     const categoriesMap = {};
 
     data.forEach(item => {
-      const cat = item.category || 'إجراءات العمليات المعتمدة';
+      const cat = currentHomeLang === 'en' ? (item.category_en || item.category || 'Operations Directives') : (item.category_ar || item.category || 'إجراءات العمليات');
       if (!categoriesMap[cat]) categoriesMap[cat] = { icon: getCategoryIcon(cat), count: 0 };
       categoriesMap[cat].count++;
     });
@@ -945,9 +957,9 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">أدلة العمل والإجراءات التشغيلية المعتمدة والتوجيهات المحدثة.</div>
+            <div class="cat-desc">${currentHomeLang === 'en' ? 'Standard operating workflows & active guidelines.' : 'أدلة العمل والإجراءات التشغيلية المعتمدة والتوجيهات.'}</div>
           </div>
-          <span class="cat-badge">📂 ${info.count} دليل تشغيلي ➔</span>
+          <span class="cat-badge">📂 ${info.count} ${currentHomeLang === 'en' ? 'Directive(s) ➔' : 'دليل تشغيلي ➔'}</span>
         </div>
       `;
     }).join('');
@@ -955,42 +967,51 @@
 
   function openCategory(encodedCatName) {
     const catName = decodeURIComponent(encodedCatName);
-    const items = masterKnowledgeBase.filter(i => (i.category || 'إجراءات العمليات المعتمدة') === catName);
+    const items = masterKnowledgeBase.filter(i => {
+      const c = currentHomeLang === 'en' ? (i.category_en || i.category) : (i.category_ar || i.category);
+      return c === catName;
+    });
     
     document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${items.length} دليل تشغيلي متاح`;
+    document.getElementById('currentCategorySubtitle').innerText = `${items.length} ${currentHomeLang === 'en' ? 'Directive(s) Available' : 'دليل تشغيلي متاح'}`;
 
     const container = document.getElementById('sopsContainer');
-    container.innerHTML = items.map(item => `
-      <div class="sop-card">
-        <div class="sop-header">
-          <div>
-            <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
-            <h3 class="sop-title">${item.title}</h3>
+    container.innerHTML = items.map(item => {
+      const title = currentHomeLang === 'en' ? (item.title_en || item.title) : (item.title_ar || item.title);
+      const desc = currentHomeLang === 'en' ? (item.description_en || item.description) : (item.description_ar || item.description);
+      const steps = currentHomeLang === 'en' ? (item.steps_en || item.steps) : (item.steps_ar || item.steps);
+
+      return `
+        <div class="sop-card">
+          <div class="sop-header">
+            <div>
+              <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
+              <h3 class="sop-title">${title}</h3>
+            </div>
+            <span class="sop-tag">🖥️ ${item.system}</span>
           </div>
-          <span class="sop-tag">🖥️ ${item.system}</span>
+          <div class="sop-desc-box">${desc}</div>
+          ${steps && steps.length > 0 ? `
+            <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 ${currentHomeLang === 'en' ? 'Operational Guidelines & Steps:' : 'الإجراءات وخطوات التنفيذ:'}</div>
+            <div class="steps-timeline">
+              ${steps.map((step, idx) => `
+                <div class="step-box">
+                  <div class="step-number">${idx + 1}</div>
+                  <div class="step-content">${step}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+          ${item.canned_reply ? `
+            <div class="canned-box">
+              <button class="copy-btn" onclick="copyReplyTextDirect('${item.canned_reply.replace(/'/g, "\\'")}')">📋 ${currentHomeLang === 'en' ? 'Copy Reply' : 'نسخ الرد'}</button>
+              <strong style="color:#166534;">💬 ${currentHomeLang === 'en' ? 'Approved Response:' : 'نص الرد المعتمد:'}</strong><br>
+              <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
+            </div>
+          ` : ''}
         </div>
-        <div class="sop-desc-box">${item.description}</div>
-        ${item.steps ? `
-          <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 الإجراءات وخطوات التنفيذ:</div>
-          <div class="steps-timeline">
-            ${item.steps.map((step, idx) => `
-              <div class="step-box">
-                <div class="step-number">${idx + 1}</div>
-                <div class="step-content">${step}</div>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-        ${item.canned_reply ? `
-          <div class="canned-box">
-            <button class="copy-btn" onclick="copyReplyTextDirect('${item.canned_reply.replace(/'/g, "\\'")}')">📋 نسخ الرد المعتمد</button>
-            <strong style="color:#166534;">💬 نص الرد المعتمد:</strong><br>
-            <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
-          </div>
-        ` : ''}
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     hideAllSections();
     document.getElementById('detailSection').style.display = 'block';
@@ -998,10 +1019,10 @@
 
   function copyReplyTextDirect(txt) {
     navigator.clipboard.writeText(txt);
-    alert('✅ تم نسخ الرد المعتمد بنجاح إلى الحافظة!');
+    alert('✅ Approved canned response copied to clipboard!');
   }
 
-  // محرك شجرة القرارات
+  // Decision Tree Engine
   function setDTLanguage(lang) {
     currentDTLanguage = lang;
     document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
@@ -1016,8 +1037,8 @@
     const catKey = currentDTLanguage === 'en' ? 'category_en' : 'category_ar';
     const categories = [...new Set(EMBEDDED_DT_TREE.map(c => c[catKey]).filter(Boolean))];
 
-    document.getElementById('dtBreadcrumbs').innerHTML = `<span>الخطوة 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي للمشكلة'}`;
-    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the main type of issue?' : 'ما هو نوع المشكلة أو الإجراء المطلوب؟';
+    document.getElementById('dtBreadcrumbs').innerHTML = `<span>Step 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي للمشكلة'}`;
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the main type of issue?' : 'ما هو نوع المشكلة الأساسي؟';
 
     const grid = document.getElementById('dtOptionsGrid');
     grid.innerHTML = categories.map(cat => `
@@ -1038,7 +1059,7 @@
     const scenarios = EMBEDDED_DT_TREE.filter(c => c[catKey] === selectedDTCategory);
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>الخطوة 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الحالة المحددة'}
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الطلب المحدد'}
     `;
     document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What specific action / scenario does the customer have?' : 'ما هي حالة أو طلب العميل بالتحديد؟';
 
@@ -1049,7 +1070,7 @@
           <div class="dt-card-title">📌 ${sc[actionKey]}</div>
           <div class="dt-card-hint">Reason: ${sc.reason_en} ➔ ${sc.resolution_en}</div>
         </div>
-        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Resolution ➔' : 'عرض الحل والإجراء ➔'}</span>
+        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Resolution ➔' : 'عرض الحل المعتمد ➔'}</span>
       </div>
     `).join('');
   }
@@ -1067,7 +1088,7 @@
     document.getElementById('dtBreadcrumbs').innerHTML = `
       <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ 
       <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--accent); text-decoration:none;">${item[actionKey]}</a> ➔ 
-      <span>الخطوة 3 (الإجراء والحل)</span>
+      <span>Step 3 (Resolution)</span>
     `;
 
     document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Standard Operating Resolution & System Tags:' : 'إجراء المعالجة والنتيجة المعتمدة:';
@@ -1080,11 +1101,11 @@
     if (item.reason_en === "Refund not received" || item.resolution_en.includes("10% Bonus")) {
       reply = currentDTLanguage === 'en'
         ? `Dear Mavin family member,\nWe are currently updating our refund transfer system to improve our payment processes. As a result, pending cash transfers are taking slightly longer than usual and will be completed within three business days.\nIf you would prefer not to wait for the bank transfer, we are happy to process your refund immediately as store credit, along with an additional 10% bonus added to your total refund amount for future orders.\nIf you would like to switch to store credit with the extra 10% bonus, please reply to this message and our team will issue it to your account right away. Otherwise, no action is needed, and your original transfer will proceed as scheduled.\nWe sincerely apologize for the delay and appreciate your patience as we make these system improvements.\nMavin team`
-        : `عميل مافين العزيز،\nنود إفادتكم بأننا نجري حالياً تحديثات شاملة على نظام التحويلات المالية بهدف تحسين الخدمة. ونتيجة لذلك، قد تستغرق التحويلات النقدية وقتاً أطول من المعتاد وستكتمل خلال ٣ أيام عمل كحد أقصى.\nوفي حال رغبتكم في تجنب الانتظار، يسعدنا تحويل المبلغ فوراً إلى رصيد بمتجرنا (Store Credit) مع إضافة ١٠٪ بونص هدية فوق قيمة المبلغ لاستخدامها في مشترياتكم القادمة.\nإذا كنتم ترغبون في تفعيل رصيد المتجر مع الـ ١٠٪ الإضافية، يرجى الرد على هذه الرسالة لإصداره لحسابكم فوراً، أو الانتظار وسيكتمل التحويل البنكي في موعده الموضح.\nنعتذر عن أي تأخير ونشكر حسن تفهمكم وتعاونكم الدائم معنا.`;
+        : `عميل مافين العزيز،\nبنحب نبلغك إننا بنعمل حالياً تحديثات على نظام تحويل المبالغ المستردة عشان نطور خدمة الدفع ونخليها أفضل. ونتيجة لده، تحويلات الكاش المعلقة بتاخد وقت أطول شوية من المعتاد، وهتكتمل خلال ٣ أيام عمل بالكتير.\nولو مش حابب تستنى تحويل البنك، بنقدملك خيار تاني أسرع: تقدر تاخد المبلغ كـ Store Credit (رصيد للمتجر) مع ١٠٪ زيادة هدية فوق قيمة المبلغ المسترد تستخدمهم في أوردراتك اللي جاية.\nلو حابب تحول المبلغ لـ Store Credit مع الـ ١٠٪ البونص، كل اللي عليك إنك ترد على الرسالة دي وفريقنا هيضيف الرصيد لحسابك فوراً. لو حابب تستمر في تحويل البنك الأصلي، مش محتاج تعمل أي حاجة والتحويل هيتم في ميعاده.\nبنتأسف جداً على التأخير البسيط ده، وبنشكر تفهمك وصبرك معانا عقبال ما نخلص التحديثات دي.`;
     } else {
       reply = currentDTLanguage === 'en' 
         ? `Hello! Regarding your inquiry on (${item.reason_en}), we have processed: ${item.action_en}. Result: ${item.resolution_en}.`
-        : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item[actionKey]})، تم اتخاذ الإجراء اللازم: ${item[actionKey]}. النتيجة: ${item.resolution_ar}.`;
+        : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item[actionKey]})، تم اتخاذ الإجراء التالي: ${item[actionKey]}. النتيجة: ${item.resolution_ar}.`;
     }
 
     document.getElementById('resReplyText').innerText = reply;
@@ -1095,17 +1116,17 @@
   function copyReplyText() {
     const txt = document.getElementById('resReplyText').innerText;
     navigator.clipboard.writeText(txt);
-    alert('✅ تم نسخ الرد بنجاح!');
+    alert('✅ Canned response copied to clipboard!');
   }
 
-  // السيناريوهات الواقعية
+  // Scenarios
   function initScenariosSection() {
     const categories = ["All", ...new Set(EMBEDDED_SCENARIOS.map(s => s.source))];
     const pillContainer = document.getElementById('scenarioCategoryPills');
 
     pillContainer.innerHTML = categories.map(cat => `
       <button class="tab-pill-btn ${cat === currentScenarioCategory ? 'active' : ''}" onclick="switchScenarioCategory('${cat}')">
-        📂 ${cat === 'All' ? 'كافة السيناريوهات' : cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
+        📂 ${cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
       </button>
     `).join('');
 
@@ -1136,28 +1157,28 @@
 
     const container = document.getElementById('scenariosContainer');
     if (data.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">لم يتم العثور على سيناريوهات مطابقة للبحث.</div>';
+      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">No matching customer scenarios found.</div>';
       return;
     }
 
     container.innerHTML = data.map((item, idx) => `
       <div class="scenario-item">
-        <div style="font-size:11.5px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.source} • سيناريو رقم #${idx+1}</div>
+        <div style="font-size:11.5px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.source} • Case #${idx+1}</div>
         <div class="sc-quote">${item.scenario}</div>
-        <div class="sc-explain"><strong>التحليل والإجراء المعتمد:</strong> ${item.explanation}</div>
+        <div class="sc-explain"><strong>Analysis & Action:</strong> ${item.explanation}</div>
         <div class="sc-tags">
-          <span class="sc-tag-reason">📌 سبب الاتصال: ${item.reason}</span>
-          <span class="sc-tag-res">✅ الحل المعتمد: ${item.resolution}</span>
+          <span class="sc-tag-reason">📌 Reason: ${item.reason}</span>
+          <span class="sc-tag-res">✅ Resolution: ${item.resolution}</span>
         </div>
       </div>
     `).join('');
   }
 
-  // محرك بورتال الاسترداد والاستبدال
+  // Multi-Tab Refund Portal Engine (Clean Headers & Colored Status Badges)
   async function fetchLiveRefundPortal() {
     const statusText = document.getElementById('sheetRecordStatus');
     const counter = document.getElementById('recordCounter');
-    statusText.innerText = '⏳ جارٍ قراءة التابات (Export2, Return & Exch, Export)...';
+    statusText.innerText = '⏳ Fetching active tabs (Export2, Return & Exch, Export)...';
 
     allTabRecords = {};
     let totalLoaded = 0;
@@ -1174,10 +1195,25 @@
             }
           }
 
-          const headers = rows[headerIdx].map((h, i) => String(h || `عمود ${i+1}`).trim());
+          // Filter out blank header columns
+          const rawHeaders = rows[headerIdx];
+          const validColIndices = [];
+          const headers = [];
+
+          rawHeaders.forEach((h, colIdx) => {
+            const trimmed = String(h || '').trim();
+            if (trimmed && !trimmed.toLowerCase().startsWith('column') && !trimmed.toLowerCase().startsWith('unnamed')) {
+              validColIndices.push(colIdx);
+              headers.push(trimmed);
+            }
+          });
+
           const records = rows.slice(headerIdx + 1).map(r => {
             const obj = { _sourceTab: tabName };
-            headers.forEach((h, i) => { obj[h] = r[i] !== undefined ? String(r[i]).trim() : ''; });
+            headers.forEach((h, i) => {
+              const origCol = validColIndices[i];
+              obj[h] = r[origCol] !== undefined ? String(r[origCol]).trim() : '';
+            });
             return obj;
           }).filter(obj => Object.values(obj).filter(v => v !== tabName).some(v => v.length > 0));
 
@@ -1190,8 +1226,8 @@
     }
 
     renderTabPills();
-    statusText.innerText = `✅ تم المزامنة بنجاح — ${totalLoaded} سجل عبر كافة التابات.`;
-    counter.innerText = `${totalLoaded} إجمالي السجلات`;
+    statusText.innerText = `✅ Live Sync Active — ${totalLoaded} records loaded.`;
+    counter.innerText = `${totalLoaded} total records`;
     filterPortalRecords();
   }
 
@@ -1201,7 +1237,7 @@
 
     container.innerHTML = tabs.map(tab => `
       <button class="tab-pill-btn ${tab === currentActiveTab ? 'active' : ''}" onclick="switchActiveTab('${tab}')">
-        📁 ${tab === 'All Tabs' ? 'كافة التابات' : tab} ${allTabRecords[tab] ? `(${allTabRecords[tab].records.length})` : ''}
+        📁 ${tab} ${allTabRecords[tab] ? `(${allTabRecords[tab].records.length})` : ''}
       </button>
     `).join('');
   }
@@ -1237,17 +1273,38 @@
     renderPortalTable(headers, displayRecords);
   }
 
+  // Format Dynamic Status Badges
+  function formatStatusCell(value) {
+    if (!value) return '';
+    const v = String(value).toLowerCase();
+
+    if (v.includes('success') || v.includes('issued') || v.includes('completed') || v.includes('approved') || v.includes('delivered') || v.includes('ناجح') || v.includes('تم')) {
+      return `<span class="status-pill status-success">🟢 ${value}</span>`;
+    }
+    if (v.includes('pending') || v.includes('in progress') || v.includes('heading') || v.includes('قيد') || v.includes('انتظار')) {
+      return `<span class="status-pill status-warning">🟡 ${value}</span>`;
+    }
+    if (v.includes('cancel') || v.includes('reject') || v.includes('fail') || v.includes('ملغي') || v.includes('مرفوض')) {
+      return `<span class="status-pill status-danger">🔴 ${value}</span>`;
+    }
+    if (v.includes('refund') || v.includes('exchange') || v.includes('shipped') || v.includes('استبدال') || v.includes('استرجاع')) {
+      return `<span class="status-pill status-info">🔵 ${value}</span>`;
+    }
+    return `<span>${value}</span>`;
+  }
+
   function renderPortalTable(headers, data) {
     const thead = document.getElementById('refundsTableHead');
     const tbody = document.getElementById('refundsTableBody');
 
     if (!data || data.length === 0) {
       thead.innerHTML = '';
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:35px; color:var(--muted); font-size:15px;">لا توجد سجلات مطابقة في الجداول.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:35px; color:var(--muted); font-size:15px;">No matching records found in selected tab.</td></tr>';
       return;
     }
 
-    const validHeaders = headers.filter(h => h && h !== 'Column');
+    // Clean out any blank or unnamed headers
+    const validHeaders = headers.filter(h => h && !h.toLowerCase().startsWith('column') && !h.toLowerCase().startsWith('unnamed'));
 
     thead.innerHTML = `<tr>${validHeaders.map(h => `<th>${h}</th>`).join('')}</tr>`;
     tbody.innerHTML = data.slice(0, 150).map(row => `
@@ -1255,13 +1312,19 @@
         ${validHeaders.map(h => {
           if (h === 'Source Tab') return `<td><span style="background:#eff6ff; color:#1d4ed8; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11px;">${row._sourceTab}</span></td>`;
           const cellVal = row[h] !== undefined ? row[h] : '';
+          
+          // Check if column is a status/action/result column
+          const isStatusCol = h.toLowerCase().includes('status') || h.toLowerCase().includes('state') || h.toLowerCase().includes('حالة') || h.toLowerCase().includes('action') || h.toLowerCase().includes('نتيجة');
+          if (isStatusCol) {
+            return `<td>${formatStatusCell(cellVal)}</td>`;
+          }
           return `<td>${cellVal}</td>`;
         }).join('')}
       </tr>
     `).join('');
   }
 
-  // مراجعة الحالات
+  // Case Reviews
   function openReviewModal(index) {
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
     const r = records[index];
@@ -1269,9 +1332,9 @@
 
     activeReviewIndex = index;
     document.getElementById('modalCaseDetails').innerHTML = `
-      <strong>رقم الطلب:</strong> ${r.order_number} | <strong>رقم التذكرة:</strong> ${r.ticket_number}<br>
-      <strong>اسم العميل:</strong> ${r.customer_name} | <strong>السبب:</strong> ${r.contact_reason}<br>
-      <strong>ملخص الإجراء:</strong> ${r.case_summary}
+      <strong>Order #:</strong> ${r.order_number} | <strong>Ticket #:</strong> ${r.ticket_number}<br>
+      <strong>Customer:</strong> ${r.customer_name} | <strong>Reason:</strong> ${r.contact_reason}<br>
+      <strong>Agent Summary:</strong> ${r.case_summary}
     `;
 
     document.getElementById('modal_review_status').value = r.review_status || 'Approved';
@@ -1297,28 +1360,27 @@
     localStorage.setItem('mavin_escalations', JSON.stringify(records));
     closeReviewModal();
     loadLogs();
-    alert('✅ تم حفظ قرار المراجعة بنجاح!');
+    alert('✅ Case review decision successfully saved!');
   }
 
-  // محرك احتساب درجات الجودة
+  // Dynamic QA Score Engine
   function calculateQAScore() {
     const isEndUserFatal = document.getElementById('qa_end_user_critical').value === 'yes';
     const bizCritScore = parseInt(document.getElementById('qa_business_critical').value) || 0;
 
     if (isEndUserFatal || bizCritScore === 0) {
       document.getElementById('qaLivePercentage').innerText = '0%';
-      document.getElementById('qaGradeText').innerText = 'التقدير: إخفاق حرج (0%) ❌ خطأ فادح في السياسة أو تضليل العميل';
-      document.getElementById('qaFatalText').innerText = '⚠️ تم تفعيل الإخفاق الحرج: تصفير النتيجة';
-      return { score: 0, grade: 'إخفاق حرج (0%)' };
+      document.getElementById('qaGradeText').innerText = 'Grade: Fatal Fail (0%) ❌ Critical Policy / User Misguidance';
+      document.getElementById('qaFatalText').innerText = '⚠️ Fatal Failure Triggered: Auto-zeroed';
+      return { score: 0, grade: 'Fatal Fail (0%)' };
     }
 
     document.getElementById('qaFatalText').innerText = '';
 
-    const ticketFirst = parseInt(document.getElementById('qa_ticket_first').value) || 0; // max 10
-    const understand = parseInt(document.getElementById('qa_understand').value) || 0; // max 10
-    const repetitiveVal = document.getElementById('qa_repetitive').value; // max 10
+    const ticketFirst = parseInt(document.getElementById('qa_ticket_first').value) || 0;
+    const understand = parseInt(document.getElementById('qa_understand').value) || 0;
+    const repetitiveVal = document.getElementById('qa_repetitive').value;
 
-    // أنظمة الفحص الخمسة (Shopify, Gorgias, Slack, Bosta, Estbdal) - 4 درجات لكل نظام = 20 درجة
     let systemScore = 0;
     if (document.getElementById('chk_shopify').checked) systemScore += 4;
     if (document.getElementById('chk_gorgias').checked) systemScore += 4;
@@ -1326,11 +1388,11 @@
     if (document.getElementById('chk_bosta').checked) systemScore += 4;
     if (document.getElementById('chk_estbdal').checked) systemScore += 4;
 
-    const correctRes = parseInt(document.getElementById('qa_correct_res').value) || 0; // max 15
-    const oneTouch = parseInt(document.getElementById('qa_one_touch').value) || 0; // max 10
-    const escProcess = parseInt(document.getElementById('qa_esc_process').value) || 0; // max 4
-    const slaStated = parseInt(document.getElementById('qa_sla_stated').value) || 0; // max 4
-    const closureSla = parseInt(document.getElementById('qa_closure_sla').value) || 0; // max 4
+    const correctRes = parseInt(document.getElementById('qa_correct_res').value) || 0;
+    const oneTouch = parseInt(document.getElementById('qa_one_touch').value) || 0;
+    const escProcess = parseInt(document.getElementById('qa_esc_process').value) || 0;
+    const slaStated = parseInt(document.getElementById('qa_sla_stated').value) || 0;
+    const closureSla = parseInt(document.getElementById('qa_closure_sla').value) || 0;
 
     let earnedPoints = ticketFirst + understand + systemScore + correctRes + oneTouch + escProcess + slaStated + closureSla + bizCritScore;
     let totalPossible = 90;
@@ -1343,11 +1405,11 @@
     const finalPercentage = Math.round((earnedPoints / totalPossible) * 100);
     document.getElementById('qaLivePercentage').innerText = finalPercentage + '%';
 
-    let grade = 'ممتاز (⭐⭐⭐)';
-    if (finalPercentage < 70) grade = 'يحتاج خطة توجيه وتحسين (ضعيف ⚠️)';
-    else if (finalPercentage < 85) grade = 'أداء جيد (👍)';
+    let grade = 'Excellent (⭐⭐⭐)';
+    if (finalPercentage < 70) grade = 'Needs Coaching / Action Plan (⚠️)';
+    else if (finalPercentage < 85) grade = 'Good (👍)';
 
-    document.getElementById('qaGradeText').innerText = `التقدير: ${grade} (${finalPercentage}%)`;
+    document.getElementById('qaGradeText').innerText = `Grade: ${grade} (${finalPercentage}%)`;
     return { score: finalPercentage, grade: grade };
   }
 
@@ -1387,32 +1449,32 @@
     qaRecords.unshift(auditRecord);
     localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
 
-    const subject = encodeURIComponent(`[Mavin QA] تقرير تقييم جودة المحادثة: تذكرة ${auditRecord.ticket_ref} - الدرجة: ${auditRecord.score}`);
+    const subject = encodeURIComponent(`[Mavin QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
     const body = encodeURIComponent(
-      `مرحباً،\n\nنرفق لك تقرير تقييم الجودة (QA Evaluation) الخاص بالتذكرة/المحادثة رقم: ${auditRecord.ticket_ref}\n\n` +
+      `Hello,\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
       `--------------------------------------------------\n` +
-      `⭐ النتيجة الإجمالية: ${auditRecord.score} (${auditRecord.grade})\n` +
-      `👤 مسؤول التقييم: ${auditRecord.auditor_email}\n` +
-      `📅 التاريخ: ${auditRecord.date}\n` +
-      `🏷️ تحديد المسؤولية: ${auditRecord.attribution}\n` +
+      `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
+      `👤 Auditor: ${auditRecord.auditor_email}\n` +
+      `📅 Date: ${auditRecord.date}\n` +
+      `🏷️ Attribution: ${auditRecord.attribution}\n` +
       `--------------------------------------------------\n\n` +
-      `تفاصيل المحاور التقييمية:\n` +
-      `• معيار العميل الحرج: ${auditRecord.endUserCritical}\n` +
-      `• معيار العمل الحرج: ${auditRecord.bizCritical}\n` +
-      `• فتح التذكرة أولاً والـ 24 ساعة: ${auditRecord.ticketFirst}\n` +
-      `• فهم المشكلة بدقة: ${auditRecord.understanding}\n` +
-      `• التحقيق عبر الأنظمة الخمسة: ${auditRecord.systemsChecked}\n` +
-      `• تقديم الحل الصحيح: ${auditRecord.correctResolution}\n` +
-      `• كفاءة الـ One-Touch: ${auditRecord.oneTouch}\n` +
-      `• وضوح الـ SLA: ${auditRecord.slaStated}\n` +
-      `• إغلاق التذكرة المحلولة (خلال ٢-٣ ساعات): ${auditRecord.closureSla}\n\n` +
-      `ملاحظات وخطة التوجيه:\n${auditRecord.feedback}\n\n` +
-      `مع تمنياتنا بالتوفيق المستمر،\nفريق إدارة الجودة | Mavin Wear`
+      `Detailed Scoring Breakdown:\n` +
+      `• End-User Critical: ${auditRecord.endUserCritical}\n` +
+      `• Business Critical: ${auditRecord.bizCritical}\n` +
+      `• Open Ticket & Flag First: ${auditRecord.ticketFirst}\n` +
+      `• Diagnostic Understanding: ${auditRecord.understanding}\n` +
+      `• 5-Platform Investigation: ${auditRecord.systemsChecked}\n` +
+      `• Correct Resolution Delivered: ${auditRecord.correctResolution}\n` +
+      `• One-Touch Resolution: ${auditRecord.oneTouch}\n` +
+      `• Clear SLA Stated: ${auditRecord.slaStated}\n` +
+      `• Resolved Ticket Closure SLA (2-3h): ${auditRecord.closureSla}\n\n` +
+      `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
+      `Best regards,\nMavin Wear Quality Assurance Team`
     );
 
     window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
 
-    alert(`🎉 تم اعتماد تقرير الجودة بنجاح! الدرجة: ${auditRecord.score}.\nتم فتح البريد الإلكتروني لإرسال التقرير للأيجنت (${auditRecord.agent_email})!`);
+    alert(`🎉 Quality Evaluation Logged! Score: ${auditRecord.score}.\nEmail dispatch client opened for ${auditRecord.agent_email}!`);
     document.getElementById('qaForm').reset();
     calculateQAScore();
     showSection('qualityLogs');
@@ -1423,7 +1485,7 @@
     const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
 
     if (records.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">لا توجد تقارير جودة مسجلة حتى الآن.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations logged yet.</td></tr>';
       return;
     }
 
@@ -1443,10 +1505,10 @@
 
   function exportQAToExcel() {
     const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-    if (records.length === 0) { alert('لا توجد تقارير لتصديرها.'); return; }
+    if (records.length === 0) { alert('No QA records to export.'); return; }
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "تقييمات_الجودة");
+    XLSX.utils.book_append_sheet(wb, ws, "QA_Evaluations");
     XLSX.writeFile(wb, "Mavin_Wear_QA_Evaluations.xlsx");
   }
 
@@ -1454,29 +1516,32 @@
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) { renderHomeCategories(masterKnowledgeBase); return; }
     const filtered = masterKnowledgeBase.filter(i => 
-      (i.category && i.category.toLowerCase().includes(q)) ||
-      (i.title && i.title.toLowerCase().includes(q)) ||
+      (i.category_en && i.category_en.toLowerCase().includes(q)) ||
+      (i.category_ar && i.category_ar.toLowerCase().includes(q)) ||
+      (i.title_en && i.title_en.toLowerCase().includes(q)) ||
+      (i.title_ar && i.title_ar.toLowerCase().includes(q)) ||
       (i.code && i.code.toLowerCase().includes(q)) ||
-      (i.description && i.description.toLowerCase().includes(q))
+      (i.description_en && i.description_en.toLowerCase().includes(q)) ||
+      (i.description_ar && i.description_ar.toLowerCase().includes(q))
     );
     
-    document.getElementById('currentCategoryTitle').innerText = `نتائج البحث (${filtered.length})`;
-    document.getElementById('currentCategorySubtitle').innerText = `مطابقة لـ: "${q}"`;
+    document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
+    document.getElementById('currentCategorySubtitle').innerText = `Matching: "${q}"`;
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">لم يتم العثور على إجراءات مطابقة للبحث.</p>';
+      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No documents found matching your search.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
         <div class="sop-card">
           <div class="sop-header">
             <div>
               <span class="sop-code-badge">${item.code}</span>
-              <h3 class="sop-title">${item.title}</h3>
+              <h3 class="sop-title">${currentHomeLang === 'en' ? item.title_en : item.title_ar}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
           </div>
-          <div class="sop-desc-box">${item.description}</div>
+          <div class="sop-desc-box">${currentHomeLang === 'en' ? item.description_en : item.description_ar}</div>
         </div>
       `).join('');
     }
@@ -1553,7 +1618,7 @@
     records.unshift(data);
     localStorage.setItem('mavin_escalations', JSON.stringify(records));
 
-    alert('✅ تم تسجيل التصعيد بنجاح!');
+    alert('✅ Escalation successfully submitted and recorded!');
     document.getElementById('escForm').reset();
     showSection('logs');
   });
@@ -1563,7 +1628,7 @@
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
 
     if (records.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">لا توجد سجلات تصعيد حالياً.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No escalation records logged yet.</td></tr>';
       return;
     }
 
@@ -1586,9 +1651,9 @@
           <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
           <td>
             ${isReviewer ? `
-              <button class="nav-btn primary" style="padding:4px 8px; font-size:12px;" onclick="openReviewModal(${idx})">✏️ مراجعة / اعتماد</button>
+              <button class="nav-btn primary" style="padding:4px 8px; font-size:12px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
             ` : `
-              <span style="font-size:11.5px; color:var(--muted);">عرض فقط</span>
+              <span style="font-size:11.5px; color:var(--muted);">View Only</span>
             `}
           </td>
         </tr>
@@ -1598,14 +1663,14 @@
 
   function exportToExcel() {
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    if (records.length === 0) { alert('لا توجد سجلات لتصديرها.'); return; }
+    if (records.length === 0) { alert('⚠️ No records to export.'); return; }
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "سجلات_التصعيد");
+    XLSX.utils.book_append_sheet(wb, ws, "Escalations");
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // بدء التشغيل
+  // Startup Initializers
   goToHome();
   changeUserSession();
   fetchAllLiveSheets();
