@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Operations & Live Knowledge Hub</title>
+  <title>Mavin Wear | CS Operations & Decision Engine</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -47,36 +47,33 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Clean SOP Card */
-    .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-    .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
-    .sop-code-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
-    .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    
-    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
-    
-    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); margin: 15px 0; font-size: 13px; }
-    .meta-item strong { color: var(--primary); }
+    /* Decision Wizard Layout */
+    .dt-wrapper { background: white; border-radius: 14px; border: 1px solid var(--border); padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .dt-top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+    .dt-breadcrumb { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+    .dt-breadcrumb span { color: var(--accent); }
+    .lang-toggle { display: flex; background: #f1f5f9; border-radius: 8px; padding: 3px; }
+    .lang-btn { border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
+    .lang-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-    .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
-    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
-    .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
-    .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
+    .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+    .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
     
-    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
-    .copy-btn { background: var(--success); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
+    .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+    .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
+    .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+    .dt-card-hint { font-size: 13px; color: var(--muted); line-height: 1.4; }
+    .dt-card-action { font-size: 12px; font-weight: bold; color: var(--accent); align-self: flex-end; }
+
+    .dt-resolution-card { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; padding: 24px; margin-top: 15px; }
+    .res-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .res-block { background: white; border: 1px solid var(--border); border-left: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
+    .res-block strong { color: var(--primary); font-size: 14px; }
+    .res-block div { margin-top: 6px; font-size: 15px; color: #334155; line-height: 1.5; }
+
+    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
+    .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
-
-    /* Interactive Decision Tree */
-    .dt-container { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 25px; margin-bottom: 20px; }
-    .dt-step-badge { background: #f1f5f9; color: var(--primary); padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block; margin-bottom: 12px; }
-    .dt-question { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
-    .dt-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .dt-opt-btn { padding: 16px; background: #f8fafc; border: 2px solid var(--border); border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; text-align: center; color: var(--text); transition: 0.2s; }
-    .dt-opt-btn:hover { border-color: var(--accent); background: #eff6ff; color: var(--accent); transform: translateY(-2px); }
-    .dt-result-box { background: #f0fdf4; border: 2px solid #86efac; border-radius: 10px; padding: 22px; margin-top: 20px; display: none; }
 
     /* Refund Portal Banner & Table */
     .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
@@ -99,7 +96,7 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Live Google Sheets Sync — Decision Tree, SOPs & Refund Portal</div>
+    <div class="brand-sub">Live Google Sheets Sync — Decision Engine & Refund Portal</div>
   </div>
 
   <div class="top-actions">
@@ -117,7 +114,7 @@
 
   <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, cheat sheet, defect policy, or keyword..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, cheat sheet, or policy..." onkeyup="handleGlobalSearch()">
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
       ⏳ Connecting and loading procedures from Google Sheets...
@@ -126,36 +123,60 @@
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
   </div>
 
-  <!-- 2. INTERACTIVE DECISION TREE VIEW -->
+  <!-- 2. INTERACTIVE DECISION TREE WIZARD -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
         <h2 style="margin:0; color:var(--primary);">🌳 Interactive Decision Tree Flow</h2>
-        <span id="dtSheetStatus" style="font-size:13px; color:var(--muted);">Loading branches...</span>
+        <span id="dtSheetStatus" style="font-size:13px; color:var(--muted);">Parsing official branches...</span>
       </div>
       <div style="display:flex; gap:8px;">
+        <button class="nav-btn" onclick="resetDecisionTree()">🔄 Restart Scenario</button>
         <a href="https://docs.google.com/spreadsheets/d/1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 Open Decision Tree Sheet ↗
+          📊 Master Sheet ↗
         </a>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
 
-    <div class="dt-container">
-      <div id="dtStepBadge" class="dt-step-badge">Scenario Step 1</div>
-      <div id="dtQuestion" class="dt-question">What is the customer's main inquiry or issue?</div>
-      
-      <div id="dtOptionsContainer" class="dt-options"></div>
-
-      <div id="dtResultBox" class="dt-result-box">
-        <h3 id="dtResultTitle" style="margin-top:0; color:#166534; font-size:18px;">✅ Resolution Procedure</h3>
-        <div id="dtResultText" style="font-size:14.5px; line-height:1.6; color:#14532d; margin-bottom:15px;"></div>
-        <div id="dtResultReply" class="canned-box" style="display:none;">
-          <button class="copy-btn" onclick="copyResultReply()">📋 Copy Reply</button>
-          <strong style="color:#166534;">💬 Canned Message:</strong>
-          <div id="dtReplyText" style="margin-top:5px; font-size:13.5px; color:#14532d;"></div>
+    <div class="dt-wrapper">
+      <div class="dt-top-controls">
+        <div class="dt-breadcrumb" id="dtBreadcrumbs">
+          <span>Step 1</span> ➔ Select Main Category
         </div>
-        <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:15px;">🔄 Start New Case</button>
+        <div class="lang-toggle">
+          <button id="btnLangEn" class="lang-btn active" onclick="setDTLanguage('en')">English</button>
+          <button id="btnLangAr" class="lang-btn" onclick="setDTLanguage('ar')">العربية</button>
+        </div>
+      </div>
+
+      <div class="dt-prompt" id="dtPromptTitle">Select Customer Inquiry Category:</div>
+
+      <div class="dt-grid" id="dtOptionsGrid"></div>
+
+      <div id="dtFinalView" style="display:none;">
+        <div class="dt-resolution-card">
+          <span class="res-badge">✅ Recommended Official Resolution</span>
+          <h3 id="resTitle" style="margin:0 0 10px 0; font-size:19px; color:var(--primary);"></h3>
+
+          <div class="res-block">
+            <strong>📋 Action to Take:</strong>
+            <div id="resActionText"></div>
+          </div>
+
+          <div class="res-block" style="border-left-color:#8b5cf6;">
+            <strong>🎯 Result / Status Expected:</strong>
+            <div id="resExpectedText"></div>
+          </div>
+
+          <div class="canned-box" id="resReplyBox">
+            <button class="copy-btn" onclick="copyReplyText()">📋 Copy Canned Reply</button>
+            <strong style="color:#166534;">💬 Approved Response:</strong>
+            <div id="resReplyText" style="margin-top:6px; color:#14532d; font-size:14px; line-height:1.5;"></div>
+          </div>
+
+          <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:20px;">🔄 Start Another Case</button>
+        </div>
       </div>
     </div>
   </div>
@@ -198,7 +219,7 @@
     </div>
   </div>
 
-  <!-- 4. STEP-BY-STEP DETAIL VIEW -->
+  <!-- 4. DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
       <div>
@@ -207,7 +228,6 @@
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-
     <div id="sopsContainer"></div>
   </div>
 
@@ -282,13 +302,13 @@
 </div>
 
 <script>
-  // Google Sheets IDs
   const DECISION_TREE_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
   const KB_SHEET_ID = "1f03md-Uhc2yrtucfRbhKyIu63HWsxMm312O4FJj80vk";
   const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
 
   let masterKnowledgeBase = [];
-  let decisionTreeData = [];
+  let dtParsedData = { en: [], ar: [] };
+  let currentDTLanguage = 'en';
   let sheetRefundRecords = [];
   let sheetRawHeaders = [];
 
@@ -300,25 +320,18 @@
         delete window[uniqueName];
         document.body.removeChild(script);
         if (!json || !json.table) {
-          resolve({ headers: [], rows: [] });
+          resolve([]);
           return;
         }
-        const headers = json.table.cols.map(c => (c ? (c.label || '').trim() : ''));
-        const rows = json.table.rows.map(r => {
-          const rowObj = {};
-          r.c.forEach((cell, idx) => {
-            const h = headers[idx] || `col_${idx}`;
-            rowObj[h] = cell ? (cell.f || cell.v || '') : '';
-          });
-          return rowObj;
-        });
-        resolve({ headers, rows });
+        // إرجاع كل خلية بمكانها الدقيق (A, B, C...)
+        const rawGrid = json.table.rows.map(r => r.c.map(cell => cell ? (cell.f || cell.v || '') : ''));
+        resolve(rawGrid);
       };
       script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=responseHandler:${uniqueName}`;
       script.onerror = function() {
         delete window[uniqueName];
         document.body.removeChild(script);
-        resolve({ headers: [], rows: [] });
+        resolve([]);
       };
       document.body.appendChild(script);
     });
@@ -332,103 +345,44 @@
     ]);
   }
 
-  // Intelligent Semantic Parser for Mavin Wear Knowledge Base
+  // 1. Knowledge Base Loader
   async function fetchLiveKnowledgeBase() {
     const loading = document.getElementById('kbLoadingState');
     const grid = document.getElementById('categoryGrid');
     
-    const result = await fetchGoogleSheetJSON(KB_SHEET_ID, 'handleKB');
-    if (result.rows && result.rows.length > 0) {
+    const rows = await fetchGoogleSheetJSON(KB_SHEET_ID, 'handleKB');
+    if (rows && rows.length > 1) {
       masterKnowledgeBase = [];
+      const headers = rows[0];
 
-      result.rows.forEach((row, idx) => {
-        const rawValues = Object.values(row).map(v => String(v).trim()).filter(Boolean);
-        if (rawValues.length === 0) return;
+      rows.slice(1).forEach((r, idx) => {
+        const rowObj = {};
+        headers.forEach((h, i) => { rowObj[h || `col_${i}`] = r[i] || ''; });
+        const values = Object.values(rowObj).filter(Boolean);
+        if (values.length === 0) return;
 
-        // 1. استخراج الكود الرسمي
-        let code = row['Code'] || row['ID'] || row['SOP ID'] || '';
-        if (!code) {
-          const codeMatch = rawValues.join(' ').match(/MV-\d+/i);
-          code = codeMatch ? codeMatch[0].toUpperCase() : `MV-${String(idx + 1).padStart(3, '0')}`;
-        }
+        let code = rowObj['Code'] || values[0] || `MV-${String(idx + 1).padStart(3, '0')}`;
+        let title = rowObj['Title'] || rowObj['Document Title'] || values[1] || `Document ${code}`;
+        let category = rowObj['Category'] || (title.toLowerCase().includes('handbook') ? 'Handbooks' : 'Operations SOPs');
+        let system = rowObj['System'] || 'Mavin CS Portal';
+        let description = rowObj['Description'] || values.find(v => v.length > 30) || 'Operational guideline.';
 
-        // 2. استخراج العنوان النظيف
-        let title = row['Title'] || row['Document Title'] || row['Name'] || '';
-        if (!title) {
-          const candidate = rawValues.find(v => 
-            v.length > 5 && v.length < 70 && 
-            !v.startsWith('MV-') && 
-            !v.includes('http') && 
-            !v.includes('|')
-          );
-          title = candidate || `Document ${code}`;
-        }
-
-        // 3. استخراج القسم/الفئة
-        let category = row['Category'] || row['Department'] || row['Type'] || '';
-        if (!category) {
-          const tLow = (title + ' ' + rawValues.join(' ')).toLowerCase();
-          if (tLow.includes('handbook')) category = 'Handbooks';
-          else if (tLow.includes('cheat sheet')) category = 'Cheat Sheets';
-          else if (tLow.includes('bosta') || tLow.includes('shipping') || tLow.includes('courier')) category = 'Shipping & Courier';
-          else if (tLow.includes('refund') || tLow.includes('paymob') || tLow.includes('payment')) category = 'Payments & Refunds';
-          else if (tLow.includes('defect') || tLow.includes('quality')) category = 'Defects & Quality';
-          else category = 'Operations SOPs';
-        }
-
-        // 4. استخراج النظام
-        let system = row['System'] || row['Partner'] || '';
-        if (!system) {
-          const sLow = rawValues.join(' ').toLowerCase();
-          if (sLow.includes('bosta') && sLow.includes('shopify')) system = 'Bosta + Shopify';
-          else if (sLow.includes('bosta')) system = 'Bosta Operations';
-          else if (sLow.includes('paymob')) system = 'Paymob Gateway';
-          else if (sLow.includes('shopify')) system = 'Shopify Store';
-          else system = 'Mavin CS Portal';
-        }
-
-        // 5. استخراج الوصف النظيف
-        let description = row['Description'] || row['Summary'] || row['Overview'] || '';
-        if (!description) {
-          description = rawValues.find(v => 
-            v.length > 35 && 
-            !v.includes('|') && 
-            !v.startsWith('MV-') && 
-            v !== title
-          ) || 'Operational guideline and workflow standard for Mavin Wear.';
-        }
-
-        // 6. استخراج المسؤول ومستوى الصعوبة
-        const role = row['Role'] || row['Owner'] || (rawValues.join(' ').includes('Team Lead') ? 'CS Team Lead' : 'CS Operations');
-        const updateDate = row['Last Updated'] || 'Active V1';
-
-        masterKnowledgeBase.push({
-          code: code,
-          title: title,
-          category: category,
-          system: system,
-          role: role,
-          updateDate: updateDate,
-          description: description
-        });
+        masterKnowledgeBase.push({ code, title, category, system, description });
       });
 
       loading.style.display = 'none';
       grid.style.display = 'grid';
       renderHomeCategories(masterKnowledgeBase);
-    } else {
-      loading.innerHTML = '⚠️ Could not load KB sheet. Please verify sheet sharing settings.';
     }
   }
 
   function getCategoryIcon(cat) {
-    const c = cat.toLowerCase();
+    const c = String(cat).toLowerCase();
     if (c.includes('refund') || c.includes('pay')) return '💳';
     if (c.includes('defect') || c.includes('quality')) return '👗';
     if (c.includes('exchange') || c.includes('size')) return '🔄';
-    if (c.includes('ship') || c.includes('bosta') || c.includes('courier')) return '🚚';
+    if (c.includes('ship') || c.includes('bosta')) return '🚚';
     if (c.includes('handbook')) return '📖';
-    if (c.includes('cheat sheet')) return '⚡';
     return '📑';
   }
 
@@ -438,12 +392,7 @@
 
     data.forEach(item => {
       const cat = item.category || 'Operations SOPs';
-      if (!categoriesMap[cat]) {
-        categoriesMap[cat] = {
-          icon: getCategoryIcon(cat),
-          count: 0
-        };
-      }
+      if (!categoriesMap[cat]) categoriesMap[cat] = { icon: getCategoryIcon(cat), count: 0 };
       categoriesMap[cat].count++;
     });
 
@@ -455,7 +404,7 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">Structured operational guidelines, workflows & handbooks.</div>
+            <div class="cat-desc">Structured operational workflows and handbooks.</div>
           </div>
           <span class="cat-badge">📂 ${info.count} Document(s) ➔</span>
         </div>
@@ -475,25 +424,12 @@
       <div class="sop-card">
         <div class="sop-header">
           <div>
-            <span class="sop-code-badge">${item.code}</span>
+            <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
             <h3 class="sop-title">${item.title}</h3>
           </div>
-          <div class="sop-tags">
-            <span class="sop-tag">🖥️ ${item.system}</span>
-            <span class="sop-tag">👤 ${item.role}</span>
-          </div>
+          <span class="sop-tag">🖥️ ${item.system}</span>
         </div>
-
-        <div class="sop-desc-box">
-          <strong style="color:var(--primary); font-size:15px;">📋 Document Purpose & Summary:</strong><br>
-          <div style="margin-top:6px; color:#334155;">${item.description}</div>
-        </div>
-
-        <div class="meta-grid">
-          <div class="meta-item"><strong>Status:</strong> Active Standard</div>
-          <div class="meta-item"><strong>Target Scope:</strong> Customer Support & Operations</div>
-          <div class="meta-item"><strong>System Dependency:</strong> ${item.system}</div>
-        </div>
+        <div class="sop-desc-box">${item.description}</div>
       </div>
     `).join('');
 
@@ -501,119 +437,188 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
-  // 2. Decision Tree Loader
+  // 2. Vertical Decision Tree Parser (Solves the Column A & B Vertical Layout)
   async function fetchLiveDecisionTree() {
-    const result = await fetchGoogleSheetJSON(DECISION_TREE_ID, 'handleDT');
-    if (result.rows && result.rows.length > 0) {
-      decisionTreeData = result.rows;
-      document.getElementById('dtSheetStatus').innerText = `✅ Live Sync Active — ${decisionTreeData.length} branches ready.`;
-      initDecisionTreeFlow();
-    }
-  }
+    const rawGrid = await fetchGoogleSheetJSON(DECISION_TREE_ID, 'handleDT');
+    if (!rawGrid || rawGrid.length === 0) return;
 
-  let dtSelectedPath = [];
+    dtParsedData = { en: [], ar: [] };
 
-  function initDecisionTreeFlow() {
-    if (!decisionTreeData || decisionTreeData.length === 0) return;
-    dtSelectedPath = [];
-    document.getElementById('dtResultBox').style.display = 'none';
-    document.getElementById('dtOptionsContainer').style.display = 'grid';
+    let currentCatEn = 'General Scenarios';
+    let currentCatAr = 'سيناريوهات عامة';
 
-    const keys = Object.keys(decisionTreeData[0]);
-    const firstCol = keys[0];
-    const mainOptions = [...new Set(decisionTreeData.map(r => r[firstCol]).filter(Boolean))];
+    let pendingActionEn = '';
+    let pendingActionAr = '';
 
-    document.getElementById('dtStepBadge').innerText = `Step 1 — ${firstCol}`;
-    document.getElementById('dtQuestion').innerText = `Select the customer's scenario:`;
+    rawGrid.forEach(row => {
+      const colA = String(row[0] || '').trim(); // English Column
+      const colB = String(row[1] || row[2] || '').trim(); // Arabic Column
 
-    const container = document.getElementById('dtOptionsContainer');
-    container.innerHTML = mainOptions.map(opt => `
-      <button class="dt-opt-btn" onclick="handleDTCycle('${firstCol}', '${encodeURIComponent(opt)}')">${opt}</button>
-    `).join('');
-  }
+      // 1. اكتشاف الفئة الرئيسية
+      if (colA.includes('PRODUCT QUALITY') || colA.includes('EXCHANGES & RETURNS') || colA.includes('SHIPPING & DELIVERY') || colA.includes('ESCALATIONS')) {
+        currentCatEn = cleanTreeHeader(colA);
+        currentCatAr = cleanTreeHeader(colB) || currentCatEn;
+        pendingActionEn = '';
+        pendingActionAr = '';
+        return;
+      }
 
-  function handleDTCycle(colName, encodedVal) {
-    const val = decodeURIComponent(encodedVal);
-    dtSelectedPath.push({ col: colName, val: val });
+      // 2. اكتشاف سطر الإجراء (Action)
+      if (colA.includes('Action:') || colA.includes('► Action')) {
+        pendingActionEn = cleanTreeText(colA.replace(/.*?Action:/i, ''));
+      }
+      if (colB.includes('الإجراء:') || colB.includes('الإجراء') || colB.includes('►')) {
+        pendingActionAr = cleanTreeText(colB.replace(/.*?الإجراء:?/i, ''));
+      }
 
-    let filtered = decisionTreeData;
-    dtSelectedPath.forEach(step => {
-      filtered = filtered.filter(r => r[step.col] === step.val);
+      // 3. اكتشاف سطر السبب والنتيجة (Reason ➔ Res)
+      if (colA.includes('Reason:') || colA.includes('└► Reason')) {
+        const parts = colA.split(/Res:|➔|->/i);
+        const reasonText = cleanTreeText(parts[0].replace(/.*?Reason:/i, ''));
+        const resText = parts[1] ? cleanTreeText(parts[1]) : 'Process completed';
+
+        dtParsedData.en.push({
+          category: currentCatEn,
+          reason: reasonText,
+          action: pendingActionEn || reasonText,
+          result: resText
+        });
+      }
+
+      if (colB.includes('Reason:') || colB.includes('السبب') || colB.includes('└►')) {
+        const parts = colB.split(/Res:|النتيجة:|➔|->/i);
+        const reasonText = cleanTreeText(parts[0].replace(/.*?Reason:?/i, ''));
+        const resText = parts[1] ? cleanTreeText(parts[1]) : 'تم تنفيذ الإجراء المطلوب';
+
+        dtParsedData.ar.push({
+          category: currentCatAr,
+          reason: reasonText,
+          action: pendingActionAr || reasonText,
+          result: resText
+        });
+      }
     });
 
-    const keys = Object.keys(decisionTreeData[0]);
-    const nextColIdx = keys.indexOf(colName) + 1;
+    document.getElementById('dtSheetStatus').innerText = `✅ Live Sync Active — ${dtParsedData.en.length} cases parsed perfectly.`;
+    initDecisionTreeWizard();
+  }
 
-    if (nextColIdx >= keys.length - 1 || filtered.length === 1) {
-      showDTResult(filtered[0]);
-      return;
-    }
+  function cleanTreeHeader(txt) {
+    return txt.replace(/[|►─\-├└📦🔄🚚🚨]+/g, '').trim();
+  }
 
-    const nextCol = keys[nextColIdx];
-    const nextOptions = [...new Set(filtered.map(r => r[nextCol]).filter(Boolean))];
+  function cleanTreeText(txt) {
+    return txt.replace(/[|►─\-├└L]+/g, '').trim();
+  }
 
-    if (nextOptions.length === 0 || (nextOptions.length === 1 && nextOptions[0] === '')) {
-      showDTResult(filtered[0]);
-      return;
-    }
+  function setDTLanguage(lang) {
+    currentDTLanguage = lang;
+    document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+    document.getElementById('btnLangAr').classList.toggle('active', lang === 'ar');
+    initDecisionTreeWizard();
+  }
 
-    document.getElementById('dtStepBadge').innerText = `Step ${dtSelectedPath.length + 1} — ${nextCol}`;
-    document.getElementById('dtQuestion').innerText = `Select details for (${val}):`;
+  let selectedDTCategory = '';
 
-    const container = document.getElementById('dtOptionsContainer');
-    container.innerHTML = nextOptions.map(opt => `
-      <button class="dt-opt-btn" onclick="handleDTCycle('${nextCol}', '${encodeURIComponent(opt)}')">${opt}</button>
+  function initDecisionTreeWizard() {
+    document.getElementById('dtFinalView').style.display = 'none';
+    document.getElementById('dtOptionsGrid').style.display = 'grid';
+
+    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
+    const categories = [...new Set(cases.map(c => c.category).filter(Boolean))];
+
+    document.getElementById('dtBreadcrumbs').innerHTML = `<span>Step 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي'}`;
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the main type of issue?' : 'ما هو نوع المشكلة الأساسي؟';
+
+    const grid = document.getElementById('dtOptionsGrid');
+    grid.innerHTML = categories.map(cat => `
+      <div class="dt-card-btn" onclick="selectDTCategory('${encodeURIComponent(cat)}')">
+        <div>
+          <div class="dt-card-title">${getCategoryIcon(cat)} ${cat}</div>
+          <div class="dt-card-hint">${cases.filter(c => c.category === cat).length} ${currentDTLanguage === 'en' ? 'scenarios available' : 'حالة وإجراء'}</div>
+        </div>
+        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'Select ➔' : 'اختيار ➔'}</span>
+      </div>
     `).join('');
   }
 
-  function showDTResult(row) {
-    document.getElementById('dtOptionsContainer').style.display = 'none';
-    const resultBox = document.getElementById('dtResultBox');
-    resultBox.style.display = 'block';
+  function selectDTCategory(encodedCat) {
+    selectedDTCategory = decodeURIComponent(encodedCat);
+    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
+    const scenarios = cases.filter(c => c.category === selectedDTCategory);
 
-    const keys = Object.keys(row);
-    const actionKey = keys.find(k => k.toLowerCase().includes('action') || k.toLowerCase().includes('procedure') || k.toLowerCase().includes('solution') || k.toLowerCase().includes('إجراء')) || keys[keys.length - 1];
-    const replyKey = keys.find(k => k.toLowerCase().includes('reply') || k.toLowerCase().includes('canned') || k.toLowerCase().includes('رد'));
+    document.getElementById('dtBreadcrumbs').innerHTML = `
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Reason' : 'اختر السبب المحدد'}
+    `;
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the specific customer scenario?' : 'ما هي الحالة أو المشكلة بالتحديد؟';
 
-    document.getElementById('dtResultText').innerHTML = `
-      <strong>Recommended Action:</strong><br>${row[actionKey] || Object.values(row).join('<br>')}
+    const grid = document.getElementById('dtOptionsGrid');
+    grid.innerHTML = scenarios.map((sc, idx) => `
+      <div class="dt-card-btn" onclick="showDTCaseResult(${idx})">
+        <div>
+          <div class="dt-card-title">📌 ${sc.reason}</div>
+          <div class="dt-card-hint">${sc.action.substring(0, 90)}...</div>
+        </div>
+        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Action ➔' : 'عرض الحل والإجراء ➔'}</span>
+      </div>
+    `).join('');
+  }
+
+  function showDTCaseResult(index) {
+    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
+    const scenarios = cases.filter(c => c.category === selectedDTCategory);
+    const item = scenarios[index];
+    if (!item) return;
+
+    document.getElementById('dtOptionsGrid').style.display = 'none';
+    document.getElementById('dtFinalView').style.display = 'block';
+
+    document.getElementById('dtBreadcrumbs').innerHTML = `
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ 
+      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--accent); text-decoration:none;">${item.reason}</a> ➔ 
+      <span>Step 3 (Resolution)</span>
     `;
 
-    if (replyKey && row[replyKey]) {
-      document.getElementById('dtResultReply').style.display = 'block';
-      document.getElementById('dtReplyText').innerText = row[replyKey];
-    } else {
-      document.getElementById('dtResultReply').style.display = 'none';
-    }
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Standard Operational Resolution:' : 'إجراء المعالجة والحل المعتمد:';
+    document.getElementById('resTitle').innerText = item.reason;
+    document.getElementById('resActionText').innerText = item.action;
+    document.getElementById('resExpectedText').innerText = item.result;
+
+    const reply = currentDTLanguage === 'en' 
+      ? `Hello! Regarding your inquiry on (${item.reason}), we have arranged: ${item.action}. Result: ${item.result}.`
+      : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item.reason})، تم اتخاذ الإجراء التالي: ${item.action}. النتيجة: ${item.result}.`;
+
+    document.getElementById('resReplyText').innerText = reply;
   }
 
   function resetDecisionTree() {
-    initDecisionTreeFlow();
+    initDecisionTreeWizard();
   }
 
-  function copyResultReply() {
-    const txt = document.getElementById('dtReplyText').innerText;
+  function copyReplyText() {
+    const txt = document.getElementById('resReplyText').innerText;
     navigator.clipboard.writeText(txt);
     alert('✅ Canned response copied to clipboard!');
   }
 
-  // 3. Refund Portal
+  // 3. Refund Portal Loader
   async function fetchLiveRefundPortal() {
     const statusText = document.getElementById('sheetRecordStatus');
     const counter = document.getElementById('recordCounter');
     statusText.innerText = '⏳ Connecting to live Google Sheet...';
 
-    const result = await fetchGoogleSheetJSON(REFUND_SHEET_ID, 'handleRefunds');
-    if (result.rows && result.rows.length > 0) {
-      sheetRefundRecords = result.rows;
-      sheetRawHeaders = result.headers.filter(Boolean);
-      if (sheetRawHeaders.length === 0) sheetRawHeaders = Object.keys(result.rows[0]);
+    const rows = await fetchGoogleSheetJSON(REFUND_SHEET_ID, 'handleRefunds');
+    if (rows && rows.length > 0) {
+      sheetRawHeaders = rows[0].filter(Boolean);
+      sheetRefundRecords = rows.slice(1).map(r => {
+        const obj = {};
+        sheetRawHeaders.forEach((h, i) => { obj[h] = r[i] || ''; });
+        return obj;
+      });
 
       statusText.innerText = `✅ Live Sync Active — ${sheetRefundRecords.length} records retrieved.`;
       counter.innerText = `${sheetRefundRecords.length} records loaded`;
       renderRefundTable(sheetRefundRecords);
-    } else {
-      statusText.innerText = '⚠️ Could not load records. Ensure sheet is set to Anyone with link can view.';
     }
   }
 
@@ -623,13 +628,7 @@
       renderRefundTable(sheetRefundRecords);
       return;
     }
-
-    const filtered = sheetRefundRecords.filter(row => {
-      return Object.values(row).some(val => 
-        String(val || '').toLowerCase().includes(q)
-      );
-    });
-
+    const filtered = sheetRefundRecords.filter(row => Object.values(row).some(v => String(v).toLowerCase().includes(q)));
     renderRefundTable(filtered);
   }
 
@@ -645,9 +644,7 @@
     if (sheetRawHeaders.length > 0) {
       thead.innerHTML = `<tr>${sheetRawHeaders.map(h => `<th>${h}</th>`).join('')}</tr>`;
       tbody.innerHTML = data.map(row => `
-        <tr>
-          ${sheetRawHeaders.map(h => `<td>${row[h] !== undefined ? row[h] : ''}</td>`).join('')}
-        </tr>
+        <tr>${sheetRawHeaders.map(h => `<td>${row[h] !== undefined ? row[h] : ''}</td>`).join('')}</tr>
       `).join('');
     }
   }
@@ -661,9 +658,7 @@
     const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
-      (i.code && i.code.toLowerCase().includes(q)) ||
-      (i.description && i.description.toLowerCase().includes(q)) ||
-      (i.system && i.system.toLowerCase().includes(q))
+      (i.description && i.description.toLowerCase().includes(q))
     );
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
@@ -677,7 +672,7 @@
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <span class="sop-code-badge">${item.code}</span>
+              <div style="font-size:12px; font-weight:bold; color:var(--accent);">${item.code}</div>
               <h3 class="sop-title">${item.title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
@@ -710,8 +705,8 @@
     hideAllSections();
     if (name === 'decisionTree') {
       document.getElementById('decisionTreeSection').style.display = 'block';
-      if (decisionTreeData.length === 0) fetchLiveDecisionTree();
-      else initDecisionTreeFlow();
+      if (dtParsedData.en.length === 0) fetchLiveDecisionTree();
+      else initDecisionTreeWizard();
     }
     if (name === 'refundPortal') {
       document.getElementById('refundPortalSection').style.display = 'block';
