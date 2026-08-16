@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mavin Wear | CS Knowledge Base & Escalation</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary: #111827;
+      --accent: #2563eb;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --success: #10b981;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: #1f2937; margin: 0; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 25px; }
+    .brand-title { font-size: 26px; font-weight: 800; color: var(--primary); margin: 0; }
+    .brand-sub { font-size: 14px; color: #6b7280; margin-top: 5px; }
+    .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+    .tab-btn { flex: 1; padding: 12px; border: none; background: #e5e7eb; font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 14px; }
+    .tab-btn.active { background: var(--primary); color: #fff; }
+    .card { background: var(--card-bg); padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 15px; border: 1px solid var(--border); }
+    .search-box { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; margin-bottom: 15px; font-size: 15px; }
+    .copy-btn { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; float: left; font-size: 13px; font-weight: bold; }
+    .copy-btn:hover { opacity: 0.9; }
+    .tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+    .tag-shipping { background: #dbeafe; color: #1e40af; }
+    .tag-product { background: #fee2e2; color: #991b1b; }
+    .tag-return { background: #fef3c7; color: #92400e; }
+    label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
+    input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+    .submit-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+    .submit-btn:hover { background: #374151; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 10px; text-align: right; }
+    th { background: #f3f4f6; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="brand-title">👗 Mavin Wear Operations Guide</div>
+    <div class="brand-sub">الدليل التشغيلي الموحد لخدمة العملاء ونظام تصعيد المنتجات</div>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('kb')">📖 إجراءات العمل والردود (SOPs)</button>
+    <button class="tab-btn" onclick="showTab('form')">🚨 نموذج تصعيد المنتجات (Escalation)</button>
+    <button class="tab-btn" onclick="showTab('logs')">📊 سجل الحالات (SQL Logs)</button>
+  </div>
+
+  <!-- قسم الإجراءات والردود الجاهزة -->
+  <div id="kbTab">
+    <input type="text" id="searchKB" class="search-box" placeholder="🔍 ابحث بالمشكلة (مثال: مقاس، خامة، ديفوه، تأخير شحن)..." onkeyup="filterKB()">
+    
+    <div class="card kb-item">
+      <span class="tag tag-product">عيب صناعة / تلف</span>
+      <h3 style="margin: 0 0 8px 0; color: #111827;">1. استلام منتج تالف أو به ديفوه (Defective / Damaged)</h3>
+      <p><strong>الإجراء:</strong> طلب صورة واضحة للقطعة وعيب الصناعة مع بوليصة الشحنة، تسجيل الحالة فوراً في نموذج التصعيد، وعمل طلب استبدال فوري مجاني.</p>
+      <div>
+        <strong>الرد المعتمد:</strong>
+        <button class="copy-btn" onclick="copyText('أهلاً بك، نعتذر بشدة عن استلام المنتج بهذه الحالة. حرصاً على رضاكِ، تم تسجيل طلب استبدال فوري مجاني، وسيقوم المندوب بتسليمك القطعة السليمة واستلام الحالية.')">📋 نسخ الرد</button>
+      </div>
+      <div style="clear:both; margin-top:10px; background:#f3f4f6; padding:10px; border-radius:6px; border-right:4px solid var(--success);">
+        أهلاً بك، نعتذر بشدة عن استلام المنتج بهذه الحالة. حرصاً على رضاكِ، تم تسجيل طلب استبدال فوري مجاني، وسيقوم المندوب بتسليمك القطعة السليمة واستلام الحالية.
+      </div>
+    </div>
+
+    <div class="card kb-item">
+      <span class="tag tag-return">استبدال مقاس</span>
+      <h3 style="margin: 0 0 8px 0; color: #111827;">2. طلب استبدال المقاس (Size Exchange)</h3>
+      <p><strong>الإجراء:</strong> مراجعة جدول المقاسات مع العميل وتحديد المقاس المطلوب وتوفره في المخزون، ثم إنشاء بوليصة استبدال مع توضيح رسوم الشحن (إن وجدت وفق السياسة).</p>
+      <div>
+        <strong>الرد المعتمد:</strong>
+        <button class="copy-btn" onclick="copyText('أهلاً بك، يسعدنا مساعدتك في تغيير المقاس. تم التحقق من توفر المقاس المطلوب وعمل طلب الاستبدال، وسيقوم المندوب بالتواصل معك خلال 2-4 أيام عمل.')">📋 نسخ الرد</button>
+      </div>
+      <div style="clear:both; margin-top:10px; background:#f3f4f6; padding:10px; border-radius:6px; border-right:4px solid var(--success);">
+        أهلاً بك، يسعدنا مساعدتك في تغيير المقاس. تم التحقق من توفر المقاس المطلوب وعمل طلب الاستبدال، وسيقوم المندوب بالتواصل معك خلال 2-4 أيام عمل.
+      </div>
+    </div>
+
+    <div class="card kb-item">
+      <span class="tag tag-shipping">شحن وتوصيل</span>
+      <h3 style="margin: 0 0 8px 0; color: #111827;">3. متابعة تأخر الشحنة مع شركة الشحن</h3>
+      <p><strong>الإجراء:</strong> فحص رقم التتبع على بورتال شركة الشحن. إذا تجاوز التأخير 48 ساعة عن الموعد المحدد، يتم رفع بلاغ استعجال فوري لشركة الشحن وتحديث العميل.</p>
+      <div>
+        <strong>الرد المعتمد:</strong>
+        <button class="copy-btn" onclick="copyText('أهلاً بك، نعتذر عن التأخير غير المتوقع في وصول أوردرك. تم التواصل مع شركة الشحن لتسريع التوصيل ذو الأولوية وسيتم تسليم الشحنة في أقرب وقت.')">📋 نسخ الرد</button>
+      </div>
+      <div style="clear:both; margin-top:10px; background:#f3f4f6; padding:10px; border-radius:6px; border-right:4px solid var(--success);">
+        أهلاً بك، نعتذر عن التأخير غير المتوقع في وصول أوردرك. تم التواصل مع شركة الشحن لتسريع التوصيل ذو الأولوية وسيتم تسليم الشحنة في أقرب وقت.
+      </div>
+    </div>
+  </div>
+
+  <!-- قسم نموذج تصعيد مشاكل المنتجات -->
+  <div id="formTab" style="display:none;">
+    <div class="card">
+      <h3 style="margin-top:0;">CS Product Escalation Form (Mavin Wear)</h3>
+      <form id="escForm">
+        <label>Order Number (رقم الطلب):</label>
+        <input type="text" id="order_number" placeholder="مثال: #10852" required>
+
+        <label>Ticket Number (رقم التذكرة):</label>
+        <input type="text" id="ticket_number" placeholder="مثال: #TK-304" required>
+
+        <label>Customer Name (اسم العميل):</label>
+        <input type="text" id="customer_name" required>
+
+        <label>Contact Reason (سبب التواصل):</label>
+        <input type="text" id="contact_reason" placeholder="مثال: ديفوه في القماش / استبدال مقاس / تأخير تسليم" required>
+
+        <label>Ticket Date (تاريخ التذكرة):</label>
+        <input type="date" id="ticket_date" required>
+
+        <label>Did the customer receive the order? (هل استلم العميل الأوردر؟):</label>
+        <select id="received_order">
+          <option value="false">لا</option>
+          <option value="true">نعم</option>
+        </select>
+
+        <label>Delivered Date (تاريخ الاستلام إن وجد):</label>
+        <input type="date" id="delivered_date">
+
+        <label>Case Summary (تفاصيل المشكلة والإجراء المطلوب):</label>
+        <textarea id="case_summary" rows="3" placeholder="توضيح العيب، المقاس المطلوب، أو حالة المتابعة..." required></textarea>
+
+        <button type="submit" class="submit-btn">💾 تسجيل التصعيد بقاعدة البيانات</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- قسم سجلات SQL -->
+  <div id="logsTab" style="display:none;">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0;">سجل التصعيدات المسجلة (Mavin Wear DB)</h3>
+        <button onclick="loadLogs()" style="padding: 8px 14px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">🔄 تحديث السجلات</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="logsTable">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Ticket #</th>
+              <th>العميل</th>
+              <th>السبب</th>
+              <th>تاريخ التذكرة</th>
+              <th>استلم؟</th>
+              <th>ملخص الحالة</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
+  // 🔴 استبدلي هذا السطر بالمفتاح الذي نسختِه من Supabase
+const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function showTab(tab) {
+    document.getElementById('kbTab').style.display = tab === 'kb' ? 'block' : 'none';
+    document.getElementById('formTab').style.display = tab === 'form' ? 'block' : 'none';
+    document.getElementById('logsTab').style.display = tab === 'logs' ? 'block' : 'none';
+    document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', (tab === 'kb' && idx === 0) || (tab === 'form' && idx === 1) || (tab === 'logs' && idx === 2));
+    });
+    if (tab === 'logs') loadLogs();
+  }
+
+  function copyText(txt) {
+    navigator.clipboard.writeText(txt);
+    alert('✅ تم نسخ الرد المعتمد بنجاح!');
+  }
+
+  function filterKB() {
+    let q = document.getElementById('searchKB').value.toLowerCase();
+    document.querySelectorAll('.kb-item').forEach(item => {
+      item.style.display = item.innerText.toLowerCase().includes(q) ? 'block' : 'none';
+    });
+  }
+
+  document.getElementById('escForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      order_number: document.getElementById('order_number').value,
+      ticket_number: document.getElementById('ticket_number').value,
+      customer_name: document.getElementById('customer_name').value,
+      contact_reason: document.getElementById('contact_reason').value,
+      ticket_date: document.getElementById('ticket_date').value,
+      received_order: document.getElementById('received_order').value === 'true',
+      delivered_date: document.getElementById('delivered_date').value || null,
+      case_summary: document.getElementById('case_summary').value
+    };
+    
+    const { error } = await client.from('product_escalations').insert([data]);
+    if (error) { 
+      alert('❌ حدث خطأ: ' + error.message); 
+    } else { 
+      alert('✅ تم تسجيل الحالة بنجاح في قاعدة بيانات Mavin Wear!'); 
+      document.getElementById('escForm').reset(); 
+    }
+  });
+
+  async function loadLogs() {
+    const tbody = document.querySelector('#logsTable tbody');
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">جاري جلب البيانات من SQL...</td></tr>';
+    const { data, error } = await client.from('product_escalations').select('*').order('id', { ascending: false });
+    if (error) { 
+      tbody.innerHTML = `<tr><td colspan="7" style="color:red; text-align:center;">خطأ: ${error.message}</td></tr>`; 
+      return; 
+    }
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">لا توجد سجلات مسجلة بعد.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(r => `
+      <tr>
+        <td><strong>${r.order_number}</strong></td>
+        <td>${r.ticket_number}</td>
+        <td>${r.customer_name}</td>
+        <td>${r.contact_reason}</td>
+        <td>${r.ticket_date}</td>
+        <td>${r.received_order ? 'نعم' : 'لا'}</td>
+        <td>${r.case_summary}</td>
+      </tr>
+    `).join('');
+  }
+</script>
+</body>
+</html>
