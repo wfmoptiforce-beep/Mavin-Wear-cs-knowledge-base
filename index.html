@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Operations & Decision Engine Hub</title>
+  <title>Mavin Wear | CS Operations & QA Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -17,6 +17,7 @@
       --border: #e2e8f0;
       --success: #10b981;
       --warning: #f59e0b;
+      --danger: #ef4444;
       --purple: #8b5cf6;
       --text: #1e293b;
       --muted: #64748b;
@@ -29,13 +30,18 @@
     .brand-title { font-size: 28px; font-weight: 800; color: var(--primary); }
     .brand-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
     
-    .top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 14px; text-decoration: none; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
+    .role-tag { background: #e0e7ff; color: #3730a3; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    
+    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 13.5px; text-decoration: none; }
     .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
     .nav-btn.primary { background: var(--primary); color: white; border: none; }
     .nav-btn.primary:hover { background: #1e293b; }
     .nav-btn.accent { background: var(--accent); color: white; border: none; }
     .nav-btn.accent:hover { background: #1d4ed8; }
+    .nav-btn.qa-btn { background: var(--purple); color: white; border: none; }
 
     .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
@@ -59,7 +65,6 @@
 
     .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
     .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
-    
     .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
     .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
     .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
@@ -102,33 +107,67 @@
     th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
     th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
 
-    /* Escalation Form */
+    /* Quality Audit & Review Styles */
+    .score-card { background: #f8fafc; border: 2px solid var(--purple); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
+    .score-display { font-size: 42px; font-weight: 900; color: var(--purple); }
+    .score-label { font-size: 14px; font-weight: bold; color: var(--text); }
+    
+    .criteria-group { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+    .criteria-title { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .criteria-desc { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+
+    /* Review Comment Pill */
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; }
+    .status-approved { background: #dcfce7; color: #166534; }
+    .status-rejected { background: #fee2e2; color: #991b1b; }
+    .status-pending { background: #fef3c7; color: #92400e; }
+
+    /* Modal Styling */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: white; border-radius: 14px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+
+    /* General Form Elements */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
     input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
     .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
     .submit-btn:hover { background: #1e293b; }
+    .submit-btn.purple { background: var(--purple); }
+    .submit-btn.purple:hover { background: #7c3aed; }
   </style>
 </head>
 <body>
 <div class="container">
   
   <div class="header">
-    <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Decision Engine, 63 Real Customer Scenarios & Live Multi-Tab Portal</div>
+    <div class="brand-title">👗 Mavin Wear Operations & Quality Hub</div>
+    <div class="brand-sub">Decision Engine, Escalation Review, Live QA Scoring & Multi-Tab Portal</div>
+  </div>
+
+  <!-- User Session Header -->
+  <div class="top-bar">
+    <div class="user-badge">
+      <span>👤 Current Active User:</span>
+      <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:5px 10px; font-weight:bold; margin:0;">
+        <option value="agent@mavinwear.com">Support Agent (General CS)</option>
+        <option value="nourtamer2005@gmail.com">Nour Tamer (Escalation Reviewer)</option>
+        <option value="nanielshazly4@gmail.com">Nani El Shazly (Escalation Reviewer)</option>
+        <option value="Rehabmohamed881@gmail.com">Rehab Mohamed (Quality Specialist)</option>
+      </select>
+    </div>
+    <div id="roleIndicator">
+      <span class="role-tag">General Access</span>
+    </div>
   </div>
 
   <div class="top-actions">
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-      <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
-      <button class="nav-btn" onclick="showSection('decisionTree')">🌳 Interactive Decision Tree</button>
-      <button class="nav-btn" onclick="showSection('scenarios')">🗣️ 63 Customer Scenarios</button>
-      <button class="nav-btn" onclick="showSection('refundPortal')">🔍 Agent Return/Refund Portal</button>
-      <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
-      <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
-    </div>
-    <div style="display: flex; gap: 8px;">
-      <button class="nav-btn accent" onclick="fetchAllLiveSheets()">🔄 Sync Live Sheets</button>
-    </div>
+    <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
+    <button class="nav-btn" onclick="showSection('decisionTree')">🌳 Interactive Decision Tree</button>
+    <button class="nav-btn" onclick="showSection('scenarios')">🗣️ 63 Customer Scenarios</button>
+    <button class="nav-btn" onclick="showSection('refundPortal')">🔍 Agent Return/Refund Portal</button>
+    <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
+    <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records & Review</button>
+    <button class="nav-btn qa-btn" id="btnQAForm" onclick="showSection('qualityForm')">⭐ Quality Audit Form</button>
+    <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 QA Evaluation Logs</button>
   </div>
 
   <!-- 1. HOME VIEW (Categories) -->
@@ -142,7 +181,7 @@
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
   </div>
 
-  <!-- 2. INTERACTIVE DECISION TREE WIZARD (Built from your Excel Map) -->
+  <!-- 2. INTERACTIVE DECISION TREE WIZARD -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -202,7 +241,7 @@
     </div>
   </div>
 
-  <!-- 3. REAL CUSTOMER SCENARIOS (63 Cases from your Excel) -->
+  <!-- 3. REAL CUSTOMER SCENARIOS -->
   <div id="scenariosSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -240,7 +279,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
           <strong style="color:var(--primary); font-size:15px;">Universal Multi-Tab Search</strong>
-          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Name, Fitting Issue, or SKU (e.g. Rival Slim Tee).</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Name, Fitting Issue, or SKU.</div>
         </div>
         <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records loaded</span>
       </div>
@@ -312,10 +351,13 @@
     </div>
   </div>
 
-  <!-- 7. LOGS VIEW -->
+  <!-- 7. ESCALATION RECORDS & REVIEW VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
-      <h2 style="margin:0; color:var(--primary);">📊 Database Escalation Records</h2>
+      <div>
+        <h2 style="margin:0; color:var(--primary);">📊 Escalation Records & Case Review</h2>
+        <span style="font-size:13px; color:var(--muted);">Authorized reviewers can validate actions, approve resolutions, and add comments.</span>
+      </div>
       <div style="display:flex; gap:10px;">
         <button class="nav-btn" onclick="exportToExcel()" style="background:#10b981; color:white; border:none;">📥 Export to Excel</button>
         <button class="nav-btn" onclick="loadLogs()">🔄 Refresh</button>
@@ -331,8 +373,10 @@
             <th>Customer</th>
             <th>Reason</th>
             <th>Date</th>
-            <th>Received?</th>
             <th>Summary</th>
+            <th>Review Status</th>
+            <th>Reviewer Notes</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -340,10 +384,162 @@
     </div>
   </div>
 
+  <!-- 8. QUALITY AUDIT FORM VIEW (QA Access: Rehabmohamed881@gmail.com) -->
+  <div id="qualityFormSection" style="display:none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="margin:0; color:var(--purple);">⭐ Quality Assurance (QA) Evaluation Form</h2>
+        <span style="font-size:13px; color:var(--muted);">Score calculates automatically. Submitting will auto-generate and email the report directly to the agent.</span>
+      </div>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+    </div>
+
+    <div class="score-card">
+      <div class="score-display" id="liveScoreDisplay">100%</div>
+      <div class="score-label" id="liveGradeDisplay">Grade: Excellent Performance ⭐⭐⭐</div>
+    </div>
+
+    <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border);">
+      <form id="qaForm">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:15px; margin-bottom:20px;">
+          <div>
+            <label>Agent Name / Email:</label>
+            <input type="email" id="qa_agent_email" placeholder="agent@mavinwear.com" required>
+          </div>
+          <div>
+            <label>Auditor Name / Email:</label>
+            <input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f8fafc;">
+          </div>
+          <div>
+            <label>Ticket / Chat Reference #:</label>
+            <input type="text" id="qa_ticket_ref" placeholder="e.g. #TK-9801" required>
+          </div>
+          <div>
+            <label>Interaction Channel:</label>
+            <select id="qa_channel">
+              <option value="Live Chat / WhatsApp">Live Chat / WhatsApp</option>
+              <option value="Instagram / Facebook DM">Instagram / Facebook DM</option>
+              <option value="Phone Call">Phone Call</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Criteria 1 -->
+        <div class="criteria-group">
+          <div class="criteria-title">1. Greeting, Professional Tone & Politeness (20 Points)</div>
+          <div class="criteria-desc">Welcoming the customer warmly, maintaining polite tone, and proper closing.</div>
+          <select id="qa_crit_1" onchange="calculateQAScore()">
+            <option value="20">Fully Met (20/20) - Warm & Professional</option>
+            <option value="10">Partially Met (10/20) - Dry tone or missed greeting</option>
+            <option value="0">Failed (0/20) - Rude tone or unprofessional</option>
+          </select>
+        </div>
+
+        <!-- Criteria 2 -->
+        <div class="criteria-group">
+          <div class="criteria-title">2. Root Cause Identification & Correct Tagging (25 Points)</div>
+          <div class="criteria-desc">Accurately identifying the root cause vs customer emotion (Contact Reason & Resolution).</div>
+          <select id="qa_crit_2" onchange="calculateQAScore()">
+            <option value="25">Fully Met (25/25) - Perfect categorization</option>
+            <option value="12">Partially Met (12/25) - Minor misclassification</option>
+            <option value="0">Failed (0/25) - Wrong tagging completely</option>
+          </select>
+        </div>
+
+        <!-- Criteria 3 -->
+        <div class="criteria-group">
+          <div class="criteria-title">3. Policy Adherence & Resolution Accuracy (35 Points)</div>
+          <div class="criteria-desc">Following official SOPs (Refund channel, 14-day exchange, defect proof collection).</div>
+          <select id="qa_crit_3" onchange="calculateQAScore()">
+            <option value="35">Fully Met (35/35) - 100% Policy compliant</option>
+            <option value="15">Partially Met (15/35) - Incomplete steps</option>
+            <option value="0">Failed (0/35) - Incorrect policy or unauthorized promise</option>
+          </select>
+        </div>
+
+        <!-- Criteria 4 -->
+        <div class="criteria-group">
+          <div class="criteria-title">4. SLA & First Contact Resolution (FCR) (20 Points)</div>
+          <div class="criteria-desc">Responding within SLA threshold without unnecessary delays or ping-pong.</div>
+          <select id="qa_crit_4" onchange="calculateQAScore()">
+            <option value="20">Fully Met (20/20) - Fast & Efficient</option>
+            <option value="10">Partially Met (10/20) - Slight delay</option>
+            <option value="0">Failed (0/20) - Significant SLA breach</option>
+          </select>
+        </div>
+
+        <label>Auditor Detailed Feedback & Coaching Notes:</label>
+        <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths and coaching points for the agent..." required></textarea>
+
+        <button type="submit" class="submit-btn purple">📤 Submit Evaluation & Email Agent Directly</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. QA EVALUATION LOGS VIEW -->
+  <div id="qualityLogsSection" style="display:none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="margin:0; color:var(--purple);">📈 Quality Assurance Evaluation Records</h2>
+        <span style="font-size:13px; color:var(--muted);">History of all agent audits, scores, and feedback.</span>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="nav-btn" onclick="exportQAToExcel()" style="background:#10b981; color:white; border:none;">📥 Export QA Excel</button>
+        <button class="nav-btn" onclick="loadQALogs()">🔄 Refresh</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+      </div>
+    </div>
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
+      <table id="qaLogsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Agent Email</th>
+            <th>Ticket Ref</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Auditor</th>
+            <th>Feedback Notes</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MODAL: ESCALATION CASE REVIEW (Authorized Reviewers) -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-content">
+      <h3 style="margin-top:0; color:var(--primary);">📝 Review & Validate Escalation Case</h3>
+      <div id="modalCaseDetails" style="background:#f8fafc; padding:12px; border-radius:8px; margin-bottom:15px; font-size:13.5px; line-height:1.5;"></div>
+
+      <label>Case Resolution Decision:</label>
+      <select id="modal_review_status">
+        <option value="Approved">Approved (حل سليم ومعتمد ✅)</option>
+        <option value="Rejected">Rejected (الحل غير سليم / يحتاج تعديل ❌)</option>
+        <option value="Pending">Pending (قيد المراجعة والمتابعة ⏳)</option>
+      </select>
+
+      <label>Reviewer Feedback & Comments:</label>
+      <textarea id="modal_review_comment" rows="3" placeholder="Write feedback regarding this action..." required></textarea>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button class="nav-btn" onclick="closeReviewModal()">Cancel</button>
+        <button class="nav-btn primary" onclick="saveCaseReview()">Save Review Decision</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  // 1. EMBEDDED DECISION TREE DATA (From Sheet: Decision Tree Map)
+  // Authorized Reviewers & QA Specialists
+  const ESCALATION_REVIEWERS = ["nourtamer2005@gmail.com", "nanielshazly4@gmail.com"];
+  const QA_SPECIALISTS = ["Rehabmohamed881@gmail.com"];
+
+  let currentUser = "agent@mavinwear.com";
+
+  // Decision Tree Map Dataset
   const EMBEDDED_DT_TREE = [
     { category_en: "📦 PRODUCT QUALITY & ERRORS", category_ar: "📦 جودة المنتج والأخطاء", action_en: "Issued a compensation promo code", action_ar: "إصدار كود خصم لتعويض العميل عن التلف", reason_en: "Damaged or Defective Item", reason_ar: "Damaged or Defective Item", resolution_en: "Discount", resolution_ar: "Discount" },
     { category_en: "📦 PRODUCT QUALITY & ERRORS", category_ar: "📦 جودة المنتج والأخطاء", action_en: "Created replacement for damaged/wrong item/wrong size", action_ar: "عمل طلب استبدال لمنتج تالف / مقاس خطأ / منتج خطأ", reason_en: "Damaged / Wrong Item / Wrong Size", reason_ar: "Damaged / Wrong Item / Wrong Size", resolution_en: "Exchange Initiated", resolution_ar: "Exchange Initiated" },
@@ -370,7 +566,7 @@
     { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Update customer phone number or delivery address in system", action_ar: "تعديل بيانات العميل (رقم هاتف أو عنوان استلام) على السيستم", reason_en: "Account & Website Issues", reason_ar: "Account & Website Issues", resolution_en: "Edit Customer Data", resolution_ar: "Edit Customer Data" }
   ];
 
-  // 2. EMBEDDED REAL CUSTOMER SCENARIOS (63 Cases extracted from your Excel sheets)
+  // 63 Customer Scenarios Dataset
   const EMBEDDED_SCENARIOS = [
     { source: "Overall Standard Scenarios", scenario: "\"الأوردر لسه طالبه إمبارح هيوصل إمتى؟\"", explanation: "استفسار طبيعي عن الشحن في وقته. إرسال رابط التتبع.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
     { source: "Overall Standard Scenarios", scenario: "\"عايز ألغي الأوردر\" (قبل الشحن)", explanation: "العميل تراجع عن الشراء. إلغاء الطلب من النظام.", reason: "Order Status & Tracking", resolution: "Order Cancelled" },
@@ -392,18 +588,18 @@
     { source: "Escalations & Tone Analysis", scenario: "\"أنا عملت شكوى من يومين ومحدش عبرني، ممكن تشوف شكوتي وصلت لفين؟\"", explanation: "متابعة لشكوى خدمة عملاء سابقة. يتم مراجعة النظام وطمأنته.", reason: "Complaint & Escalation", resolution: "Information Given" },
     { source: "Escalations & Tone Analysis", scenario: "\"أنا بقدم شكوى رسمية.. المنتج جالي تالف والطباعة بايظة!\"", explanation: "حالة خادعة: العميل قال \"شكوى\" لكن السبب الفعلي هو جودة المنتج. يتم حل المشكلة بالاستبدال أو الخصم.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated or (Discount)" },
     { source: "Escalations & Tone Analysis", scenario: "\"عايز أعمل شكوى.. الأوردر بقاله 10 أيام مجاش!\"", explanation: "حالة خادعة: العميل قال \"شكوى\" لكن السبب هو تأخير الشحن.", reason: "Late Order inquiry", resolution: "Complaint Acknowledged" },
-    { source: "Escalations & Tone Analysis", scenario: "\"أنا هفضحكم على جروبات الفيس بوك وهعملكم شير في كل مكان!\"", explanation: "تهديد صريح وتصعيد. يتم احتواء العميل فوراً ومعرفة مشكلته الأساسية (إذا لم يذكرها، تُصنف كتصعيد).", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
+    { source: "Escalations & Tone Analysis", scenario: "\"أنا هفضحكم على جروبات الفيس بوك وهعملكم شير في كل مكان!\"", explanation: "تهديد صريح وتصعيد. يتم احتواء العميل فوراً ومعرفة مشكلته الأساسية.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
     { source: "Edge Cases & Exceptions", scenario: "\"الأوردر مكتوب في التتبع (تمت المحاولة) والمندوب أصلاً مكلمنيش!\"", explanation: "كذب من المندوب لتقفيل التارجت بتاعه.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Edge Cases & Exceptions", scenario: "\"أنا كتبت عنواني غلط في الأوردر وهو خرج للشحن، الحقوا عدلوه.\"", explanation: "الأوردر خرج بالفعل، التعديل هنا يعتبر متابعة وتواصل مع الشحن لتعديل المسار.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
     { source: "Edge Cases & Exceptions", scenario: "\"المندوب بيقولي مفيش فكة ومش هسلمك الأوردر غير لما تتصرف.\"", explanation: "سوء تصرف من المندوب، دي مشكلة في شركة الشحن نفسها.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Edge Cases & Exceptions", scenario: "\"الأوردر جالي ناقص قطعة، المندوب سرقها!\"", explanation: "الشكوى هنا تبدو كسرقة/شحن، ولكن السبب الجذري هو \"استلام منتج ناقص/مختلف\".", reason: "Wrong Item (أو Damaged)", resolution: "Exchange Initiated (أو Complaint)" },
     { source: "Edge Cases & Exceptions", scenario: "\"اللون بهت على بعضه في أول غسلة وبوظلي باقي الهدوم!\"", explanation: "شكوى جودة قوية (عيب صناعة).", reason: "Damaged or Defective Item", resolution: "Exchange (أو Refund)" },
     { source: "Edge Cases & Exceptions", scenario: "\"السوستة بتاعة الجاكيت باظت بعد ما لبسته يومين بس.\"", explanation: "تلف سريع يدل على سوء الخامات.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated" },
-    { source: "Edge Cases & Exceptions", scenario: "\"عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.\"", explanation: "طلب استبدال بمنتج مختلف وتسوية مالية.", reason: "Exchanges", resolution: "Exchange Initiated (أو Info Given إذا رفضتم)" },
-    { source: "Edge Cases & Exceptions", scenario: "\"أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟\"", explanation: "العميل بيسأل عن سياسة الاسترجاع في حالة فقدان الملحقات.", reason: "Policy (أو Exchanges)", resolution: "Information Given" },
+    { source: "Edge Cases & Exceptions", scenario: "\"عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.\"", explanation: "طلب استبدال بمنتج مختلف وتسوية مالية.", reason: "Exchanges", resolution: "Exchange Initiated" },
+    { source: "Edge Cases & Exceptions", scenario: "\"أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟\"", explanation: "العميل بيسأل عن سياسة الاسترجاع في حالة فقدان الملحقات.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "\"لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟\"", explanation: "استفسار طبيعي عن السياسة قبل الاستلام. يتم توضيح الرفض بلباقة.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "\"إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!\"", explanation: "اعتراض على سياسة الشركة. المندوب هنا غير مخطئ. يتم تأكيد سياسة الشركة.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "\"أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.\"", explanation: "المندوب نفذ تعليمات الشركة (ممنوع الفتح)، العميل افتعل المشكلة ورفض الاستلام. يتم تأكيد السياسة وإلغاء الطلب إذا لزم الأمر.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
+    { source: "Policy vs Courier Issues", scenario: "\"أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.\"", explanation: "المندوب نفذ تعليمات الشركة (ممنوع الفتح)، العميل افتعل المشكلة ورفض الاستلام.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
     { source: "Policy vs Courier Issues", scenario: "\"المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين.\"", explanation: "خطأ صريح من المندوب وسوء سلوك. يتم رفع شكوى لإدارة الشحن.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Policy vs Courier Issues", scenario: "\"المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!\"", explanation: "المندوب يرفض التوصيل للباب. هذه مشكلة في الشحن. يتم رفع شكوى.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Policy vs Courier Issues", scenario: "\"جتلي رسالة إن الأوردر (تم التسليم) وأنا أصلاً كنت نايم ومستلمتش حاجة!\"", explanation: "المندوب تلاعب بالنظام أو سلم الأوردر لشخص خطأ. يتم فتح تحقيق في الشحن.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
@@ -427,6 +623,23 @@
   let currentActiveTab = "All Tabs";
   let currentScenarioCategory = "All";
 
+  let activeReviewIndex = null;
+
+  // Session & Access Control
+  function changeUserSession() {
+    currentUser = document.getElementById('userSelector').value;
+    const indicator = document.getElementById('roleIndicator');
+
+    if (ESCALATION_REVIEWERS.includes(currentUser)) {
+      indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534;">✅ Escalation Reviewer (Validation Access)</span>';
+    } else if (QA_SPECIALISTS.includes(currentUser)) {
+      indicator.innerHTML = '<span class="role-tag" style="background:#f3e8ff; color:#6b21a8;">⭐ QA Specialist (Full Audit Access)</span>';
+    } else {
+      indicator.innerHTML = '<span class="role-tag">General CS Agent</span>';
+    }
+    loadLogs();
+  }
+
   function fetchGoogleSheetJSON(sheetId, callbackName, sheetName = "") {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -434,10 +647,7 @@
       window[uniqueName] = function(json) {
         delete window[uniqueName];
         document.body.removeChild(script);
-        if (!json || !json.table) {
-          resolve([]);
-          return;
-        }
+        if (!json || !json.table) { resolve([]); return; }
         const rawGrid = json.table.rows.map(r => r.c.map(cell => cell ? (cell.f || cell.v || '') : ''));
         resolve(rawGrid);
       };
@@ -553,7 +763,7 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
-  // 2. Decision Tree Wizard Engine (From Embedded Tree)
+  // 2. Decision Tree Engine
   function setDTLanguage(lang) {
     currentDTLanguage = lang;
     document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
@@ -643,7 +853,7 @@
     alert('✅ Canned response copied to clipboard!');
   }
 
-  // 3. 63 Real Customer Scenarios Renderer
+  // 3. 63 Scenarios
   function initScenariosSection() {
     const categories = ["All", ...new Set(EMBEDDED_SCENARIOS.map(s => s.source))];
     const pillContainer = document.getElementById('scenarioCategoryPills');
@@ -806,6 +1016,150 @@
     `).join('');
   }
 
+  // 5. Case Reviews (Nour Tamer & Nani El Shazly)
+  function openReviewModal(index) {
+    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
+    const r = records[index];
+    if (!r) return;
+
+    activeReviewIndex = index;
+    document.getElementById('modalCaseDetails').innerHTML = `
+      <strong>Order #:</strong> ${r.order_number} | <strong>Ticket #:</strong> ${r.ticket_number}<br>
+      <strong>Customer:</strong> ${r.customer_name} | <strong>Reason:</strong> ${r.contact_reason}<br>
+      <strong>Agent Summary:</strong> ${r.case_summary}
+    `;
+
+    document.getElementById('modal_review_status').value = r.review_status || 'Approved';
+    document.getElementById('modal_review_comment').value = r.review_comment || '';
+
+    document.getElementById('reviewModal').style.display = 'flex';
+  }
+
+  function closeReviewModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+    activeReviewIndex = null;
+  }
+
+  function saveCaseReview() {
+    if (activeReviewIndex === null) return;
+    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
+
+    records[activeReviewIndex].review_status = document.getElementById('modal_review_status').value;
+    records[activeReviewIndex].review_comment = document.getElementById('modal_review_comment').value;
+    records[activeReviewIndex].reviewed_by = currentUser;
+    records[activeReviewIndex].reviewed_at = new Date().toISOString().split('T')[0];
+
+    localStorage.setItem('mavin_escalations', JSON.stringify(records));
+    closeReviewModal();
+    loadLogs();
+    alert('✅ Case review decision successfully saved!');
+  }
+
+  // 6. Quality Audit Score Calculation & Auto-Email Dispatch
+  function calculateQAScore() {
+    const c1 = parseInt(document.getElementById('qa_crit_1').value) || 0;
+    const c2 = parseInt(document.getElementById('qa_crit_2').value) || 0;
+    const c3 = parseInt(document.getElementById('qa_crit_3').value) || 0;
+    const c4 = parseInt(document.getElementById('qa_crit_4').value) || 0;
+
+    const total = c1 + c2 + c3 + c4;
+    document.getElementById('liveScoreDisplay').innerText = total + '%';
+
+    let grade = 'Excellent (ممتاز ⭐⭐⭐)';
+    let color = '#10b981';
+
+    if (total < 70) { grade = 'Needs Coaching / Action Plan (يحتاج تحسين ⚠️)'; color = '#ef4444'; }
+    else if (total < 85) { grade = 'Good Performance (جيد 👍)'; color = '#f59e0b'; }
+
+    document.getElementById('liveGradeDisplay').innerText = `Grade: ${grade}`;
+    document.getElementById('liveScoreDisplay').style.color = color;
+    return { score: total, grade: grade };
+  }
+
+  document.getElementById('qaForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const scoreData = calculateQAScore();
+
+    const auditRecord = {
+      date: new Date().toISOString().split('T')[0],
+      agent_email: document.getElementById('qa_agent_email').value.trim(),
+      auditor_email: document.getElementById('qa_auditor_email').value.trim(),
+      ticket_ref: document.getElementById('qa_ticket_ref').value.trim(),
+      channel: document.getElementById('qa_channel').value,
+      score: scoreData.score + '%',
+      grade: scoreData.grade,
+      crit1: document.getElementById('qa_crit_1').value + '/20',
+      crit2: document.getElementById('qa_crit_2').value + '/25',
+      crit3: document.getElementById('qa_crit_3').value + '/35',
+      crit4: document.getElementById('qa_crit_4').value + '/20',
+      feedback: document.getElementById('qa_feedback').value.trim()
+    };
+
+    // Save QA record locally
+    const qaRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+    qaRecords.unshift(auditRecord);
+    localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
+
+    // Auto-generate formatted Email to Agent
+    const subject = encodeURIComponent(`[Mavin Wear QA] Quality Evaluation Report - Ticket ${auditRecord.ticket_ref} (${auditRecord.score})`);
+    const body = encodeURIComponent(
+      `Hello,\n\nHere is your Quality Assurance (QA) evaluation scorecard for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
+      `-----------------------------------------\n` +
+      `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
+      `👤 Auditor: ${auditRecord.auditor_email}\n` +
+      `📅 Date: ${auditRecord.date}\n` +
+      `📱 Channel: ${auditRecord.channel}\n` +
+      `-----------------------------------------\n\n` +
+      `Detailed Scoring Breakdown:\n` +
+      `1. Greeting, Professional Tone & Politeness: ${auditRecord.crit1}\n` +
+      `2. Root Cause Identification & Tagging: ${auditRecord.crit2}\n` +
+      `3. Policy Adherence & Resolution: ${auditRecord.crit3}\n` +
+      `4. SLA & First Contact Resolution: ${auditRecord.crit4}\n\n` +
+      `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
+      `Keep up the great effort!\nMavin Wear Quality Assurance Team`
+    );
+
+    // Open default mail client to dispatch directly to agent
+    window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
+
+    alert(`🎉 Quality Evaluation Logged! Score: ${auditRecord.score}.\nEmail dispatch client opened to send the report directly to ${auditRecord.agent_email}!`);
+    document.getElementById('qaForm').reset();
+    calculateQAScore();
+    showSection('qualityLogs');
+  });
+
+  function loadQALogs() {
+    const tbody = document.querySelector('#qaLogsTable tbody');
+    const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+
+    if (records.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations submitted yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = records.map(r => `
+      <tr>
+        <td>${r.date}</td>
+        <td><strong>${r.agent_email}</strong></td>
+        <td>${r.ticket_ref}</td>
+        <td><strong style="color:var(--purple); font-size:14px;">${r.score}</strong></td>
+        <td>${r.grade}</td>
+        <td>${r.auditor_email}</td>
+        <td>${r.feedback}</td>
+      </tr>
+    `).join('');
+  }
+
+  function exportQAToExcel() {
+    const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+    if (records.length === 0) { alert('No QA records to export.'); return; }
+    const ws = XLSX.utils.json_to_sheet(records);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "QA_Evaluations");
+    XLSX.writeFile(wb, "Mavin_Wear_QA_Evaluations.xlsx");
+  }
+
+  // General Navigation & Global Search
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
@@ -830,7 +1184,7 @@
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <div style="font-size:12px; font-weight:bold; color:var(--accent);">${item.code}</div>
+              <span class="sop-code-badge">${item.code}</span>
               <h3 class="sop-title">${item.title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
@@ -852,6 +1206,8 @@
     document.getElementById('refundPortalSection').style.display = 'none';
     document.getElementById('escalationSection').style.display = 'none';
     document.getElementById('logsSection').style.display = 'none';
+    document.getElementById('qualityFormSection').style.display = 'none';
+    document.getElementById('qualityLogsSection').style.display = 'none';
   }
 
   function goToHome() {
@@ -879,9 +1235,17 @@
       document.getElementById('logsSection').style.display = 'block';
       loadLogs();
     }
+    if (name === 'qualityForm') {
+      document.getElementById('qualityFormSection').style.display = 'block';
+      calculateQAScore();
+    }
+    if (name === 'qualityLogs') {
+      document.getElementById('qualityLogsSection').style.display = 'block';
+      loadQALogs();
+    }
   }
 
-  // Escalation Form
+  // Escalation Form Submission
   document.getElementById('escForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {
@@ -892,7 +1256,11 @@
       ticket_date: document.getElementById('ticket_date').value,
       received_order: document.getElementById('received_order').value === 'true',
       delivered_date: document.getElementById('delivered_date').value || null,
-      case_summary: document.getElementById('case_summary').value
+      case_summary: document.getElementById('case_summary').value,
+      review_status: 'Pending',
+      review_comment: '',
+      reviewed_by: '',
+      reviewed_at: ''
     };
     
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
@@ -901,6 +1269,7 @@
 
     alert('✅ Escalation successfully submitted and recorded!');
     document.getElementById('escForm').reset();
+    showSection('logs');
   });
 
   function loadLogs() {
@@ -908,21 +1277,37 @@
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
 
     if (records.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No records logged yet.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No escalation records logged yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = records.map(r => `
-      <tr>
-        <td><strong>${r.order_number}</strong></td>
-        <td>${r.ticket_number}</td>
-        <td>${r.customer_name}</td>
-        <td>${r.contact_reason}</td>
-        <td>${r.ticket_date}</td>
-        <td>${r.received_order ? 'Yes' : 'No'}</td>
-        <td>${r.case_summary}</td>
-      </tr>
-    `).join('');
+    const isReviewer = ESCALATION_REVIEWERS.includes(currentUser);
+
+    tbody.innerHTML = records.map((r, idx) => {
+      let statusClass = 'status-pending';
+      if (r.review_status === 'Approved') statusClass = 'status-approved';
+      if (r.review_status === 'Rejected') statusClass = 'status-rejected';
+
+      return `
+        <tr>
+          <td><strong>${r.order_number}</strong></td>
+          <td>${r.ticket_number}</td>
+          <td>${r.customer_name}</td>
+          <td>${r.contact_reason}</td>
+          <td>${r.ticket_date}</td>
+          <td>${r.case_summary}</td>
+          <td><span class="status-badge ${statusClass}">${r.review_status || 'Pending'}</span></td>
+          <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
+          <td>
+            ${isReviewer ? `
+              <button class="nav-btn primary" style="padding:4px 8px; font-size:12px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
+            ` : `
+              <span style="font-size:11.5px; color:var(--muted);">View Only</span>
+            `}
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
   function exportToExcel() {
@@ -939,7 +1324,7 @@
 
   // Startup
   goToHome();
-  initDecisionTreeWizard();
+  changeUserSession();
   fetchAllLiveSheets();
 </script>
 </body>
