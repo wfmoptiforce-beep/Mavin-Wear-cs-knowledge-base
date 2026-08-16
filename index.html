@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mavin Wear | CS Operations & Live Knowledge Hub</title>
   
-  <!-- المكتبات السحابية لمعالجة الشيتات وجداول البيانات -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
@@ -54,18 +52,16 @@
     .sub-filter-btn { padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted); transition: 0.2s; }
     .sub-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* Structured SOP & Step-by-Step Styling */
+    /* Structured SOP Card */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
-    .tag-container { display: flex; gap: 8px; flex-wrap: wrap; }
     .sop-system-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
     
     .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 12px; }
     .step-box { display: flex; gap: 15px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: flex-start; }
     .step-number { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
     .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
-    .step-content strong { color: var(--primary); }
     
     .callout-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 6px; font-size: 13.5px; color: #92400e; margin: 15px 0; }
     .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
@@ -118,23 +114,23 @@
     </div>
   </div>
 
-  <!-- 1. HOME VIEW (Categories from Live Sheets) -->
+  <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
     <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, policy, decision flow, or defect type..." onkeyup="handleGlobalSearch()">
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
-      ⏳ Connecting and loading procedures from your live Google Sheets...
+      ⏳ Connecting and loading procedures from Google Sheet...
     </div>
 
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
   </div>
 
-  <!-- 2. INTERACTIVE DECISION TREE VIEW (Live from Sheet 1) -->
+  <!-- 2. INTERACTIVE DECISION TREE VIEW -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
         <h2 style="margin:0; color:var(--primary);">🌳 Interactive Decision Tree Flow</h2>
-        <span id="dtSheetStatus" style="font-size:13px; color:var(--muted);">Loaded live from Decision Tree Google Sheet.</span>
+        <span id="dtSheetStatus" style="font-size:13px; color:var(--muted);">Loading branches...</span>
       </div>
       <div style="display:flex; gap:8px;">
         <a href="https://docs.google.com/spreadsheets/d/1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo/edit?usp=sharing" target="_blank" class="nav-btn">
@@ -168,11 +164,12 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
         <h2 style="margin:0; color:var(--primary);">🔍 Mavin Refunds — Agent Portal</h2>
-        <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">Live Google Sheet sync active.</span>
+        <span id="sheetRecordStatus" style="font-size:13px; color:var(--muted);">Loading live records...</span>
       </div>
       <div style="display:flex; gap:8px;">
+        <button class="nav-btn" onclick="fetchLiveRefundPortal()">🔄 Refresh Sheet Data</button>
         <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 Master Refund Sheet ↗
+          📊 Open Master Sheet ↗
         </a>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
@@ -184,7 +181,7 @@
           <strong style="color:var(--primary); font-size:15px;">Universal Multi-Field Search</strong>
           <div style="font-size:13px; color:var(--muted); margin-top:2px;">Search by Order #, Customer Phone, Name, Ticket #, or Wallet.</div>
         </div>
-        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records</span>
+        <span id="recordCounter" style="font-weight:bold; font-size:13px; color:var(--accent);">0 records loaded</span>
       </div>
 
       <div class="portal-search-row">
@@ -285,21 +282,49 @@
 </div>
 
 <script>
-  // 1. Google Sheets Live Endpoints
-  const DECISION_TREE_SHEET_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
+  // Google Sheets IDs
+  const DECISION_TREE_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
   const KB_SHEET_ID = "1f03md-Uhc2yrtucfRbhKyIu63HWsxMm312O4FJj80vk";
   const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
-
-  const DT_CSV_URL = `https://docs.google.com/spreadsheets/d/${DECISION_TREE_SHEET_ID}/gviz/tq?tqx=out:csv`;
-  const KB_CSV_URL = `https://docs.google.com/spreadsheets/d/${KB_SHEET_ID}/gviz/tq?tqx=out:csv`;
-  const REFUND_CSV_URL = `https://docs.google.com/spreadsheets/d/${REFUND_SHEET_ID}/gviz/tq?tqx=out:csv`;
 
   let masterKnowledgeBase = [];
   let decisionTreeData = [];
   let sheetRefundRecords = [];
   let sheetRawHeaders = [];
 
-  // جلب كافة البيانات لايف من كل شيتات جوجل
+  // دالة JSONP لجلب بيانات Google Sheet المباشرة بدون CORS error
+  function fetchGoogleSheetJSON(sheetId, callbackName) {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      const uniqueName = callbackName + '_' + Math.floor(Math.random() * 10000);
+      window[uniqueName] = function(json) {
+        delete window[uniqueName];
+        document.body.removeChild(script);
+        if (!json || !json.table) {
+          resolve({ headers: [], rows: [] });
+          return;
+        }
+        const headers = json.table.cols.map(c => (c ? c.label || '' : ''));
+        const rows = json.table.rows.map(r => {
+          const rowObj = {};
+          r.c.forEach((cell, idx) => {
+            const h = headers[idx] || `col_${idx}`;
+            rowObj[h] = cell ? (cell.f || cell.v || '') : '';
+          });
+          return rowObj;
+        });
+        resolve({ headers, rows });
+      };
+      script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=responseHandler:${uniqueName}`;
+      script.onerror = function() {
+        delete window[uniqueName];
+        document.body.removeChild(script);
+        resolve({ headers: [], rows: [] });
+      };
+      document.body.appendChild(script);
+    });
+  }
+
   async function fetchAllLiveSheets() {
     await Promise.all([
       fetchLiveKnowledgeBase(),
@@ -308,47 +333,37 @@
     ]);
   }
 
-  // 1. جلب قاعدة المعرفة والـ SOPs من شيت (1f03md...)
+  // 1. جلب شيت قاعدة المعرفة
   async function fetchLiveKnowledgeBase() {
     const loading = document.getElementById('kbLoadingState');
     const grid = document.getElementById('categoryGrid');
     
-    try {
-      const res = await fetch(KB_CSV_URL);
-      const csv = await res.text();
+    const result = await fetchGoogleSheetJSON(KB_SHEET_ID, 'handleKB');
+    if (result.rows && result.rows.length > 0) {
+      masterKnowledgeBase = result.rows.map((row, idx) => {
+        const keys = Object.keys(row);
+        const categoryVal = row.Category || row.category || row['القسم'] || keys[0] && row[keys[0]] || 'General Operations';
+        const titleVal = row.Title || row.title || row.Issue || row['اسم الحالة'] || keys[1] && row[keys[1]] || `SOP #${idx+1}`;
+        const actionVal = row.Action || row.Steps || row.Procedure || row['الإجراء'] || Object.values(row).join('\n');
+        const replyVal = row.CannedReply || row.Response || row['الرد'] || '';
+        const systemVal = row.System || row['السيستم'] || 'Operations System';
 
-      Papa.parse(csv, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          if (results.data && results.data.length > 0) {
-            masterKnowledgeBase = results.data.map((row, idx) => {
-              const keys = Object.keys(row);
-              const categoryVal = row.Category || row.category || row.Department || row['القسم'] || 'General Operations';
-              const titleVal = row.Title || row.title || row.Issue || row['اسم الحالة'] || keys[0] && row[keys[0]] || `SOP #${idx+1}`;
-              const actionVal = row.Action || row.Steps || row.Procedure || row['الإجراء'] || Object.values(row).join(' | ');
-              const replyVal = row.CannedReply || row.Response || row['الرد الجاهز'] || '';
-              const systemVal = row.System || row['السيستم'] || 'Mavin Wear Operations';
-
-              return {
-                category: String(categoryVal).trim(),
-                subCategory: row.SubCategory || String(categoryVal).trim(),
-                icon: getCategoryIcon(String(categoryVal)),
-                title: String(titleVal).trim(),
-                system: String(systemVal).trim(),
-                steps: String(actionVal).split('\n').filter(Boolean),
-                canned_reply: String(replyVal).trim()
-              };
-            });
-
-            loading.style.display = 'none';
-            grid.style.display = 'grid';
-            renderHomeCategories(masterKnowledgeBase);
-          }
-        }
+        return {
+          category: String(categoryVal).trim(),
+          subCategory: row.SubCategory || String(categoryVal).trim(),
+          icon: getCategoryIcon(String(categoryVal)),
+          title: String(titleVal).trim(),
+          system: String(systemVal).trim(),
+          steps: String(actionVal).split('\n').filter(Boolean),
+          canned_reply: String(replyVal).trim()
+        };
       });
-    } catch(err) {
-      console.error("Error fetching KB Sheet:", err);
+
+      loading.style.display = 'none';
+      grid.style.display = 'grid';
+      renderHomeCategories(masterKnowledgeBase);
+    } else {
+      loading.innerHTML = '⚠️ Could not load KB sheet. Please verify sheet sharing settings.';
     }
   }
 
@@ -361,45 +376,30 @@
     return '📑';
   }
 
-  // 2. جلب شجرة اتخاذ القرار من شيت (1yqsj...)
+  // 2. جلب شيت شجرة اتخاذ القرار
   async function fetchLiveDecisionTree() {
-    try {
-      const res = await fetch(DT_CSV_URL);
-      const csv = await res.text();
-
-      Papa.parse(csv, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          if (results.data && results.data.length > 0) {
-            decisionTreeData = results.data;
-            document.getElementById('dtSheetStatus').innerText = `✅ Live Sync Active — ${decisionTreeData.length} branches ready.`;
-            initDecisionTreeFlow();
-          }
-        }
-      });
-    } catch(err) {
-      console.error("Error fetching Decision Tree:", err);
+    const result = await fetchGoogleSheetJSON(DECISION_TREE_ID, 'handleDT');
+    if (result.rows && result.rows.length > 0) {
+      decisionTreeData = result.rows;
+      document.getElementById('dtSheetStatus').innerText = `✅ Live Sync Active — ${decisionTreeData.length} branches ready.`;
+      initDecisionTreeFlow();
     }
   }
 
-  // 3. محرك شجرة اتخاذ القرار التفاعلي
-  let dtCurrentLevel = 0;
+  // 3. محرك شجرة اتخاذ القرار
   let dtSelectedPath = [];
 
   function initDecisionTreeFlow() {
     if (!decisionTreeData || decisionTreeData.length === 0) return;
-    dtCurrentLevel = 0;
     dtSelectedPath = [];
     document.getElementById('dtResultBox').style.display = 'none';
     document.getElementById('dtOptionsContainer').style.display = 'grid';
 
-    // استخراج الخيارات الرئيسية من العمود الأول
     const keys = Object.keys(decisionTreeData[0]);
     const firstCol = keys[0];
     const mainOptions = [...new Set(decisionTreeData.map(r => r[firstCol]).filter(Boolean))];
 
-    document.getElementById('dtStepBadge').innerText = `Step 1 — Choose Main Issue`;
+    document.getElementById('dtStepBadge').innerText = `Step 1 — ${firstCol}`;
     document.getElementById('dtQuestion').innerText = `Select the customer's scenario:`;
 
     const container = document.getElementById('dtOptionsContainer');
@@ -412,7 +412,6 @@
     const val = decodeURIComponent(encodedVal);
     dtSelectedPath.push({ col: colName, val: val });
 
-    // تصفية البيانات بناءً على الاختيار
     let filtered = decisionTreeData;
     dtSelectedPath.forEach(step => {
       filtered = filtered.filter(r => r[step.col] === step.val);
@@ -421,7 +420,6 @@
     const keys = Object.keys(decisionTreeData[0]);
     const nextColIdx = keys.indexOf(colName) + 1;
 
-    // إذا وصلنا لآخر عمود (الحل أو الإجراء)
     if (nextColIdx >= keys.length - 1 || filtered.length === 1) {
       showDTResult(filtered[0]);
       return;
@@ -430,7 +428,7 @@
     const nextCol = keys[nextColIdx];
     const nextOptions = [...new Set(filtered.map(r => r[nextCol]).filter(Boolean))];
 
-    if (nextOptions.length === 0 || nextOptions.length === 1 && nextOptions[0] === '') {
+    if (nextOptions.length === 0 || (nextOptions.length === 1 && nextOptions[0] === '')) {
       showDTResult(filtered[0]);
       return;
     }
@@ -475,31 +473,23 @@
     alert('✅ Canned response copied to clipboard!');
   }
 
-  // 4. جلب بورتال الريفوند من شيت (1BLUm...)
+  // 4. جلب شيت الريفوند
   async function fetchLiveRefundPortal() {
     const statusText = document.getElementById('sheetRecordStatus');
     const counter = document.getElementById('recordCounter');
+    statusText.innerText = '⏳ Connecting to live Google Sheet...';
 
-    try {
-      const response = await fetch(REFUND_CSV_URL);
-      const csvText = await response.text();
+    const result = await fetchGoogleSheetJSON(REFUND_SHEET_ID, 'handleRefunds');
+    if (result.rows && result.rows.length > 0) {
+      sheetRefundRecords = result.rows;
+      sheetRawHeaders = result.headers.filter(Boolean);
+      if (sheetRawHeaders.length === 0) sheetRawHeaders = Object.keys(result.rows[0]);
 
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          if (results.data && results.data.length > 0) {
-            sheetRefundRecords = results.data;
-            sheetRawHeaders = results.meta.fields || Object.keys(results.data[0]);
-
-            statusText.innerText = `✅ Live Sync Active — ${sheetRefundRecords.length} records retrieved.`;
-            counter.innerText = `${sheetRefundRecords.length} records loaded`;
-            renderRefundTable(sheetRefundRecords);
-          }
-        }
-      });
-    } catch(err) {
-      statusText.innerText = '❌ Fetch error: ' + err.message;
+      statusText.innerText = `✅ Live Sync Active — ${sheetRefundRecords.length} records retrieved.`;
+      counter.innerText = `${sheetRefundRecords.length} records loaded`;
+      renderRefundTable(sheetRefundRecords);
+    } else {
+      statusText.innerText = '⚠️ Could not load records. Ensure sheet is set to Anyone with link can view.';
     }
   }
 
@@ -538,7 +528,7 @@
     }
   }
 
-  // Categories & Detail Renderers
+  // Categories Renderer
   function renderHomeCategories(data) {
     const grid = document.getElementById('categoryGrid');
     const categoriesMap = {};
@@ -690,7 +680,8 @@
     hideAllSections();
     if (name === 'decisionTree') {
       document.getElementById('decisionTreeSection').style.display = 'block';
-      initDecisionTreeFlow();
+      if (decisionTreeData.length === 0) fetchLiveDecisionTree();
+      else initDecisionTreeFlow();
     }
     if (name === 'refundPortal') {
       document.getElementById('refundPortalSection').style.display = 'block';
@@ -764,7 +755,7 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Startup
+  // Initial Load
   goToHome();
   fetchAllLiveSheets();
 </script>
