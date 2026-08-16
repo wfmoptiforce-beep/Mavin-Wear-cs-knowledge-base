@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Smart Operations Hub</title>
+  <title>Mavin Wear | Interactive Operations Hub</title>
   
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+  <!-- المكتبات الأساسية لقراءة الإكسيل والوورد والملفات المضغوطة -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
     :root {
@@ -50,7 +51,7 @@
 
     .sop-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .sop-title { font-size: 17px; font-weight: 700; color: var(--primary); margin: 0 0 10px 0; }
-    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
+    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto; background: #f8fafc; padding: 14px; border-radius: 6px; border: 1px solid var(--border); }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
@@ -70,7 +71,7 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Smart Knowledge Base & Multi-File Parser</div>
+    <div class="brand-sub">Interactive Knowledge Base, SOPs & Document Hub</div>
   </div>
 
   <div class="top-actions">
@@ -80,20 +81,20 @@
       <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
     </div>
     <div>
-      <!-- Multiple selection enabled -->
-      <input type="file" id="fileUploader" multiple accept=".zip, .docx, .xlsx, .xls, .csv, .txt, .json" style="display:none" onchange="handleSmartMultiUpload(event)">
-      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">📂 Upload Multiple Files / Folder</button>
+      <!-- يسمح بتحديد عدة ملفات معاً -->
+      <input type="file" id="fileUploader" multiple accept=".xlsx, .xls, .csv, .docx, .zip, .txt" style="display:none" onchange="handleSmartMultiUpload(event)">
+      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">📂 Select All Files / Excel / Folder</button>
     </div>
   </div>
 
   <!-- 1. HOME VIEW -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, policy, keyword, or defect handling..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, policy, defect type, or keyword..." onkeyup="handleGlobalSearch()">
     
     <div class="status-bar">
       <div>
         <strong style="color:var(--accent); font-size:14px;">📁 Knowledge Base Status</strong>
-        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Connecting to database...</div>
+        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Select your files or Excel sheets to organize them automatically.</div>
       </div>
       <span id="docCountBadge" style="font-size:12px; font-weight:bold; color:var(--success);">● Active</span>
     </div>
@@ -149,7 +150,7 @@
         <label>Case Summary (Action & Details):</label>
         <textarea id="case_summary" rows="3" placeholder="Explain details of defect or action taken..." required></textarea>
 
-        <button type="submit" class="submit-btn">💾 Submit to Database</button>
+        <button type="submit" class="submit-btn">💾 Submit & Save Escalation</button>
       </form>
     </div>
   </div>
@@ -185,119 +186,159 @@
 </div>
 
 <script>
-  const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
-  const client = (window.supabase) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-
   let documentsStore = [];
 
-  function autoCategorize(fileName, text) {
-    const combined = (fileName + " " + text).toLowerCase();
-    if (combined.includes('defect') || combined.includes('damage') || combined.includes('stain') || combined.includes('torn') || combined.includes('quality') || combined.includes('تالف') || combined.includes('عيب')) {
+  function autoCategorize(textToAnalyze) {
+    const txt = (textToAnalyze || "").toLowerCase();
+    if (txt.includes('defect') || txt.includes('damage') || txt.includes('stain') || txt.includes('torn') || txt.includes('quality') || txt.includes('تالف') || txt.includes('عيب') || txt.includes('قطع') || txt.includes('بقعة')) {
       return { category: "Defects & Quality", icon: "👗" };
     }
-    if (combined.includes('exchange') || combined.includes('size') || combined.includes('measure') || combined.includes('استبدال') || combined.includes('مقاس')) {
+    if (txt.includes('exchange') || txt.includes('size') || txt.includes('measure') || txt.includes('fit') || txt.includes('استبدال') || txt.includes('مقاس')) {
       return { category: "Exchanges & Sizes", icon: "🔄" };
     }
-    if (combined.includes('ship') || combined.includes('courier') || combined.includes('track') || combined.includes('delay') || combined.includes('delivery') || combined.includes('شحن') || combined.includes('توصيل')) {
+    if (txt.includes('ship') || txt.includes('courier') || txt.includes('track') || txt.includes('delay') || txt.includes('delivery') || txt.includes('شحن') || txt.includes('توصيل') || txt.includes('مندوب')) {
       return { category: "Shipping & Courier", icon: "🚚" };
     }
-    if (combined.includes('refund') || combined.includes('return') || combined.includes('cancel') || combined.includes('استرجاع') || combined.includes('الغاء')) {
+    if (txt.includes('refund') || txt.includes('return') || txt.includes('cancel') || txt.includes('استرجاع') || txt.includes('الغاء') || txt.includes('فلوس') || txt.includes('مرتجع')) {
       return { category: "Refunds & Returns", icon: "💳" };
     }
-    if (combined.includes('kpi') || combined.includes('sla') || combined.includes('metric') || combined.includes('score') || combined.includes('report')) {
+    if (txt.includes('kpi') || txt.includes('sla') || txt.includes('metric') || txt.includes('score') || txt.includes('report') || txt.includes('performance')) {
       return { category: "Operations & KPIs", icon: "📊" };
     }
     return { category: "General SOPs & Guidelines", icon: "📑" };
   }
 
-  // Multi-file smart reader
+  // Multi-File Parser
   async function handleSmartMultiUpload(e) {
     const files = Array.from(e.target.files);
     if (!files || files.length === 0) return;
 
-    document.getElementById('statusText').innerText = `⏳ Parsing ${files.length} selected files...`;
+    document.getElementById('statusText').innerText = `⏳ Parsing ${files.length} file(s)...`;
     let parsedDocs = [];
 
     for (const file of files) {
       try {
-        if (file.name.endsWith('.zip')) {
+        const fname = file.name.toLowerCase();
+
+        // 1. ملفات Excel
+        if (fname.endsWith('.xlsx') || fname.endsWith('.xls') || fname.endsWith('.csv')) {
+          const buffer = await file.arrayBuffer();
+          const wb = XLSX.read(new Uint8Array(buffer), { type: 'array' });
+
+          wb.SheetNames.forEach(sheetName => {
+            const sheet = wb.Sheets[sheetName];
+            const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+            if (rows && rows.length > 0) {
+              rows.forEach((row, idx) => {
+                const keys = Object.keys(row);
+                const titleVal = row['Title'] || row['title'] || row['Reason'] || row['Issue'] || row['اسم الحالة'] || row['المشكلة'] || keys[0] && row[keys[0]] || `Entry #${idx+1}`;
+                const actionVal = row['Action'] || row['action'] || row['Procedure'] || row['SOP'] || row['الإجراء'] || row['الخطوات'] || Object.values(row).join(' | ');
+                const replyVal = row['Canned_Response'] || row['Response'] || row['الرد'] || row['Canned Reply'] || '';
+
+                const cat = autoCategorize(`${sheetName} ${titleVal} ${actionVal}`);
+                parsedDocs.push({
+                  category: row['Category'] || cat.category,
+                  icon: cat.icon,
+                  title: String(titleVal).trim(),
+                  content: String(actionVal).trim(),
+                  canned_reply: String(replyVal).trim()
+                });
+              });
+            } else {
+              // إذا كان الجدول مصفوفة عادية
+              const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+              const textContent = rawData.map(r => r.join(' | ')).join('\n');
+              if (textContent.trim()) {
+                const cat = autoCategorize(`${sheetName} ${textContent}`);
+                parsedDocs.push({
+                  category: cat.category,
+                  icon: cat.icon,
+                  title: `${file.name} - ${sheetName}`,
+                  content: textContent,
+                  canned_reply: ''
+                });
+              }
+            }
+          });
+        }
+        // 2. ملفات Word (.docx)
+        else if (fname.endsWith('.docx')) {
+          const buffer = await file.arrayBuffer();
+          const res = await mammoth.extractRawText({ arrayBuffer: buffer });
+          if (res.value.trim()) {
+            const cat = autoCategorize(`${file.name} ${res.value}`);
+            parsedDocs.push({
+              category: cat.category,
+              icon: cat.icon,
+              title: file.name.replace('.docx', ''),
+              content: res.value.trim(),
+              canned_reply: ''
+            });
+          }
+        }
+        // 3. ملفات ZIP
+        else if (fname.endsWith('.zip')) {
           const zip = await JSZip.loadAsync(file);
-          for (const relativePath of Object.keys(zip.files)) {
-            const zipEntry = zip.files[relativePath];
-            if (!zipEntry.dir && !relativePath.includes('__MACOSX')) {
-              const name = zipEntry.name.split('/').pop();
-              if (name.endsWith('.docx')) {
-                const arrayBuffer = await zipEntry.async('arraybuffer');
-                const result = await mammoth.extractRawText({ arrayBuffer });
-                if (result.value.trim()) {
-                  const cat = autoCategorize(name, result.value);
-                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: name.replace('.docx', ''), content: result.value.trim() });
+          for (const path of Object.keys(zip.files)) {
+            const entry = zip.files[path];
+            if (!entry.dir && !path.includes('__MACOSX')) {
+              const entryName = entry.name.split('/').pop();
+              if (entryName.endsWith('.docx')) {
+                const buf = await entry.async('arraybuffer');
+                const docRes = await mammoth.extractRawText({ arrayBuffer: buf });
+                if (docRes.value.trim()) {
+                  const cat = autoCategorize(`${entryName} ${docRes.value}`);
+                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: entryName.replace('.docx', ''), content: docRes.value.trim(), canned_reply: '' });
                 }
-              } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
-                const arrayBuffer = await zipEntry.async('arraybuffer');
-                const wb = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+              } else if (entryName.endsWith('.xlsx') || entryName.endsWith('.xls') || entryName.endsWith('.csv')) {
+                const buf = await entry.async('arraybuffer');
+                const wb = XLSX.read(new Uint8Array(buf), { type: 'array' });
                 wb.SheetNames.forEach(s => {
-                  const rows = XLSX.utils.sheet_to_json(wb.Sheets[s], { header: 1 });
-                  const formatted = rows.map(r => r.join(' | ')).join('\n');
+                  const raw = XLSX.utils.sheet_to_json(wb.Sheets[s], { header: 1 });
+                  const formatted = raw.map(r => r.join(' | ')).join('\n');
                   if (formatted.trim()) {
-                    const cat = autoCategorize(s + " " + name, formatted);
-                    parsedDocs.push({ category: cat.category, icon: cat.icon, title: `${name} (${s})`, content: formatted });
+                    const cat = autoCategorize(`${entryName} ${s} ${formatted}`);
+                    parsedDocs.push({ category: cat.category, icon: cat.icon, title: `${entryName} (${s})`, content: formatted, canned_reply: '' });
                   }
                 });
-              } else if (name.endsWith('.txt') || name.endsWith('.csv') || name.endsWith('.md')) {
-                const text = await zipEntry.async('string');
-                if (text.trim()) {
-                  const cat = autoCategorize(name, text);
-                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: name, content: text.trim() });
+              } else if (entryName.endsWith('.txt') || entryName.endsWith('.md')) {
+                const str = await entry.async('string');
+                if (str.trim()) {
+                  const cat = autoCategorize(`${entryName} ${str}`);
+                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: entryName, content: str.trim(), canned_reply: '' });
                 }
               }
             }
           }
-        } else if (file.name.endsWith('.docx')) {
-          const arrayBuffer = await file.arrayBuffer();
-          const result = await mammoth.extractRawText({ arrayBuffer });
-          if (result.value.trim()) {
-            const cat = autoCategorize(file.name, result.value);
-            parsedDocs.push({ category: cat.category, icon: cat.icon, title: file.name.replace('.docx', ''), content: result.value.trim() });
-          }
-        } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-          const arrayBuffer = await file.arrayBuffer();
-          const wb = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
-          wb.SheetNames.forEach(sheetName => {
-            const sheet = wb.Sheets[sheetName];
-            const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-            const formatted = rows.filter(r => r.length > 0).map(r => r.join(' | ')).join('\n');
-            if (formatted.trim()) {
-              const cat = autoCategorize(sheetName + " " + file.name, formatted);
-              parsedDocs.push({
-                category: cat.category,
-                icon: cat.icon,
-                title: `${file.name.replace(/\.[^/.]+$/, "")} - ${sheetName}`,
-                content: formatted
-              });
-            }
-          });
-        } else {
+        }
+        // 4. نصوص عامة (.txt)
+        else {
           const text = await file.text();
           if (text.trim()) {
-            const cat = autoCategorize(file.name, text);
-            parsedDocs.push({ category: cat.category, icon: cat.icon, title: file.name, content: text.trim() });
+            const cat = autoCategorize(`${file.name} ${text}`);
+            parsedDocs.push({
+              category: cat.category,
+              icon: cat.icon,
+              title: file.name,
+              content: text.trim(),
+              canned_reply: ''
+            });
           }
         }
       } catch (err) {
-        console.error("Error reading file:", file.name, err);
+        console.error("Error parsing file:", file.name, err);
       }
     }
 
     if (parsedDocs.length > 0) {
       documentsStore = parsedDocs;
-      localStorage.setItem('mavin_kb_store', JSON.stringify(parsedDocs));
-      document.getElementById('statusText').innerText = `✅ Successfully organized ${parsedDocs.length} items from ${files.length} file(s)!`;
+      localStorage.setItem('mavin_kb_data', JSON.stringify(parsedDocs));
+      document.getElementById('statusText').innerText = `✅ Successfully loaded and organized ${parsedDocs.length} procedures from your files!`;
       goToHome();
-      alert(`🎉 Successfully organized ${parsedDocs.length} procedures and files!`);
+      alert(`🎉 Organized ${parsedDocs.length} procedures and records into smart categories!`);
     } else {
-      alert('⚠️ Could not extract text from the selected files. Please check file format.');
+      alert('⚠️ Could not extract data from the selected file. Please make sure the sheet has content.');
     }
   }
 
@@ -323,7 +364,7 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">Organized procedures, guidelines, and SOP documents.</div>
+            <div class="cat-desc">Organized procedures and operational guides.</div>
           </div>
           <span class="cat-badge">📂 ${info.count} Procedures ➔</span>
         </div>
@@ -371,7 +412,7 @@
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching query.</p>';
+      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
         <div class="sop-item">
@@ -414,7 +455,7 @@
   }
 
   // Submit Escalation
-  document.getElementById('escForm').addEventListener('submit', async (e) => {
+  document.getElementById('escForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const data = {
       order_number: document.getElementById('order_number').value,
@@ -427,41 +468,24 @@
       case_summary: document.getElementById('case_summary').value
     };
     
-    const localRecords = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    localRecords.unshift(data);
-    localStorage.setItem('mavin_escalations', JSON.stringify(localRecords));
+    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
+    records.unshift(data);
+    localStorage.setItem('mavin_escalations', JSON.stringify(records));
 
-    if (client) {
-      try { await client.from('product_escalations').insert([data]); } catch(e){}
-    }
-
-    alert('✅ Escalation successfully logged!');
+    alert('✅ Escalation successfully logged and saved!');
     document.getElementById('escForm').reset();
   });
 
-  async function loadLogs() {
+  function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Fetching database records...</td></tr>';
-    
-    let allRecords = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    if (client) {
-      try {
-        const { data } = await client.from('product_escalations').select('*').order('id', { ascending: false });
-        if (data && data.length > 0) {
-          const keys = new Set(allRecords.map(r => r.order_number + "_" + r.ticket_number));
-          data.forEach(d => {
-            if (!keys.has(d.order_number + "_" + d.ticket_number)) allRecords.push(d);
-          });
-        }
-      } catch(e){}
-    }
+    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
 
-    if (allRecords.length === 0) {
+    if (records.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No records logged yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = allRecords.map(r => `
+    tbody.innerHTML = records.map(r => `
       <tr>
         <td><strong>${r.order_number}</strong></td>
         <td>${r.ticket_number}</td>
@@ -486,12 +510,12 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Load Saved KB or Defaults
-  const saved = localStorage.getItem('mavin_kb_store');
-  if (saved) {
+  // Load Saved or Default SOPs
+  const savedData = localStorage.getItem('mavin_kb_data');
+  if (savedData) {
     try {
-      documentsStore = JSON.parse(saved);
-      document.getElementById('statusText').innerText = `Loaded saved Knowledge Base (${documentsStore.length} items).`;
+      documentsStore = JSON.parse(savedData);
+      document.getElementById('statusText').innerText = `Active Knowledge Base (${documentsStore.length} procedures loaded).`;
     } catch(e) {}
   } else {
     documentsStore = [
@@ -501,7 +525,6 @@
       { category: "Refunds & Returns", icon: "💳", title: "Customer Return & Refund SOP", content: "Check that item meets return criteria (tags intact, unworn). Once warehouse inspection approves the return, process refund within 3-5 business days.", canned_reply: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly." },
       { category: "Operations & KPIs", icon: "📊", title: "CS Response SLAs & Quality Standards", content: "First Response Time (FRT) < 15 minutes. CSAT target > 90%. All product defects must be logged in the escalation database daily.", canned_reply: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority." }
     ];
-    document.getElementById('statusText').innerText = `Default knowledge base active (${documentsStore.length} procedures).`;
   }
 
   goToHome();
