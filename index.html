@@ -157,7 +157,7 @@
 
     .status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
     .status-approved { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
-    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
     .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
@@ -190,7 +190,7 @@
         <path d="M224 42V6H234L250 29V6H260V42H250L234 19V42H224Z" fill="#09090B"/>
       </svg>
     </div>
-    <div class="brand-sub">Operations, Decision Engine & QA Intelligence Hub</div>
+    <div class="brand-sub">Operations, Bosta Partnership & QA Intelligence Hub</div>
   </div>
 
   <!-- User Session Header -->
@@ -222,13 +222,13 @@
 
   <!-- INTERACTIVE AGENT WORKFLOW GUIDE (Step-by-Step Flow with Arrows) -->
   <div class="workflow-banner">
-    <div class="workflow-title">⚡ MAVIN Agent Golden Workflow (Step-by-Step Guide)</div>
+    <div class="workflow-title">⚡ MAVIN × BOSTA Agent Golden Workflow</div>
     <div class="flow-container">
       <div class="flow-step-card">
         <div>
           <div class="flow-step-num">Step 1</div>
           <div class="flow-step-head">Open Ticket & Flag First</div>
-          <div class="flow-step-desc">Always open ticket and flag issue before messaging customer. Protects 24h SLA.</div>
+          <div class="flow-step-desc">Always open ticket & log order # before contacting customer. Protects 24h SLA.</div>
         </div>
       </div>
       <div class="flow-arrow">➔</div>
@@ -261,7 +261,7 @@
   <!-- 1. HOME VIEW (Bilingual Knowledge Base) -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. One Touch, Flag Ticket, 10% Store Credit, Bosta, Duplicate Refund)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Fulfillment, One Touch, 10% Store Credit, Awaiting Action, NDR)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
@@ -342,14 +342,14 @@
     </div>
 
     <div class="portal-banner">
-      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Flag Ticket, 10% bonus, Compression Tee, delayed order)..." onkeyup="filterScenarios()">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Bosta fulfillment, Awaiting Action, 10% bonus, Compression Tee)..." onkeyup="filterScenarios()">
       <div class="tab-pills" id="scenarioCategoryPills"></div>
     </div>
 
     <div id="scenariosContainer"></div>
   </div>
 
-  <!-- 4. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW (Clean Headers & Colored Status) -->
+  <!-- 4. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW -->
   <div id="refundPortalSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -419,7 +419,7 @@
         <input type="text" id="customer_name" required>
 
         <label>Contact Reason:</label>
-        <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Size Exchange / COD Refund / Transfer Delay" required>
+        <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Bosta Awaiting Action / COD Refund" required>
 
         <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
@@ -522,10 +522,10 @@
               <option value="Missed One-Touch Resolution">Missed One-Touch Resolution</option>
               <option value="Unclosed Resolved Ticket SLA Breach">Unclosed Resolved Ticket (> 2-3 hours) ⚠️</option>
               <option value="Blindly Followed Previous Agent">Blindly Followed Previous Agent (No self-check) ❌</option>
+              <option value="Bosta Fulfillment / Awaiting Action Delay">Bosta Fulfillment / Awaiting Action Delay</option>
               <option value="Production / Quality Issue">Production / Factory Defect</option>
               <option value="Refund System Update / Delay">Refund System Update Delay</option>
               <option value="Non-Agent Related - Courier">Non-Agent Related (Courier)</option>
-              <option value="Non-Agent Related - Warehouse">Non-Agent Related (Warehouse)</option>
             </select>
           </div>
         </div>
@@ -717,8 +717,50 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (ZERO EXTERNAL DEPENDENCY)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING BOSTA PARTNERSHIP HANDBOOK & PLAYBOOKS)
   const EMBEDDED_MASTER_SOPS = [
+    {
+      code: "SOP-BOSTA-01",
+      category_en: "Bosta Partnership & Fulfillment",
+      category_ar: "شراكة بوسطة والوفاء بالطلبات",
+      system: "Bosta API + Shopify",
+      title_en: "📦 Bosta Fulfillment & Order Journey (3PL Partnership)",
+      title_ar: "📦 رحلة الطلب وشراكة الإنجاز مع بوسطة (3PL Partnership)",
+      description_en: "Bosta owns the full fulfillment operation (pick, pack, ship, last-mile). Mavin Wear owns sales and return decisions. Orders are received via API, queued for same-day processing (95%+ target), and tracked through delivery or NDR.",
+      description_ar: "تتولى بوسطة كامل عمليات الاستلام والتجهيز والشحن والتوصيل للعميل (3PL)، بينما تدير ميفين مبيعاتها وقرارات المرتجعات. يتم استقبال الطلبات عبر الـ API وإنجازها في نفس اليوم.",
+      steps_en: [
+        "1. Order Creation: Customer places order; clean data (address, phone, SKU) is pushed via API to Bosta.",
+        "2. Pick & Pack: Bosta warehouse picks items, checks against order, and packs per agreed standards.",
+        "3. Last-Mile Delivery: Bosta dispatches for delivery and sends tracking updates to customer.",
+        "4. Success / NDR: Delivered & COD collected, OR failed delivery resulting in NDR notification within 24h."
+      ],
+      steps_ar: [
+        "1. إنشاء الطلب: دفع بيانات صحيحة عبر الـ API (العنوان، الهاتف، الـ SKU).",
+        "2. التجهيز والتغليف: بوسطة تقوم بالانتقاي والتغليف وفق معايير الجودة.",
+        "3. التوصيل: بوسطة تتولى التوصيل وإرسال تحديثات التتبع للعميل.",
+        "4. التسليم أو الـ NDR: تسليم ناجح وتحصيل الكاش، أو فشل تسجيل NDR خلال 24 ساعة."
+      ],
+      canned_reply: "Your order has been securely processed and dispatched with Bosta delivery partner. You can track its live status anytime."
+    },
+    {
+      code: "SOP-BOSTA-02",
+      category_en: "Bosta Partnership & Fulfillment",
+      category_ar: "شراكة بوسطة والوفاء بالطلبات",
+      system: "Bosta Portal + Shopify Tags",
+      title_en: "⚠️ Bosta Exception Handling: Awaiting Action & OOS Orders",
+      title_ar: "⚠️ معالجة استثناءات بوسطة: طلبات Awaiting Action و OOS",
+      description_en: "Protocol for fixing stuck orders. 'Awaiting Action' (bad address/phone) must be flagged by Bosta within 2h and resolved by Mavin within 12h. OOS orders must be reported within 24h to avoid invisible dead stock.",
+      description_ar: "بروتوكول معالجة الطلبات المعلقة: طلبات Awaiting Action (عنوان/هاتف خاطئ) تُبلغ خلال ساعتين وتحل خلال 12 ساعة، وطلبات نفاد المخزون (OOS) تبلغ خلال 24 ساعة.",
+      steps_en: [
+        "Awaiting Action (Bad Address/Phone): Bosta flags within 2h ➔ Mavin contacts customer and sends fix within 12h ➔ Bosta re-dispatches within 24h.",
+        "OOS Orders: Warehouse flags out-of-stock items immediately ➔ Bosta sends OOS report within 24h ➔ Mavin decides (substitute, cancel, or hold) within 12h."
+      ],
+      steps_ar: [
+        "طلبات Awaiting Action: بوسطة تبلغ خلال ساعتين ➔ ميفين تتواصل وتصلح البيانات خلال 12 ساعة ➔ بوسطة تعيد الإرسال خلال 24 ساعة.",
+        "طلبات نفاد المخزون (OOS): إرسال تقرير OOS خلال 24 ساعة لقرارات الاستبدال أو الإلغاء."
+      ],
+      canned_reply: "We are coordinating directly with Bosta operations to update your delivery details and expedite dispatch."
+    },
     {
       code: "SOP-CORE-02",
       category_en: "Customer Support & Ticket Operations",
@@ -814,90 +856,6 @@
       canned_reply: "Your issue has been resolved. If you need any further assistance, feel free to reach out anytime!"
     },
     {
-      code: "SOP-REF-01",
-      category_en: "Refunds & Financial Operations",
-      category_ar: "العمليات المالية والاسترداد",
-      system: "Refund Sheets & Portal",
-      title_en: "1. Refund Sheet – Duplicate Entries Search Protocol",
-      title_ar: "1. منع الإدخالات المكررة في شيت الاسترداد (Duplicate Entries)",
-      description_en: "Mandatory search protocol to eliminate duplicate refund processing across Order #, Name, and Phone Number.",
-      description_ar: "بروتوكول بحث إلزامي قبل إضافة أي طلب استرداد مالي لمنع الازدواجية والأخطاء الحسابية.",
-      steps_en: [
-        "Search sheet by Order #, Customer Name, and Phone before creating any refund entry.",
-        "Ensure no duplicated entry exists.",
-        "Do not process duplicates under any circumstances."
-      ],
-      steps_ar: [
-        "البحث المسبق في شيت الاسترداد برقم الطلب والاسم والهاتف.",
-        "التأكد التام من عدم وجود إدخال مسجل مسبقاً.",
-        "منع تكرار تسجيل الطلب لتفادي تكرار التحويل المالي."
-      ],
-      canned_reply: "We are verifying your refund request in our financial logs to ensure accurate processing without duplicates."
-    },
-    {
-      code: "SOP-REF-02",
-      category_en: "Refunds & Financial Operations",
-      category_ar: "العمليات المالية والاسترداد",
-      system: "Shopify + Calculator",
-      title_en: "2. Net Refund Amount Calculation SOP (Discounts & Shipping)",
-      title_ar: "2. احتساب صافي قيمة الاسترداد المالي مع الخصومات والشحن",
-      description_en: "Standard calculation method for calculating net customer refunds taking into account original promotions and shipping deductions.",
-      description_ar: "الآلية الرسمية لاحتساب المبلغ المسترد بدقة مع مراعاة أكواد الخصم ورسوم الشحن المطبقة.",
-      steps_en: [
-        "Calculate net refundable amount after deducting promotional discounts.",
-        "Deduct shipping fees for regular returns (never deduct for production defects).",
-        "Confirm final net amount before submission."
-      ],
-      steps_ar: [
-        "احتساب المبلغ الصافي بخصم قيمة العروض الترويجية.",
-        "خصم رسوم الشحن في المرتجع العادي (ولا تُخصم في عيوب التصنيع).",
-        "مراجعة المبلغ النهائي ومطابقته للفاتورة."
-      ],
-      canned_reply: "Your net refund amount has been calculated based on the item price after promotional deductions and shipping fee rules."
-    },
-    {
-      code: "SOP-LOG-03",
-      category_en: "Shipping & Courier Operations",
-      category_ar: "الشحن والعمليات اللوجستية",
-      system: "Bosta Business Portal",
-      title_en: "3. Address Sheet & Bosta Business Direct Entry",
-      title_ar: "3. تحديث العناوين مباشرة عبر نظام Bosta Business",
-      description_en: "Standard operating procedure for updating customer shipping addresses during active delivery states.",
-      description_ar: "الإجراء المعتمد لتعديل عناوين التسليم للعملاء أثناء سريان حالة الشحن.",
-      steps_en: [
-        "Enter updated address details directly within the order on Bosta Business.",
-        "Ensures real-time courier dispatch update even if order appears as 'Shipped' or 'Heading to Customer'.",
-        "Verify complete address and secondary phone with customer."
-      ],
-      steps_ar: [
-        "إدخال وتعديل بيانات العنوان مباشرة من داخل تفاصيل الطلب على Bosta Business.",
-        "يضمن وصول التحديث للمندوب فوراً حتى لو كانت الشحنة في الطريق.",
-        "التأكيد مع العميل على العنوان التفصيلي الجديد."
-      ],
-      canned_reply: "Your delivery address update has been recorded directly on Bosta Business logistics portal for the courier."
-    },
-    {
-      code: "SOP-EXC-04",
-      category_en: "Exchanges & Sizes",
-      category_ar: "الاستبدال والمقاسات",
-      system: "Exchange Tool & Sheet",
-      title_en: "4. Exchange Sheet – 'In Progress' Status Definition",
-      title_ar: "4. تحديد حالة 'قيد التنفيذ' (In Progress) في شيت الاستبدال",
-      description_en: "Clear workflow definition for handling 2nd exchange requests and pending initial exchanges.",
-      description_ar: "المعنى الإجرائي لحالة In Progress في طلبات الاستبدال المتعددة والمتابعات المعلقة.",
-      steps_en: [
-        "'In Progress' status means the second exchange is currently pending because the first exchange has not yet been completed.",
-        "Do NOT dispatch the second exchange until initial return confirmation is received.",
-        "Update the sheet once warehouse confirms receipt."
-      ],
-      steps_ar: [
-        "حالة 'In Progress' تعني أن طلب الاستبدال الثاني معلق لعدم اكتمال تسليم الاستبدال الأول.",
-        "عدم إرسال الاستبدال الثاني إلا بعد التأكد من اكتمال الإجراء الأول بنجاح.",
-        "تحديث حالة الشيت فور ورود التحديث التأكيدي."
-      ],
-      canned_reply: "Your exchange request is currently In Progress pending the completion and return confirmation of the initial exchange."
-    },
-    {
       code: "SOP-REF-05",
       category_en: "Refunds & Financial Operations",
       category_ar: "العمليات المالية والاسترداد",
@@ -963,7 +921,7 @@
     { source: "One-Touch Ticket & Efficiency", scenario: "\"عايز أعرف الأوردر هيوصل إمتى ورقم البوليصة إيه بالظبط؟\"", explanation: "تحقيق One Touch متكامل: فحص Shopify و Bosta وإرسال رابط التتبع والـ SLA في رسالة واحدة متكاملة وإغلاق التذكرة فوراً.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
     { source: "Ticket Hygiene & Closure SLA", scenario: "\"الأوردر وصلني والمشكلة اتحلت شكراً ليكم!\"", explanation: "تم حل التذكرة بالكامل؛ يجب إغلاق التذكرة خلال ساعتين إلى ٣ ساعات كحد أقصى لمنع تراكم التذاكر المحلولة.", reason: "Order Status & Tracking", resolution: "Information Given / Ticket Closed" },
     { source: "Investigation & Golden Rule", scenario: "\"الزميل اللي قبلي قالي في الشات إن الأوردر هيتسلم النهاردة، ومجاش!\"", explanation: "تطبيق قاعدة التحقيق الذاتي: الخطأ وارد ولا يُبنى على رد الزميل السابق. يتم الفحص فوراً عبر Shopify, Gorgias, Slack, Bosta وتقديم الميعاد الدقيق.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "Refund System Upgrade & Store Credit Bonus", scenario: "\"الفلوس بتاعت المرتجع اتأخرت ولسه موصلتش لحسابي\"", explanation: "نظراً للتحديثات الحالية على نظام التحويلات، يتم توضيح مهلة الـ ٣ أيام عمل، مع تقديم خيار رصيد المتجر الفوري مضافاً إليه ١٠٪ بونص زيادة هدية.", reason: "Refund not received", resolution: "Offer Store Credit (+10% Bonus)" },
+    { source: "Refund System Upgrade & Store Credit Bonus", scenario: "\"الفلوس بتاعت المرتجع اتأخرت ولسه موصلتش لحسابي\"", explanation: "نظراً لتحديثات نظام التحويلات، يتم توضيح مهلة الـ ٣ أيام عمل، مع تقديم خيار رصيد المتجر الفوري مضافاً إليه ١٠٪ بونص زيادة هدية.", reason: "Refund not received", resolution: "Offer Store Credit (+10% Bonus)" },
     { source: "Production Quality Issues (SOP Directive)", scenario: "\"تيشرت الـ Compression Tee الخياطة والأكمام فيها عيب ومش مظبوطة، وعايز احتفظ بيه بس عوضوني\"", explanation: "عيب إنتاج مؤكد: إظهار الاستعداد الكامل للمساعدة، وتحمل المسؤولية، وتقديم تعويض / استرداد 50% من سعر القطعة فوراً.", reason: "Damaged or Defective Item", resolution: "Discount (50% Refund Compensation)" },
     { source: "Production Quality Issues (SOP Directive)", scenario: "\"الـ Compression Tee فيه عيب خياطة وعايز أرجعه وأخد فلوسي كاملة\"", explanation: "عيب إنتاج مؤكد: عمل استرداد كامل لقيمة المنتج بنسبة 100% بعد استلام المرتجع.", reason: "Damaged or Defective Item", resolution: "Refund (Full Amount)" },
     { source: "Production Quality Issues (SOP Directive)", scenario: "\"الـ Compression Tee فيه عيب تصنيع وعايز أبدله بقطعة تانية\"", explanation: "عيب إنتاج مؤكد: استبدال مجاني 100% بدون أي رسوم شحن مع توضيح ذلك للعميل بصورة واضحة.", reason: "Damaged / Wrong Item / Wrong Size", resolution: "Exchange Initiated (100% Free Shipping)" },
@@ -1049,7 +1007,7 @@
     if (c.includes('ticket') || c.includes('تذاكر') || c.includes('protocol')) return '📌';
     if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي')) return '💳';
     if (c.includes('core') || c.includes('one') || c.includes('golden') || c.includes('مبادئ')) return '⭐';
-    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة')) return '📦';
+    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة') || c.includes('bosta')) return '📦';
     if (c.includes('exchange') || c.includes('size') || c.includes('استبدال')) return '🔄';
     if (c.includes('ship') || c.includes('delivery') || c.includes('شحن')) return '🚚';
     return '📑';
