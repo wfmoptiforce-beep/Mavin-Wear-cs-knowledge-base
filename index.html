@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Operations & Live Multi-Tab Hub</title>
+  <title>Mavin Wear | CS Operations & Decision Engine Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -17,6 +17,7 @@
       --border: #e2e8f0;
       --success: #10b981;
       --warning: #f59e0b;
+      --purple: #8b5cf6;
       --text: #1e293b;
       --muted: #64748b;
     }
@@ -47,26 +48,18 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Clean SOP Card */
-    .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-    .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
-    .sop-code-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
-    .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
-
     /* Decision Wizard Layout */
-    .dt-wrapper { background: white; border-radius: 14px; border: 1px solid var(--border); padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .dt-wrapper { background: white; border-radius: 14px; border: 1px solid var(--border); padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; }
     .dt-top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
     .dt-breadcrumb { font-size: 13.5px; color: var(--muted); font-weight: 600; }
     .dt-breadcrumb span { color: var(--accent); }
     .lang-toggle { display: flex; background: #f1f5f9; border-radius: 8px; padding: 3px; }
-    .lang-btn { border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
+    .lang-btn { border: none; padding: 6px 14px; border-radius: 6px; font-size: 12.5px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
     .lang-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
     .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
     .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    
     .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
     .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
     .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
@@ -75,6 +68,11 @@
 
     .dt-resolution-card { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; padding: 24px; margin-top: 15px; }
     .res-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .res-grid-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 15px 0; }
+    .res-info-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .res-info-label { font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase; }
+    .res-info-val { font-size: 15px; font-weight: bold; color: var(--primary); margin-top: 4px; }
+
     .res-block { background: white; border: 1px solid var(--border); border-left: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
     .res-block strong { color: var(--primary); font-size: 14px; }
     .res-block div { margin-top: 6px; font-size: 15px; color: #334155; line-height: 1.5; }
@@ -83,12 +81,19 @@
     .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
-    /* Refund Portal Banner & Multi-Tab Table */
+    /* Scenario Card List */
+    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 12px; transition: 0.2s; }
+    .scenario-item:hover { border-color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+    .sc-quote { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .sc-explain { font-size: 13.5px; color: #334155; margin-bottom: 12px; line-height: 1.5; }
+    .sc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sc-tag-reason { background: #eff6ff; color: #1d4ed8; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .sc-tag-res { background: #f0fdf4; color: #166534; font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+
+    /* Multi-Tab Portal */
     .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
     .portal-search-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
     .portal-search-input { flex: 1; min-width: 250px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; }
-    .tab-select { padding: 14px; border: 1px solid var(--border); border-radius: 8px; background: white; font-weight: bold; color: var(--primary); cursor: pointer; }
-    
     .tab-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
     .tab-pill-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #bfdbfe; background: white; color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .tab-pill-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
@@ -96,7 +101,6 @@
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
     th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
     th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
-    td { line-height: 1.4; }
 
     /* Escalation Form */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
@@ -110,25 +114,26 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Multi-Tab Live Search — Decision Tree, SOPs & Agent Portal</div>
+    <div class="brand-sub">Decision Engine, 63 Real Customer Scenarios & Live Multi-Tab Portal</div>
   </div>
 
   <div class="top-actions">
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
       <button class="nav-btn" onclick="showSection('decisionTree')">🌳 Interactive Decision Tree</button>
+      <button class="nav-btn" onclick="showSection('scenarios')">🗣️ 63 Customer Scenarios</button>
       <button class="nav-btn" onclick="showSection('refundPortal')">🔍 Agent Return/Refund Portal</button>
       <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
       <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
     </div>
     <div style="display: flex; gap: 8px;">
-      <button class="nav-btn accent" onclick="fetchAllLiveSheets()">🔄 Sync All Live Sheets</button>
+      <button class="nav-btn accent" onclick="fetchAllLiveSheets()">🔄 Sync Live Sheets</button>
     </div>
   </div>
 
-  <!-- 1. HOME VIEW -->
+  <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, cheat sheet, or policy..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, customer scenario, decision branch, or policy..." onkeyup="handleGlobalSearch()">
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
       ⏳ Connecting and loading procedures from Google Sheets...
@@ -137,18 +142,15 @@
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
   </div>
 
-  <!-- 2. INTERACTIVE DECISION TREE VIEW -->
+  <!-- 2. INTERACTIVE DECISION TREE WIZARD (Built from your Excel Map) -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--primary);">🌳 Interactive Decision Tree Flow</h2>
-        <span id="dtSheetStatus" style="font-size:13px; color:var(--muted);">Parsing official branches...</span>
+        <h2 style="margin:0; color:var(--primary);">🌳 Official Decision Tree Engine</h2>
+        <span style="font-size:13px; color:var(--muted);">Structured from the Mavin Wear Master Decision Tree Map.</span>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="nav-btn" onclick="resetDecisionTree()">🔄 Restart Scenario</button>
-        <a href="https://docs.google.com/spreadsheets/d/1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 Master Sheet ↗
-        </a>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
@@ -172,19 +174,25 @@
           <span class="res-badge">✅ Recommended Official Resolution</span>
           <h3 id="resTitle" style="margin:0 0 10px 0; font-size:19px; color:var(--primary);"></h3>
 
+          <div class="res-grid-info">
+            <div class="res-info-card">
+              <div class="res-info-label">Contact Reason</div>
+              <div class="res-info-val" id="resReasonBadge"></div>
+            </div>
+            <div class="res-info-card">
+              <div class="res-info-label">Resolution Code</div>
+              <div class="res-info-val" id="resResolutionBadge" style="color:var(--accent);"></div>
+            </div>
+          </div>
+
           <div class="res-block">
             <strong>📋 Action to Take:</strong>
             <div id="resActionText"></div>
           </div>
 
-          <div class="res-block" style="border-left-color:#8b5cf6;">
-            <strong>🎯 Result / Status Expected:</strong>
-            <div id="resExpectedText"></div>
-          </div>
-
           <div class="canned-box" id="resReplyBox">
             <button class="copy-btn" onclick="copyReplyText()">📋 Copy Canned Reply</button>
-            <strong style="color:#166534;">💬 Approved Response:</strong>
+            <strong style="color:#166534;">💬 Approved Customer Response:</strong>
             <div id="resReplyText" style="margin-top:6px; color:#14532d; font-size:14px; line-height:1.5;"></div>
           </div>
 
@@ -194,7 +202,25 @@
     </div>
   </div>
 
-  <!-- 3. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW -->
+  <!-- 3. REAL CUSTOMER SCENARIOS (63 Cases from your Excel) -->
+  <div id="scenariosSection" style="display:none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="margin:0; color:var(--primary);">🗣️ Real Customer Scenarios & Tone Guide</h2>
+        <span style="font-size:13px; color:var(--muted);">63 actual scenarios, root-cause analysis, and exact tagging rules.</span>
+      </div>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+    </div>
+
+    <div class="portal-banner">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. الأوردر اتأخر, مقاس ضيق, بهت, شتمني, كود خصم)..." onkeyup="filterScenarios()">
+      <div class="tab-pills" id="scenarioCategoryPills"></div>
+    </div>
+
+    <div id="scenariosContainer"></div>
+  </div>
+
+  <!-- 4. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW -->
   <div id="refundPortalSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -223,9 +249,7 @@
         <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Phone, Order #, Name, Item Name, or Reason to search..." onkeyup="filterPortalRecords()">
       </div>
 
-      <div class="tab-pills" id="tabPillsContainer">
-        <!-- Tab buttons populated dynamically -->
-      </div>
+      <div class="tab-pills" id="tabPillsContainer"></div>
     </div>
 
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
@@ -236,7 +260,7 @@
     </div>
   </div>
 
-  <!-- 4. DETAIL VIEW -->
+  <!-- 5. DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
       <div>
@@ -248,7 +272,7 @@
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 5. ESCALATION FORM VIEW -->
+  <!-- 6. ESCALATION FORM VIEW -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
@@ -288,7 +312,7 @@
     </div>
   </div>
 
-  <!-- 6. LOGS VIEW -->
+  <!-- 7. LOGS VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <h2 style="margin:0; color:var(--primary);">📊 Database Escalation Records</h2>
@@ -319,20 +343,89 @@
 </div>
 
 <script>
-  const DECISION_TREE_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
+  // 1. EMBEDDED DECISION TREE DATA (From Sheet: Decision Tree Map)
+  const EMBEDDED_DT_TREE = [
+    { category_en: "📦 PRODUCT QUALITY & ERRORS", category_ar: "📦 جودة المنتج والأخطاء", action_en: "Issued a compensation promo code", action_ar: "إصدار كود خصم لتعويض العميل عن التلف", reason_en: "Damaged or Defective Item", reason_ar: "Damaged or Defective Item", resolution_en: "Discount", resolution_ar: "Discount" },
+    { category_en: "📦 PRODUCT QUALITY & ERRORS", category_ar: "📦 جودة المنتج والأخطاء", action_en: "Created replacement for damaged/wrong item/wrong size", action_ar: "عمل طلب استبدال لمنتج تالف / مقاس خطأ / منتج خطأ", reason_en: "Damaged / Wrong Item / Wrong Size", reason_ar: "Damaged / Wrong Item / Wrong Size", resolution_en: "Exchange Initiated", resolution_ar: "Exchange Initiated" },
+    { category_en: "📦 PRODUCT QUALITY & ERRORS", category_ar: "📦 جودة المنتج والأخطاء", action_en: "Refunded money because replacement is out of stock", action_ar: "استرجاع المبلغ لأن المنتج البديل غير متوفر في المخزون", reason_en: "Damaged or Defective Item", reason_ar: "Damaged or Defective Item", resolution_en: "Refund", resolution_ar: "Refund" },
+    
+    { category_en: "🔄 EXCHANGES & RETURNS", category_ar: "🔄 الاستبدال والاسترجاع", action_en: "Customer wants a different size or color", action_ar: "العميل يريد تغيير المقاس أو اللون", reason_en: "Exchanges", reason_ar: "Exchanges", resolution_en: "Exchange Initiated", resolution_ar: "Exchange Initiated" },
+    { category_en: "🔄 EXCHANGES & RETURNS", category_ar: "🔄 الاستبدال والاسترجاع", action_en: "Customer requests money back", action_ar: "العميل يطلب إرجاع المنتج واسترداد أمواله", reason_en: "Refunds", reason_ar: "Refunds", resolution_en: "Refund (or Offer Store Credit)", resolution_ar: "Refund (or Offer Store Credit)" },
+    { category_en: "🔄 EXCHANGES & RETURNS", category_ar: "🔄 الاستبدال والاسترجاع", action_en: "Request rejected (used item or past 14 days)", action_ar: "رفض الطلب (بسبب الاستخدام أو مرور أكثر من 14 يوم)", reason_en: "Late Return (or Exchanges)", reason_ar: "Late Return (or Exchanges)", resolution_en: "Information Given", resolution_ar: "Information Given" },
+
+    { category_en: "🚚 SHIPPING & DELIVERY", category_ar: "🚚 الشحن والتوصيل", action_en: "Normal status check or asking for ETA", action_ar: "سؤال عادي عن حالة الطلب أو موعد الوصول المتوقع", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "Tracking Update Provided", resolution_ar: "Tracking Update Provided" },
+    { category_en: "🚚 SHIPPING & DELIVERY", category_ar: "🚚 الشحن والتوصيل", action_en: "Order is delayed beyond normal SLA", action_ar: "الأوردر متأخر عن ميعاده الرسمي للتوصيل", reason_en: "Late Order inquiry", reason_ar: "Late Order inquiry", resolution_en: "Complaint Acknowledged", resolution_ar: "Complaint Acknowledged" },
+    { category_en: "🚚 SHIPPING & DELIVERY", category_ar: "🚚 الشحن والتوصيل", action_en: "Courier was rude, lied about delivery, or refused delivery to door", action_ar: "المندوب أسلوبه سيء، كذب بشأن التسليم، أو رفض التوصيل للباب", reason_en: "Courier Issues", reason_ar: "Courier Issues", resolution_en: "Complaint Acknowledged", resolution_ar: "Complaint Acknowledged" },
+    { category_en: "🚚 SHIPPING & DELIVERY", category_ar: "🚚 الشحن والتوصيل", action_en: "Customer cancels the order before it ships", action_ar: "العميل يطلب إلغاء الأوردر قبل خروجه للشحن", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "Order Cancelled", resolution_ar: "Order Cancelled" },
+
+    { category_en: "😡 ESCALATIONS & ANGER", category_ar: "😡 التصعيد والشكاوى العامة", action_en: "Customer is angry at service, demands a manager", action_ar: "العميل غاضب من الخدمة ويطلب التحدث لمدير", reason_en: "Complaint & Escalation", reason_ar: "Complaint & Escalation", resolution_en: "Complaint Acknowledged", resolution_ar: "Complaint Acknowledged" },
+    { category_en: "😡 ESCALATIONS & ANGER", category_ar: "😡 التصعيد والشكاوى العامة", action_en: "Customer is following up on a previously submitted complaint", action_ar: "العميل يتابع شكوى تم رفعها مسبقاً", reason_en: "Complaint & Escalation", reason_ar: "Complaint & Escalation", resolution_en: "Information Given", resolution_ar: "Information Given" },
+
+    { category_en: "🛡️ POLICIES", category_ar: "🛡️ السياسات والقوانين", action_en: "Customer wants to open package before paying (Policy refusal)", action_ar: "العميل يسأل عن إمكانية فتح الشحنة قبل الدفع (توضيح الرفض)", reason_en: "Policy", reason_ar: "Policy", resolution_en: "Information Given", resolution_ar: "Information Given" },
+    { category_en: "🛡️ POLICIES", category_ar: "🛡️ السياسات والقوانين", action_en: "Customer fought with courier because courier adhered to no-opening policy", action_ar: "العميل تشاجر مع المندوب لأن المندوب رفض فتح الشحنة", reason_en: "Policy", reason_ar: "Policy", resolution_en: "Information Given (or Order Cancelled)", resolution_ar: "Information Given (or Order Cancelled)" },
+
+    { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Fix technical promo code issue / Provide alternative", action_ar: "حل مشكلة تقنية في الكود أو إعطاء كود بديل للعميل", reason_en: "Discount Code Issue", reason_ar: "Discount Code Issue", resolution_en: "Discount", resolution_ar: "Discount" },
+    { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Explain that promo codes don't combine with free shipping deals", action_ar: "توضيح أن الكود لا يعمل مع عروض الشحن المجاني", reason_en: "Discount Code Issue", reason_ar: "Discount Code Issue", resolution_en: "Information Given", resolution_ar: "Information Given" },
+    { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Answer questions about fabric, sizing, restocks, and offers", action_ar: "الإجابة عن أسئلة تخص الخامة، المقاسات، المخزون، والعروض", reason_en: "Product Inquiry / Stock / Discounts", reason_ar: "Product Inquiry / Stock / Discounts", resolution_en: "Information Given", resolution_ar: "Information Given" },
+    { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Update customer phone number or delivery address in system", action_ar: "تعديل بيانات العميل (رقم هاتف أو عنوان استلام) على السيستم", reason_en: "Account & Website Issues", reason_ar: "Account & Website Issues", resolution_en: "Edit Customer Data", resolution_ar: "Edit Customer Data" }
+  ];
+
+  // 2. EMBEDDED REAL CUSTOMER SCENARIOS (63 Cases extracted from your Excel sheets)
+  const EMBEDDED_SCENARIOS = [
+    { source: "Overall Standard Scenarios", scenario: "\"الأوردر لسه طالبه إمبارح هيوصل إمتى؟\"", explanation: "استفسار طبيعي عن الشحن في وقته. إرسال رابط التتبع.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
+    { source: "Overall Standard Scenarios", scenario: "\"عايز ألغي الأوردر\" (قبل الشحن)", explanation: "العميل تراجع عن الشراء. إلغاء الطلب من النظام.", reason: "Order Status & Tracking", resolution: "Order Cancelled" },
+    { source: "Overall Standard Scenarios", scenario: "\"الأوردر اتأخر جداً عن الميعاد الرسمي\"", explanation: "تأخير يتجاوز الـ SLA. استعجال الشحن والاعتذار للعميل.", reason: "Late Order inquiry", resolution: "Complaint Acknowledged" },
+    { source: "Overall Standard Scenarios", scenario: "\"مندوب الشحن أسلوبه سيء / كدب وقال تم التسليم\"", explanation: "شكوى في شركة الشحن أو المندوب. رفع شكوى للإدارة.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Overall Standard Scenarios", scenario: "\"المقاس مظبوط المكتوب على التيكت بس التلبيس ضيق\"", explanation: "مشكلة في باترون أو ديزاين المنتج. عمل طلب استبدال.", reason: "Sizing & Fit Not accurate", resolution: "Exchange Initiated" },
+    { source: "Overall Standard Scenarios", scenario: "\"طلبت تيشرت جالي بنطلون\"", explanation: "استلام منتج مختلف تماماً بسبب خطأ التحضير. عمل طلب استبدال.", reason: "Wrong Item", resolution: "Exchange Initiated" },
+    { source: "Overall Standard Scenarios", scenario: "\"طلبت مقاس L التيكت المكتوب عليه M\"", explanation: "خطأ مباشر من المخزن في المقاس المبعوت. عمل طلب استبدال.", reason: "Wrong Size", resolution: "Exchange Initiated" },
+    { source: "Overall Standard Scenarios", scenario: "\"المنتج سليم بس عايز أغير اللون أو المقاس لعدم إعجابي به\"", explanation: "طلب استبدال بناءً على رغبة شخصية. عمل طلب استبدال.", reason: "Exchanges", resolution: "Exchange Initiated" },
+    { source: "Overall Standard Scenarios", scenario: "\"عايز أرجع أو أبدل الأوردر اللي استلمته من شهر\"", explanation: "تجاوز مهلة السماح المحددة (مثلاً 14 يوم). رفض الطلب وشرح السياسة.", reason: "Late Return", resolution: "Information Given" },
+    { source: "Overall Standard Scenarios", scenario: "\"عايز أرجع الأوردر وأخد فلوسي\"", explanation: "طلب استرجاع. أخذ بيانات البنك أو المحفظة لرفع الطلب.", reason: "Refunds", resolution: "Refund" },
+    { source: "Overall Standard Scenarios", scenario: "\"عايز أرجع الأوردر وضيفوا المبلغ في حسابي على الموقع\"", explanation: "العميل وافق على استرجاع المبلغ كرصيد يشتري بيه لاحقاً.", reason: "Refunds", resolution: "Offer Store Credit" },
+    { source: "Overall Standard Scenarios", scenario: "\"عملت مرتجع من أسبوع والفلوس لسه مسمعتش في البنك\"", explanation: "استفسار عن تأخر وصول أموال الاسترجاع. شرح وقت إجراءات البنك.", reason: "Refund not received", resolution: "Information Given" },
+    { source: "Overall Standard Scenarios", scenario: "\"الطباعة شققت بعد الغسيل / المنتج فيه قطع أو بقعة\"", explanation: "عيب صناعة صريح. إذا تم عمل طلب لتبديله بقطعة سليمة.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated" },
+    { source: "Overall Standard Scenarios", scenario: "\"الطباعة شققت\" (وتم تقديم كود خصم للتعويض)", explanation: "عيب صناعة، وتم إنهاء المشكلة بتعويض العميل بالخصم.", reason: "Damaged or Defective Item", resolution: "Discount" },
+    { source: "Overall Standard Scenarios", scenario: "\"الخامة إيه؟ / هل بيكش بعد الغسيل؟\"", explanation: "أسئلة عامة عن مواصفات المنتجات قبل الشراء.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
+    { source: "Escalations & Tone Analysis", scenario: "\"انتو أسوأ خدمة عملاء ومفيش حد بيفهم، أنا عايز أكلم مدير حالاً!\"", explanation: "تصعيد صريح وهجوم على مستوى الخدمة. يتم امتصاص الغضب ورفع طلب للإدارة.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
+    { source: "Escalations & Tone Analysis", scenario: "\"أنا عايز أقدم شكوى في الموظفة اللي قفلت الشات في وشي من شوية.\"", explanation: "شكوى في سلوك موظف خدمة عملاء. يتم الاعتذار ورفع الشكوى للتحقيق.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
+    { source: "Escalations & Tone Analysis", scenario: "\"أنا عملت شكوى من يومين ومحدش عبرني، ممكن تشوف شكوتي وصلت لفين؟\"", explanation: "متابعة لشكوى خدمة عملاء سابقة. يتم مراجعة النظام وطمأنته.", reason: "Complaint & Escalation", resolution: "Information Given" },
+    { source: "Escalations & Tone Analysis", scenario: "\"أنا بقدم شكوى رسمية.. المنتج جالي تالف والطباعة بايظة!\"", explanation: "حالة خادعة: العميل قال \"شكوى\" لكن السبب الفعلي هو جودة المنتج. يتم حل المشكلة بالاستبدال أو الخصم.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated or (Discount)" },
+    { source: "Escalations & Tone Analysis", scenario: "\"عايز أعمل شكوى.. الأوردر بقاله 10 أيام مجاش!\"", explanation: "حالة خادعة: العميل قال \"شكوى\" لكن السبب هو تأخير الشحن.", reason: "Late Order inquiry", resolution: "Complaint Acknowledged" },
+    { source: "Escalations & Tone Analysis", scenario: "\"أنا هفضحكم على جروبات الفيس بوك وهعملكم شير في كل مكان!\"", explanation: "تهديد صريح وتصعيد. يتم احتواء العميل فوراً ومعرفة مشكلته الأساسية (إذا لم يذكرها، تُصنف كتصعيد).", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
+    { source: "Edge Cases & Exceptions", scenario: "\"الأوردر مكتوب في التتبع (تمت المحاولة) والمندوب أصلاً مكلمنيش!\"", explanation: "كذب من المندوب لتقفيل التارجت بتاعه.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Edge Cases & Exceptions", scenario: "\"أنا كتبت عنواني غلط في الأوردر وهو خرج للشحن، الحقوا عدلوه.\"", explanation: "الأوردر خرج بالفعل، التعديل هنا يعتبر متابعة وتواصل مع الشحن لتعديل المسار.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
+    { source: "Edge Cases & Exceptions", scenario: "\"المندوب بيقولي مفيش فكة ومش هسلمك الأوردر غير لما تتصرف.\"", explanation: "سوء تصرف من المندوب، دي مشكلة في شركة الشحن نفسها.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Edge Cases & Exceptions", scenario: "\"الأوردر جالي ناقص قطعة، المندوب سرقها!\"", explanation: "الشكوى هنا تبدو كسرقة/شحن، ولكن السبب الجذري هو \"استلام منتج ناقص/مختلف\".", reason: "Wrong Item (أو Damaged)", resolution: "Exchange Initiated (أو Complaint)" },
+    { source: "Edge Cases & Exceptions", scenario: "\"اللون بهت على بعضه في أول غسلة وبوظلي باقي الهدوم!\"", explanation: "شكوى جودة قوية (عيب صناعة).", reason: "Damaged or Defective Item", resolution: "Exchange (أو Refund)" },
+    { source: "Edge Cases & Exceptions", scenario: "\"السوستة بتاعة الجاكيت باظت بعد ما لبسته يومين بس.\"", explanation: "تلف سريع يدل على سوء الخامات.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated" },
+    { source: "Edge Cases & Exceptions", scenario: "\"عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.\"", explanation: "طلب استبدال بمنتج مختلف وتسوية مالية.", reason: "Exchanges", resolution: "Exchange Initiated (أو Info Given إذا رفضتم)" },
+    { source: "Edge Cases & Exceptions", scenario: "\"أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟\"", explanation: "العميل بيسأل عن سياسة الاسترجاع في حالة فقدان الملحقات.", reason: "Policy (أو Exchanges)", resolution: "Information Given" },
+    { source: "Policy vs Courier Issues", scenario: "\"لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟\"", explanation: "استفسار طبيعي عن السياسة قبل الاستلام. يتم توضيح الرفض بلباقة.", reason: "Policy", resolution: "Information Given" },
+    { source: "Policy vs Courier Issues", scenario: "\"إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!\"", explanation: "اعتراض على سياسة الشركة. المندوب هنا غير مخطئ. يتم تأكيد سياسة الشركة.", reason: "Policy", resolution: "Information Given" },
+    { source: "Policy vs Courier Issues", scenario: "\"أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.\"", explanation: "المندوب نفذ تعليمات الشركة (ممنوع الفتح)، العميل افتعل المشكلة ورفض الاستلام. يتم تأكيد السياسة وإلغاء الطلب إذا لزم الأمر.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
+    { source: "Policy vs Courier Issues", scenario: "\"المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين.\"", explanation: "خطأ صريح من المندوب وسوء سلوك. يتم رفع شكوى لإدارة الشحن.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Policy vs Courier Issues", scenario: "\"المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!\"", explanation: "المندوب يرفض التوصيل للباب. هذه مشكلة في الشحن. يتم رفع شكوى.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Policy vs Courier Issues", scenario: "\"جتلي رسالة إن الأوردر (تم التسليم) وأنا أصلاً كنت نايم ومستلمتش حاجة!\"", explanation: "المندوب تلاعب بالنظام أو سلم الأوردر لشخص خطأ. يتم فتح تحقيق في الشحن.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
+    { source: "Pre-purchase & General", scenario: "\"أنا طولي 180 ووزني 90، تفتكري ألبس مقاس إيه في الهودي ده؟\"", explanation: "استفسار عن المنتج. يتم توجيهه لجدول المقاسات أو إعطائه نصيحة.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
+    { source: "Pre-purchase & General", scenario: "\"اللون ده في الحقيقة فاتح زي الصورة ولا كحلي غامق؟\"", explanation: "سؤال عن تفاصيل المنتج ليتخذ قرار الشراء.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
+    { source: "Pre-purchase & General", scenario: "\"هتنزلوا كوليكشن الصيفي إمتى؟ أنا مستنيه بفارغ الصبر.\"", explanation: "استفسار عن توفر منتجات جديدة (مخزون).", reason: "Stock & Availability", resolution: "Information Given" },
+    { source: "Pre-purchase & General", scenario: "\"أنا اشتريت الأوردر إمبارح بـ 1000 جنيه، والنهاردة عملتوا سيل بقى بـ 700! ينفع أخد الفرق؟\"", explanation: "استفسار عن سياسة العروض والتخفيضات. يتم الاعتذار وتوضيح أن العروض لها وقت محدد.", reason: "Discounts & Promotions", resolution: "Information Given" },
+    { source: "Complex Returns & SLA", scenario: "\"أنا استلمت الأوردر من شهر وكنت مسافر ومفتحتوش، ينفع أبدله دلوقتي؟\"", explanation: "العميل بيطلب استثناء لسياسة الـ 14 يوم. يتم رفض الطلب حسب القوانين.", reason: "Late Return", resolution: "Information Given" },
+    { source: "Complex Returns & SLA", scenario: "\"عايز أرجع البنطلون بس أنا رميت التيكت والكيس بتاعه.\"", explanation: "العميل بيطلب إرجاع منتج فقد حالته الأصلية. يتم الرفض وتوضيح السياسة.", reason: "Policy Or ( Exchanges)", resolution: "Information Given" },
+    { source: "Complex Returns & SLA", scenario: "\"عملت طلب استرجاع والمندوب أخد الحاجة من 3 أيام، الفلوس هتنزل حسابي إمتى؟\"", explanation: "الأوردر رجع بالفعل والعميل يسأل عن الخطوة المالية.", reason: "Refund not received", resolution: "Information Given" }
+  ];
+
   const KB_SHEET_ID = "1f03md-Uhc2yrtucfRbhKyIu63HWsxMm312O4FJj80vk";
   const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
-
-  // أسماء التابات الموجودة في شيت الريفوند
   const REFUND_TABS = ["Export2", "Return & Exch", "Export", "SEARCH"];
 
   let masterKnowledgeBase = [];
-  let dtParsedData = { en: [], ar: [] };
   let currentDTLanguage = 'en';
-
-  // Multi-tab storage
+  let selectedDTCategory = '';
   let allTabRecords = {};
   let currentActiveTab = "All Tabs";
+  let currentScenarioCategory = "All";
 
   function fetchGoogleSheetJSON(sheetId, callbackName, sheetName = "") {
     return new Promise((resolve) => {
@@ -362,7 +455,6 @@
   async function fetchAllLiveSheets() {
     await Promise.all([
       fetchLiveKnowledgeBase(),
-      fetchLiveDecisionTree(),
       fetchLiveRefundPortal()
     ]);
   }
@@ -401,10 +493,12 @@
   function getCategoryIcon(cat) {
     const c = String(cat).toLowerCase();
     if (c.includes('refund') || c.includes('pay')) return '💳';
-    if (c.includes('defect') || c.includes('quality')) return '👗';
+    if (c.includes('defect') || c.includes('quality')) return '📦';
     if (c.includes('exchange') || c.includes('size')) return '🔄';
-    if (c.includes('ship') || c.includes('bosta')) return '🚚';
-    if (c.includes('handbook')) return '📖';
+    if (c.includes('ship') || c.includes('delivery')) return '🚚';
+    if (c.includes('escalat') || c.includes('anger')) return '😡';
+    if (c.includes('polic')) return '🛡️';
+    if (c.includes('inquir') || c.includes('account')) return '❓';
     return '📑';
   }
 
@@ -459,72 +553,7 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
-  // 2. Decision Tree Parser
-  async function fetchLiveDecisionTree() {
-    const rawGrid = await fetchGoogleSheetJSON(DECISION_TREE_ID, 'handleDT');
-    if (!rawGrid || rawGrid.length === 0) return;
-
-    dtParsedData = { en: [], ar: [] };
-
-    let currentCatEn = 'General Scenarios';
-    let currentCatAr = 'سيناريوهات عامة';
-
-    let pendingActionEn = '';
-    let pendingActionAr = '';
-
-    rawGrid.forEach(row => {
-      const colA = String(row[0] || '').trim();
-      const colB = String(row[1] || row[2] || '').trim();
-
-      if (colA.includes('PRODUCT QUALITY') || colA.includes('EXCHANGES & RETURNS') || colA.includes('SHIPPING & DELIVERY') || colA.includes('ESCALATIONS')) {
-        currentCatEn = cleanTreeHeader(colA);
-        currentCatAr = cleanTreeHeader(colB) || currentCatEn;
-        pendingActionEn = '';
-        pendingActionAr = '';
-        return;
-      }
-
-      if (colA.includes('Action:') || colA.includes('► Action')) {
-        pendingActionEn = cleanTreeText(colA.replace(/.*?Action:/i, ''));
-      }
-      if (colB.includes('الإجراء:') || colB.includes('الإجراء') || colB.includes('►')) {
-        pendingActionAr = cleanTreeText(colB.replace(/.*?الإجراء:?/i, ''));
-      }
-
-      if (colA.includes('Reason:') || colA.includes('└► Reason')) {
-        const parts = colA.split(/Res:|➔|->/i);
-        const reasonText = cleanTreeText(parts[0].replace(/.*?Reason:/i, ''));
-        const resText = parts[1] ? cleanTreeText(parts[1]) : 'Process completed';
-
-        dtParsedData.en.push({
-          category: currentCatEn,
-          reason: reasonText,
-          action: pendingActionEn || reasonText,
-          result: resText
-        });
-      }
-
-      if (colB.includes('Reason:') || colB.includes('السبب') || colB.includes('└►')) {
-        const parts = colB.split(/Res:|النتيجة:|➔|->/i);
-        const reasonText = cleanTreeText(parts[0].replace(/.*?Reason:?/i, ''));
-        const resText = parts[1] ? cleanTreeText(parts[1]) : 'تم تنفيذ الإجراء المطلوب';
-
-        dtParsedData.ar.push({
-          category: currentCatAr,
-          reason: reasonText,
-          action: pendingActionAr || reasonText,
-          result: resText
-        });
-      }
-    });
-
-    document.getElementById('dtSheetStatus').innerText = `✅ Live Sync Active — ${dtParsedData.en.length} cases parsed perfectly.`;
-    initDecisionTreeWizard();
-  }
-
-  function cleanTreeHeader(txt) { return txt.replace(/[|►─\-├└📦🔄🚚🚨]+/g, '').trim(); }
-  function cleanTreeText(txt) { return txt.replace(/[|►─\-├└L]+/g, '').trim(); }
-
+  // 2. Decision Tree Wizard Engine (From Embedded Tree)
   function setDTLanguage(lang) {
     currentDTLanguage = lang;
     document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
@@ -532,16 +561,14 @@
     initDecisionTreeWizard();
   }
 
-  let selectedDTCategory = '';
-
   function initDecisionTreeWizard() {
     document.getElementById('dtFinalView').style.display = 'none';
     document.getElementById('dtOptionsGrid').style.display = 'grid';
 
-    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
-    const categories = [...new Set(cases.map(c => c.category).filter(Boolean))];
+    const catKey = currentDTLanguage === 'en' ? 'category_en' : 'category_ar';
+    const categories = [...new Set(EMBEDDED_DT_TREE.map(c => c[catKey]).filter(Boolean))];
 
-    document.getElementById('dtBreadcrumbs').innerHTML = `<span>Step 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي'}`;
+    document.getElementById('dtBreadcrumbs').innerHTML = `<span>Step 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي للمشكلة'}`;
     document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the main type of issue?' : 'ما هو نوع المشكلة الأساسي؟';
 
     const grid = document.getElementById('dtOptionsGrid');
@@ -549,38 +576,40 @@
       <div class="dt-card-btn" onclick="selectDTCategory('${encodeURIComponent(cat)}')">
         <div>
           <div class="dt-card-title">${getCategoryIcon(cat)} ${cat}</div>
-          <div class="dt-card-hint">${cases.filter(c => c.category === cat).length} ${currentDTLanguage === 'en' ? 'scenarios available' : 'حالة وإجراء'}</div>
+          <div class="dt-card-hint">${EMBEDDED_DT_TREE.filter(c => c[catKey] === cat).length} ${currentDTLanguage === 'en' ? 'actions / resolutions' : 'إجراءات وحلول متوفرة'}</div>
         </div>
-        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'Select ➔' : 'اختيار ➔'}</span>
+        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'Select Category ➔' : 'اختيار القسم ➔'}</span>
       </div>
     `).join('');
   }
 
   function selectDTCategory(encodedCat) {
     selectedDTCategory = decodeURIComponent(encodedCat);
-    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
-    const scenarios = cases.filter(c => c.category === selectedDTCategory);
+    const catKey = currentDTLanguage === 'en' ? 'category_en' : 'category_ar';
+    const actionKey = currentDTLanguage === 'en' ? 'action_en' : 'action_ar';
+    const scenarios = EMBEDDED_DT_TREE.filter(c => c[catKey] === selectedDTCategory);
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Reason' : 'اختر السبب المحدد'}
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الطلب المحدد'}
     `;
-    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the specific customer scenario?' : 'ما هي الحالة أو المشكلة بالتحديد؟';
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What specific action / scenario does the customer have?' : 'ما هي حالة أو طلب العميل بالتحديد؟';
 
     const grid = document.getElementById('dtOptionsGrid');
     grid.innerHTML = scenarios.map((sc, idx) => `
       <div class="dt-card-btn" onclick="showDTCaseResult(${idx})">
         <div>
-          <div class="dt-card-title">📌 ${sc.reason}</div>
-          <div class="dt-card-hint">${sc.action.substring(0, 90)}...</div>
+          <div class="dt-card-title">📌 ${sc[actionKey]}</div>
+          <div class="dt-card-hint">Reason: ${sc.reason_en} ➔ ${sc.resolution_en}</div>
         </div>
-        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Action ➔' : 'عرض الحل والإجراء ➔'}</span>
+        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Resolution ➔' : 'عرض الحل المعتمد ➔'}</span>
       </div>
     `).join('');
   }
 
   function showDTCaseResult(index) {
-    const cases = dtParsedData[currentDTLanguage] || dtParsedData.en;
-    const scenarios = cases.filter(c => c.category === selectedDTCategory);
+    const catKey = currentDTLanguage === 'en' ? 'category_en' : 'category_ar';
+    const actionKey = currentDTLanguage === 'en' ? 'action_en' : 'action_ar';
+    const scenarios = EMBEDDED_DT_TREE.filter(c => c[catKey] === selectedDTCategory);
     const item = scenarios[index];
     if (!item) return;
 
@@ -589,18 +618,19 @@
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
       <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:none;">${selectedDTCategory}</a> ➔ 
-      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--accent); text-decoration:none;">${item.reason}</a> ➔ 
+      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--accent); text-decoration:none;">${item[actionKey]}</a> ➔ 
       <span>Step 3 (Resolution)</span>
     `;
 
-    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Standard Operational Resolution:' : 'إجراء المعالجة والحل المعتمد:';
-    document.getElementById('resTitle').innerText = item.reason;
-    document.getElementById('resActionText').innerText = item.action;
-    document.getElementById('resExpectedText').innerText = item.result;
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Standard Operating Resolution & System Tags:' : 'إجراء المعالجة والنتيجة المعتمدة:';
+    document.getElementById('resTitle').innerText = item[actionKey];
+    document.getElementById('resReasonBadge').innerText = item.reason_en;
+    document.getElementById('resResolutionBadge').innerText = item.resolution_en;
+    document.getElementById('resActionText').innerText = item[actionKey];
 
     const reply = currentDTLanguage === 'en' 
-      ? `Hello! Regarding your inquiry on (${item.reason}), we have arranged: ${item.action}. Result: ${item.result}.`
-      : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item.reason})، تم اتخاذ الإجراء التالي: ${item.action}. النتيجة: ${item.result}.`;
+      ? `Hello! Regarding your inquiry on (${item.reason_en}), we have processed: ${item.action_en}. Result: ${item.resolution_en}.`
+      : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item[actionKey]})، تم اتخاذ الإجراء التالي: ${item[actionKey]}. النتيجة: ${item.resolution_ar}.`;
 
     document.getElementById('resReplyText').innerText = reply;
   }
@@ -613,7 +643,62 @@
     alert('✅ Canned response copied to clipboard!');
   }
 
-  // 3. Multi-Tab Refund & Return Portal Engine
+  // 3. 63 Real Customer Scenarios Renderer
+  function initScenariosSection() {
+    const categories = ["All", ...new Set(EMBEDDED_SCENARIOS.map(s => s.source))];
+    const pillContainer = document.getElementById('scenarioCategoryPills');
+
+    pillContainer.innerHTML = categories.map(cat => `
+      <button class="tab-pill-btn ${cat === currentScenarioCategory ? 'active' : ''}" onclick="switchScenarioCategory('${cat}')">
+        📂 ${cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
+      </button>
+    `).join('');
+
+    filterScenarios();
+  }
+
+  function switchScenarioCategory(cat) {
+    currentScenarioCategory = cat;
+    initScenariosSection();
+  }
+
+  function filterScenarios() {
+    const q = document.getElementById('scenarioSearchInput').value.toLowerCase().trim();
+    let data = EMBEDDED_SCENARIOS;
+
+    if (currentScenarioCategory !== 'All') {
+      data = data.filter(s => s.source === currentScenarioCategory);
+    }
+
+    if (q) {
+      data = data.filter(s => 
+        s.scenario.toLowerCase().includes(q) ||
+        s.explanation.toLowerCase().includes(q) ||
+        s.reason.toLowerCase().includes(q) ||
+        s.resolution.toLowerCase().includes(q)
+      );
+    }
+
+    const container = document.getElementById('scenariosContainer');
+    if (data.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">No matching customer scenarios found.</div>';
+      return;
+    }
+
+    container.innerHTML = data.map((item, idx) => `
+      <div class="scenario-item">
+        <div style="font-size:11.5px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.source} • Case #${idx+1}</div>
+        <div class="sc-quote">${item.scenario}</div>
+        <div class="sc-explain"><strong>التحليل والإجراء:</strong> ${item.explanation}</div>
+        <div class="sc-tags">
+          <span class="sc-tag-reason">📌 Reason: ${item.reason}</span>
+          <span class="sc-tag-res">✅ Resolution: ${item.resolution}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // 4. Multi-Tab Refund Portal Engine
   async function fetchLiveRefundPortal() {
     const statusText = document.getElementById('sheetRecordStatus');
     const counter = document.getElementById('recordCounter');
@@ -626,7 +711,6 @@
       try {
         const rows = await fetchGoogleSheetJSON(REFUND_SHEET_ID, 'handleTab_' + tabName.replace(/\W/g, ''), tabName);
         if (rows && rows.length > 0) {
-          // العثور على سطر الهيدر الحقيقي
           let headerIdx = 0;
           for (let i = 0; i < Math.min(5, rows.length); i++) {
             if (rows[i].some(cell => String(cell).toLowerCase().includes('phone') || String(cell).toLowerCase().includes('name') || String(cell).toLowerCase().includes('order') || String(cell).toLowerCase().includes('reason'))) {
@@ -679,7 +763,6 @@
     let headers = [];
 
     if (currentActiveTab === "All Tabs") {
-      // دمج كل التابات
       Object.keys(allTabRecords).forEach(tab => {
         displayRecords.push(...allTabRecords[tab].records);
         if (headers.length === 0) headers = allTabRecords[tab].headers;
@@ -690,7 +773,6 @@
       headers = allTabRecords[currentActiveTab].headers;
     }
 
-    // تطبيق البحث الشامل على كل خانات السطر
     if (q) {
       displayRecords = displayRecords.filter(row => 
         Object.values(row).some(val => String(val || '').toLowerCase().includes(q))
@@ -710,7 +792,6 @@
       return;
     }
 
-    // تنظيف الهيدرز الفارغة
     const validHeaders = headers.filter(h => h && h !== 'Column');
 
     thead.innerHTML = `<tr>${validHeaders.map(h => `<th>${h}</th>`).join('')}</tr>`;
@@ -735,8 +816,7 @@
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
       (i.code && i.code.toLowerCase().includes(q)) ||
-      (i.description && i.description.toLowerCase().includes(q)) ||
-      (i.system && i.system.toLowerCase().includes(q))
+      (i.description && i.description.toLowerCase().includes(q))
     );
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
@@ -750,7 +830,7 @@
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <span class="sop-code-badge">${item.code}</span>
+              <div style="font-size:12px; font-weight:bold; color:var(--accent);">${item.code}</div>
               <h3 class="sop-title">${item.title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
@@ -768,6 +848,7 @@
     document.getElementById('homeSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'none';
     document.getElementById('decisionTreeSection').style.display = 'none';
+    document.getElementById('scenariosSection').style.display = 'none';
     document.getElementById('refundPortalSection').style.display = 'none';
     document.getElementById('escalationSection').style.display = 'none';
     document.getElementById('logsSection').style.display = 'none';
@@ -783,8 +864,11 @@
     hideAllSections();
     if (name === 'decisionTree') {
       document.getElementById('decisionTreeSection').style.display = 'block';
-      if (dtParsedData.en.length === 0) fetchLiveDecisionTree();
-      else initDecisionTreeWizard();
+      initDecisionTreeWizard();
+    }
+    if (name === 'scenarios') {
+      document.getElementById('scenariosSection').style.display = 'block';
+      initScenariosSection();
     }
     if (name === 'refundPortal') {
       document.getElementById('refundPortalSection').style.display = 'block';
@@ -855,6 +939,7 @@
 
   // Startup
   goToHome();
+  initDecisionTreeWizard();
   fetchAllLiveSheets();
 </script>
 </body>
