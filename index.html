@@ -50,7 +50,7 @@
     .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 6px; font-size: 14.5px; background: white; margin-bottom: 20px; transition: border-color 0.2s; }
     .search-box:focus { outline: none; border-color: var(--primary); }
 
-    /* Interactive Agent Workflow Guide (Step-by-Step Flow with Arrows) */
+    /* Interactive Agent Workflow Guide */
     .workflow-banner { background: var(--primary); color: white; border-radius: 10px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .workflow-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
     .flow-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: stretch; }
@@ -70,7 +70,7 @@
     .cat-badge { font-size: 11.5px; font-weight: 700; color: var(--primary); background: var(--accent-light); padding: 5px 12px; border-radius: 4px; align-self: flex-start; border: 1px solid var(--border); }
 
     /* Clean SOP Presentation */
-    .sop-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+    .sop-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 20px; text-align: left; }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
     .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
     .sop-code-badge { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-bottom: 6px; letter-spacing: 0.5px; }
@@ -88,7 +88,7 @@
     .copy-btn:hover { background: #27272a; }
 
     /* Interactive Decision Wizard */
-    .dt-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border); padding: 28px; margin-bottom: 25px; }
+    .dt-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border); padding: 28px; margin-bottom: 25px; text-align: left; }
     .dt-top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
     .dt-breadcrumb { font-size: 13px; color: var(--muted); font-weight: 600; }
     .dt-breadcrumb span { color: var(--primary); }
@@ -116,14 +116,15 @@
     .res-block strong { color: var(--primary); font-size: 13.5px; }
     .res-block div { margin-top: 6px; font-size: 14px; color: #27272a; line-height: 1.5; }
 
-    /* 63 Scenarios Styling */
-    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 12px; transition: 0.15s; }
-    .scenario-item:hover { border-color: var(--primary); }
-    .sc-quote { font-size: 14.5px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-    .sc-explain { font-size: 13px; color: #3f3f46; margin-bottom: 12px; line-height: 1.5; }
+    /* Clean 63 Scenarios Styling (Left-to-Right Consistent & Professional) */
+    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 14px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: 0.15s; }
+    .scenario-item:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .sc-source { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .sc-quote { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 10px; direction: ltr; unicode-bidi: plaintext; background: var(--accent-light); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border); }
+    .sc-explain { font-size: 13.5px; color: #3f3f46; margin-bottom: 14px; line-height: 1.6; }
     .sc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sc-tag-reason { background: var(--accent-light); color: var(--primary); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); }
-    .sc-tag-res { background: #18181b; color: white; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .sc-tag-reason { background: #e0e7ff; color: #3730a3; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 4px; }
+    .sc-tag-res { background: #dcfce7; color: #166534; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 4px; }
 
     /* Refund Portal Banner & Table */
     .portal-banner { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
@@ -220,7 +221,7 @@
     <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 QA Evaluation Logs</button>
   </div>
 
-  <!-- INTERACTIVE AGENT WORKFLOW GUIDE (Step-by-Step Flow with Arrows) -->
+  <!-- INTERACTIVE AGENT WORKFLOW GUIDE -->
   <div class="workflow-banner">
     <div class="workflow-title">⚡ MAVIN × BOSTA Agent Golden Workflow</div>
     <div class="flow-container">
@@ -258,7 +259,7 @@
     </div>
   </div>
 
-  <!-- 1. HOME VIEW (Bilingual Knowledge Base) -->
+  <!-- 1. HOME VIEW -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
       <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Fulfillment, One Touch, 10% Store Credit, Awaiting Action, NDR)..." onkeyup="handleGlobalSearch()">
@@ -401,7 +402,7 @@
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 6. ESCALATION FORM VIEW (English Only) -->
+  <!-- 6. ESCALATION FORM VIEW -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary); font-size:22px;">🚨 CS Product Escalation Form</h2>
@@ -474,7 +475,7 @@
     </div>
   </div>
 
-  <!-- 8. ADVANCED QUALITY AUDIT FORM VIEW (English Only) -->
+  <!-- 8. ADVANCED QUALITY AUDIT FORM VIEW -->
   <div id="qualityFormSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -667,7 +668,7 @@
       </div>
     </div>
     <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
-      <table id="qaLogsTable">
+      <table id="logsTable">
         <thead>
           <tr>
             <th>Date</th>
@@ -1237,7 +1238,7 @@
 
     container.innerHTML = data.map((item, idx) => `
       <div class="scenario-item">
-        <div style="font-size:11px; font-weight:bold; color:var(--primary); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px;">${item.source} • Case #${idx+1}</div>
+        <div class="sc-source">${item.source} • Case #${idx+1}</div>
         <div class="sc-quote">${item.scenario}</div>
         <div class="sc-explain"><strong>Analysis & Action:</strong> ${item.explanation}</div>
         <div class="sc-tags">
