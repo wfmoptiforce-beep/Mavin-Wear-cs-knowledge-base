@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | Interactive Operations Hub</title>
+  <title>Mavin Wear | CS Smart Operations Hub</title>
+  
+  <!-- المكتبات الذكية لفك وقراءة ملفات ZIP, Word, Excel, Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <style>
     :root {
       --primary: #0f172a;
@@ -21,50 +25,41 @@
     }
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-    .container { max-width: 1050px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
     
-    /* Header */
-    .header { text-align: center; margin-bottom: 25px; position: relative; }
+    .header { text-align: center; margin-bottom: 25px; }
     .brand-title { font-size: 28px; font-weight: 800; color: var(--primary); }
     .brand-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
     
-    /* Top Bar Actions */
     .top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; text-decoration: none; font-size: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; text-decoration: none; font-size: 14px; }
     .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
     .nav-btn.primary { background: var(--primary); color: white; border: none; }
     .nav-btn.primary:hover { background: #1e293b; }
-    
-    /* Search */
+    .upload-btn { background: var(--accent); color: white; border: none; font-weight: bold; }
+    .upload-btn:hover { background: var(--accent-hover); }
+
     .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    
-    /* Interactive Categories Grid */
-    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-bottom: 25px; }
+
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-bottom: 25px; }
     .cat-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
     .cat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: var(--accent); }
     .cat-icon { font-size: 32px; margin-bottom: 12px; }
     .cat-name { font-size: 18px; font-weight: 700; color: var(--primary); margin: 0 0 6px 0; }
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
-    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: #eff6ff; padding: 4px 10px; border-radius: 20px; align-self: flex-start; }
+    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: #eff6ff; padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Detail / SOP Card View */
     .sop-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .sop-title { font-size: 17px; font-weight: 700; color: var(--primary); margin: 0 0 10px 0; }
-    .sop-action { font-size: 14px; line-height: 1.6; color: #334155; margin-bottom: 12px; }
-    .canned-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid var(--success); padding: 12px 14px; border-radius: 6px; font-size: 13.5px; line-height: 1.5; margin-top: 10px; position: relative; }
+    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 250px; overflow-y: auto; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
-    /* Upload Box */
-    .upload-banner { background: #eff6ff; border: 1px dashed var(--accent); border-radius: 10px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 15px; }
+    .status-bar { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
     
-    /* Escalation Form */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
     input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
     .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-    .submit-btn:hover { background: #1e293b; }
-    
-    /* Table */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
     th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
     th { background: #f8fafc; font-weight: bold; }
@@ -73,60 +68,56 @@
 <body>
 <div class="container">
   
-  <!-- Header -->
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Interactive Knowledge Base, SOPs & Escalation System</div>
+    <div class="brand-sub">Smart Knowledge Base, SOPs & Document Hub</div>
   </div>
 
-  <!-- Navigation Bar -->
   <div class="top-actions">
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
-      <button class="nav-btn" onclick="showSection('escalation')">🚨 Product Escalation Form</button>
-      <button class="nav-btn" onclick="showSection('logs')">📊 Database Logs</button>
+      <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
+      <button class="nav-btn" onclick="showSection('logs')">📊 Database Records</button>
     </div>
     <div>
-      <input type="file" id="fileUploader" accept=".xlsx, .xls, .csv" style="display:none" onchange="handleFileUpload(event)">
-      <button class="nav-btn" onclick="document.getElementById('fileUploader').click()">📂 Load Sheet from Laptop</button>
+      <input type="file" id="fileUploader" accept=".zip, .docx, .xlsx, .xls, .csv, .txt" style="display:none" onchange="handleSmartUpload(event)">
+      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">📂 Upload Folder / ZIP / Files</button>
     </div>
   </div>
 
-  <!-- 1. HOME VIEW (Interactive Category Cards) -->
+  <!-- HOME VIEW -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any issue, keyword, return policy, or item defect..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, file title, keyword, or policy..." onkeyup="handleGlobalSearch()">
     
-    <div class="upload-banner">
+    <div class="status-bar">
       <div>
-        <strong style="color:var(--accent); font-size:14px;">📁 Custom Data Source</strong>
-        <div style="font-size:13px; color:var(--muted); margin-top:2px;">You can click "Load Sheet from Laptop" to feed all your Excel/CSV files directly into this interface!</div>
+        <strong style="color:var(--accent); font-size:14px;">📁 Knowledge Base Source</strong>
+        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Built-in Mavin Wear procedures active. Upload your ZIP/Files to organize documents automatically.</div>
       </div>
-      <span id="dataStatus" style="font-size:12px; font-weight:bold; color:var(--success);">● Default SOPs Active</span>
+      <span id="docCountBadge" style="font-size:12px; font-weight:bold; color:var(--success);">● Active</span>
     </div>
 
-    <div class="category-grid" id="categoryGrid">
-      <!-- Generated dynamically -->
-    </div>
+    <div class="category-grid" id="categoryGrid"></div>
   </div>
 
-  <!-- 2. DETAILS VIEW (SOPs in Selected Category) -->
+  <!-- DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <div>
         <h2 id="currentCategoryTitle" style="margin:0; color:var(--primary);">Category Title</h2>
-        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Canned Responses</span>
+        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Documents</span>
       </div>
-      <button class="nav-btn primary" onclick="goToHome()">⬅ Back to Home</button>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
     
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 3. ESCALATION FORM VIEW -->
+  <!-- ESCALATION FORM -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
-      <button class="nav-btn primary" onclick="goToHome()">⬅ Back to Home</button>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
     <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border);">
       <form id="escForm">
@@ -154,7 +145,7 @@
         <label>Delivered Date (if applicable):</label>
         <input type="date" id="delivered_date">
 
-        <label>Case Summary (Investigation & Actions):</label>
+        <label>Case Summary (Action & Investigation Details):</label>
         <textarea id="case_summary" rows="3" placeholder="Explain details of defect or action taken..." required></textarea>
 
         <button type="submit" class="submit-btn">💾 Submit to Database</button>
@@ -162,13 +153,13 @@
     </div>
   </div>
 
-  <!-- 4. LOGS VIEW -->
+  <!-- LOGS VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary);">📊 Database Escalation Records</h2>
       <div style="display:flex; gap:10px;">
         <button class="nav-btn" onclick="loadLogs()">🔄 Refresh</button>
-        <button class="nav-btn primary" onclick="goToHome()">⬅ Back to Home</button>
+        <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
@@ -192,71 +183,182 @@
 </div>
 
 <script>
-  // Supabase Connection
   const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
   const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // Default Structured Knowledge Base Data
-  let knowledgeData = [
+  let documentsStore = [
     {
       category: "Defects & Quality",
       icon: "👗",
-      desc: "Handling damaged pieces, tailoring defects, fabric flaws, and stain issues.",
-      title: "1. Item Arrived Defective or Damaged",
-      action: "Request clear photos of the defect and courier shipping label. Log an escalation to issue a free immediate replacement without extra courier fees.",
-      canned_response: "Hello! We sincerely apologize for receiving the item in this condition. We have arranged a free immediate replacement order for you. The courier will deliver the fresh piece and collect the current one.",
-      doc_link: "https://drive.google.com/drive/folders/1aIPOWNQDes4ftGoLTiUKfDl0gGgxdEO1?usp=sharing"
+      title: "Damaged or Defective Item Received",
+      content: "Collect clear photo/video evidence of the defect and courier AWB label. Log an escalation ticket to dispatch a free immediate replacement.",
+      canned_reply: "Hello! We sincerely apologize for receiving the item in this condition. We have arranged a free immediate replacement order for you."
     },
     {
       category: "Exchanges & Sizes",
       icon: "🔄",
-      desc: "Size mismatch, color exchange requests, and fit guide assistance.",
-      title: "2. Size Exchange Request",
-      action: "Confirm customer measurements with our standard size chart. Verify warehouse stock for the requested size and initiate exchange order (turnaround: 2-4 business days).",
-      canned_response: "Hello! We'd be more than happy to help you exchange the size. The new size has been confirmed in stock and your exchange ticket has been dispatched.",
-      doc_link: "https://drive.google.com/drive/folders/1aIPOWNQDes4ftGoLTiUKfDl0gGgxdEO1?usp=sharing"
+      title: "Size Exchange Policy & Workflow",
+      content: "Verify customer measurements with our standard size chart. Confirm warehouse inventory for requested size and issue an exchange order (SLA: 2-4 business days).",
+      canned_reply: "Hello! We would be glad to help you exchange the size. The requested size is confirmed in stock and your exchange ticket has been dispatched."
     },
     {
       category: "Shipping & Courier",
       icon: "🚚",
-      desc: "Shipment tracking, delivery delays, address corrections, and dispatch SLAs.",
-      title: "3. Delayed Order Follow-up",
-      action: "Check tracking on the courier portal. If the shipment SLA is exceeded by >48 hours, immediately raise an urgent escalation to logistics dispatch.",
-      canned_response: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today.",
-      doc_link: "https://drive.google.com/drive/folders/1aIPOWNQDes4ftGoLTiUKfDl0gGgxdEO1?usp=sharing"
+      title: "Delayed Delivery & Tracking Investigation",
+      content: "Track shipment on courier portal. If delivery exceeds 48h past SLA, immediately raise a priority investigation flag to logistics.",
+      canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today."
     },
     {
-      category: "Refunds & Cancellations",
+      category: "Refunds & Returns",
       icon: "💳",
-      desc: "Order cancellation before dispatch, returns policy, and payment refunds.",
-      title: "4. Return & Refund Process",
-      action: "Inspect return criteria (unworn, tags attached, within policy window). Once received in warehouse inspection, process refund within 3-5 business days.",
-      canned_response: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly.",
-      doc_link: "https://drive.google.com/drive/folders/1aIPOWNQDes4ftGoLTiUKfDl0gGgxdEO1?usp=sharing"
+      title: "Customer Return & Refund SOP",
+      content: "Check that item meets return criteria (tags intact, unworn). Once warehouse inspection approves the return, process refund within 3-5 business days.",
+      canned_reply: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly."
     },
     {
       category: "Operations & KPIs",
-      icon: "📈",
-      desc: "Team performance metrics, SLA thresholds, Quality scores & escalation matrix.",
-      title: "5. CS Quality & Response SLAs",
-      action: "Target First Response Time (FRT) < 15 mins. CSAT target > 90%. Daily escalation logging required for any product quality or logistics deviation.",
-      canned_response: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority.",
-      doc_link: "https://drive.google.com/drive/folders/1aIPOWNQDes4ftGoLTiUKfDl0gGgxdEO1?usp=sharing"
+      icon: "📊",
+      title: "CS Response SLAs & Quality Standards",
+      content: "First Response Time (FRT) < 15 minutes. CSAT target > 90%. All product defects must be logged in the escalation database daily.",
+      canned_reply: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority."
     }
   ];
 
-  // Render Home Categories
+  // Smart Auto-Categorization Logic
+  function autoCategorize(fileName, text) {
+    const combined = (fileName + " " + text).toLowerCase();
+    if (combined.includes('defect') || combined.includes('damage') || combined.includes('stain') || combined.includes('torn') || combined.includes('quality') || combined.includes('تالف') || combined.includes('عيب')) {
+      return { category: "Defects & Quality", icon: "👗" };
+    }
+    if (combined.includes('exchange') || combined.includes('size') || combined.includes('measure') || combined.includes('استبدال') || combined.includes('مقاس')) {
+      return { category: "Exchanges & Sizes", icon: "🔄" };
+    }
+    if (combined.includes('ship') || combined.includes('courier') || combined.includes('track') || combined.includes('delay') || combined.includes('delivery') || combined.includes('شحن') || combined.includes('توصيل')) {
+      return { category: "Shipping & Courier", icon: "🚚" };
+    }
+    if (combined.includes('refund') || combined.includes('return') || combined.includes('cancel') || combined.includes('استرجاع') || combined.includes('الغاء')) {
+      return { category: "Refunds & Returns", icon: "💳" };
+    }
+    if (combined.includes('kpi') || combined.includes('sla') || combined.includes('metric') || combined.includes('score') || combined.includes('report')) {
+      return { category: "Operations & KPIs", icon: "📊" };
+    }
+    return { category: "General SOPs & Guidelines", icon: "📑" };
+  }
+
+  // Handle Smart File / ZIP Upload
+  async function handleSmartUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    document.getElementById('statusText').innerText = `⏳ Parsing and analyzing "${file.name}"...`;
+    const newDocs = [];
+
+    try {
+      if (file.name.endsWith('.zip')) {
+        const zip = await JSZip.loadAsync(file);
+        const filePromises = [];
+
+        zip.forEach((relativePath, zipEntry) => {
+          if (!zipEntry.dir && !relativePath.includes('__MACOSX')) {
+            filePromises.push((async () => {
+              const name = zipEntry.name.split('/').pop();
+              if (name.endsWith('.docx')) {
+                const arrayBuffer = await zipEntry.async('arraybuffer');
+                const result = await mammoth.extractRawText({ arrayBuffer });
+                if (result.value.trim()) {
+                  const catInfo = autoCategorize(name, result.value);
+                  newDocs.push({
+                    category: catInfo.category,
+                    icon: catInfo.icon,
+                    title: name.replace('.docx', ''),
+                    content: result.value.trim()
+                  });
+                }
+              } else if (name.endsWith('.txt') || name.endsWith('.csv') || name.endsWith('.md')) {
+                const text = await zipEntry.async('string');
+                if (text.trim()) {
+                  const catInfo = autoCategorize(name, text);
+                  newDocs.push({
+                    category: catInfo.category,
+                    icon: catInfo.icon,
+                    title: name,
+                    content: text.trim()
+                  });
+                }
+              }
+            })());
+          }
+        });
+
+        await Promise.all(filePromises);
+
+      } else if (file.name.endsWith('.docx')) {
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        const catInfo = autoCategorize(file.name, result.value);
+        newDocs.push({
+          category: catInfo.category,
+          icon: catInfo.icon,
+          title: file.name.replace('.docx', ''),
+          content: result.value.trim()
+        });
+
+      } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+        const arrayBuffer = await file.arrayBuffer();
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+        workbook.SheetNames.forEach(sheetName => {
+          const sheet = workbook.Sheets[sheetName];
+          const json = XLSX.utils.sheet_to_json(sheet);
+          json.forEach(row => {
+            const rowText = Object.values(row).join(' ');
+            const catInfo = autoCategorize(sheetName, rowText);
+            newDocs.push({
+              category: row.Category || catInfo.category,
+              icon: catInfo.icon,
+              title: row.Title || row.Reason || sheetName,
+              content: row.Action || row.Procedure || rowText,
+              canned_reply: row.Canned_Response || row.Response || ''
+            });
+          });
+        });
+
+      } else {
+        const text = await file.text();
+        const catInfo = autoCategorize(file.name, text);
+        newDocs.push({
+          category: catInfo.category,
+          icon: catInfo.icon,
+          title: file.name,
+          content: text.trim()
+        });
+      }
+
+      if (newDocs.length > 0) {
+        documentsStore = newDocs;
+        document.getElementById('statusText').innerText = `✅ Successfully organized ${newDocs.length} files from "${file.name}" into smart categories!`;
+        goToHome();
+        alert(`🎉 Organized ${newDocs.length} documents into intelligent categories!`);
+      } else {
+        alert('⚠️ No readable text files found in the upload.');
+      }
+
+    } catch (err) {
+      alert('❌ Error reading files: ' + err.message);
+      document.getElementById('statusText').innerText = 'Error parsing file.';
+    }
+  }
+
+  // Render Category Cards on Home
   function renderHomeCategories(data) {
     const grid = document.getElementById('categoryGrid');
     const categoriesMap = {};
 
     data.forEach(item => {
-      const cat = item.category || 'General';
+      const cat = item.category || 'General SOPs & Guidelines';
       if (!categoriesMap[cat]) {
         categoriesMap[cat] = {
-          icon: item.icon || '📌',
-          desc: item.desc || 'Standard operating procedures and replies.',
+          icon: item.icon || '📑',
           count: 0
         };
       }
@@ -270,9 +372,9 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">${info.desc}</div>
+            <div class="cat-desc">Organized procedures, guidelines, and SOP documents.</div>
           </div>
-          <span class="cat-badge">📂 ${info.count} SOPs & Guides ➔</span>
+          <span class="cat-badge">📂 ${info.count} Documents & SOPs ➔</span>
         </div>
       `;
     }).join('');
@@ -280,24 +382,19 @@
 
   // Open Specific Category View
   function openCategory(catName) {
-    const items = knowledgeData.filter(i => (i.category || 'General') === catName);
+    const items = documentsStore.filter(i => (i.category || 'General SOPs & Guidelines') === catName);
     document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${items.length} Procedures available`;
+    document.getElementById('currentCategorySubtitle').innerText = `${items.length} Documents & SOPs available`;
 
     const container = document.getElementById('sopsContainer');
     container.innerHTML = items.map(item => `
       <div class="sop-item">
-        <h3 class="sop-title">${item.title || item.Title || 'SOP Details'}</h3>
-        <div class="sop-action"><strong>Action / Policy:</strong> ${item.action || item.Action || ''}</div>
-        ${(item.canned_response || item.Canned_Response) ? `
-          <div class="canned-box">
-            <button class="copy-btn" onclick="copyText('${(item.canned_response || item.Canned_Response).replace(/'/g, "\\'")}')">📋 Copy Reply</button>
-            <strong>Canned Response:</strong><br>${item.canned_response || item.Canned_Response}
-          </div>
-        ` : ''}
-        ${item.doc_link ? `
-          <div style="margin-top:12px;">
-            <a href="${item.doc_link}" target="_blank" style="color:var(--accent); font-size:13px; font-weight:600; text-decoration:none;">📄 Open Reference Document ↗</a>
+        ${item.canned_reply ? `<button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Reply</button>` : ''}
+        <h3 class="sop-title">${item.title}</h3>
+        <div class="sop-body">${item.content}</div>
+        ${item.canned_reply ? `
+          <div style="margin-top:10px; background:#eff6ff; padding:10px; border-radius:6px; border-left:4px solid var(--accent); font-size:13px;">
+            <strong>Canned Reply:</strong> ${item.canned_reply}
           </div>
         ` : ''}
       </div>
@@ -307,39 +404,31 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
-  // Global Search Handler
+  // Global Search
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
-      renderHomeCategories(knowledgeData);
+      renderHomeCategories(documentsStore);
       return;
     }
-    const filtered = knowledgeData.filter(i => 
+    const filtered = documentsStore.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
-      (i.action && i.action.toLowerCase().includes(q)) ||
-      (i.canned_response && i.canned_response.toLowerCase().includes(q))
+      (i.content && i.content.toLowerCase().includes(q))
     );
     
-    // Render filtered directly in detail section
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
-    document.getElementById('currentCategorySubtitle').innerText = `Matching query: "${q}"`;
+    document.getElementById('currentCategorySubtitle').innerText = `Matching: "${q}"`;
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
+      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs or files match your search query.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
         <div class="sop-item">
-          <span style="font-size:11px; font-weight:bold; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px;">${item.category}</span>
-          <h3 class="sop-title" style="margin-top:6px;">${item.title || item.Title || ''}</h3>
-          <div class="sop-action"><strong>Action:</strong> ${item.action || item.Action || ''}</div>
-          ${(item.canned_response || item.Canned_Response) ? `
-            <div class="canned-box">
-              <button class="copy-btn" onclick="copyText('${(item.canned_response || item.Canned_Response).replace(/'/g, "\\'")}')">📋 Copy</button>
-              ${item.canned_response || item.Canned_Response}
-            </div>
-          ` : ''}
+          <span style="font-size:11px; font-weight:bold; background:#e0e7ff; color:#3730a3; padding:3px 8px; border-radius:4px;">${item.category}</span>
+          <h3 class="sop-title" style="margin-top:8px;">${item.title}</h3>
+          <div class="sop-body">${item.content}</div>
         </div>
       `).join('');
     }
@@ -348,56 +437,6 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
-  // Load Excel / CSV directly from Laptop
-  function handleFileUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    const isExcel = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
-
-    if (isExcel) {
-      reader.onload = function(evt) {
-        const data = new Uint8Array(evt.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-        updateLoadedData(jsonData, file.name);
-      };
-      reader.readAsArrayBuffer(file);
-    } else {
-      Papa.parse(file, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          updateLoadedData(results.data, file.name);
-        }
-      });
-    }
-  }
-
-  function updateLoadedData(data, fileName) {
-    if (!data || data.length === 0) {
-      alert('⚠️ File is empty or invalid.');
-      return;
-    }
-    // Normalize keys
-    knowledgeData = data.map(row => ({
-      category: row.Category || row.category || 'Uploaded Data',
-      icon: row.Icon || row.icon || '📑',
-      desc: row.Description || row.desc || 'Imported SOP from ' + fileName,
-      title: row.Title || row.title || row.Reason || 'SOP Entry',
-      action: row.Action || row.action || row.Procedure || '',
-      canned_response: row.Canned_Response || row.canned_response || row.Response || '',
-      doc_link: row.Doc_Link || row.doc_link || row.Link || ''
-    }));
-
-    document.getElementById('dataStatus').innerText = `● Loaded: ${fileName} (${knowledgeData.length} records)`;
-    goToHome();
-    alert(`✅ Successfully loaded ${knowledgeData.length} records from ${fileName}!`);
-  }
-
-  // Navigation helpers
   function hideAllSections() {
     document.getElementById('homeSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'none';
@@ -408,7 +447,7 @@
   function goToHome() {
     hideAllSections();
     document.getElementById('homeSection').style.display = 'block';
-    renderHomeCategories(knowledgeData);
+    renderHomeCategories(documentsStore);
   }
 
   function showSection(name) {
@@ -443,12 +482,12 @@
     if (error) { 
       alert('❌ Error: ' + error.message); 
     } else { 
-      alert('✅ Escalation logged to SQL Database!'); 
+      alert('✅ Escalation logged to Database!'); 
       document.getElementById('escForm').reset(); 
     }
   });
 
-  // Load SQL Database Logs
+  // Load SQL Logs
   async function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Fetching database records...</td></tr>';
@@ -474,7 +513,7 @@
     `).join('');
   }
 
-  // Initial Load
+  // Init
   goToHome();
 </script>
 </body>
