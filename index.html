@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | CS Operations & QA Hub</title>
+  <title>Mavin Wear | Operations & QA Intelligence Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
@@ -65,6 +65,7 @@
 
     .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
     .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    
     .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
     .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
     .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
@@ -107,14 +108,18 @@
     th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: top; }
     th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
 
-    /* Quality Audit & Review Styles */
-    .score-card { background: #f8fafc; border: 2px solid var(--purple); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
-    .score-display { font-size: 42px; font-weight: 900; color: var(--purple); }
-    .score-label { font-size: 14px; font-weight: bold; color: var(--text); }
+    /* Advanced QA Form Styles */
+    .qa-header-card { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border-radius: 14px; padding: 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+    .qa-score-circle { background: white; color: #4f46e5; width: 100px; height: 100px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .qa-score-circle span { font-size: 11px; font-weight: bold; color: var(--muted); }
+
+    .qa-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .qa-section-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
     
-    .criteria-group { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; }
-    .criteria-title { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
-    .criteria-desc { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
+
+    .fatal-banner { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 10px; padding: 15px; margin-bottom: 16px; }
 
     /* Review Comment Pill */
     .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; }
@@ -139,14 +144,14 @@
 <div class="container">
   
   <div class="header">
-    <div class="brand-title">👗 Mavin Wear Operations & Quality Hub</div>
+    <div class="brand-title">👗 Mavin Wear Operations & QA Hub</div>
     <div class="brand-sub">Decision Engine, Escalation Review, Live QA Scoring & Multi-Tab Portal</div>
   </div>
 
   <!-- User Session Header -->
   <div class="top-bar">
     <div class="user-badge">
-      <span>👤 Current Active User:</span>
+      <span>👤 Active User:</span>
       <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:5px 10px; font-weight:bold; margin:0;">
         <option value="agent@mavinwear.com">Support Agent (General CS)</option>
         <option value="nourtamer2005@gmail.com">Nour Tamer (Escalation Reviewer)</option>
@@ -384,24 +389,34 @@
     </div>
   </div>
 
-  <!-- 8. QUALITY AUDIT FORM VIEW (QA Access: Rehabmohamed881@gmail.com) -->
+  <!-- 8. ADVANCED QUALITY AUDIT FORM VIEW (QA: Rehabmohamed881@gmail.com) -->
   <div id="qualityFormSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h2 style="margin:0; color:var(--purple);">⭐ Quality Assurance (QA) Evaluation Form</h2>
-        <span style="font-size:13px; color:var(--muted);">Score calculates automatically. Submitting will auto-generate and email the report directly to the agent.</span>
+        <h2 style="margin:0; color:var(--purple);">⭐ Quality Assurance (QA) Smart Audit Form</h2>
+        <span style="font-size:13px; color:var(--muted);">Dynamic scoring engine with Fatal flags, N/A weight redistribution & auto-email.</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
 
-    <div class="score-card">
-      <div class="score-display" id="liveScoreDisplay">100%</div>
-      <div class="score-label" id="liveGradeDisplay">Grade: Excellent Performance ⭐⭐⭐</div>
+    <!-- Live Score Banner -->
+    <div class="qa-header-card">
+      <div>
+        <h3 style="margin:0; font-size:22px;">Audit Scorecard Performance</h3>
+        <div id="qaGradeText" style="font-size:15px; margin-top:6px; opacity:0.95;">Grade: Excellent (100%) ⭐⭐⭐</div>
+        <div id="qaFatalText" style="font-size:13px; margin-top:4px; font-weight:bold; color:#fef08a;"></div>
+      </div>
+      <div class="qa-score-circle">
+        <span id="qaLivePercentage">100%</span>
+        <span>SCORE</span>
+      </div>
     </div>
 
-    <div style="background:white; padding:25px; border-radius:12px; border:1px solid var(--border);">
-      <form id="qaForm">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:15px; margin-bottom:20px;">
+    <form id="qaForm">
+      <!-- General Audit Meta -->
+      <div class="qa-section">
+        <div class="qa-section-title">📌 Interaction & Agent Identification</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:15px;">
           <div>
             <label>Agent Name / Email:</label>
             <input type="email" id="qa_agent_email" placeholder="agent@mavinwear.com" required>
@@ -415,65 +430,121 @@
             <input type="text" id="qa_ticket_ref" placeholder="e.g. #TK-9801" required>
           </div>
           <div>
-            <label>Interaction Channel:</label>
-            <select id="qa_channel">
-              <option value="Live Chat / WhatsApp">Live Chat / WhatsApp</option>
-              <option value="Instagram / Facebook DM">Instagram / Facebook DM</option>
-              <option value="Phone Call">Phone Call</option>
+            <label>Root Cause Attribution:</label>
+            <select id="qa_attribution">
+              <option value="Agent Related">Agent Related (خطأ من الأيجنت)</option>
+              <option value="Non-Agent Related - Courier">Non-Agent Related (شركة الشحن)</option>
+              <option value="Non-Agent Related - Warehouse">Non-Agent Related (المخزن)</option>
+              <option value="Non-Agent Related - System/Technical">Non-Agent Related (السيستم)</option>
             </select>
           </div>
         </div>
+      </div>
 
-        <!-- Criteria 1 -->
-        <div class="criteria-group">
-          <div class="criteria-title">1. Greeting, Professional Tone & Politeness (20 Points)</div>
-          <div class="criteria-desc">Welcoming the customer warmly, maintaining polite tone, and proper closing.</div>
-          <select id="qa_crit_1" onchange="calculateQAScore()">
-            <option value="20">Fully Met (20/20) - Warm & Professional</option>
-            <option value="10">Partially Met (10/20) - Dry tone or missed greeting</option>
-            <option value="0">Failed (0/20) - Rude tone or unprofessional</option>
+      <!-- Critical Failures / Fatals -->
+      <div class="fatal-banner">
+        <strong style="color:#991b1b; font-size:15px;">⚠️ Critical Business & End-User Parameters (Auto-Fail):</strong>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px; margin-top:10px;">
+          <div>
+            <label style="color:#991b1b;">End-User Critical (معلومة غلط / مواعيد غلط):</label>
+            <select id="qa_end_user_critical" onchange="calculateQAScore()">
+              <option value="no">No Fatal - Correct Info & Dates</option>
+              <option value="yes">Fatal Fail (معلومة خاطئة أو ميعاد مضلل للعميل ❌)</option>
+            </select>
+          </div>
+          <div>
+            <label style="color:#991b1b;">Business Critical (تأثير مالي / سياسات - Score 3 or 0):</label>
+            <select id="qa_business_critical" onchange="calculateQAScore()">
+              <option value="3">Score 3 - Protected Business & Policy</option>
+              <option value="0">Score 0 - Fatal Breach / Financial Loss ❌</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. Issue Understanding -->
+      <div class="qa-section">
+        <div class="qa-section-title">🧠 1. Issue Understanding & Identification</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
+          <div>
+            <label>Did the agent understand the customer issue correctly?</label>
+            <select id="qa_understand" onchange="calculateQAScore()">
+              <option value="15">Yes (15/15) - Accurate understanding</option>
+              <option value="0">No (0/15) - Misunderstood root cause</option>
+            </select>
+          </div>
+          <div>
+            <label>Did the agent ask clarifying diagnostic questions?</label>
+            <select id="qa_diagnostic" onchange="calculateQAScore()">
+              <option value="15">Yes (15/15) - Asked clear questions</option>
+              <option value="0">No (0/15) - Missed asking clarifying questions</option>
+            </select>
+          </div>
+          <div>
+            <label>Were repetitive questions avoided? (هل تجنب التكرار؟):</label>
+            <select id="qa_repetitive" onchange="calculateQAScore()">
+              <option value="10">Yes (10/10) - No repetitive questions</option>
+              <option value="0">No (0/10) - Asked repeated questions</option>
+              <option value="NA">N/A (Not Applicable - Reallocate weight)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Full Systems Investigation -->
+      <div class="qa-section">
+        <div class="qa-section-title">🔍 2. Full Systems Investigation & Checks (20 Pts)</div>
+        <div class="criteria-desc">Did the agent inspect all relevant systems before taking action?</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> Shopify Store Check</label>
+          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> Bosta Courier Portal Check</label>
+          <label class="check-item"><input type="checkbox" id="chk_exchange" checked onchange="calculateQAScore()"> Exchange & Size Tool Check</label>
+          <label class="check-item"><input type="checkbox" id="chk_refund" checked onchange="calculateQAScore()"> Refund / Sheet Verification</label>
+          <label class="check-item"><input type="checkbox" id="chk_product" checked onchange="calculateQAScore()"> CS Product Escalation Log</label>
+        </div>
+      </div>
+
+      <!-- 3. Correct Resolution Delivery -->
+      <div class="qa-section">
+        <div class="qa-section-title">🎯 3. Resolution Delivery & Correct Action (25 Pts)</div>
+        <div>
+          <label>Based on customer request, did the agent deliver the exact right resolution?</label>
+          <select id="qa_correct_res" onchange="calculateQAScore()">
+            <option value="25">Yes (25/25) - Delivered correct approved resolution</option>
+            <option value="0">No (0/25) - Incorrect action or wrong resolution</option>
           </select>
         </div>
+      </div>
 
-        <!-- Criteria 2 -->
-        <div class="criteria-group">
-          <div class="criteria-title">2. Root Cause Identification & Correct Tagging (25 Points)</div>
-          <div class="criteria-desc">Accurately identifying the root cause vs customer emotion (Contact Reason & Resolution).</div>
-          <select id="qa_crit_2" onchange="calculateQAScore()">
-            <option value="25">Fully Met (25/25) - Perfect categorization</option>
-            <option value="12">Partially Met (12/25) - Minor misclassification</option>
-            <option value="0">Failed (0/25) - Wrong tagging completely</option>
-          </select>
+      <!-- 4. Escalation Process & SLA -->
+      <div class="qa-section">
+        <div class="qa-section-title">⏱️ 4. Escalation Process & SLA Communication (12 Pts)</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
+          <div>
+            <label>Escalation Process followed correctly?</label>
+            <select id="qa_esc_process" onchange="calculateQAScore()">
+              <option value="6">Yes (6/6) - Correct escalation path</option>
+              <option value="0">No (0/6) - Wrong escalation or unnecessary tag</option>
+            </select>
+          </div>
+          <div>
+            <label>Clear SLA stated explicitly to customer? (ذكر الموعد بوضوح؟):</label>
+            <select id="qa_sla_stated" onchange="calculateQAScore()">
+              <option value="6">Yes (6/6) - Mentioned exact SLA clearly</option>
+              <option value="0">No (0/6) - Vague or missing SLA</option>
+            </select>
+          </div>
         </div>
+      </div>
 
-        <!-- Criteria 3 -->
-        <div class="criteria-group">
-          <div class="criteria-title">3. Policy Adherence & Resolution Accuracy (35 Points)</div>
-          <div class="criteria-desc">Following official SOPs (Refund channel, 14-day exchange, defect proof collection).</div>
-          <select id="qa_crit_3" onchange="calculateQAScore()">
-            <option value="35">Fully Met (35/35) - 100% Policy compliant</option>
-            <option value="15">Partially Met (15/35) - Incomplete steps</option>
-            <option value="0">Failed (0/35) - Incorrect policy or unauthorized promise</option>
-          </select>
-        </div>
+      <!-- Coaching Notes -->
+      <div class="qa-section">
+        <label>Auditor Detailed Feedback & Coaching Action Plan:</label>
+        <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths and areas for coaching..." required></textarea>
+      </div>
 
-        <!-- Criteria 4 -->
-        <div class="criteria-group">
-          <div class="criteria-title">4. SLA & First Contact Resolution (FCR) (20 Points)</div>
-          <div class="criteria-desc">Responding within SLA threshold without unnecessary delays or ping-pong.</div>
-          <select id="qa_crit_4" onchange="calculateQAScore()">
-            <option value="20">Fully Met (20/20) - Fast & Efficient</option>
-            <option value="10">Partially Met (10/20) - Slight delay</option>
-            <option value="0">Failed (0/20) - Significant SLA breach</option>
-          </select>
-        </div>
-
-        <label>Auditor Detailed Feedback & Coaching Notes:</label>
-        <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths and coaching points for the agent..." required></textarea>
-
-        <button type="submit" class="submit-btn purple">📤 Submit Evaluation & Email Agent Directly</button>
-      </form>
-    </div>
+      <button type="submit" class="submit-btn purple">📤 Submit QA Evaluation & Email Report Directly to Agent</button>
+    </form>
   </div>
 
   <!-- 9. QA EVALUATION LOGS VIEW -->
@@ -496,6 +567,7 @@
             <th>Date</th>
             <th>Agent Email</th>
             <th>Ticket Ref</th>
+            <th>Attribution</th>
             <th>Score</th>
             <th>Grade</th>
             <th>Auditor</th>
@@ -507,7 +579,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ESCALATION CASE REVIEW (Authorized Reviewers) -->
+  <!-- MODAL: ESCALATION CASE REVIEW -->
   <div class="modal-overlay" id="reviewModal">
     <div class="modal-content">
       <h3 style="margin-top:0; color:var(--primary);">📝 Review & Validate Escalation Case</h3>
@@ -533,7 +605,6 @@
 </div>
 
 <script>
-  // Authorized Reviewers & QA Specialists
   const ESCALATION_REVIEWERS = ["nourtamer2005@gmail.com", "nanielshazly4@gmail.com"];
   const QA_SPECIALISTS = ["Rehabmohamed881@gmail.com"];
 
@@ -566,7 +637,7 @@
     { category_en: "❓ INQUIRIES & ACCOUNTS", category_ar: "❓ استفسارات، خصومات، وحسابات", action_en: "Update customer phone number or delivery address in system", action_ar: "تعديل بيانات العميل (رقم هاتف أو عنوان استلام) على السيستم", reason_en: "Account & Website Issues", reason_ar: "Account & Website Issues", resolution_en: "Edit Customer Data", resolution_ar: "Edit Customer Data" }
   ];
 
-  // 63 Customer Scenarios Dataset
+  // 63 Scenarios Dataset
   const EMBEDDED_SCENARIOS = [
     { source: "Overall Standard Scenarios", scenario: "\"الأوردر لسه طالبه إمبارح هيوصل إمتى؟\"", explanation: "استفسار طبيعي عن الشحن في وقته. إرسال رابط التتبع.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
     { source: "Overall Standard Scenarios", scenario: "\"عايز ألغي الأوردر\" (قبل الشحن)", explanation: "العميل تراجع عن الشراء. إلغاء الطلب من النظام.", reason: "Order Status & Tracking", resolution: "Order Cancelled" },
@@ -1016,7 +1087,7 @@
     `).join('');
   }
 
-  // 5. Case Reviews (Nour Tamer & Nani El Shazly)
+  // 5. Case Reviews
   function openReviewModal(index) {
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
     const r = records[index];
@@ -1055,27 +1126,59 @@
     alert('✅ Case review decision successfully saved!');
   }
 
-  // 6. Quality Audit Score Calculation & Auto-Email Dispatch
+  // 6. Dynamic QA Score Engine with N/A Weight Reallocation & Fatal Auto-Fail
   function calculateQAScore() {
-    const c1 = parseInt(document.getElementById('qa_crit_1').value) || 0;
-    const c2 = parseInt(document.getElementById('qa_crit_2').value) || 0;
-    const c3 = parseInt(document.getElementById('qa_crit_3').value) || 0;
-    const c4 = parseInt(document.getElementById('qa_crit_4').value) || 0;
+    const isEndUserFatal = document.getElementById('qa_end_user_critical').value === 'yes';
+    const bizCritScore = parseInt(document.getElementById('qa_business_critical').value) || 0; // 3 or 0
 
-    const total = c1 + c2 + c3 + c4;
-    document.getElementById('liveScoreDisplay').innerText = total + '%';
+    // Fatal Auto-Fail check
+    if (isEndUserFatal || bizCritScore === 0) {
+      document.getElementById('qaLivePercentage').innerText = '0%';
+      document.getElementById('qaGradeText').innerText = 'Grade: Fatal Fail (0%) ❌ Critical Policy / User Misguidance';
+      document.getElementById('qaFatalText').innerText = '⚠️ Fatal Failure Triggered: Auto-zeroed';
+      return { score: 0, grade: 'Fatal Fail (0%)' };
+    }
+
+    document.getElementById('qaFatalText').innerText = '';
+
+    // Standard scoring variables
+    const understand = parseInt(document.getElementById('qa_understand').value) || 0; // max 15
+    const diagnostic = parseInt(document.getElementById('qa_diagnostic').value) || 0; // max 15
+    const repetitiveVal = document.getElementById('qa_repetitive').value; // 10, 0, or NA
+
+    // System checks (Shopify, Bosta, Exchange, Refund, Product) - 4 pts each = 20 pts max
+    let systemScore = 0;
+    if (document.getElementById('chk_shopify').checked) systemScore += 4;
+    if (document.getElementById('chk_bosta').checked) systemScore += 4;
+    if (document.getElementById('chk_exchange').checked) systemScore += 4;
+    if (document.getElementById('chk_refund').checked) systemScore += 4;
+    if (document.getElementById('chk_product').checked) systemScore += 4;
+
+    const correctRes = parseInt(document.getElementById('qa_correct_res').value) || 0; // max 25
+    const escProcess = parseInt(document.getElementById('qa_esc_process').value) || 0; // max 6
+    const slaStated = parseInt(document.getElementById('qa_sla_stated').value) || 0; // max 6
+
+    let earnedPoints = understand + diagnostic + systemScore + correctRes + escProcess + slaStated + bizCritScore; // max 15+15+20+25+6+6+3 = 90
+    let totalPossible = 90;
+
+    // N/A Weight Redistribution for Repetitive Questions
+    if (repetitiveVal !== 'NA') {
+      earnedPoints += parseInt(repetitiveVal);
+      totalPossible += 10; // Total 100
+    }
+
+    const finalPercentage = Math.round((earnedPoints / totalPossible) * 100);
+    document.getElementById('qaLivePercentage').innerText = finalPercentage + '%';
 
     let grade = 'Excellent (ممتاز ⭐⭐⭐)';
-    let color = '#10b981';
+    if (finalPercentage < 70) grade = 'Needs Improvement / Action Plan (ضعيف ⚠️)';
+    else if (finalPercentage < 85) grade = 'Good (جيد 👍)';
 
-    if (total < 70) { grade = 'Needs Coaching / Action Plan (يحتاج تحسين ⚠️)'; color = '#ef4444'; }
-    else if (total < 85) { grade = 'Good Performance (جيد 👍)'; color = '#f59e0b'; }
-
-    document.getElementById('liveGradeDisplay').innerText = `Grade: ${grade}`;
-    document.getElementById('liveScoreDisplay').style.color = color;
-    return { score: total, grade: grade };
+    document.getElementById('qaGradeText').innerText = `Grade: ${grade} (${finalPercentage}%)`;
+    return { score: finalPercentage, grade: grade };
   }
 
+  // Submit QA Evaluation and Dispatch Formatted Email
   document.getElementById('qaForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const scoreData = calculateQAScore();
@@ -1085,44 +1188,58 @@
       agent_email: document.getElementById('qa_agent_email').value.trim(),
       auditor_email: document.getElementById('qa_auditor_email').value.trim(),
       ticket_ref: document.getElementById('qa_ticket_ref').value.trim(),
-      channel: document.getElementById('qa_channel').value,
+      attribution: document.getElementById('qa_attribution').value,
       score: scoreData.score + '%',
       grade: scoreData.grade,
-      crit1: document.getElementById('qa_crit_1').value + '/20',
-      crit2: document.getElementById('qa_crit_2').value + '/25',
-      crit3: document.getElementById('qa_crit_3').value + '/35',
-      crit4: document.getElementById('qa_crit_4').value + '/20',
+      endUserCritical: document.getElementById('qa_end_user_critical').value === 'yes' ? 'FAIL' : 'PASS',
+      bizCritical: document.getElementById('qa_business_critical').value === '3' ? '3/3' : '0/3',
+      understanding: document.getElementById('qa_understand').value + '/15',
+      diagnostic: document.getElementById('qa_diagnostic').value + '/15',
+      repetitive: document.getElementById('qa_repetitive').value,
+      correctResolution: document.getElementById('qa_correct_res').value + '/25',
+      escProcess: document.getElementById('qa_esc_process').value + '/6',
+      slaStated: document.getElementById('qa_sla_stated').value + '/6',
+      systemsChecked: [
+        document.getElementById('chk_shopify').checked ? 'Shopify' : '',
+        document.getElementById('chk_bosta').checked ? 'Bosta' : '',
+        document.getElementById('chk_exchange').checked ? 'Exchange Tool' : '',
+        document.getElementById('chk_refund').checked ? 'Refund Sheet' : '',
+        document.getElementById('chk_product').checked ? 'CS Product Escalations' : ''
+      ].filter(Boolean).join(', '),
       feedback: document.getElementById('qa_feedback').value.trim()
     };
 
-    // Save QA record locally
     const qaRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
     qaRecords.unshift(auditRecord);
     localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
 
-    // Auto-generate formatted Email to Agent
-    const subject = encodeURIComponent(`[Mavin Wear QA] Quality Evaluation Report - Ticket ${auditRecord.ticket_ref} (${auditRecord.score})`);
+    // Auto-generate Formatted Email to Agent
+    const subject = encodeURIComponent(`[Mavin QA Evaluation] Scorecard: Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
     const body = encodeURIComponent(
-      `Hello,\n\nHere is your Quality Assurance (QA) evaluation scorecard for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
-      `-----------------------------------------\n` +
+      `Hello,\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
+      `--------------------------------------------------\n` +
       `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
       `👤 Auditor: ${auditRecord.auditor_email}\n` +
       `📅 Date: ${auditRecord.date}\n` +
-      `📱 Channel: ${auditRecord.channel}\n` +
-      `-----------------------------------------\n\n` +
-      `Detailed Scoring Breakdown:\n` +
-      `1. Greeting, Professional Tone & Politeness: ${auditRecord.crit1}\n` +
-      `2. Root Cause Identification & Tagging: ${auditRecord.crit2}\n` +
-      `3. Policy Adherence & Resolution: ${auditRecord.crit3}\n` +
-      `4. SLA & First Contact Resolution: ${auditRecord.crit4}\n\n` +
-      `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
-      `Keep up the great effort!\nMavin Wear Quality Assurance Team`
+      `🏷️ Attribution: ${auditRecord.attribution}\n` +
+      `--------------------------------------------------\n\n` +
+      `Detailed Breakdown:\n` +
+      `• End-User Critical (Info/Dates): ${auditRecord.endUserCritical}\n` +
+      `• Business Critical (Policies): ${auditRecord.bizCritical}\n` +
+      `• Issue Understanding: ${auditRecord.understanding}\n` +
+      `• Diagnostic Questions: ${auditRecord.diagnostic}\n` +
+      `• Avoided Repetitive Questions: ${auditRecord.repetitive}\n` +
+      `• Systems Checked: ${auditRecord.systemsChecked}\n` +
+      `• Correct Resolution Delivered: ${auditRecord.correctResolution}\n` +
+      `• Escalation Process Followed: ${auditRecord.escProcess}\n` +
+      `• Clear SLA Stated: ${auditRecord.slaStated}\n\n` +
+      `Auditor Feedback & Coaching:\n${auditRecord.feedback}\n\n` +
+      `Best regards,\nMavin Wear Quality Assurance Team`
     );
 
-    // Open default mail client to dispatch directly to agent
     window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
 
-    alert(`🎉 Quality Evaluation Logged! Score: ${auditRecord.score}.\nEmail dispatch client opened to send the report directly to ${auditRecord.agent_email}!`);
+    alert(`🎉 Quality Evaluation Logged! Final Score: ${auditRecord.score}.\nEmail dispatch opened for ${auditRecord.agent_email}!`);
     document.getElementById('qaForm').reset();
     calculateQAScore();
     showSection('qualityLogs');
@@ -1133,7 +1250,7 @@
     const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
 
     if (records.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations submitted yet.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations logged yet.</td></tr>';
       return;
     }
 
@@ -1142,6 +1259,7 @@
         <td>${r.date}</td>
         <td><strong>${r.agent_email}</strong></td>
         <td>${r.ticket_ref}</td>
+        <td><span style="font-size:11.5px; background:#eff6ff; color:#1d4ed8; padding:2px 6px; border-radius:4px;">${r.attribution}</span></td>
         <td><strong style="color:var(--purple); font-size:14px;">${r.score}</strong></td>
         <td>${r.grade}</td>
         <td>${r.auditor_email}</td>
@@ -1159,13 +1277,10 @@
     XLSX.writeFile(wb, "Mavin_Wear_QA_Evaluations.xlsx");
   }
 
-  // General Navigation & Global Search
+  // Global Search & Navigation
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
-    if (!q) {
-      renderHomeCategories(masterKnowledgeBase);
-      return;
-    }
+    if (!q) { renderHomeCategories(masterKnowledgeBase); return; }
     const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
@@ -1312,17 +1427,14 @@
 
   function exportToExcel() {
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    if (records.length === 0) {
-      alert('⚠️ No records to export.');
-      return;
-    }
+    if (records.length === 0) { alert('⚠️ No records to export.'); return; }
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Escalations");
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Startup
+  // Startup Initializers
   goToHome();
   changeUserSession();
   fetchAllLiveSheets();
