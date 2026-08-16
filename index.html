@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | Operations & CS Knowledge Base</title>
+  <title>Mavin Wear | Operations, SOPs & Agent Refund Portal</title>
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
@@ -30,7 +31,7 @@
     .brand-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
     
     .top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 14px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 14px; text-decoration: none; }
     .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
     .nav-btn.primary { background: var(--primary); color: white; border: none; }
     .nav-btn.primary:hover { background: #1e293b; }
@@ -48,24 +49,36 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
+    /* Sub-filters inside Category */
+    .sub-filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .sub-filter-btn { padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted); transition: 0.2s; }
+    .sub-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
     /* Structured SOP & Step-by-Step Styling */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
     .sop-system-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
     
-    /* Interactive Step Flow */
-    .steps-timeline { margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 12px; }
     .step-box { display: flex; gap: 15px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: flex-start; }
     .step-number { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
     .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
     .step-content strong { color: var(--primary); }
     
-    /* Callout & Canned Boxes */
     .callout-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 6px; font-size: 13.5px; color: #92400e; margin: 15px 0; }
     .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
+
+    /* Refund Portal Lookups */
+    .portal-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .portal-search-row { display: flex; gap: 10px; margin-top: 15px; }
+    .portal-search-input { flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+    .status-pill { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .status-success { background: #dcfce7; color: #166534; }
+    .status-pending { background: #fef9c3; color: #854d0e; }
+    .status-failed { background: #fee2e2; color: #991b1b; }
 
     /* Escalation Form & Logs */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
@@ -82,40 +95,92 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Cloud-Synchronized Knowledge Base & Step-by-Step SOP Flow</div>
+    <div class="brand-sub">Cloud Knowledge Base, Step-by-Step SOPs & Agent Refund Portal</div>
   </div>
 
   <div class="top-actions">
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <button class="nav-btn primary" onclick="goToHome()">🏠 Home</button>
+      <button class="nav-btn" onclick="showSection('refundPortal')">🔍 Agent Refund Portal</button>
       <button class="nav-btn" onclick="showSection('escalation')">🚨 Escalation Form</button>
       <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
     </div>
     <div>
-      <button class="nav-btn accent" onclick="syncFromCloud()">☁️ Refresh Cloud Data</button>
+      <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn accent">
+        📊 Open Full Refund Sheet ↗
+      </a>
     </div>
   </div>
 
   <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any issue (e.g. Paymob refund, damaged fabric, courier delay, size chart)..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any issue (e.g. Cash refund, Paymob, InstaPay, damaged fabric, courier delay)..." onkeyup="handleGlobalSearch()">
     <div class="category-grid" id="categoryGrid"></div>
   </div>
 
-  <!-- 2. STEP-BY-STEP DETAIL VIEW -->
+  <!-- 2. AGENT REFUND PORTAL VIEW -->
+  <div id="refundPortalSection" style="display:none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <div>
+        <h2 style="margin:0; color:var(--primary);">🔍 Mavin Refunds — Agent Portal</h2>
+        <span style="font-size:13px; color:var(--muted);">Live lookup for customer refunds, order amounts, and payout statuses.</span>
+      </div>
+      <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
+    </div>
+
+    <div class="portal-banner">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <strong style="color:var(--primary); font-size:15px;">Search Customer Refund Record</strong>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">Filter instantly by Order #, Customer Phone, Ticket #, or Customer Name.</div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" style="font-size:13px; font-weight:bold; color:var(--accent); text-decoration:none;">
+          📂 Open Master Google Sheet ↗
+        </a>
+      </div>
+
+      <div class="portal-search-row">
+        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Order # (e.g. 143157), Phone, or Name..." onkeyup="searchRefunds()">
+        <button class="nav-btn primary" onclick="searchRefunds()">Search Record</button>
+      </div>
+    </div>
+
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border); overflow-x:auto;">
+      <table id="refundsTable">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Ticket #</th>
+            <th>Customer Name</th>
+            <th>Phone / Wallet</th>
+            <th>Amount (EGP)</th>
+            <th>Channel</th>
+            <th>Status</th>
+            <th>Action / Note</th>
+          </tr>
+        </thead>
+        <tbody id="refundsTableBody">
+          <!-- Rendered dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. STEP-BY-STEP DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
       <div>
         <h2 id="currentCategoryTitle" style="margin:0; color:var(--primary);">Category Title</h2>
         <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Interactive Step Workflows</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-    
+
+    <div class="sub-filter-bar" id="subFilterBar"></div>
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 3. ESCALATION FORM VIEW -->
+  <!-- 4. ESCALATION FORM VIEW -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
@@ -133,7 +198,7 @@
         <input type="text" id="customer_name" required>
 
         <label>Contact Reason:</label>
-        <input type="text" id="contact_reason" placeholder="e.g. Defect / Size Exchange / Paymob Refund / Courier Delay" required>
+        <input type="text" id="contact_reason" placeholder="e.g. Defect / Size Exchange / COD Refund / Paymob Refund" required>
 
         <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
@@ -148,14 +213,14 @@
         <input type="date" id="delivered_date">
 
         <label>Case Summary (Action & Investigation Details):</label>
-        <textarea id="case_summary" rows="3" placeholder="Explain details of defect, refund status, or action taken..." required></textarea>
+        <textarea id="case_summary" rows="3" placeholder="Explain details of defect, refund channel, or action taken..." required></textarea>
 
         <button type="submit" class="submit-btn">💾 Submit to Database</button>
       </form>
     </div>
   </div>
 
-  <!-- 4. LOGS VIEW -->
+  <!-- 5. LOGS VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <h2 style="margin:0; color:var(--primary);">📊 Database Escalation Records</h2>
@@ -186,109 +251,126 @@
 </div>
 
 <script>
-  // Supabase Live Client
   const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
   const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
   const client = (window.supabase) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-  // Comprehensive Mavin Wear Operational Knowledge Base with Step-by-Step Workflows
+  // Master Knowledge Base with All Channels
   let masterKnowledgeBase = [
     {
-      category: "Payments & Refunds (Paymob)",
+      category: "Payments & Refunds",
+      subCategory: "Cash (COD) Refund",
+      icon: "💵",
+      title: "Cash on Delivery (COD) Return & Refund Procedure",
+      system: "InstaPay / Vodafone Cash / Bank Transfer",
+      note: "Eligibility: Item must be returned to warehouse and passed Quality Inspection (QC Passed) before initiating payment transfer.",
+      steps: [
+        "<strong>Step 1 — Confirm QC Approval:</strong> Verify warehouse notification that returned item arrived in original condition with tags.",
+        "<strong>Step 2 — Request Payout Details:</strong> Ask the customer for preferred transfer channel (InstaPay IPA/Mobile or Vodafone Cash / Orange Money).",
+        "<strong>Step 3 — Search / Log in Agent Portal:</strong> Check the <strong>Agent Refund Portal</strong> to ensure no duplicate payout was submitted.",
+        "<strong>Step 4 — Provide Transfer Confirmation:</strong> Once Finance processes payout (SLA: 2-3 business days), share transfer reference code."
+      ],
+      canned_reply: "Hello! Your returned item has passed our warehouse inspection. We have queued your cash refund via (InstaPay / Mobile Wallet). The transfer will be completed within 2-3 business days, and we will share the transaction receipt with you."
+    },
+    {
+      category: "Payments & Refunds",
+      subCategory: "Paymob Card Refund",
       icon: "💳",
-      title: "Refund Automation & Paymob Dashboard SOP",
-      system: "Paymob + Shopify",
-      note: "Important: Always confirm you are logged in as 'Mavin Wear' on the top bar before initiating or verifying any refund.",
+      title: "Online Card Refund (Paymob Dashboard SOP)",
+      system: "Paymob Gateway + Shopify",
+      note: "Crucial: Always ensure you are logged in as 'Mavin Wear' on the top bar before initiating or searching any transaction.",
       steps: [
         "<strong>Step 1 — Verify Account:</strong> Open Paymob Dashboard. Confirm you're logged in as 'Mavin Wear' in the top bar.",
         "<strong>Step 2 — Locate Transaction:</strong> Navigate to Left sidebar ➔ Payments ➔ Transactions.",
-        "<strong>Step 3 — Filter by Order ID:</strong> Click the <strong>+ Filter</strong> button. Set filter to Order ID (= Shopify order number, e.g. 143157).",
-        "<strong>Step 4 — Check Transaction Status:</strong> Review Status column. If 'Captured / Success', proceed with partial or full refund automation.",
-        "<strong>Step 5 — Complete & Log:</strong> Execute the refund, record Transaction ID in ticket, and update customer with ETA (3-5 banking days)."
+        "<strong>Step 3 — Filter by Order ID:</strong> Click <strong>+ Filter</strong> button ➔ Filter by Order ID (= Shopify order number, e.g. 143157).",
+        "<strong>Step 4 — Execute Refund:</strong> Check Status column ('Captured / Success'). Click on Transaction ID ➔ Click 'Refund' (Full or Partial amount).",
+        "<strong>Step 5 — Log & Update:</strong> Record Refund Transaction ID in Shopify ticket and inform the customer (ETA: 3-5 banking days)."
       ],
-      canned_reply: "Hello! Your refund has been initiated through our Paymob gateway. The amount will be credited back to your original payment method within 3-5 business days."
+      canned_reply: "Hello! Your card refund has been successfully initiated through our Paymob gateway. The funds will reflect in your bank account / card statement within 3-5 business days."
+    },
+    {
+      category: "Payments & Refunds",
+      subCategory: "Store Credit Voucher",
+      icon: "🎟️",
+      title: "Instant Store Credit / Discount Code Refund",
+      system: "Shopify Discounts",
+      note: "Instant Option: Recommend store credit if the customer wants to purchase an alternative style immediately without waiting for banking delays.",
+      steps: [
+        "<strong>Step 1 — Offer Incentive:</strong> Check if customer prefers instant shopping credit with free shipping on their next order.",
+        "<strong>Step 2 — Generate Discount Code:</strong> Create unique voucher in Shopify for exact refundable value (Format: CR-ORDER#-XXXX).",
+        "<strong>Step 3 — Issue Code to Customer:</strong> Send code with instructions (valid for 12 months, applies on all collections)."
+      ],
+      canned_reply: "Hello! As requested, we have generated an instant Store Credit code for you: [CODE]. You can use it at checkout anytime across our entire collection."
     },
     {
       category: "Defects & Quality Control",
+      subCategory: "Manufacturing Defect",
       icon: "👗",
       title: "Damaged / Defective Item Handling Workflow",
       system: "CS Portal + Warehouse",
-      note: "Zero Customer Cost Policy: Defective piece replacements are 100% free with no courier fees.",
+      note: "Zero Cost Policy: Damaged/defective piece replacements are 100% free with waived courier fees.",
       steps: [
-        "<strong>Step 1 — Request Evidence:</strong> Ask customer for clear photos/videos of the defect + courier shipping label (AWB).",
-        "<strong>Step 2 — Verify Policy:</strong> Ensure the issue falls under manufacturing flaws, fabric damage, or tailoring defect.",
-        "<strong>Step 3 — Create Replacement Order:</strong> Generate a free replacement order in the system with tag 'FREE_DEFECT_EXCHANGE'.",
-        "<strong>Step 4 — Log Escalation:</strong> Fill out the Escalation Form below with Order # and ticket details to notify Quality Control."
+        "<strong>Step 1 — Collect Evidence:</strong> Request clear photos/video of the defect alongside the courier shipping label (AWB).",
+        "<strong>Step 2 — Verify Flaw:</strong> Confirm the defect (stain, torn seam, fabric pull, tailoring flaw).",
+        "<strong>Step 3 — Create Free Replacement:</strong> Issue replacement order in Shopify tagged 'FREE_DEFECT_EXCHANGE'.",
+        "<strong>Step 4 — Log Escalation:</strong> Fill out the Escalation Form below to notify Quality & Manufacturing team."
       ],
-      canned_reply: "Hello! We sincerely apologize for receiving your item in this condition. We have arranged an immediate free replacement order for you. The courier will deliver the fresh piece and collect the defective one."
+      canned_reply: "Hello! We sincerely apologize for receiving your item in this condition. We have arranged an immediate free replacement order for you. The courier will deliver the new piece and pick up the defective one."
     },
     {
       category: "Exchanges & Size Chart",
+      subCategory: "Size Fit Exchange",
       icon: "🔄",
       title: "Size Exchange & Fit Assistance Procedure",
       system: "Shopify Inventory",
-      note: "Standard exchange window is within 14 days of delivery, provided tags are attached and unworn.",
+      note: "Standard exchange window: within 14 days of delivery with original tags attached.",
       steps: [
-        "<strong>Step 1 — Compare Size Chart:</strong> Review customer measurements against Mavin Wear standard size guide.",
-        "<strong>Step 2 — Check Stock:</strong> Confirm requested size availability in warehouse inventory.",
-        "<strong>Step 3 — Issue Exchange Order:</strong> Create a reverse pickup/delivery exchange AWB (turnaround 2-4 business days).",
-        "<strong>Step 4 — Notify Customer:</strong> Send tracking and timeline confirmation."
+        "<strong>Step 1 — Compare Size Chart:</strong> Assist customer in reviewing measurements against Mavin Wear standard size guide.",
+        "<strong>Step 2 — Check Stock:</strong> Confirm requested size is available in warehouse inventory.",
+        "<strong>Step 3 — Issue Exchange Order:</strong> Create reverse pickup/delivery AWB (turnaround 2-4 business days).",
+        "<strong>Step 4 — Notify Customer:</strong> Provide exchange tracking link."
       ],
       canned_reply: "Hello! We would be delighted to help you exchange the size. The requested size is confirmed in stock, and the courier will exchange the pieces at your doorstep within 2-4 business days."
     },
     {
       category: "Shipping & Courier Operations",
+      subCategory: "Delayed Delivery",
       icon: "🚚",
       title: "Delayed Shipment & Courier Escalation SOP",
       system: "Courier Portal + Logistics",
-      note: "SLA Threshold: Any order delayed >48 hours past estimated SLA must be escalated immediately.",
+      note: "SLA Threshold: Any shipment delayed >48 hours past standard SLA must be escalated immediately.",
       steps: [
-        "<strong>Step 1 — Track AWB:</strong> Check airway bill on shipping partner portal (e.g. Bosta/Mylerz).",
-        "<strong>Step 2 — Assess Status:</strong> Identify delay reason (Customer unavailable, wrong phone, or sorting delay).",
-        "<strong>Step 3 — Priority Escalation:</strong> If stuck in transit > 48h, escalate to Courier Operations Dispatch with priority tag.",
-        "<strong>Step 4 — Customer Update:</strong> Reassure customer with confirmed dispatch schedule."
+        "<strong>Step 1 — Track AWB:</strong> Check airway bill on shipping partner portal (Bosta / Mylerz).",
+        "<strong>Step 2 — Identify Reason:</strong> Determine delay cause (sorting hub delay, unreachable phone, or rescheduling).",
+        "<strong>Step 3 — Priority Escalation:</strong> If in transit >48h, escalate ticket to Courier Operations Dispatch with priority tag.",
+        "<strong>Step 4 — Customer Update:</strong> Send reassuring delivery update."
       ],
       canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today."
     },
     {
       category: "Operations & Quality SLAs",
+      subCategory: "SLA & Performance",
       icon: "📊",
       title: "Daily Operations SLAs & KPI Standards",
       system: "Workforce & Quality",
       note: "Target CSAT: > 90% | First Response Time (FRT): < 15 Minutes.",
       steps: [
-        "<strong>Step 1 — First Response SLA:</strong> Acknowledge all inbound customer tickets within 15 minutes.",
-        "<strong>Step 2 — Escalation Logging:</strong> Every defect, lost courier piece, or refund dispute must be submitted to SQL records daily.",
-        "<strong>Step 3 — Daily Sync:</strong> Operations team reviews all escalation records to identify high-defect product batches."
+        "<strong>Step 1 — First Response SLA:</strong> Acknowledge inbound customer inquiries within 15 minutes.",
+        "<strong>Step 2 — Daily Escalation Log:</strong> Record every defect, lost courier piece, or refund dispute in database records daily.",
+        "<strong>Step 3 — Operations Review:</strong> Review records weekly to optimize batch quality and courier delivery rates."
       ],
       canned_reply: "Thank you for contacting Mavin Wear Operations. We are reviewing your inquiry with highest priority."
     }
   ];
 
-  // Fetch from Cloud Database
-  async function syncFromCloud() {
-    if (!client) return;
-    try {
-      const { data } = await client.from('knowledge_base').select('*');
-      if (data && data.length > 0) {
-        // Parse DB data into step format
-        masterKnowledgeBase = data.map(item => ({
-          category: item.category,
-          icon: item.icon || '📑',
-          title: item.title,
-          system: item.system || 'Mavin Wear Operations',
-          note: item.note || '',
-          steps: Array.isArray(item.steps) ? item.steps : item.content.split('\n').filter(Boolean),
-          canned_reply: item.canned_reply || ''
-        }));
-      }
-    } catch(err) {
-      console.log("Cloud sync fallback active.");
-    }
-    renderHomeCategories(masterKnowledgeBase);
-  }
+  // Sample Portal Data & Live Cache
+  let refundPortalData = [
+    { order_number: "#143157", ticket_number: "#TK-902", customer_name: "Sarah Ahmed", phone: "01098765432", amount: "850.00", channel: "Paymob Visa", status: "Completed", note: "Refunded via Paymob - Txn: #891234" },
+    { order_number: "#143098", ticket_number: "#TK-884", customer_name: "Nouran Ezzat", phone: "01123456789", amount: "1,200.00", channel: "InstaPay", status: "Processing", note: "QC passed, queued for Finance batch" },
+    { order_number: "#142850", ticket_number: "#TK-840", customer_name: "Mariam Fathy", phone: "01234567890", amount: "650.00", channel: "Vodafone Cash", status: "Completed", note: "Transferred to 01011223344" },
+    { order_number: "#142711", ticket_number: "#TK-791", customer_name: "Dina Khaled", phone: "01555667788", amount: "920.00", channel: "Store Credit", status: "Issued", note: "Voucher Code: CR-142711-920" }
+  ];
 
-  // Render Category Cards on Home
   function renderHomeCategories(data) {
     const grid = document.getElementById('categoryGrid');
     const categoriesMap = {};
@@ -319,19 +401,51 @@
     }).join('');
   }
 
-  // Open Specific Category View with Steps and Arrows
-  function openCategory(catName) {
-    const items = masterKnowledgeBase.filter(i => (i.category || 'General Operations') === catName);
-    document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${items.length} SOP Workflow(s) Available`;
+  let activeCategoryItems = [];
 
+  function openCategory(catName) {
+    activeCategoryItems = masterKnowledgeBase.filter(i => (i.category || 'General Operations') === catName);
+    document.getElementById('currentCategoryTitle').innerText = catName;
+    document.getElementById('currentCategorySubtitle').innerText = `${activeCategoryItems.length} SOP Workflow(s) Available`;
+
+    const subCategories = ['All', ...new Set(activeCategoryItems.map(i => i.subCategory).filter(Boolean))];
+    const subFilterBar = document.getElementById('subFilterBar');
+    
+    if (subCategories.length > 2) {
+      subFilterBar.innerHTML = subCategories.map((sub, idx) => `
+        <button class="sub-filter-btn ${idx === 0 ? 'active' : ''}" onclick="filterSubCategory('${sub}', this)">${sub}</button>
+      `).join('');
+      subFilterBar.style.display = 'flex';
+    } else {
+      subFilterBar.style.display = 'none';
+    }
+
+    renderSOPCards(activeCategoryItems);
+    hideAllSections();
+    document.getElementById('detailSection').style.display = 'block';
+  }
+
+  function filterSubCategory(sub, btn) {
+    document.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if (sub === 'All') {
+      renderSOPCards(activeCategoryItems);
+    } else {
+      renderSOPCards(activeCategoryItems.filter(i => i.subCategory === sub));
+    }
+  }
+
+  function renderSOPCards(items) {
     const container = document.getElementById('sopsContainer');
     container.innerHTML = items.map(item => `
       <div class="sop-card">
         <div class="sop-header">
           <div>
             <h3 class="sop-title">${item.title}</h3>
-            <span style="font-size:12px; color:var(--muted); margin-top:4px; display:block;">Category: ${item.category}</span>
+            <span style="font-size:12px; color:var(--muted); margin-top:4px; display:block;">
+              Channel / Type: <strong>${item.subCategory || item.category}</strong>
+            </span>
           </div>
           <span class="sop-system-tag">🖥️ ${item.system || 'Operations System'}</span>
         </div>
@@ -357,12 +471,48 @@
         ` : ''}
       </div>
     `).join('');
-
-    hideAllSections();
-    document.getElementById('detailSection').style.display = 'block';
   }
 
-  // Global Search Handler
+  // Search in Agent Refund Portal
+  function searchRefunds() {
+    const q = document.getElementById('refundSearchInput').value.toLowerCase().trim();
+    const filtered = refundPortalData.filter(r => 
+      r.order_number.toLowerCase().includes(q) ||
+      r.ticket_number.toLowerCase().includes(q) ||
+      r.customer_name.toLowerCase().includes(q) ||
+      r.phone.toLowerCase().includes(q) ||
+      r.channel.toLowerCase().includes(q) ||
+      r.status.toLowerCase().includes(q)
+    );
+    renderRefundTable(filtered);
+  }
+
+  function renderRefundTable(data) {
+    const tbody = document.getElementById('refundsTableBody');
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--muted); padding:20px;">No refund records found matching query.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(r => {
+      let statusClass = 'status-pending';
+      if (r.status.toLowerCase().includes('completed') || r.status.toLowerCase().includes('issued')) statusClass = 'status-success';
+      if (r.status.toLowerCase().includes('failed') || r.status.toLowerCase().includes('rejected')) statusClass = 'status-failed';
+
+      return `
+        <tr>
+          <td><strong>${r.order_number}</strong></td>
+          <td>${r.ticket_number}</td>
+          <td>${r.customer_name}</td>
+          <td>${r.phone}</td>
+          <td><strong>${r.amount}</strong></td>
+          <td>${r.channel}</td>
+          <td><span class="status-pill ${statusClass}">${r.status}</span></td>
+          <td>${r.note}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
@@ -371,6 +521,7 @@
     }
     const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
+      (i.subCategory && i.subCategory.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
       (i.steps && i.steps.some(s => s.toLowerCase().includes(q))) ||
       (i.canned_reply && i.canned_reply.toLowerCase().includes(q))
@@ -378,36 +529,13 @@
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
     document.getElementById('currentCategorySubtitle').innerText = `Matching: "${q}"`;
+    document.getElementById('subFilterBar').style.display = 'none';
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
       container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
     } else {
-      container.innerHTML = filtered.map(item => `
-        <div class="sop-card">
-          <div class="sop-header">
-            <div>
-              <span style="font-size:11px; font-weight:bold; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px;">${item.category}</span>
-              <h3 class="sop-title" style="margin-top:6px;">${item.title}</h3>
-            </div>
-            <span class="sop-system-tag">${item.system || 'System'}</span>
-          </div>
-          <div class="steps-timeline">
-            ${item.steps.map((step, idx) => `
-              <div class="step-box">
-                <div class="step-number">${idx + 1}</div>
-                <div class="step-content">${step}</div>
-              </div>
-            `).join('')}
-          </div>
-          ${item.canned_reply ? `
-            <div class="canned-box">
-              <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy</button>
-              ${item.canned_reply}
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
+      renderSOPCards(filtered);
     }
     
     hideAllSections();
@@ -417,6 +545,7 @@
   function hideAllSections() {
     document.getElementById('homeSection').style.display = 'none';
     document.getElementById('detailSection').style.display = 'none';
+    document.getElementById('refundPortalSection').style.display = 'none';
     document.getElementById('escalationSection').style.display = 'none';
     document.getElementById('logsSection').style.display = 'none';
   }
@@ -429,6 +558,10 @@
 
   function showSection(name) {
     hideAllSections();
+    if (name === 'refundPortal') {
+      document.getElementById('refundPortalSection').style.display = 'block';
+      renderRefundTable(refundPortalData);
+    }
     if (name === 'escalation') document.getElementById('escalationSection').style.display = 'block';
     if (name === 'logs') {
       document.getElementById('logsSection').style.display = 'block';
@@ -441,7 +574,7 @@
     alert('✅ Approved canned response copied to clipboard!');
   }
 
-  // Escalation Submission (Hybrid Supabase + Local)
+  // Escalation Submission
   document.getElementById('escForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = {
@@ -467,7 +600,6 @@
     document.getElementById('escForm').reset();
   });
 
-  // Load Database Records
   async function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Fetching database records...</td></tr>';
@@ -515,9 +647,8 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Initial Load
+  // Initial Startup
   goToHome();
-  syncFromCloud();
 </script>
 </body>
 </html>
