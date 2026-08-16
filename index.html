@@ -47,28 +47,24 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Sub-filters inside Category */
-    .sub-filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-    .sub-filter-btn { padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--muted); transition: 0.2s; }
-    .sub-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-    /* Structured SOP Card */
+    /* Clean SOP Presentation */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-    .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-    .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
-    .sop-system-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
+    .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
+    .sop-desc-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 14px 16px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
     
-    .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 12px; }
-    .step-box { display: flex; gap: 15px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: flex-start; }
-    .step-number { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+    .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
+    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
+    .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
     .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
     
-    .callout-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 6px; font-size: 13.5px; color: #92400e; margin: 15px 0; }
     .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
     .copy-btn { background: var(--success); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
-    /* Interactive Decision Tree UI */
+    /* Interactive Decision Tree */
     .dt-container { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 25px; margin-bottom: 20px; }
     .dt-step-badge { background: #f1f5f9; color: var(--primary); padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block; margin-bottom: 12px; }
     .dt-question { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
@@ -116,10 +112,10 @@
 
   <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, policy, decision flow, or defect type..." onkeyup="handleGlobalSearch()">
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, handbook, policy, defect type, or keyword..." onkeyup="handleGlobalSearch()">
     
     <div id="kbLoadingState" style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:10px; border:1px solid var(--border);">
-      ⏳ Connecting and loading procedures from Google Sheet...
+      ⏳ Connecting and loading procedures from Google Sheets...
     </div>
 
     <div class="category-grid" id="categoryGrid" style="display:none;"></div>
@@ -169,7 +165,7 @@
       <div style="display:flex; gap:8px;">
         <button class="nav-btn" onclick="fetchLiveRefundPortal()">🔄 Refresh Sheet Data</button>
         <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 Open Master Sheet ↗
+          📊 Master Sheet ↗
         </a>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
@@ -207,7 +203,6 @@
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
 
-    <div class="sub-filter-bar" id="subFilterBar"></div>
     <div id="sopsContainer"></div>
   </div>
 
@@ -292,7 +287,6 @@
   let sheetRefundRecords = [];
   let sheetRawHeaders = [];
 
-  // دالة JSONP لجلب بيانات Google Sheet المباشرة بدون CORS error
   function fetchGoogleSheetJSON(sheetId, callbackName) {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -333,30 +327,57 @@
     ]);
   }
 
-  // 1. جلب شيت قاعدة المعرفة
+  // Smart Parser for Mavin Wear KB Sheet
   async function fetchLiveKnowledgeBase() {
     const loading = document.getElementById('kbLoadingState');
     const grid = document.getElementById('categoryGrid');
     
     const result = await fetchGoogleSheetJSON(KB_SHEET_ID, 'handleKB');
     if (result.rows && result.rows.length > 0) {
-      masterKnowledgeBase = result.rows.map((row, idx) => {
-        const keys = Object.keys(row);
-        const categoryVal = row.Category || row.category || row['القسم'] || keys[0] && row[keys[0]] || 'General Operations';
-        const titleVal = row.Title || row.title || row.Issue || row['اسم الحالة'] || keys[1] && row[keys[1]] || `SOP #${idx+1}`;
-        const actionVal = row.Action || row.Steps || row.Procedure || row['الإجراء'] || Object.values(row).join('\n');
-        const replyVal = row.CannedReply || row.Response || row['الرد'] || '';
-        const systemVal = row.System || row['السيستم'] || 'Operations System';
+      masterKnowledgeBase = [];
 
-        return {
-          category: String(categoryVal).trim(),
-          subCategory: row.SubCategory || String(categoryVal).trim(),
-          icon: getCategoryIcon(String(categoryVal)),
-          title: String(titleVal).trim(),
-          system: String(systemVal).trim(),
-          steps: String(actionVal).split('\n').filter(Boolean),
-          canned_reply: String(replyVal).trim()
-        };
+      result.rows.forEach((row, idx) => {
+        const values = Object.values(row).map(v => String(v).trim()).filter(Boolean);
+        if (values.length === 0) return;
+
+        // استخراج الأعمدة بذكاء
+        const title = row['Title'] || row['title'] || row['Name'] || row['Document Title'] || values[1] || values[0] || `SOP #${idx+1}`;
+        const code = row['Code'] || row['ID'] || row['SOP ID'] || values[0] || `MV-${idx+1}`;
+        const category = row['Category'] || row['Department'] || row['Type'] || (title.toLowerCase().includes('handbook') ? 'Handbook & Operations' : 'General SOPs');
+        const system = row['System'] || row['Partner'] || (values.join(' ').includes('Bosta') ? 'Bosta System' : 'CS Portal');
+        const description = row['Description'] || row['Summary'] || row['Overview'] || values.find(v => v.length > 30) || '';
+        
+        // تنظيف الخطوات: إزالة الميتاداتا والأرقام العشوائية
+        let steps = [];
+        if (row['Steps'] || row['Procedure'] || row['Action']) {
+          const rawSteps = String(row['Steps'] || row['Procedure'] || row['Action']);
+          steps = rawSteps.split(/\r?\n|\|/).map(s => s.trim()).filter(s => s.length > 5 && !s.includes('MV-') && !s.includes('Handbook'));
+        }
+
+        // إذا لم تكن هناك خطوات منفصلة، نأخذ الجمل المفيدة فقط
+        if (steps.length === 0) {
+          steps = values.filter(v => 
+            v.length > 15 && 
+            !v.includes('MV-') && 
+            !v.includes('V1') && 
+            !v.includes('Google Doc') && 
+            !v.includes('Intermediate') &&
+            v !== title && 
+            v !== description
+          );
+        }
+
+        const reply = row['Canned Reply'] || row['Response'] || row['Canned_Response'] || '';
+
+        masterKnowledgeBase.push({
+          code: code,
+          title: title,
+          category: category,
+          system: system,
+          description: description,
+          steps: steps,
+          canned_reply: reply
+        });
       });
 
       loading.style.display = 'none';
@@ -369,14 +390,98 @@
 
   function getCategoryIcon(cat) {
     const c = cat.toLowerCase();
-    if (c.includes('refund') || c.includes('pay') || c.includes('كاش') || c.includes('فلوس')) return '💳';
-    if (c.includes('defect') || c.includes('quality') || c.includes('تالف') || c.includes('عيب')) return '👗';
-    if (c.includes('exchange') || c.includes('size') || c.includes('مقاس')) return '🔄';
-    if (c.includes('ship') || c.includes('courier') || c.includes('شحن')) return '🚚';
+    if (c.includes('refund') || c.includes('pay')) return '💳';
+    if (c.includes('defect') || c.includes('quality')) return '👗';
+    if (c.includes('exchange') || c.includes('size')) return '🔄';
+    if (c.includes('ship') || c.includes('bosta') || c.includes('courier')) return '🚚';
+    if (c.includes('handbook')) return '📖';
     return '📑';
   }
 
-  // 2. جلب شيت شجرة اتخاذ القرار
+  function renderHomeCategories(data) {
+    const grid = document.getElementById('categoryGrid');
+    const categoriesMap = {};
+
+    data.forEach(item => {
+      const cat = item.category || 'General SOPs';
+      if (!categoriesMap[cat]) {
+        categoriesMap[cat] = {
+          icon: getCategoryIcon(cat),
+          count: 0
+        };
+      }
+      categoriesMap[cat].count++;
+    });
+
+    grid.innerHTML = Object.keys(categoriesMap).map(catName => {
+      const info = categoriesMap[catName];
+      const encodedName = encodeURIComponent(catName);
+      return `
+        <div class="cat-card" onclick="openCategory('${encodedName}')">
+          <div>
+            <div class="cat-icon">${info.icon}</div>
+            <h3 class="cat-name">${catName}</h3>
+            <div class="cat-desc">Structured operational workflows and handbooks.</div>
+          </div>
+          <span class="cat-badge">📂 ${info.count} Document(s) ➔</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openCategory(encodedCatName) {
+    const catName = decodeURIComponent(encodedCatName);
+    const items = masterKnowledgeBase.filter(i => (i.category || 'General SOPs') === catName);
+    
+    document.getElementById('currentCategoryTitle').innerText = catName;
+    document.getElementById('currentCategorySubtitle').innerText = `${items.length} SOP Workflow(s) Available`;
+
+    const container = document.getElementById('sopsContainer');
+    container.innerHTML = items.map(item => `
+      <div class="sop-card">
+        <div class="sop-header">
+          <div>
+            <div style="font-size:12px; font-weight:bold; color:var(--accent); margin-bottom:4px;">${item.code}</div>
+            <h3 class="sop-title">${item.title}</h3>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag">🖥️ ${item.system}</span>
+          </div>
+        </div>
+
+        ${item.description ? `
+          <div class="sop-desc-box">
+            <strong>📋 Overview & Policy:</strong><br>${item.description}
+          </div>
+        ` : ''}
+
+        ${item.steps.length > 0 ? `
+          <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 Operational Guidelines & Steps:</div>
+          <div class="steps-timeline">
+            ${item.steps.map((step, idx) => `
+              <div class="step-box">
+                <div class="step-number">${idx + 1}</div>
+                <div class="step-content">${step}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        ${item.canned_reply ? `
+          <div class="canned-box">
+            <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Canned Reply</button>
+            <strong style="color:#166534;">💬 Approved Response:</strong><br>
+            <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+
+    hideAllSections();
+    document.getElementById('detailSection').style.display = 'block';
+  }
+
+  // 2. Decision Tree Loader
   async function fetchLiveDecisionTree() {
     const result = await fetchGoogleSheetJSON(DECISION_TREE_ID, 'handleDT');
     if (result.rows && result.rows.length > 0) {
@@ -386,7 +491,6 @@
     }
   }
 
-  // 3. محرك شجرة اتخاذ القرار
   let dtSelectedPath = [];
 
   function initDecisionTreeFlow() {
@@ -473,7 +577,7 @@
     alert('✅ Canned response copied to clipboard!');
   }
 
-  // 4. جلب شيت الريفوند
+  // 3. Refund Portal
   async function fetchLiveRefundPortal() {
     const statusText = document.getElementById('sheetRecordStatus');
     const counter = document.getElementById('recordCounter');
@@ -528,111 +632,6 @@
     }
   }
 
-  // Categories Renderer
-  function renderHomeCategories(data) {
-    const grid = document.getElementById('categoryGrid');
-    const categoriesMap = {};
-
-    data.forEach(item => {
-      const cat = item.category || 'General Operations';
-      if (!categoriesMap[cat]) {
-        categoriesMap[cat] = {
-          icon: item.icon || '📑',
-          count: 0
-        };
-      }
-      categoriesMap[cat].count++;
-    });
-
-    grid.innerHTML = Object.keys(categoriesMap).map(catName => {
-      const info = categoriesMap[catName];
-      const encodedName = encodeURIComponent(catName);
-      return `
-        <div class="cat-card" onclick="openCategory('${encodedName}')">
-          <div>
-            <div class="cat-icon">${info.icon}</div>
-            <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">Procedures loaded live from Google Sheets.</div>
-          </div>
-          <span class="cat-badge">📂 ${info.count} Procedures ➔</span>
-        </div>
-      `;
-    }).join('');
-  }
-
-  let activeCategoryItems = [];
-
-  function openCategory(encodedCatName) {
-    const catName = decodeURIComponent(encodedCatName);
-    activeCategoryItems = masterKnowledgeBase.filter(i => (i.category || 'General Operations') === catName);
-    
-    document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${activeCategoryItems.length} SOP Workflow(s) Available`;
-
-    const subCategories = ['All', ...new Set(activeCategoryItems.map(i => i.subCategory).filter(Boolean))];
-    const subFilterBar = document.getElementById('subFilterBar');
-    
-    if (subCategories.length > 2) {
-      subFilterBar.innerHTML = subCategories.map((sub, idx) => `
-        <button class="sub-filter-btn ${idx === 0 ? 'active' : ''}" onclick="filterSubCategory('${encodeURIComponent(sub)}', this)">${sub}</button>
-      `).join('');
-      subFilterBar.style.display = 'flex';
-    } else {
-      subFilterBar.style.display = 'none';
-    }
-
-    renderSOPCards(activeCategoryItems);
-    hideAllSections();
-    document.getElementById('detailSection').style.display = 'block';
-  }
-
-  function filterSubCategory(encodedSub, btn) {
-    const sub = decodeURIComponent(encodedSub);
-    document.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    if (sub === 'All') {
-      renderSOPCards(activeCategoryItems);
-    } else {
-      renderSOPCards(activeCategoryItems.filter(i => i.subCategory === sub));
-    }
-  }
-
-  function renderSOPCards(items) {
-    const container = document.getElementById('sopsContainer');
-    container.innerHTML = items.map(item => `
-      <div class="sop-card">
-        <div class="sop-header">
-          <div>
-            <h3 class="sop-title">${item.title}</h3>
-            <span style="font-size:12px; color:var(--muted); margin-top:4px; display:block;">
-              Category: <strong>${item.category}</strong>
-            </span>
-          </div>
-          <span class="sop-system-tag">🖥️ ${item.system || 'System'}</span>
-        </div>
-
-        <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 Procedure Steps:</div>
-        <div class="steps-timeline">
-          ${item.steps.map((step, idx) => `
-            <div class="step-box">
-              <div class="step-number">${idx + 1}</div>
-              <div class="step-content">${step}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        ${item.canned_reply ? `
-          <div class="canned-box">
-            <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Canned Reply</button>
-            <strong style="color:#166534;">💬 Approved Response:</strong><br>
-            <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
-          </div>
-        ` : ''}
-      </div>
-    `).join('');
-  }
-
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
@@ -642,19 +641,30 @@
     const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
+      (i.description && i.description.toLowerCase().includes(q)) ||
       (i.steps && i.steps.some(s => s.toLowerCase().includes(q))) ||
       (i.canned_reply && i.canned_reply.toLowerCase().includes(q))
     );
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
     document.getElementById('currentCategorySubtitle').innerText = `Matching: "${q}"`;
-    document.getElementById('subFilterBar').style.display = 'none';
     
     const container = document.getElementById('sopsContainer');
     if (filtered.length === 0) {
       container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
     } else {
-      renderSOPCards(filtered);
+      container.innerHTML = filtered.map(item => `
+        <div class="sop-card">
+          <div class="sop-header">
+            <div>
+              <div style="font-size:12px; font-weight:bold; color:var(--accent);">${item.code}</div>
+              <h3 class="sop-title">${item.title}</h3>
+            </div>
+            <span class="sop-tag">🖥️ ${item.system}</span>
+          </div>
+          ${item.description ? `<div class="sop-desc-box">${item.description}</div>` : ''}
+        </div>
+      `).join('');
     }
     
     hideAllSections();
@@ -755,7 +765,7 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Initial Load
+  // Startup
   goToHome();
   fetchAllLiveSheets();
 </script>
