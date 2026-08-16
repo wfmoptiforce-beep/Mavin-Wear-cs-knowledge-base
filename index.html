@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mavin Wear | Interactive Operations Hub</title>
+  <title>Mavin Wear | Operations & CS Knowledge Base</title>
   
-  <!-- المكتبات الأساسية لقراءة الإكسيل والوورد والملفات المضغوطة -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
     :root {
       --primary: #0f172a;
       --accent: #2563eb;
-      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --border: #e2e8f0;
       --success: #10b981;
+      --warning: #f59e0b;
       --text: #1e293b;
       --muted: #64748b;
     }
@@ -32,31 +30,44 @@
     .brand-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
     
     .top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; text-decoration: none; font-size: 14px; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--text); cursor: pointer; transition: 0.2s; font-size: 14px; }
     .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
     .nav-btn.primary { background: var(--primary); color: white; border: none; }
     .nav-btn.primary:hover { background: #1e293b; }
-    .upload-btn { background: var(--accent); color: white; border: none; font-weight: bold; }
-    .upload-btn:hover { background: var(--accent-hover); }
+    .nav-btn.accent { background: var(--accent); color: white; border: none; }
+    .nav-btn.accent:hover { background: #1d4ed8; }
 
     .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
-    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-bottom: 25px; }
+    /* Category Cards Grid */
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-bottom: 25px; }
     .cat-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
     .cat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: var(--accent); }
     .cat-icon { font-size: 32px; margin-bottom: 12px; }
     .cat-name { font-size: 18px; font-weight: 700; color: var(--primary); margin: 0 0 6px 0; }
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
-    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: #eff6ff; padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
+    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    .sop-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .sop-title { font-size: 17px; font-weight: 700; color: var(--primary); margin: 0 0 10px 0; }
-    .sop-body { font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; max-height: 300px; overflow-y: auto; background: #f8fafc; padding: 14px; border-radius: 6px; border: 1px solid var(--border); }
-    .copy-btn { background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
+    /* Structured SOP & Step-by-Step Styling */
+    .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-system-tag { display: inline-block; font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 6px; }
+    
+    /* Interactive Step Flow */
+    .steps-timeline { margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .step-box { display: flex; gap: 15px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: flex-start; }
+    .step-number { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+    .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
+    .step-content strong { color: var(--primary); }
+    
+    /* Callout & Canned Boxes */
+    .callout-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; border-radius: 6px; font-size: 13.5px; color: #92400e; margin: 15px 0; }
+    .canned-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); padding: 14px 16px; border-radius: 8px; margin-top: 15px; position: relative; }
+    .copy-btn { background: var(--success); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
     .copy-btn:hover { background: #059669; }
 
-    .status-bar { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    
+    /* Escalation Form & Logs */
     label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; }
     input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
     .submit-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; }
@@ -71,7 +82,7 @@
   
   <div class="header">
     <div class="brand-title">👗 Mavin Wear Operations Guide</div>
-    <div class="brand-sub">Interactive Knowledge Base, SOPs & Document Hub</div>
+    <div class="brand-sub">Cloud-Synchronized Knowledge Base & Step-by-Step SOP Flow</div>
   </div>
 
   <div class="top-actions">
@@ -81,33 +92,22 @@
       <button class="nav-btn" onclick="showSection('logs')">📊 Escalation Records</button>
     </div>
     <div>
-      <!-- يسمح بتحديد عدة ملفات معاً -->
-      <input type="file" id="fileUploader" multiple accept=".xlsx, .xls, .csv, .docx, .zip, .txt" style="display:none" onchange="handleSmartMultiUpload(event)">
-      <button class="nav-btn upload-btn" onclick="document.getElementById('fileUploader').click()">📂 Select All Files / Excel / Folder</button>
+      <button class="nav-btn accent" onclick="syncFromCloud()">☁️ Refresh Cloud Data</button>
     </div>
   </div>
 
-  <!-- 1. HOME VIEW -->
+  <!-- 1. HOME VIEW (Categories) -->
   <div id="homeSection">
-    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any SOP, policy, defect type, or keyword..." onkeyup="handleGlobalSearch()">
-    
-    <div class="status-bar">
-      <div>
-        <strong style="color:var(--accent); font-size:14px;">📁 Knowledge Base Status</strong>
-        <div id="statusText" style="font-size:13px; color:var(--muted); margin-top:2px;">Select your files or Excel sheets to organize them automatically.</div>
-      </div>
-      <span id="docCountBadge" style="font-size:12px; font-weight:bold; color:var(--success);">● Active</span>
-    </div>
-
+    <input type="text" id="mainSearch" class="search-box" placeholder="🔍 Search any issue (e.g. Paymob refund, damaged fabric, courier delay, size chart)..." onkeyup="handleGlobalSearch()">
     <div class="category-grid" id="categoryGrid"></div>
   </div>
 
-  <!-- 2. DETAIL VIEW -->
+  <!-- 2. STEP-BY-STEP DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <div>
         <h2 id="currentCategoryTitle" style="margin:0; color:var(--primary);">Category Title</h2>
-        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Documents</span>
+        <span id="currentCategorySubtitle" style="font-size:13px; color:var(--muted);">Procedures & Interactive Step Workflows</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
@@ -115,7 +115,7 @@
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 3. ESCALATION FORM -->
+  <!-- 3. ESCALATION FORM VIEW -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary);">🚨 CS Product Escalation Form</h2>
@@ -133,7 +133,7 @@
         <input type="text" id="customer_name" required>
 
         <label>Contact Reason:</label>
-        <input type="text" id="contact_reason" placeholder="e.g. Fabric defect / Size exchange / Delayed delivery" required>
+        <input type="text" id="contact_reason" placeholder="e.g. Defect / Size Exchange / Paymob Refund / Courier Delay" required>
 
         <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
@@ -147,10 +147,10 @@
         <label>Delivered Date (if applicable):</label>
         <input type="date" id="delivered_date">
 
-        <label>Case Summary (Action & Details):</label>
-        <textarea id="case_summary" rows="3" placeholder="Explain details of defect or action taken..." required></textarea>
+        <label>Case Summary (Action & Investigation Details):</label>
+        <textarea id="case_summary" rows="3" placeholder="Explain details of defect, refund status, or action taken..." required></textarea>
 
-        <button type="submit" class="submit-btn">💾 Submit & Save Escalation</button>
+        <button type="submit" class="submit-btn">💾 Submit to Database</button>
       </form>
     </div>
   </div>
@@ -158,7 +158,7 @@
   <!-- 4. LOGS VIEW -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
-      <h2 style="margin:0; color:var(--primary);">📊 Escalation Records</h2>
+      <h2 style="margin:0; color:var(--primary);">📊 Database Escalation Records</h2>
       <div style="display:flex; gap:10px;">
         <button class="nav-btn" onclick="exportToExcel()" style="background:#10b981; color:white; border:none;">📥 Export to Excel</button>
         <button class="nav-btn" onclick="loadLogs()">🔄 Refresh</button>
@@ -186,168 +186,115 @@
 </div>
 
 <script>
-  let documentsStore = [];
+  // Supabase Live Client
+  const SUPABASE_URL = "https://zaawbomxpxcjogipyiuy.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_az0BV5YB";
+  const client = (window.supabase) ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-  function autoCategorize(textToAnalyze) {
-    const txt = (textToAnalyze || "").toLowerCase();
-    if (txt.includes('defect') || txt.includes('damage') || txt.includes('stain') || txt.includes('torn') || txt.includes('quality') || txt.includes('تالف') || txt.includes('عيب') || txt.includes('قطع') || txt.includes('بقعة')) {
-      return { category: "Defects & Quality", icon: "👗" };
+  // Comprehensive Mavin Wear Operational Knowledge Base with Step-by-Step Workflows
+  let masterKnowledgeBase = [
+    {
+      category: "Payments & Refunds (Paymob)",
+      icon: "💳",
+      title: "Refund Automation & Paymob Dashboard SOP",
+      system: "Paymob + Shopify",
+      note: "Important: Always confirm you are logged in as 'Mavin Wear' on the top bar before initiating or verifying any refund.",
+      steps: [
+        "<strong>Step 1 — Verify Account:</strong> Open Paymob Dashboard. Confirm you're logged in as 'Mavin Wear' in the top bar.",
+        "<strong>Step 2 — Locate Transaction:</strong> Navigate to Left sidebar ➔ Payments ➔ Transactions.",
+        "<strong>Step 3 — Filter by Order ID:</strong> Click the <strong>+ Filter</strong> button. Set filter to Order ID (= Shopify order number, e.g. 143157).",
+        "<strong>Step 4 — Check Transaction Status:</strong> Review Status column. If 'Captured / Success', proceed with partial or full refund automation.",
+        "<strong>Step 5 — Complete & Log:</strong> Execute the refund, record Transaction ID in ticket, and update customer with ETA (3-5 banking days)."
+      ],
+      canned_reply: "Hello! Your refund has been initiated through our Paymob gateway. The amount will be credited back to your original payment method within 3-5 business days."
+    },
+    {
+      category: "Defects & Quality Control",
+      icon: "👗",
+      title: "Damaged / Defective Item Handling Workflow",
+      system: "CS Portal + Warehouse",
+      note: "Zero Customer Cost Policy: Defective piece replacements are 100% free with no courier fees.",
+      steps: [
+        "<strong>Step 1 — Request Evidence:</strong> Ask customer for clear photos/videos of the defect + courier shipping label (AWB).",
+        "<strong>Step 2 — Verify Policy:</strong> Ensure the issue falls under manufacturing flaws, fabric damage, or tailoring defect.",
+        "<strong>Step 3 — Create Replacement Order:</strong> Generate a free replacement order in the system with tag 'FREE_DEFECT_EXCHANGE'.",
+        "<strong>Step 4 — Log Escalation:</strong> Fill out the Escalation Form below with Order # and ticket details to notify Quality Control."
+      ],
+      canned_reply: "Hello! We sincerely apologize for receiving your item in this condition. We have arranged an immediate free replacement order for you. The courier will deliver the fresh piece and collect the defective one."
+    },
+    {
+      category: "Exchanges & Size Chart",
+      icon: "🔄",
+      title: "Size Exchange & Fit Assistance Procedure",
+      system: "Shopify Inventory",
+      note: "Standard exchange window is within 14 days of delivery, provided tags are attached and unworn.",
+      steps: [
+        "<strong>Step 1 — Compare Size Chart:</strong> Review customer measurements against Mavin Wear standard size guide.",
+        "<strong>Step 2 — Check Stock:</strong> Confirm requested size availability in warehouse inventory.",
+        "<strong>Step 3 — Issue Exchange Order:</strong> Create a reverse pickup/delivery exchange AWB (turnaround 2-4 business days).",
+        "<strong>Step 4 — Notify Customer:</strong> Send tracking and timeline confirmation."
+      ],
+      canned_reply: "Hello! We would be delighted to help you exchange the size. The requested size is confirmed in stock, and the courier will exchange the pieces at your doorstep within 2-4 business days."
+    },
+    {
+      category: "Shipping & Courier Operations",
+      icon: "🚚",
+      title: "Delayed Shipment & Courier Escalation SOP",
+      system: "Courier Portal + Logistics",
+      note: "SLA Threshold: Any order delayed >48 hours past estimated SLA must be escalated immediately.",
+      steps: [
+        "<strong>Step 1 — Track AWB:</strong> Check airway bill on shipping partner portal (e.g. Bosta/Mylerz).",
+        "<strong>Step 2 — Assess Status:</strong> Identify delay reason (Customer unavailable, wrong phone, or sorting delay).",
+        "<strong>Step 3 — Priority Escalation:</strong> If stuck in transit > 48h, escalate to Courier Operations Dispatch with priority tag.",
+        "<strong>Step 4 — Customer Update:</strong> Reassure customer with confirmed dispatch schedule."
+      ],
+      canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today."
+    },
+    {
+      category: "Operations & Quality SLAs",
+      icon: "📊",
+      title: "Daily Operations SLAs & KPI Standards",
+      system: "Workforce & Quality",
+      note: "Target CSAT: > 90% | First Response Time (FRT): < 15 Minutes.",
+      steps: [
+        "<strong>Step 1 — First Response SLA:</strong> Acknowledge all inbound customer tickets within 15 minutes.",
+        "<strong>Step 2 — Escalation Logging:</strong> Every defect, lost courier piece, or refund dispute must be submitted to SQL records daily.",
+        "<strong>Step 3 — Daily Sync:</strong> Operations team reviews all escalation records to identify high-defect product batches."
+      ],
+      canned_reply: "Thank you for contacting Mavin Wear Operations. We are reviewing your inquiry with highest priority."
     }
-    if (txt.includes('exchange') || txt.includes('size') || txt.includes('measure') || txt.includes('fit') || txt.includes('استبدال') || txt.includes('مقاس')) {
-      return { category: "Exchanges & Sizes", icon: "🔄" };
-    }
-    if (txt.includes('ship') || txt.includes('courier') || txt.includes('track') || txt.includes('delay') || txt.includes('delivery') || txt.includes('شحن') || txt.includes('توصيل') || txt.includes('مندوب')) {
-      return { category: "Shipping & Courier", icon: "🚚" };
-    }
-    if (txt.includes('refund') || txt.includes('return') || txt.includes('cancel') || txt.includes('استرجاع') || txt.includes('الغاء') || txt.includes('فلوس') || txt.includes('مرتجع')) {
-      return { category: "Refunds & Returns", icon: "💳" };
-    }
-    if (txt.includes('kpi') || txt.includes('sla') || txt.includes('metric') || txt.includes('score') || txt.includes('report') || txt.includes('performance')) {
-      return { category: "Operations & KPIs", icon: "📊" };
-    }
-    return { category: "General SOPs & Guidelines", icon: "📑" };
-  }
+  ];
 
-  // Multi-File Parser
-  async function handleSmartMultiUpload(e) {
-    const files = Array.from(e.target.files);
-    if (!files || files.length === 0) return;
-
-    document.getElementById('statusText').innerText = `⏳ Parsing ${files.length} file(s)...`;
-    let parsedDocs = [];
-
-    for (const file of files) {
-      try {
-        const fname = file.name.toLowerCase();
-
-        // 1. ملفات Excel
-        if (fname.endsWith('.xlsx') || fname.endsWith('.xls') || fname.endsWith('.csv')) {
-          const buffer = await file.arrayBuffer();
-          const wb = XLSX.read(new Uint8Array(buffer), { type: 'array' });
-
-          wb.SheetNames.forEach(sheetName => {
-            const sheet = wb.Sheets[sheetName];
-            const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
-            if (rows && rows.length > 0) {
-              rows.forEach((row, idx) => {
-                const keys = Object.keys(row);
-                const titleVal = row['Title'] || row['title'] || row['Reason'] || row['Issue'] || row['اسم الحالة'] || row['المشكلة'] || keys[0] && row[keys[0]] || `Entry #${idx+1}`;
-                const actionVal = row['Action'] || row['action'] || row['Procedure'] || row['SOP'] || row['الإجراء'] || row['الخطوات'] || Object.values(row).join(' | ');
-                const replyVal = row['Canned_Response'] || row['Response'] || row['الرد'] || row['Canned Reply'] || '';
-
-                const cat = autoCategorize(`${sheetName} ${titleVal} ${actionVal}`);
-                parsedDocs.push({
-                  category: row['Category'] || cat.category,
-                  icon: cat.icon,
-                  title: String(titleVal).trim(),
-                  content: String(actionVal).trim(),
-                  canned_reply: String(replyVal).trim()
-                });
-              });
-            } else {
-              // إذا كان الجدول مصفوفة عادية
-              const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-              const textContent = rawData.map(r => r.join(' | ')).join('\n');
-              if (textContent.trim()) {
-                const cat = autoCategorize(`${sheetName} ${textContent}`);
-                parsedDocs.push({
-                  category: cat.category,
-                  icon: cat.icon,
-                  title: `${file.name} - ${sheetName}`,
-                  content: textContent,
-                  canned_reply: ''
-                });
-              }
-            }
-          });
-        }
-        // 2. ملفات Word (.docx)
-        else if (fname.endsWith('.docx')) {
-          const buffer = await file.arrayBuffer();
-          const res = await mammoth.extractRawText({ arrayBuffer: buffer });
-          if (res.value.trim()) {
-            const cat = autoCategorize(`${file.name} ${res.value}`);
-            parsedDocs.push({
-              category: cat.category,
-              icon: cat.icon,
-              title: file.name.replace('.docx', ''),
-              content: res.value.trim(),
-              canned_reply: ''
-            });
-          }
-        }
-        // 3. ملفات ZIP
-        else if (fname.endsWith('.zip')) {
-          const zip = await JSZip.loadAsync(file);
-          for (const path of Object.keys(zip.files)) {
-            const entry = zip.files[path];
-            if (!entry.dir && !path.includes('__MACOSX')) {
-              const entryName = entry.name.split('/').pop();
-              if (entryName.endsWith('.docx')) {
-                const buf = await entry.async('arraybuffer');
-                const docRes = await mammoth.extractRawText({ arrayBuffer: buf });
-                if (docRes.value.trim()) {
-                  const cat = autoCategorize(`${entryName} ${docRes.value}`);
-                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: entryName.replace('.docx', ''), content: docRes.value.trim(), canned_reply: '' });
-                }
-              } else if (entryName.endsWith('.xlsx') || entryName.endsWith('.xls') || entryName.endsWith('.csv')) {
-                const buf = await entry.async('arraybuffer');
-                const wb = XLSX.read(new Uint8Array(buf), { type: 'array' });
-                wb.SheetNames.forEach(s => {
-                  const raw = XLSX.utils.sheet_to_json(wb.Sheets[s], { header: 1 });
-                  const formatted = raw.map(r => r.join(' | ')).join('\n');
-                  if (formatted.trim()) {
-                    const cat = autoCategorize(`${entryName} ${s} ${formatted}`);
-                    parsedDocs.push({ category: cat.category, icon: cat.icon, title: `${entryName} (${s})`, content: formatted, canned_reply: '' });
-                  }
-                });
-              } else if (entryName.endsWith('.txt') || entryName.endsWith('.md')) {
-                const str = await entry.async('string');
-                if (str.trim()) {
-                  const cat = autoCategorize(`${entryName} ${str}`);
-                  parsedDocs.push({ category: cat.category, icon: cat.icon, title: entryName, content: str.trim(), canned_reply: '' });
-                }
-              }
-            }
-          }
-        }
-        // 4. نصوص عامة (.txt)
-        else {
-          const text = await file.text();
-          if (text.trim()) {
-            const cat = autoCategorize(`${file.name} ${text}`);
-            parsedDocs.push({
-              category: cat.category,
-              icon: cat.icon,
-              title: file.name,
-              content: text.trim(),
-              canned_reply: ''
-            });
-          }
-        }
-      } catch (err) {
-        console.error("Error parsing file:", file.name, err);
+  // Fetch from Cloud Database
+  async function syncFromCloud() {
+    if (!client) return;
+    try {
+      const { data } = await client.from('knowledge_base').select('*');
+      if (data && data.length > 0) {
+        // Parse DB data into step format
+        masterKnowledgeBase = data.map(item => ({
+          category: item.category,
+          icon: item.icon || '📑',
+          title: item.title,
+          system: item.system || 'Mavin Wear Operations',
+          note: item.note || '',
+          steps: Array.isArray(item.steps) ? item.steps : item.content.split('\n').filter(Boolean),
+          canned_reply: item.canned_reply || ''
+        }));
       }
+    } catch(err) {
+      console.log("Cloud sync fallback active.");
     }
-
-    if (parsedDocs.length > 0) {
-      documentsStore = parsedDocs;
-      localStorage.setItem('mavin_kb_data', JSON.stringify(parsedDocs));
-      document.getElementById('statusText').innerText = `✅ Successfully loaded and organized ${parsedDocs.length} procedures from your files!`;
-      goToHome();
-      alert(`🎉 Organized ${parsedDocs.length} procedures and records into smart categories!`);
-    } else {
-      alert('⚠️ Could not extract data from the selected file. Please make sure the sheet has content.');
-    }
+    renderHomeCategories(masterKnowledgeBase);
   }
 
+  // Render Category Cards on Home
   function renderHomeCategories(data) {
     const grid = document.getElementById('categoryGrid');
     const categoriesMap = {};
 
     data.forEach(item => {
-      const cat = item.category || 'General SOPs & Guidelines';
+      const cat = item.category || 'General Operations';
       if (!categoriesMap[cat]) {
         categoriesMap[cat] = {
           icon: item.icon || '📑',
@@ -364,28 +311,48 @@
           <div>
             <div class="cat-icon">${info.icon}</div>
             <h3 class="cat-name">${catName}</h3>
-            <div class="cat-desc">Organized procedures and operational guides.</div>
+            <div class="cat-desc">Step-by-step procedures, system actions & canned replies.</div>
           </div>
-          <span class="cat-badge">📂 ${info.count} Procedures ➔</span>
+          <span class="cat-badge">📂 ${info.count} Structured SOP(s) ➔</span>
         </div>
       `;
     }).join('');
   }
 
+  // Open Specific Category View with Steps and Arrows
   function openCategory(catName) {
-    const items = documentsStore.filter(i => (i.category || 'General SOPs & Guidelines') === catName);
+    const items = masterKnowledgeBase.filter(i => (i.category || 'General Operations') === catName);
     document.getElementById('currentCategoryTitle').innerText = catName;
-    document.getElementById('currentCategorySubtitle').innerText = `${items.length} Procedures available`;
+    document.getElementById('currentCategorySubtitle').innerText = `${items.length} SOP Workflow(s) Available`;
 
     const container = document.getElementById('sopsContainer');
     container.innerHTML = items.map(item => `
-      <div class="sop-item">
-        ${item.canned_reply ? `<button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Reply</button>` : ''}
-        <h3 class="sop-title">${item.title}</h3>
-        <div class="sop-body">${item.content}</div>
+      <div class="sop-card">
+        <div class="sop-header">
+          <div>
+            <h3 class="sop-title">${item.title}</h3>
+            <span style="font-size:12px; color:var(--muted); margin-top:4px; display:block;">Category: ${item.category}</span>
+          </div>
+          <span class="sop-system-tag">🖥️ ${item.system || 'Operations System'}</span>
+        </div>
+
+        ${item.note ? `<div class="callout-box"><strong>⚠️ Note:</strong> ${item.note}</div>` : ''}
+
+        <div style="font-size:14px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 Step-by-Step Procedure:</div>
+        <div class="steps-timeline">
+          ${item.steps.map((step, idx) => `
+            <div class="step-box">
+              <div class="step-number">${idx + 1}</div>
+              <div class="step-content">${step}</div>
+            </div>
+          `).join('')}
+        </div>
+
         ${item.canned_reply ? `
-          <div style="margin-top:10px; background:#eff6ff; padding:10px; border-radius:6px; border-left:4px solid var(--accent); font-size:13px;">
-            <strong>Canned Reply:</strong> ${item.canned_reply}
+          <div class="canned-box">
+            <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy Canned Reply</button>
+            <strong style="color:#166534;">💬 Approved Customer Response:</strong><br>
+            <span style="font-size:13.5px; color:#14532d; display:block; margin-top:4px;">${item.canned_reply}</span>
           </div>
         ` : ''}
       </div>
@@ -395,16 +362,18 @@
     document.getElementById('detailSection').style.display = 'block';
   }
 
+  // Global Search Handler
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
     if (!q) {
-      renderHomeCategories(documentsStore);
+      renderHomeCategories(masterKnowledgeBase);
       return;
     }
-    const filtered = documentsStore.filter(i => 
+    const filtered = masterKnowledgeBase.filter(i => 
       (i.category && i.category.toLowerCase().includes(q)) ||
       (i.title && i.title.toLowerCase().includes(q)) ||
-      (i.content && i.content.toLowerCase().includes(q))
+      (i.steps && i.steps.some(s => s.toLowerCase().includes(q))) ||
+      (i.canned_reply && i.canned_reply.toLowerCase().includes(q))
     );
     
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
@@ -415,10 +384,28 @@
       container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No SOPs found matching your search.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
-        <div class="sop-item">
-          <span style="font-size:11px; font-weight:bold; background:#e0e7ff; color:#3730a3; padding:3px 8px; border-radius:4px;">${item.category}</span>
-          <h3 class="sop-title" style="margin-top:8px;">${item.title}</h3>
-          <div class="sop-body">${item.content}</div>
+        <div class="sop-card">
+          <div class="sop-header">
+            <div>
+              <span style="font-size:11px; font-weight:bold; background:#e0e7ff; color:#3730a3; padding:2px 8px; border-radius:4px;">${item.category}</span>
+              <h3 class="sop-title" style="margin-top:6px;">${item.title}</h3>
+            </div>
+            <span class="sop-system-tag">${item.system || 'System'}</span>
+          </div>
+          <div class="steps-timeline">
+            ${item.steps.map((step, idx) => `
+              <div class="step-box">
+                <div class="step-number">${idx + 1}</div>
+                <div class="step-content">${step}</div>
+              </div>
+            `).join('')}
+          </div>
+          ${item.canned_reply ? `
+            <div class="canned-box">
+              <button class="copy-btn" onclick="copyText('${item.canned_reply.replace(/'/g, "\\'")}')">📋 Copy</button>
+              ${item.canned_reply}
+            </div>
+          ` : ''}
         </div>
       `).join('');
     }
@@ -437,7 +424,7 @@
   function goToHome() {
     hideAllSections();
     document.getElementById('homeSection').style.display = 'block';
-    renderHomeCategories(documentsStore);
+    renderHomeCategories(masterKnowledgeBase);
   }
 
   function showSection(name) {
@@ -451,11 +438,11 @@
 
   function copyText(txt) {
     navigator.clipboard.writeText(txt);
-    alert('✅ Canned response copied to clipboard!');
+    alert('✅ Approved canned response copied to clipboard!');
   }
 
-  // Submit Escalation
-  document.getElementById('escForm').addEventListener('submit', (e) => {
+  // Escalation Submission (Hybrid Supabase + Local)
+  document.getElementById('escForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = {
       order_number: document.getElementById('order_number').value,
@@ -472,20 +459,38 @@
     records.unshift(data);
     localStorage.setItem('mavin_escalations', JSON.stringify(records));
 
-    alert('✅ Escalation successfully logged and saved!');
+    if (client) {
+      try { await client.from('product_escalations').insert([data]); } catch(e){}
+    }
+
+    alert('✅ Escalation successfully submitted and recorded!');
     document.getElementById('escForm').reset();
   });
 
-  function loadLogs() {
+  // Load Database Records
+  async function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
-    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Fetching database records...</td></tr>';
+    
+    let allRecords = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
+    if (client) {
+      try {
+        const { data } = await client.from('product_escalations').select('*').order('id', { ascending: false });
+        if (data && data.length > 0) {
+          const keys = new Set(allRecords.map(r => r.order_number + "_" + r.ticket_number));
+          data.forEach(d => {
+            if (!keys.has(d.order_number + "_" + d.ticket_number)) allRecords.push(d);
+          });
+        }
+      } catch(e){}
+    }
 
-    if (records.length === 0) {
+    if (allRecords.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No records logged yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = records.map(r => `
+    tbody.innerHTML = allRecords.map(r => `
       <tr>
         <td><strong>${r.order_number}</strong></td>
         <td>${r.ticket_number}</td>
@@ -510,24 +515,9 @@
     XLSX.writeFile(wb, "Mavin_Wear_Escalations.xlsx");
   }
 
-  // Load Saved or Default SOPs
-  const savedData = localStorage.getItem('mavin_kb_data');
-  if (savedData) {
-    try {
-      documentsStore = JSON.parse(savedData);
-      document.getElementById('statusText').innerText = `Active Knowledge Base (${documentsStore.length} procedures loaded).`;
-    } catch(e) {}
-  } else {
-    documentsStore = [
-      { category: "Defects & Quality", icon: "👗", title: "Damaged or Defective Item Received", content: "Collect clear photo/video evidence of the defect and courier AWB label. Log an escalation ticket to dispatch a free immediate replacement.", canned_reply: "Hello! We sincerely apologize for receiving the item in this condition. We have arranged a free immediate replacement order for you." },
-      { category: "Exchanges & Sizes", icon: "🔄", title: "Size Exchange Policy & Workflow", content: "Verify customer measurements with our standard size chart. Confirm warehouse inventory for requested size and issue an exchange order (SLA: 2-4 business days).", canned_reply: "Hello! We would be glad to help you exchange the size. The requested size is confirmed in stock and your exchange ticket has been dispatched." },
-      { category: "Shipping & Courier", icon: "🚚", title: "Delayed Delivery & Tracking Investigation", content: "Track shipment on courier portal. If delivery exceeds 48h past SLA, immediately raise a priority investigation flag to logistics.", canned_reply: "Hello! We apologize for the unexpected delay. We have raised a priority flag with our courier partner to expedite delivery to your address today." },
-      { category: "Refunds & Returns", icon: "💳", title: "Customer Return & Refund SOP", content: "Check that item meets return criteria (tags intact, unworn). Once warehouse inspection approves the return, process refund within 3-5 business days.", canned_reply: "Hello! Your return request has been authorized. Once our quality inspection team receives the item, your refund will be processed promptly." },
-      { category: "Operations & KPIs", icon: "📊", title: "CS Response SLAs & Quality Standards", content: "First Response Time (FRT) < 15 minutes. CSAT target > 90%. All product defects must be logged in the escalation database daily.", canned_reply: "Thank you for reaching out to Mavin Wear Operations. We are reviewing your inquiry with highest priority." }
-    ];
-  }
-
+  // Initial Load
   goToHome();
+  syncFromCloud();
 </script>
 </body>
 </html>
