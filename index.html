@@ -161,7 +161,7 @@
 
     .status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
     .status-approved { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
-    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
+    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
     .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
@@ -779,8 +779,33 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING REFUND BOT SOP)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING REFUND BOT & SHOPIFY/BOSTA CHECKLIST)
   const EMBEDDED_MASTER_SOPS = [
+    {
+      code: "SOP-SHOPIFY-BOSTA",
+      category_en: "Shopify & Bosta Ops Checklist",
+      category_ar: "قائمة مهام العمليات اليومية شوبيفاي وبوسطة",
+      system: "Shopify Orders + Bosta Dashboard + Slack",
+      title_en: "📋 Shopify & Bosta — CS / Ops Daily Checklist & Saved Tabs",
+      title_ar: "📋 قائمة المهام اليومية لعمليات شوبيفاي وبوسطة وتبويبات المتابعة",
+      description_en: "Operator's manual for order tracking inside Shopify. The sync-bosta worker reads Bosta and writes signals (Native status, governed tags, and metafields). Includes the 6 saved-view tabs (Action Required, Carrier Follow-Up, Escalations, Card at Risk, Refunds Owed, Returns Failed/Exchange).",
+      description_ar: "دليل التشغيل اليومي لتتبع الطلبات داخل شوبيفاي. يغطي التيجان (Tags)، الميتافيلدز، وتبويبات المتابعة الستة الأساسية (Action Required, Carrier Follow-Up, Refunds Owed, وغيرها).",
+      steps_en: [
+        "1. Start of Shift (2 min): Open Shopify Orders list, skim the 6 saved-view tabs, check #bosta-escalations on Slack, and have Bosta dashboard open.",
+        "2. Fulfillment · Action Required (Ops): Fix on-hold address/phone, clear warehouse-hold, make OOS restock/cancel decisions, chase not-picked orders, and fix return-blocked data.",
+        "3. CS · Carrier Follow-Up: Chase sla-breach, stuck-3d, and escalate failed-2 orders via #bosta-escalations.",
+        "4. Finance · Card at Risk & Refunds Owed: Review prepaid delivery failures (46/48) and process physically returned pending-refunds.",
+        "5. Golden Rules: Tag gone = solved. Always write a stamped order Note (e.g. [CS 28/06] Called customer...). Always post in #bosta-escalations before adding the 'escalated' tag."
+      ],
+      steps_ar: [
+        "1. بداية الوردية (دقيقتان): افتح قائمة طلبات شوبيفاي، افحص التبويبات الستة، وراجع قناة #bosta-escalations.",
+        "2. تبويب Action Required: إصلاح العناوين والهواتف المعلقة (on-hold)، حل مشاكل المخزن (warehouse-hold)، وقرارات الـ OOS.",
+        "3. تبويب Carrier Follow-Up: متابعة الحالات المتأخرة (sla-breach, stuck-3d) وتصعيد المرتجعات الفاشلة (failed-2).",
+        "4. تبويب Refunds Owed: مراجعة المنتجات المستلمة وإصدار المرتجعات المالية في شوبيفاي.",
+        "5. القواعد الذهبية: اختفاء التاج يعني حل المشكلة. توثيق كافة الإجراءات البشرية في ملاحظات الطلب (Order Notes)."
+      ],
+      canned_reply: "We have reviewed your order status through our logistics sync and updated your tracking and delivery preferences."
+    },
     {
       code: "SOP-BOT-01",
       category_en: "Refund Bot & Paymob Operations",
@@ -789,7 +814,7 @@
       title_en: "🤖 Mavin Wear Refund Bot & Daily 2-Minute Check SOP",
       title_ar: "🤖 دليل تشغيل بوت الاسترداد الآلي وفحص Paymob اليومي",
       description_en: "Automatic bot runs daily (Sun-Thu, 2pm-2am Cairo time) to refund qualifying prepaid Paymob orders. Handles 7 automatic situations (accidental double payments, warehouse cancellations, returned packages, missing 9+ days, OOS). Stops and flags for human review if order > EGP 5,000 or refund fails 3x.",
-      description_ar: "بوت يعمل يومياً أوتوماتيكياً لاسترداد طلبات Paymob المؤهلة. يعالج 7 حالات أوتوماتيكياً (دفع مرتين، إلغاء المخزن، مرتجعات، شحنات مفقودة، نفاد مخزون). يتوقف للتدخل البشري إذا تجاوز الطلب 5000 جنيه أو فشل الاسترداد 3 مرات.",
+      description_ar: "بوت يعمل يومياً أوتوماتيكياً لاسترداد طلبات Paymob المؤهلة. يعالج 7 حالات أوتوماتيكياً ويوقف الحالات المعقدة (أكبر من 5000 جنيه أو فشل 3 مرات) لمراجعة الفريق.",
       steps_en: [
         "1. Daily Morning Check: Open Slack #cs-updates and find today's 'Refunds — YYYY-MM-DD' report.",
         "2. Review the Split: Check ✅ clean (auto-refunded), 🔄 recovered (retried & succeeded), and 🔴 failed (failed 3 times).",
@@ -799,7 +824,7 @@
       ],
       steps_ar: [
         "1. الفحص الصباحي اليومي: افتح Slack في قناة #cs-updates وابحث عن تقرير المرتجعات اليومي.",
-        "2. مراجعة التقسيم الثلاثي: ✅ تم بنجاح، 🔄 تم استرداده بعد إعادة المحاولة، 🔴 فشل ٣ مرات ويحتاج تدخلاً.",
+        "2. مراجعة التقسيم الثلاثي: ✅ تم بنجاح، 🔄 تم استرداده بعد إعادة المحاولة، 🔴 فشل ٣ مرات.",
         "3. فحص الإخفاقات: عند وجود فشل (🔴 > 0)، اكتب /breakdown في Slack وابحث عن المعاملة في Paymob.",
         "4. فحص Paymob: استخدم رقم طلب Shopify في خانة Order ID للتأكد من حالة الدفع.",
         "5. التصعيد: قم بالتواصل مع أحمد في حال تعثر الطلب لثلاثة أيام متتالية أو وجود طلب يتجاوز 5000 جنيه."
