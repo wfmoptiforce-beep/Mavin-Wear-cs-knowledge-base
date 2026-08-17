@@ -667,7 +667,7 @@
       </div>
     </div>
     <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
-      <table id="logsTable">
+      <table id="qaLogsTable">
         <thead>
           <tr>
             <th>Date</th>
@@ -955,7 +955,7 @@
     { source: "Edge Cases & Exceptions", scenario: "عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.", explanation: "Cross-product exchange with price adjustment.", reason: "Exchanges", resolution: "Exchange Initiated" },
     { source: "Edge Cases & Exceptions", scenario: "أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟", explanation: "Missing tags/packaging return inquiry. Explain policy.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟", explanation: "No-opening policy pre-check. Politely explain company policy.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "إزاي يعني مفيش معاينة قبل الاستلاستخدام والدفع؟ ده حقي كعميل!", explanation: "Customer objecting to no-inspection policy. Reiterate policy firmly and politely.", reason: "Policy", resolution: "Information Given" },
+    { source: "Policy vs Courier Issues", scenario: "إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!", explanation: "Customer objecting to no-inspection policy. Reiterate policy firmly and politely.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.", explanation: "Courier followed policy; customer refused delivery. Cancel order if needed.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
     { source: "Policy vs Courier Issues", scenario: "المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين.", explanation: "Courier rudeness. Escalate to Bosta last-mile lead.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Policy vs Courier Issues", scenario: "المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!", explanation: "Courier refusing door-to-door delivery. Raise dispute with Bosta.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
@@ -1505,6 +1505,7 @@
     return { score: finalPercentage, grade: grade };
   }
 
+  // --- FIXED ROBUST QA SUBMIT FUNCTION ---
   document.getElementById('qaForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const scoreData = calculateQAScore();
@@ -1537,60 +1538,76 @@
       feedback: document.getElementById('qa_feedback').value.trim()
     };
 
-    const qaRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-    qaRecords.unshift(auditRecord);
-    localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
+    // 1. Save safely to localStorage
+    try {
+      const qaRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+      qaRecords.unshift(auditRecord);
+      localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
+    } catch (err) {
+      console.error("Storage error:", err);
+    }
 
-    const subject = encodeURIComponent(`[MAVIN QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
-    const body = encodeURIComponent(
-      `Hello,\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
-      `--------------------------------------------------\n` +
-      `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
-      `👤 Auditor: ${auditRecord.auditor_email}\n` +
-      `📅 Date: ${auditRecord.date}\n` +
-      `🏷️ Attribution: ${auditRecord.attribution}\n` +
-      `--------------------------------------------------\n\n` +
-      `Detailed Scoring Breakdown:\n` +
-      `• End-User Critical: ${auditRecord.endUserCritical}\n` +
-      `• Business Critical: ${auditRecord.bizCritical}\n` +
-      `• Open Ticket & Flag First: ${auditRecord.ticketFirst}\n` +
-      `• Diagnostic Understanding: ${auditRecord.understanding}\n` +
-      `• 5-Platform Investigation: ${auditRecord.systemsChecked}\n` +
-      `• Correct Resolution Delivered: ${auditRecord.correctResolution}\n` +
-      `• One-Touch Resolution: ${auditRecord.oneTouch}\n` +
-      `• Clear SLA Stated: ${auditRecord.slaStated}\n` +
-      `• Resolved Ticket Closure SLA (2-3h): ${auditRecord.closureSla}\n\n` +
-      `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
-      `Best regards,\nMAVIN Quality Assurance Team`
-    );
-
-    window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
-
-    alert(`🎉 Quality Evaluation Logged! Score: ${auditRecord.score}.\nEmail dispatch client opened for ${auditRecord.agent_email}!`);
+    // 2. Alert success & switch to logs view
+    alert(`🎉 Quality Evaluation Logged Successfully!\nScore: ${auditRecord.score} (${auditRecord.grade})`);
     document.getElementById('qaForm').reset();
     calculateQAScore();
     showSection('qualityLogs');
+    loadQALogs();
+
+    // 3. Optional Email client trigger
+    try {
+      const subject = encodeURIComponent(`[MAVIN QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
+      const body = encodeURIComponent(
+        `Hello,\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
+        `--------------------------------------------------\n` +
+        `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
+        `👤 Auditor: ${auditRecord.auditor_email}\n` +
+        `📅 Date: ${auditRecord.date}\n` +
+        `🏷️ Attribution: ${auditRecord.attribution}\n` +
+        `--------------------------------------------------\n\n` +
+        `Detailed Scoring Breakdown:\n` +
+        `• End-User Critical: ${auditRecord.endUserCritical}\n` +
+        `• Business Critical: ${auditRecord.bizCritical}\n` +
+        `• Open Ticket & Flag First: ${auditRecord.ticketFirst}\n` +
+        `• Diagnostic Understanding: ${auditRecord.understanding}\n` +
+        `• 5-Platform Investigation: ${auditRecord.systemsChecked}\n` +
+        `• Correct Resolution Delivered: ${auditRecord.correctResolution}\n` +
+        `• One-Touch Resolution: ${auditRecord.oneTouch}\n` +
+        `• Clear SLA Stated: ${auditRecord.slaStated}\n` +
+        `• Resolved Ticket Closure SLA (2-3h): ${auditRecord.closureSla}\n\n` +
+        `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
+        `Best regards,\nMAVIN Quality Assurance Team`
+      );
+      window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
+    } catch (mailErr) {
+      console.warn("Mail client skipped:", mailErr);
+    }
   });
 
   function loadQALogs() {
     const tbody = document.querySelector('#qaLogsTable tbody');
-    const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+    let records = [];
+    try {
+      records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+    } catch (e) {
+      records = [];
+    }
 
-    if (records.length === 0) {
+    if (!records || records.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations logged yet.</td></tr>';
       return;
     }
 
     tbody.innerHTML = records.map(r => `
       <tr>
-        <td>${r.date}</td>
-        <td><strong>${r.agent_email}</strong></td>
-        <td>${r.ticket_ref}</td>
-        <td><span style="font-size:11px; background:var(--accent-light); color:var(--primary); padding:2px 6px; border-radius:4px; border:1px solid var(--border);">${r.attribution}</span></td>
-        <td><strong style="color:var(--primary); font-size:14px;">${r.score}</strong></td>
-        <td>${r.grade}</td>
-        <td>${r.auditor_email}</td>
-        <td>${r.feedback}</td>
+        <td>${r.date || ''}</td>
+        <td><strong>${r.agent_email || ''}</strong></td>
+        <td>${r.ticket_ref || ''}</td>
+        <td><span style="font-size:11px; background:var(--accent-light); color:var(--primary); padding:2px 6px; border-radius:4px; border:1px solid var(--border);">${r.attribution || ''}</span></td>
+        <td><strong style="color:var(--primary); font-size:14px;">${r.score || ''}</strong></td>
+        <td>${r.grade || ''}</td>
+        <td>${r.auditor_email || ''}</td>
+        <td>${r.feedback || ''}</td>
       </tr>
     `).join('');
   }
@@ -1732,8 +1749,24 @@
       if (r.review_status === 'Rejected') statusClass = 'status-rejected';
 
       return `
-        `
-      );
+        <tr>
+          <td><strong>${r.order_number}</strong></td>
+          <td>${r.ticket_number}</td>
+          <td>${r.customer_name}</td>
+          <td>${r.contact_reason}</td>
+          <td>${r.ticket_date}</td>
+          <td>${r.case_summary}</td>
+          <td><span class="status-badge ${statusClass}">${r.review_status || 'Pending'}</span></td>
+          <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
+          <td>
+            ${isReviewer ? `
+              <button class="nav-btn primary" style="padding:4px 8px; font-size:11.5px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
+            ` : `
+              <span style="font-size:11.5px; color:var(--muted);">View Only</span>
+            `}
+          </td>
+        </tr>
+      `;
     }).join('');
   }
 
