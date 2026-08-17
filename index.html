@@ -266,7 +266,7 @@
   <!-- 1. HOME VIEW -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Handbook, Shopify Checklist, Refund Bot, Awaiting Action)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Handbook, Refund Bot, Awaiting Action, One Touch)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
@@ -781,7 +781,7 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING COMPLETE BOSTA HANDBOOK & SHOPIFY PLAYBOOKS)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING COMPLETE BOSTA HANDBOOK & SHOPIFY CHECKLIST)
   const EMBEDDED_MASTER_SOPS = [
     {
       code: "SOP-BOSTA-HANDBOOK",
