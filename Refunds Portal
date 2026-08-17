@@ -1,0 +1,765 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIN OPS HUB - Refunds Portal</title>
+<style>
+:root {
+  --bg:#f3f3f7; --card:#fff; --border:#e5e5e5; --border2:#d0d0d0;
+  --text:#111; --muted:#888; --muted2:#bbb;
+  --indigo:#4b4bf9; --dark:#0a0a0a;
+  --green:#16a34a; --green-bg:#f0fdf4; --green-bd:#bbf7d0;
+  --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
+  --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
+  --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
+  --orange:#ea580c; --orange-bg:#fff7ed; --orange-bd:#fed7aa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* NAV */
+.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
+.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
+.nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{padding:8px 14px;border-radius:8px;color:#666;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none;display:flex;align-items:center;gap:7px}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{background:#fff;color:#0a0a0a}
+.nav-link svg{width:15px;height:15px;flex-shrink:0}
+.nav-right{z-index:2}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
+.user-name{font-size:12px;font-weight:700;color:#fff}
+.user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+
+/* TABS */
+.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+.tab-btn svg{width:15px;height:15px}
+
+/* PAGE */
+.page{padding:32px;max-width:1100px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* HEADER */
+.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
+.page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
+.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px}
+
+/* SEARCH BOX */
+.search-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.search-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.search-field{display:flex;flex-direction:column;gap:5px}
+.search-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
+.search-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
+.search-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
+.search-input::placeholder{color:var(--muted2)}
+.search-actions{display:flex;gap:10px}
+.btn-search{background:#111;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.btn-search:hover{background:#333}
+.btn-clear{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:11px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-clear:hover{border-color:#999;color:var(--text)}
+
+/* RESULTS */
+.results-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.results-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa}
+.results-title{font-size:13px;font-weight:800}
+.results-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px}
+.result-card{padding:20px;border-bottom:1px solid #f5f5f5;transition:.1s}
+.result-card:last-child{border-bottom:none}
+.result-card:hover{background:#fafafa}
+.result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.result-order{font-size:16px;font-weight:900;color:var(--text)}
+.result-customer{font-size:13px;font-weight:600;color:var(--text);margin-top:2px}
+.result-phone{font-size:11.5px;color:var(--muted);margin-top:1px}
+.status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11.5px;font-weight:800;white-space:nowrap}
+.status-pending{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}
+.status-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.status-rejected{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.status-processing{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.status-default{background:#f3f3f7;color:var(--muted);border:1px solid var(--border)}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.result-item{display:flex;flex-direction:column;gap:3px}
+.result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.result-item-val{font-size:12.5px;font-weight:600;color:var(--text)}
+.empty-state{padding:48px 20px;text-align:center;color:var(--muted)}
+.empty-icon{font-size:36px;margin-bottom:12px}
+.empty-text{font-size:14px;font-weight:600}
+.empty-sub{font-size:12.5px;margin-top:4px}
+
+/* DUPLICATE ALERT */
+.dup-alert{background:var(--yellow-bg);border:1.5px solid var(--yellow-bd);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none}
+.dup-alert.show{display:flex;align-items:flex-start;gap:12px}
+.dup-alert-icon{font-size:20px;flex-shrink:0}
+.dup-alert-title{font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:4px}
+.dup-alert-text{font-size:12.5px;color:#92400e;line-height:1.5}
+
+/* FORM */
+.form-card{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.form-card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa}
+.card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:17px;height:17px}
+.card-title{font-size:13px;font-weight:800;flex:1}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px}
+.form-grid-2{grid-template-columns:repeat(2,1fr)}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
+.form-label span{color:var(--red);margin-left:2px}
+.form-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
+.form-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
+.form-input::placeholder{color:var(--muted2)}
+select.form-input option{background:#fff}
+.form-span2{grid-column:span 2}
+.form-span3{grid-column:1/-1}
+
+/* SUBMIT ROW */
+.submit-row{display:flex;gap:10px;margin-bottom:40px;margin-top:4px}
+.btn-submit{background:#111;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
+.btn-submit:hover{background:#333}
+.btn-submit:disabled{background:#555;cursor:not-allowed}
+.btn-reset-form{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:13px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-reset-form:hover{border-color:#999;color:var(--text)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-width:380px}
+.toast.show{display:flex}
+.toast.success{background:var(--green);color:#fff}
+.toast.error{background:var(--red);color:#fff}
+.toast.warn{background:var(--yellow);color:#fff}
+
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* REQUIRED TAG */
+.required-note{font-size:11.5px;color:var(--muted);padding:0 22px 16px;display:flex;align-items:center;gap:4px}
+
+@media(max-width:900px){
+  .search-grid{grid-template-columns:repeat(2,1fr)}
+  .result-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .page{padding:16px}
+  .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
+  .nav-brand{position:static;transform:none}
+}
+@media(max-width:560px){
+  .nav-links{display:none}
+  .search-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
+    </a>
+    <a href="scenarios.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="refunds.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h8"/></svg>Refunds
+    </a>
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
+    </a>
+  </div>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Agent Support</div>
+        <div class="user-role">CS · Operations</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('search',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Search Refunds
+  </button>
+  <button class="tab-btn" onclick="switchTab('submit',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Submit New Request
+  </button>
+</div>
+
+<!-- ══ SEARCH TAB ══ -->
+<div class="page tab-content active" id="tab-search">
+  <div class="page-badge"><span class="page-badge-dot"></span>Refund Portal</div>
+  <div class="page-title">Search Refund Requests</div>
+  <div class="page-sub">Search by customer name, order number, phone, or transaction ID. Results show live from the sheet.</div>
+
+  <div class="search-card">
+    <div class="search-grid">
+      <div class="search-field">
+        <label class="search-label">Customer Name</label>
+        <input class="search-input" id="sName" type="text" placeholder="e.g. Mohamed Ahmed">
+      </div>
+      <div class="search-field">
+        <label class="search-label">Order Number</label>
+        <input class="search-input" id="sOrder" type="text" placeholder="e.g. 154929">
+      </div>
+      <div class="search-field">
+        <label class="search-label">Phone Number</label>
+        <input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238">
+      </div>
+      <div class="search-field">
+        <label class="search-label">Transaction ID</label>
+        <input class="search-input" id="sTxn" type="text" placeholder="e.g. TXN-001">
+      </div>
+    </div>
+    <div class="search-actions">
+      <button class="btn-search" onclick="doSearch()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search
+      </button>
+      <button class="btn-clear" onclick="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+  <div class="results-wrap" id="resultsWrap">
+    <div class="results-header">
+      <span class="results-title">Results</span>
+      <span class="results-count" id="resultsCount">—</span>
+    </div>
+    <div id="resultsList">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Enter search criteria above</div>
+        <div class="empty-sub">Search by any field to find refund requests</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUBMIT TAB ══ -->
+<div class="page tab-content" id="tab-submit">
+  <div class="page-badge"><span class="page-badge-dot"></span>New Request</div>
+  <div class="page-title">Submit Refund / Exchange Request</div>
+  <div class="page-sub">Fill in all required fields. Duplicate orders within 5 days will be blocked.</div>
+
+  <!-- DUPLICATE ALERT -->
+  <div class="dup-alert" id="dupAlert">
+    <div class="dup-alert-icon">⚠️</div>
+    <div>
+      <div class="dup-alert-title">Duplicate Case Detected</div>
+      <div class="dup-alert-text" id="dupAlertText">A case already exists for this order.</div>
+    </div>
+  </div>
+
+  <!-- AGENT INFO -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="card-icon" style="background:#f0f0ff"><svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <span class="card-title">Agent Information</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Agent Email <span>*</span></label>
+        <input class="form-input" id="fAgentEmail" type="email" placeholder="agent@mavinwear.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Agent Name <span>*</span></label>
+        <input class="form-input" id="fAgentName" type="text" placeholder="e.g. Asmaa Hassan">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Submission Date</label>
+        <input class="form-input" id="fDate" type="datetime-local">
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER INFO -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="card-icon" style="background:#f0fdf4"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span class="card-title">Customer Information</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Customer Name <span>*</span></label>
+        <input class="form-input" id="fCustName" type="text" placeholder="e.g. Mohamed Ahmed">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Customer Phone <span>*</span></label>
+        <input class="form-input" id="fCustPhone" type="tel" placeholder="e.g. 01144504238">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Order Number <span>*</span></label>
+        <input class="form-input" id="fOrderNum" type="text" placeholder="e.g. 154929" oninput="checkDuplicate()">
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUEST DETAILS -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="card-icon" style="background:#eff6ff"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <span class="card-title">Request Details</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Request Type <span>*</span></label>
+        <select class="form-input" id="fReqType">
+          <option value="">Select type</option>
+          <option>Return Request</option>
+          <option>Exchange - 1st exchange</option>
+          <option>Exchange - 2nd exchange</option>
+          <option>Refund Request</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Reason for Request <span>*</span></label>
+        <select class="form-input" id="fReason">
+          <option value="">Select reason</option>
+          <option>Size issue (Fitting Issue)</option>
+          <option>Customer Changed mind</option>
+          <option>Customer Return</option>
+          <option>Defective / Damaged item</option>
+          <option>Wrong item received</option>
+          <option>2nd Exchange request</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Number of Returned Items</label>
+        <input class="form-input" id="fNumItems" type="number" min="1" placeholder="e.g. 2">
+      </div>
+      <div class="form-field form-span3">
+        <label class="form-label">Product Name & SKU</label>
+        <input class="form-input" id="fProductSKU" type="text" placeholder="e.g. Lounge Stripe Sweatpants White x Grey / M / SS26-STEE-S-01">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Original Item Name & SKU</label>
+        <input class="form-input" id="fOrigSKU" type="text" placeholder="Original item SKU">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Requested Item Name & SKU</label>
+        <input class="form-input" id="fReqSKU" type="text" placeholder="Requested item SKU">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Shipping Fees</label>
+        <select class="form-input" id="fShipping">
+          <option value="">Select</option>
+          <option>Shipping Fees Apply</option>
+          <option>No Shipping Fees</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Refund Amount (EGP)</label>
+        <input class="form-input" id="fRefund" type="text" placeholder="e.g. 450.00">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Bosta Ticket ID</label>
+        <input class="form-input" id="fBostaTicket" type="text" placeholder="e.g. 7506992329">
+      </div>
+      <div class="form-field form-span3">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" id="fNotes" rows="3" placeholder="Any additional notes or context..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
+      </div>
+    </div>
+    <div class="required-note">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Fields marked with <span style="color:var(--red);margin:0 3px">*</span> are required
+    </div>
+  </div>
+
+  <div class="submit-row">
+    <button class="btn-reset-form" onclick="resetSubmitForm()">↺ Reset</button>
+    <button class="btn-submit" id="submitRefundBtn" onclick="submitRefund()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Submit Request
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────────
+const SHEET_ID  = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
+const READ_TAB  = 'Export2';   // search reads from here
+const WRITE_TAB = 'Export2';   // submit writes here
+const GAS_URL   = '';          // ← هنحتاج Google Apps Script URL للكتابة
+
+// Column indices in Export2 (0-based):
+// A=ff/timestamp, B=Email, C=AgentName, D=CustName, E=CustPhone,
+// F=OrderNum, G=RequestType, H=Reason, I=NumItems, J=ProductSKU,
+// K=OrigSKU, L=ReqSKU, M=ShippingFees, N=Refund, O=BostaTicket,
+// P=Photos, Q=Notes, R=ExchangeStatus, S=FulfilmentNote
+const COL = {
+  timestamp:0, email:1, agentName:2, custName:3, custPhone:4,
+  orderNum:5, reqType:6, reason:7, numItems:8, productSKU:9,
+  origSKU:10, reqSKU:11, shipping:12, refund:13, bostaTicket:14,
+  photos:15, notes:16, exchangeStatus:17, fulfilNote:18
+};
+
+let allData = [];
+let dupCheckData = [];
+
+// ── FETCH SHEET DATA ────────────────────────────────────────────────────
+async function fetchSheetData() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(READ_TAB)}`;
+  try {
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47).slice(0,-2));
+    const rows = json.table.rows;
+    return rows.map(r => r.c ? r.c.map(cell => cell ? (cell.f || cell.v || '') : '') : []);
+  } catch(e) {
+    console.error('Sheet fetch error:', e);
+    return [];
+  }
+}
+
+// ── SEARCH ──────────────────────────────────────────────────────────────
+async function doSearch() {
+  const name  = document.getElementById('sName').value.trim().toLowerCase();
+  const order = document.getElementById('sOrder').value.trim().toLowerCase();
+  const phone = document.getElementById('sPhone').value.trim().toLowerCase();
+  const txn   = document.getElementById('sTxn').value.trim().toLowerCase();
+
+  if (!name && !order && !phone && !txn) {
+    showToast('Enter at least one search field.', 'warn');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-search');
+  btn.innerHTML = '<span class="spin"></span> Searching...';
+  btn.disabled  = true;
+
+  const data = await fetchSheetData();
+  allData = data;
+
+  const results = data.filter(row => {
+    const rName  = (row[COL.custName]  || '').toLowerCase();
+    const rOrder = (row[COL.orderNum]  || '').toString().toLowerCase();
+    const rPhone = (row[COL.custPhone] || '').toString().toLowerCase();
+    const rTxn   = (row[0]             || '').toString().toLowerCase(); // timestamp/ff col
+
+    let match = true;
+    if (name  && !rName.includes(name))   match = false;
+    if (order && !rOrder.includes(order)) match = false;
+    if (phone && !rPhone.includes(phone)) match = false;
+    if (txn   && !rTxn.includes(txn))     match = false;
+    return match;
+  });
+
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search';
+  btn.disabled = false;
+
+  renderResults(results);
+}
+
+function renderResults(results) {
+  const list  = document.getElementById('resultsList');
+  const count = document.getElementById('resultsCount');
+
+  if (!results.length) {
+    count.textContent = '0 results';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
+    return;
+  }
+
+  count.textContent = `${results.length} result${results.length > 1 ? 's' : ''}`;
+  list.innerHTML = results.map(row => {
+    const status   = (row[COL.exchangeStatus] || '').toString().trim();
+    const statusCls = getStatusClass(status);
+    const date     = (row[COL.timestamp] || '').toString().split('T')[0] || '—';
+    return `
+    <div class="result-card">
+      <div class="result-top">
+        <div>
+          <div class="result-order">Order #${row[COL.orderNum] || '—'}</div>
+          <div class="result-customer">${row[COL.custName] || '—'}</div>
+          <div class="result-phone">${row[COL.custPhone] || '—'}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="status-badge ${statusCls}">${status || 'Pending'}</span>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px">${date}</div>
+        </div>
+      </div>
+      <div class="result-grid">
+        <div class="result-item">
+          <span class="result-item-label">Request Type</span>
+          <span class="result-item-val">${row[COL.reqType] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Reason</span>
+          <span class="result-item-val">${row[COL.reason] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Agent</span>
+          <span class="result-item-val">${row[COL.agentName] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Bosta Ticket</span>
+          <span class="result-item-val">${row[COL.bostaTicket] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Product / SKU</span>
+          <span class="result-item-val">${row[COL.productSKU] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Refund</span>
+          <span class="result-item-val">${row[COL.refund] ? 'EGP ' + row[COL.refund] : '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Shipping</span>
+          <span class="result-item-val">${row[COL.shipping] || '—'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-item-label">Items</span>
+          <span class="result-item-val">${row[COL.numItems] || '—'}</span>
+        </div>
+      </div>
+      ${row[COL.notes] ? `<div style="margin-top:12px;padding:10px 12px;background:#fafafa;border-radius:8px;font-size:12px;color:var(--muted);border:1px solid var(--border)"><strong>Note:</strong> ${row[COL.notes]}</div>` : ''}
+      ${row[COL.fulfilNote] ? `<div style="margin-top:8px;padding:10px 12px;background:var(--blue-bg);border-radius:8px;font-size:12px;color:var(--blue);border:1px solid var(--blue-bd)"><strong>Fulfilment Note:</strong> ${row[COL.fulfilNote]}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function getStatusClass(status) {
+  const s = (status || '').toLowerCase();
+  if (s.includes('approved') || s.includes('done') || s.includes('completed')) return 'status-approved';
+  if (s.includes('rejected') || s.includes('declined')) return 'status-rejected';
+  if (s.includes('processing') || s.includes('progress')) return 'status-processing';
+  if (s.includes('pending') || s === '') return 'status-pending';
+  return 'status-default';
+}
+
+function clearSearch() {
+  ['sName','sOrder','sPhone','sTxn'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('resultsList').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Search by any field to find refund requests</div></div>`;
+  document.getElementById('resultsCount').textContent = '—';
+}
+
+// ── DUPLICATE CHECK ──────────────────────────────────────────────────────
+let dupTimeout;
+async function checkDuplicate() {
+  clearTimeout(dupTimeout);
+  dupTimeout = setTimeout(async () => {
+    const orderNum = document.getElementById('fOrderNum').value.trim();
+    if (!orderNum) { hideDupAlert(); return; }
+
+    const data = await fetchSheetData();
+    dupCheckData = data;
+
+    const now      = new Date();
+    const matches  = data.filter(row => {
+      const rOrder = (row[COL.orderNum] || '').toString().trim();
+      if (rOrder !== orderNum) return false;
+
+      // Parse row date
+      const rDate = parseRowDate(row[COL.timestamp]);
+      if (!rDate) return true; // can't parse → treat as duplicate to be safe
+
+      const diffDays = (now - rDate) / (1000 * 60 * 60 * 24);
+      return diffDays <= 5;
+    });
+
+    if (matches.length > 0) {
+      const m = matches[0];
+      const status = m[COL.exchangeStatus] || 'Pending';
+      showDupAlert(`A case for Order #${orderNum} already exists (submitted on ${(m[COL.timestamp]||'').toString().slice(0,16)}). Status: ${status}. Please follow up on the existing case.`);
+    } else {
+      hideDupAlert();
+    }
+  }, 600);
+}
+
+function parseRowDate(val) {
+  if (!val) return null;
+  const s = val.toString();
+  // Try ISO or Date(y,m,d,h,m,s) format from gviz
+  if (s.startsWith('Date(')) {
+    const parts = s.replace('Date(','').replace(')','').split(',').map(Number);
+    return new Date(parts[0], parts[1], parts[2], parts[3]||0, parts[4]||0, parts[5]||0);
+  }
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function showDupAlert(msg) {
+  const el = document.getElementById('dupAlert');
+  document.getElementById('dupAlertText').textContent = msg;
+  el.classList.add('show');
+  document.getElementById('submitRefundBtn').disabled = true;
+}
+function hideDupAlert() {
+  document.getElementById('dupAlert').classList.remove('show');
+  document.getElementById('submitRefundBtn').disabled = false;
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────────────
+// We use Google Apps Script to write to the sheet
+// The GAS_URL needs to be set after deploying the Apps Script
+
+async function submitRefund() {
+  // Validate required fields
+  const email    = document.getElementById('fAgentEmail').value.trim();
+  const agentN   = document.getElementById('fAgentName').value.trim();
+  const custName = document.getElementById('fCustName').value.trim();
+  const custPh   = document.getElementById('fCustPhone').value.trim();
+  const orderN   = document.getElementById('fOrderNum').value.trim();
+  const reqType  = document.getElementById('fReqType').value;
+  const reason   = document.getElementById('fReason').value;
+
+  if (!email)    return showToast('Agent email is required.', 'error');
+  if (!agentN)   return showToast('Agent name is required.', 'error');
+  if (!custName) return showToast('Customer name is required.', 'error');
+  if (!custPh)   return showToast('Customer phone is required.', 'error');
+  if (!orderN)   return showToast('Order number is required.', 'error');
+  if (!reqType)  return showToast('Request type is required.', 'error');
+  if (!reason)   return showToast('Reason is required.', 'error');
+
+  // Check duplicate again before submit
+  const data     = await fetchSheetData();
+  const now      = new Date();
+  const dupCheck = data.filter(row => {
+    const rOrder = (row[COL.orderNum] || '').toString().trim();
+    if (rOrder !== orderN) return false;
+    const rDate  = parseRowDate(row[COL.timestamp]);
+    if (!rDate) return true;
+    return (now - rDate) / (1000 * 60 * 60 * 24) <= 5;
+  });
+
+  if (dupCheck.length > 0) {
+    const st = dupCheck[0][COL.exchangeStatus] || 'Pending';
+    showDupAlert(`Order #${orderN} already has an active case (Status: ${st}). Cannot submit duplicate.`);
+    return;
+  }
+
+  // Build row data
+  const timestamp = new Date().toLocaleString('en-GB', {timeZone:'Africa/Cairo'});
+  const rowData = [
+    timestamp,
+    email,
+    agentN,
+    custName,
+    custPh,
+    orderN,
+    document.getElementById('fReqType').value,
+    document.getElementById('fReason').value,
+    document.getElementById('fNumItems').value,
+    document.getElementById('fProductSKU').value,
+    document.getElementById('fOrigSKU').value,
+    document.getElementById('fReqSKU').value,
+    document.getElementById('fShipping').value,
+    document.getElementById('fRefund').value,
+    document.getElementById('fBostaTicket').value,
+    '', // photos — not supported in browser form
+    document.getElementById('fNotes').value,
+    'Pending', // Exchange status default
+    ''  // Fulfilment note
+  ];
+
+  setSubmitLoading(true);
+
+  // If GAS_URL is set → use Apps Script
+  // If not → use direct Sheets API (needs OAuth — not suitable for browser)
+  if (!GAS_URL) {
+    // Fallback: open a pre-filled Google Form or show manual instruction
+    setSubmitLoading(false);
+    showToast('⚠️ Apps Script URL not configured. See setup instructions.', 'warn');
+
+    // Show the data so agent can manually add
+    console.log('Row to add to Export2:', rowData);
+
+    // For now, copy to clipboard as CSV
+    const csv = rowData.map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join('\t');
+    try {
+      await navigator.clipboard.writeText(csv);
+      showToast('Data copied! Paste into Export2 sheet manually.', 'warn');
+    } catch(e) {}
+    return;
+  }
+
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ sheet: WRITE_TAB, row: rowData }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const result = await res.json();
+    if (result.status === 'ok') {
+      setSubmitLoading(false);
+      showToast('✅ Request submitted successfully!', 'success');
+      resetSubmitForm();
+    } else {
+      throw new Error(result.message || 'Unknown error');
+    }
+  } catch(e) {
+    setSubmitLoading(false);
+    showToast('Submit failed: ' + e.message, 'error');
+  }
+}
+
+function setSubmitLoading(on) {
+  const btn = document.getElementById('submitRefundBtn');
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? `<span class="spin"></span> Submitting...`
+    : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request`;
+}
+
+function resetSubmitForm() {
+  ['fAgentEmail','fAgentName','fCustName','fCustPhone','fOrderNum',
+   'fNumItems','fProductSKU','fOrigSKU','fReqSKU','fRefund','fBostaTicket','fNotes'
+  ].forEach(id => document.getElementById(id).value = '');
+  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value = '');
+  hideDupAlert();
+  setNow();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.className = `toast show ${type}`;
+  t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 5000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+function setNow() {
+  const now = new Date();
+  const cairo = new Date(now.toLocaleString('en-US', {timeZone:'Africa/Cairo'}));
+  const pad = n => n.toString().padStart(2,'0');
+  document.getElementById('fDate').value =
+    `${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
+}
+setNow();
+</script>
+</body>
+</html>
+    
