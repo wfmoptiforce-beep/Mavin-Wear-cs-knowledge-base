@@ -1,1 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIN OPS HUB - QA Audit</title>
+<style>
+:root {
+  --black:#0a0a0a; --dark:#111111; --card:#1a1a1a; --card2:#1f1f1f;
+  --border:#2a2a2a; --border2:#333; --white:#ffffff; --off:#f0f0f0;
+  --muted:#888; --muted2:#555; --green:#22c55e; --red:#ef4444;
+  --yellow:#f59e0b; --blue:#3b82f6; --purple:#a855f7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased;min-height:100vh}
 
+/* NAV */
+.topnav{background:var(--dark);padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:42px;height:42px;background:var(--white);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:var(--black)}
+.nav-brand-text{color:var(--white);font-weight:800;font-size:15px;line-height:1.2}
+.nav-brand-sub{color:var(--muted);font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{padding:8px 14px;border-radius:8px;color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none;display:flex;align-items:center;gap:7px}
+.nav-link:hover{background:rgba(255,255,255,.07);color:var(--white)}
+.nav-link.active{background:var(--white);color:var(--black)}
+.nav-link svg{width:15px;height:15px;flex-shrink:0}
+.nav-right{z-index:2}
+.user-sel{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;outline:none}
+.user-sel option{background:var(--dark);color:var(--white)}
+
+/* PAGE */
+.page{padding:40px 32px;max-width:1000px;margin:0 auto}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:32px}
+.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.page-badge-dot{width:6px;height:6px;background:var(--white);border-radius:50%}
+.page-title{font-size:28px;font-weight:900;color:var(--white);letter-spacing:-.5px;margin-bottom:6px}
+.page-sub{color:var(--muted);font-size:14px}
+
+/* META FIELDS */
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+.meta-field{display:flex;flex-direction:column;gap:6px}
+.meta-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.meta-input{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--white);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
+.meta-input:focus{border-color:#555;background:var(--card2)}
+.meta-input::placeholder{color:var(--muted2)}
+select.meta-input option{background:var(--dark)}
+
+/* SECTION */
+.qa-section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.qa-section-header{padding:18px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.section-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.section-icon svg{width:18px;height:18px}
+.section-title{font-size:13.5px;font-weight:800;color:var(--white);flex:1}
+.section-pts{font-size:12px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:100px;padding:3px 10px}
+
+/* CRITERIA ROW */
+.criteria-grid{padding:6px 0}
+.criteria-row{display:flex;align-items:center;padding:13px 22px;border-bottom:1px solid rgba(255,255,255,.04);gap:16px;transition:.1s}
+.criteria-row:last-child{border-bottom:none}
+.criteria-row:hover{background:rgba(255,255,255,.02)}
+.criteria-name{flex:1;font-size:13px;font-weight:600;color:var(--off)}
+.criteria-max{font-size:11px;color:var(--muted);margin-right:4px;white-space:nowrap}
+.radio-group{display:flex;gap:6px}
+.radio-btn{width:38px;height:32px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
+.radio-btn:hover{border-color:#555;color:var(--white)}
+.radio-btn.selected-0{background:rgba(239,68,68,.15);border-color:var(--red);color:var(--red)}
+.radio-btn.selected-1{background:rgba(245,158,11,.15);border-color:var(--yellow);color:var(--yellow)}
+.radio-btn.selected-2{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green)}
+.radio-btn.selected-na{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
+
+/* CRITICAL ERRORS */
+.critical-section{background:#1a0a0a;border:1px solid #3a1515;border-radius:16px;margin-bottom:16px;overflow:hidden}
+.critical-header{padding:18px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #3a1515;background:rgba(239,68,68,.06)}
+.critical-title{font-size:13.5px;font-weight:800;color:var(--red);flex:1}
+.critical-badge{font-size:10px;font-weight:800;color:var(--red);background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:100px;padding:3px 10px;letter-spacing:1px}
+.critical-row{display:flex;align-items:center;padding:13px 22px;border-bottom:1px solid rgba(255,255,255,.04);gap:16px}
+.critical-row:last-child{border-bottom:none}
+.critical-name{flex:1;font-size:13px;font-weight:600;color:var(--off)}
+.critical-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle-group{display:flex;gap:6px}
+.toggle-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
+.toggle-btn:hover{border-color:#555;color:var(--white)}
+.toggle-btn.sel-yes{background:rgba(239,68,68,.15);border-color:var(--red);color:var(--red)}
+.toggle-btn.sel-no{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green)}
+.toggle-btn.sel-na{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
+
+/* SCORE PANEL */
+.score-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;display:flex;align-items:center;gap:32px}
+.score-circle{width:100px;height:100px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;position:relative}
+.score-num{font-size:30px;font-weight:900;line-height:1}
+.score-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.score-breakdown{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.score-item{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.score-item-name{font-size:11.5px;color:var(--muted);font-weight:600}
+.score-item-val{font-size:13px;font-weight:800;color:var(--white)}
+.ztp-warning{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--red);display:none}
+
+/* SUBMIT */
+.submit-row{display:flex;gap:12px;margin-bottom:40px}
+.btn-submit{background:var(--white);color:var(--black);border:none;border-radius:10px;padding:13px 28px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
+.btn-submit:hover{background:var(--off)}
+.btn-reset{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:13px 22px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-reset:hover{border-color:#555;color:var(--white)}
+
+/* RESULT MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--dark);border:1px solid var(--border);border-radius:20px;padding:40px;max-width:520px;width:100%;text-align:center}
+.modal-score-big{font-size:72px;font-weight:900;line-height:1;margin-bottom:8px}
+.modal-grade{font-size:16px;font-weight:800;margin-bottom:20px;letter-spacing:1px;text-transform:uppercase}
+.modal-agent{font-size:14px;color:var(--muted);margin-bottom:24px}
+.modal-breakdown{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left;display:flex;flex-direction:column;gap:8px}
+.modal-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.modal-row-name{color:var(--muted)}
+.modal-row-val{font-weight:700;color:var(--white)}
+.modal-ztp{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:12px 16px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:20px;display:none}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+.modal-btn-close{background:var(--white);color:var(--black);border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:800;cursor:pointer}
+.modal-btn-new{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer}
+.modal-btn-new:hover{color:var(--white);border-color:#555}
+
+/* FOOTER */
+.footer{text-align:center;padding:28px 32px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+
+@media(max-width:768px){
+  .meta-grid{grid-template-columns:1fr}
+  .score-panel{flex-direction:column}
+  .score-breakdown{grid-template-columns:1fr}
+  .page{padding:20px 16px}
+  .topnav{height:auto;padding:14px 16px;flex-wrap:wrap;gap:10px}
+  .nav-brand{position:static;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
+    </a>
+    <a href="scenarios.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="portal.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Return Portal
+    </a>
+    <a href="qa.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
+    </a>
+  </div>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <select class="user-sel">
+      <option>زهراء — Support</option>
+      <option>Nour Tamer</option>
+      <option>Rehab Mohamed</option>
+    </select>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
+    <div class="page-title">QA Audit Form</div>
+    <div class="page-sub">Score an agent interaction. Total = 100 pts. Critical errors may override final score.</div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-grid">
+    <div class="meta-field">
+      <label class="meta-label">Agent Name</label>
+      <input class="meta-input" id="agentName" type="text" placeholder="e.g. Nour Tamer">
+    </div>
+    <div class="meta-field">
+      <label class="meta-label">Evaluator Name</label>
+      <input class="meta-input" id="evalName" type="text" placeholder="e.g. Zahraa">
+    </div>
+    <div class="meta-field">
+      <label class="meta-label">Ticket / Order #</label>
+      <input class="meta-input" id="ticketNum" type="text" placeholder="e.g. #156688">
+    </div>
+    <div class="meta-field">
+      <label class="meta-label">Date</label>
+      <input class="meta-input" id="auditDate" type="date">
+    </div>
+    <div class="meta-field">
+      <label class="meta-label">Channel</label>
+      <select class="meta-input" id="channel">
+        <option value="">Select channel</option>
+        <option>WhatsApp</option>
+        <option>Email</option>
+        <option>Instagram DM</option>
+        <option>Facebook DM</option>
+        <option>Phone Call</option>
+      </select>
+    </div>
+    <div class="meta-field">
+      <label class="meta-label">Contact Reason</label>
+      <select class="meta-input" id="contactReason">
+        <option value="">Select reason</option>
+        <option>Product Inquiry (Pre-purchase)</option>
+        <option>Stock & Availability</option>
+        <option>Discounts & Promotions</option>
+        <option>Late Return</option>
+        <option>Policy / Exchanges</option>
+        <option>Refund not received</option>
+        <option>Courier Issues</option>
+        <option>Order Status & Tracking</option>
+        <option>Wrong Item / Damaged</option>
+        <option>Exchanges</option>
+        <option>Refunds</option>
+        <option>Account & Website Issues</option>
+        <option>Payment Issues / Policy</option>
+        <option>Complaint & Escalation</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- LIVE SCORE -->
+  <div class="score-panel">
+    <div class="score-circle" id="scoreCircle">
+      <span class="score-num" id="liveScore">—</span>
+      <span class="score-label">/ 100</span>
+    </div>
+    <div class="score-breakdown">
+      <div class="score-item"><span class="score-item-name">Issue Understanding</span><span class="score-item-val" id="s1">—</span></div>
+      <div class="score-item"><span class="score-item-name">Solution Quality</span><span class="score-item-val" id="s2">—</span></div>
+      <div class="score-item"><span class="score-item-name">Customer Experience</span><span class="score-item-val" id="s3">—</span></div>
+      <div class="score-item"><span class="score-item-name">Communication</span><span class="score-item-val" id="s4">—</span></div>
+      <div class="score-item"><span class="score-item-name">Process Compliance</span><span class="score-item-val" id="s5">—</span></div>
+      <div class="score-item"><span class="score-item-name">Critical Errors</span><span class="score-item-val" id="s6" style="color:var(--red)">None</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: ISSUE UNDERSTANDING -->
+  <div class="qa-section">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(59,130,246,.15)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <span class="section-title">Issue Understanding</span>
+      <span class="section-pts" id="pts1">0 / 8 pts</span>
+    </div>
+    <div class="criteria-grid" id="sec1">
+      <!-- rows injected by JS -->
+    </div>
+  </div>
+
+  <!-- SECTION 2: SOLUTION QUALITY -->
+  <div class="qa-section">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(34,197,94,.15)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="section-title">Solution Quality</span>
+      <span class="section-pts" id="pts2">0 / 8 pts</span>
+    </div>
+    <div class="criteria-grid" id="sec2"></div>
+  </div>
+
+  <!-- SECTION 3: CUSTOMER EXPERIENCE -->
+  <div class="qa-section">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(245,158,11,.15)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
+      <span class="section-title">Customer Experience</span>
+      <span class="section-pts" id="pts3">0 / 8 pts</span>
+    </div>
+    <div class="criteria-grid" id="sec3"></div>
+  </div>
+
+  <!-- SECTION 4: COMMUNICATION -->
+  <div class="qa-section">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(168,85,247,.15)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <span class="section-title">Communication</span>
+      <span class="section-pts" id="pts4">0 / 5 pts</span>
+    </div>
+    <div class="criteria-grid" id="sec4"></div>
+  </div>
+
+  <!-- SECTION 5: PROCESS COMPLIANCE -->
+  <div class="qa-section">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(255,255,255,.08)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </div>
+      <span class="section-title">Process Compliance</span>
+      <span class="section-pts" id="pts5">0 / 5 pts</span>
+    </div>
+    <div class="criteria-grid" id="sec5"></div>
+  </div>
+
+  <!-- CRITICAL ERRORS -->
+  <div class="critical-section">
+    <div class="critical-header">
+      <div class="section-icon" style="background:rgba(239,68,68,.15)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <span class="critical-title">Critical Errors</span>
+      <span class="critical-badge">AUTO-FAIL RISK</span>
+    </div>
+    <div id="sec-critical"></div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="qa-section" style="margin-top:16px">
+    <div class="qa-section-header">
+      <div class="section-icon" style="background:rgba(255,255,255,.06)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <span class="section-title">Evaluator Notes</span>
+    </div>
+    <div style="padding:16px 22px">
+      <textarea class="meta-input" id="evalNotes" rows="3" placeholder="Add coaching notes, observations, or context for this audit..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-row" style="margin-top:20px">
+    <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
+    <button class="btn-submit" onclick="submitAudit()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Submit QA Audit
+    </button>
+  </div>
+
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div style="font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px">QA Result</div>
+    <div class="modal-score-big" id="modalScore">—</div>
+    <div class="modal-grade" id="modalGrade">—</div>
+    <div class="modal-agent" id="modalAgent">—</div>
+    <div class="modal-ztp" id="modalZtp">⚠️ Zero-Tolerance Policy triggered — Score overridden to FAIL</div>
+    <div class="modal-breakdown" id="modalBreakdown"></div>
+    <div class="modal-btns">
+      <button class="modal-btn-new" onclick="resetForm()">New Audit</button>
+      <button class="modal-btn-close" onclick="document.getElementById('modalOverlay').classList.remove('show')">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">MAVIN Wear Operations Hub — All Rights Reserved</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const SECTIONS = [
+  {
+    id:'sec1', ptsId:'pts1', scoreId:'s1', max:8,
+    label:'Issue Understanding',
+    items:[
+      {name:'Identified the customer issue', max:2},
+      {name:'Asked clarification questions', max:2, allowNA:true},
+      {name:'Investigated properly', max:2, allowNA:true},
+      {name:'Did not assume the issue', max:2},
+    ]
+  },
+  {
+    id:'sec2', ptsId:'pts2', scoreId:'s2', max:8,
+    label:'Solution Quality',
+    items:[
+      {name:'Provided correct solution', max:2},
+      {name:'Explained the solution clearly', max:2},
+      {name:'Provided accurate information', max:2},
+      {name:'Confirmed resolution', max:2},
+    ]
+  },
+  {
+    id:'sec3', ptsId:'pts3', scoreId:'s3', max:8,
+    label:'Customer Experience',
+    items:[
+      {name:'Acknowledged the issue', max:2},
+      {name:'Used empathy statements', max:2},
+      {name:'Showed willingness to help', max:2},
+      {name:'Handled negative emotions', max:2},
+    ]
+  },
+  {
+    id:'sec4', ptsId:'pts4', scoreId:'s4', max:5,
+    label:'Communication',
+    items:[
+      {name:'Clear and professional language', max:1},
+      {name:'Efficient communication', max:1},
+      {name:'Greeting & Closure', max:2},
+      {name:'Grammar and spelling', max:1, allowNA:true},
+    ]
+  },
+  {
+    id:'sec5', ptsId:'pts5', scoreId:'s5', max:5,
+    label:'Process Compliance',
+    items:[
+      {name:'Used correct macros / templates', max:2},
+      {name:'Followed internal process', max:1},
+      {name:'Correct documentation', max:1},
+      {name:'Correct case status', max:1},
+    ]
+  }
+];
+
+const CRITICAL = [
+  {id:'bc', name:'Business Critical (BC)', desc:'Action that causes direct financial loss or damages brand reputation'},
+  {id:'ec', name:'End-User Critical (EC)', desc:'Incorrect info or action that directly harms the customer'},
+  {id:'cc', name:'Compliance Critical (CC)', desc:'Violation of policy, legal, or regulatory requirement'},
+  {id:'ztp', name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'},
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────
+const state = {}; // sectionId_itemIndex → value (0,1,2,NA)
+const critState = {}; // critId → 'yes'|'no'|'na'
+
+// ── BUILD UI ───────────────────────────────────────────────────────────
+function buildSections(){
+  SECTIONS.forEach(sec=>{
+    const container = document.getElementById(sec.id);
+    sec.items.forEach((item,i)=>{
+      const key = `${sec.id}_${i}`;
+      state[key] = null;
+      const row = document.createElement('div');
+      row.className = 'criteria-row';
+      const opts = [0,1,2];
+      const btnHtml = opts.map(v=>`
+        <button class="radio-btn" data-key="${key}" data-val="${v}" onclick="pick('${key}',${v},this)">${v}</button>
+      `).join('');
+      const naBtn = item.allowNA
+        ? `<button class="radio-btn" data-key="${key}" data-val="NA" onclick="pickNA('${key}',this)">NA</button>`
+        : '';
+      row.innerHTML = `
+        <span class="criteria-name">${item.name}</span>
+        <span class="criteria-max">max ${item.max}</span>
+        <div class="radio-group">${btnHtml}${naBtn}</div>
+      `;
+      container.appendChild(row);
+    });
+  });
+
+  // Critical errors
+  const cc = document.getElementById('sec-critical');
+  CRITICAL.forEach(c=>{
+    critState[c.id] = null;
+    const row = document.createElement('div');
+    row.className = 'critical-row';
+    row.innerHTML = `
+      <div style="flex:1">
+        <div class="critical-name">${c.name}</div>
+        <div class="critical-desc">${c.desc}</div>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn" onclick="pickCrit('${c.id}','yes',this)">Yes</button>
+        <button class="toggle-btn" onclick="pickCrit('${c.id}','no',this)">No</button>
+        <button class="toggle-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button>
+      </div>
+    `;
+    cc.appendChild(row);
+  });
+}
+
+// ── INTERACTIONS ───────────────────────────────────────────────────────
+function pick(key, val, btn){
+  state[key] = val;
+  const group = btn.closest('.radio-group');
+  group.querySelectorAll('.radio-btn').forEach(b=>{
+    b.className='radio-btn';
+    if(b.dataset.val==val && b.dataset.key==key) b.classList.add(`selected-${val}`);
+  });
+  recalc();
+}
+function pickNA(key, btn){
+  state[key] = 'NA';
+  const group = btn.closest('.radio-group');
+  group.querySelectorAll('.radio-btn').forEach(b=>{
+    b.className='radio-btn';
+    if(b.dataset.val==='NA') b.classList.add('selected-na');
+  });
+  recalc();
+}
+function pickCrit(id, val, btn){
+  critState[id] = val;
+  const group = btn.closest('.toggle-group');
+  group.querySelectorAll('.toggle-btn').forEach(b=> b.className='toggle-btn');
+  btn.classList.add(`sel-${val}`);
+  recalc();
+}
+
+// ── SCORING ────────────────────────────────────────────────────────────
+function recalc(){
+  let totalEarned=0, totalPossible=0;
+  const secScores=[];
+
+  SECTIONS.forEach((sec,si)=>{
+    let earned=0, possible=0;
+    sec.items.forEach((item,i)=>{
+      const key=`${sec.id}_${i}`;
+      const v=state[key];
+      if(v==='NA' || v===null){
+        // NA → excluded from possible
+      } else {
+        // scale: item.max is 1 or 2; v is 0,1,2
+        const scaled = (v/2)*item.max;
+        earned+=scaled;
+        possible+=item.max;
+      }
+    });
+    // scale section to its max
+    const sectionScore = possible>0 ? Math.round((earned/possible)*sec.max) : null;
+    secScores.push({label:sec.label, score:sectionScore, max:sec.max});
+    document.getElementById(sec.ptsId).textContent =
+      sectionScore!==null ? `${sectionScore} / ${sec.max} pts` : `— / ${sec.max} pts`;
+    document.getElementById(sec.scoreId).textContent =
+      sectionScore!==null ? `${sectionScore}/${sec.max}` : '—';
+    if(sectionScore!==null){ totalEarned+=sectionScore; totalPossible+=sec.max; }
+  });
+
+  // Check ZTP
+  const ztpTriggered = critState['ztp']==='yes';
+  const anyCritical = ['bc','ec','cc'].some(k=>critState[k]==='yes');
+
+  // Critical display
+  const critErrors = ['bc','ec','cc'].filter(k=>critState[k]==='yes').map(k=>{
+    return CRITICAL.find(c=>c.id===k).name;
+  });
+  document.getElementById('s6').textContent = critErrors.length ? critErrors.join(', ') : (ztpTriggered?'ZTP':'None');
+
+  // Score
+  const circle = document.getElementById('scoreCircle');
+  const liveEl = document.getElementById('liveScore');
+  if(totalPossible===0){ liveEl.textContent='—'; circle.style.borderColor='var(--border)'; return; }
+
+  let finalScore = Math.round((totalEarned/34)*100); // 34 = max without scaling
+  // simpler: sum all section maxes = 8+8+8+5+5 = 34
+  // already scaled per section so totalEarned is out of 34
+  finalScore = Math.round((totalEarned/34)*100);
+
+  if(ztpTriggered) finalScore=0;
+
+  liveEl.textContent = finalScore;
+  if(finalScore>=90){ circle.style.borderColor='var(--green)'; liveEl.style.color='var(--green)'; }
+  else if(finalScore>=70){ circle.style.borderColor='var(--yellow)'; liveEl.style.color='var(--yellow)'; }
+  else { circle.style.borderColor='var(--red)'; liveEl.style.color='var(--red)'; }
+
+  return {finalScore, secScores, ztpTriggered, critErrors};
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────────────────
+function submitAudit(){
+  const result = recalc();
+  if(!result){ alert('Please score at least one section before submitting.'); return; }
+  const {finalScore, secScores, ztpTriggered, critErrors} = result;
+
+  const agent = document.getElementById('agentName').value || '—';
+  const eval_ = document.getElementById('evalName').value || '—';
+  const ticket = document.getElementById('ticketNum').value || '—';
+  const date = document.getElementById('auditDate').value || '—';
+
+  // Grade
+  let grade, gradeColor;
+  if(ztpTriggered){ grade='FAIL — ZTP'; gradeColor='var(--red)'; }
+  else if(finalScore>=90){ grade='EXCELLENT'; gradeColor='var(--green)'; }
+  else if(finalScore>=80){ grade='GOOD'; gradeColor='var(--green)'; }
+  else if(finalScore>=70){ grade='MEETS STANDARDS'; gradeColor='var(--yellow)'; }
+  else if(finalScore>=60){ grade='NEEDS IMPROVEMENT'; gradeColor='var(--yellow)'; }
+  else { grade='BELOW STANDARD'; gradeColor='var(--red)'; }
+
+  document.getElementById('modalScore').textContent = finalScore;
+  document.getElementById('modalScore').style.color = gradeColor;
+  document.getElementById('modalGrade').textContent = grade;
+  document.getElementById('modalGrade').style.color = gradeColor;
+  document.getElementById('modalAgent').textContent = `Agent: ${agent} · Ticket: ${ticket} · Date: ${date} · Evaluator: ${eval_}`;
+
+  const ztpEl = document.getElementById('modalZtp');
+  ztpEl.style.display = ztpTriggered ? 'block' : 'none';
+
+  // Breakdown
+  const bd = document.getElementById('modalBreakdown');
+  bd.innerHTML = secScores.map(s=>`
+    <div class="modal-row">
+      <span class="modal-row-name">${s.label}</span>
+      <span class="modal-row-val">${s.score!==null?`${s.score}/${s.max}`:'—'}</span>
+    </div>
+  `).join('');
+  if(critErrors.length){
+    bd.innerHTML += `<div class="modal-row" style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px">
+      <span class="modal-row-name" style="color:var(--red)">Critical Errors</span>
+      <span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span>
+    </div>`;
+  }
+
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+// ── RESET ──────────────────────────────────────────────────────────────
+function resetForm(){
+  document.getElementById('modalOverlay').classList.remove('show');
+  // Reset state
+  Object.keys(state).forEach(k=>state[k]=null);
+  Object.keys(critState).forEach(k=>critState[k]=null);
+  // Reset buttons
+  document.querySelectorAll('.radio-btn').forEach(b=>b.className='radio-btn');
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.className='toggle-btn');
+  // Reset score display
+  document.getElementById('liveScore').textContent='—';
+  document.getElementById('liveScore').style.color='var(--white)';
+  document.getElementById('scoreCircle').style.borderColor='var(--border)';
+  SECTIONS.forEach(sec=>{
+    document.getElementById(sec.ptsId).textContent=`— / ${sec.max} pts`;
+    document.getElementById(sec.scoreId).textContent='—';
+  });
+  document.getElementById('s6').textContent='None';
+  // Reset inputs
+  ['agentName','evalName','ticketNum','evalNotes'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  document.getElementById('auditDate').value='';
+  document.getElementById('channel').value='';
+  document.getElementById('contactReason').value='';
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────
+buildSections();
+// Default date to today
+document.getElementById('auditDate').valueAsDate = new Date();
+</script>
+</body>
+</html>
+    
