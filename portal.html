@@ -13,6 +13,7 @@
   --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
   --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
   --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
+  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
@@ -59,7 +60,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .src-pills{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
 .src-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid}
 .pill-sb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.pill-ex2{background:#f5f3ff;color:#7c3aed;border-color:#ddd6fe}
+.pill-ex2{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
 .pill-ex{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
 .pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 .results-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
@@ -69,26 +70,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .results-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px}
 .src-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:100px;border:1px solid;display:inline-flex;align-items:center}
 .tag-sb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.tag-ex2{background:#f5f3ff;color:#7c3aed;border-color:#ddd6fe}
+.tag-ex2{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
 .tag-ex{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
 .result-card{padding:20px;border-bottom:1px solid #f5f5f5;transition:.1s}
 .result-card:last-child{border-bottom:none}
 .result-card:hover{background:#fafafa}
 .result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.result-left{flex:1}
 .result-order{font-size:16px;font-weight:900}
 .result-customer{font-size:13px;font-weight:600;margin-top:2px}
 .result-phone{font-size:11.5px;color:var(--muted);margin-top:1px}
-.result-badges{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.result-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.result-date{font-size:11px;color:var(--muted);font-weight:500}
 .result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .result-item{display:flex;flex-direction:column;gap:3px}
 .result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
-.result-item-val{font-size:12.5px;font-weight:600}
+.result-item-val{font-size:12.5px;font-weight:600;color:var(--text)}
 .status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11.5px;font-weight:800;white-space:nowrap}
 .s-pending{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}
 .s-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
 .s-rejected{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
 .s-processing{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
 .s-default{background:#f3f3f7;color:var(--muted);border:1px solid var(--border)}
+.note-box{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.5;border:1px solid}
+.note-general{background:#fafafa;color:var(--muted);border-color:var(--border)}
+.note-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
 .divider{display:flex;align-items:center;gap:12px;padding:10px 20px;background:#fafafa;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .divider-line{flex:1;height:1px;background:var(--border)}
 .divider-text{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
@@ -125,7 +131,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-text{font-size:14px;font-weight:600}
 .empty-sub{font-size:12.5px;margin-top:4px}
-.loading-bar{display:none;padding:20px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;gap:10px;align-items:center;justify-content:center}
+.loading-bar{display:none;padding:24px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;gap:10px;align-items:center;justify-content:center}
 .loading-bar.show{display:flex}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(75,75,249,.2);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite}
 .spinw{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
@@ -136,6 +142,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   .page{padding:16px}
   .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
   .nav-brand{position:static;transform:none}
+  .src-pills{display:none}
 }
 @media(max-width:560px){
   .nav-links{display:none}
@@ -196,7 +203,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="page tab-content active" id="tab-search">
   <div class="page-badge"><span class="page-badge-dot"></span>Refund Portal</div>
   <div class="page-title">Search Refund Requests</div>
-  <div class="page-sub">Searches Supabase + Export2 (Returns) + Export (Refunds) simultaneously.</div>
+  <div class="page-sub">Searches Supabase + Export2 (Returns/Exchange) + Export (Refunds) simultaneously.</div>
 
   <div class="search-card">
     <div class="search-grid">
@@ -213,8 +220,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
         <input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238" onkeydown="if(event.key==='Enter')doSearch()">
       </div>
       <div class="search-field">
-        <label class="search-label">Bosta Ticket / Transaction ID</label>
-        <input class="search-input" id="sTicket" type="text" placeholder="e.g. 7506992329" onkeydown="if(event.key==='Enter')doSearch()">
+        <label class="search-label">Bosta Ticket / Txn ID</label>
+        <input class="search-input" id="sTicket" type="text" placeholder="e.g. MVN-118798" onkeydown="if(event.key==='Enter')doSearch()">
       </div>
     </div>
     <div class="search-actions">
@@ -355,110 +362,122 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────────────
+// ── CONFIG ─────────────────────────────────────────────────────────────
 const SB_URL   = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
 const SB_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 const SB_TABLE = 'refund_requests';
 const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
 
 // ── Export2 columns (0-based) ──────────────────────────────────────────
-// A=ff/timestamp, B=Email, C=AgentName, D=CustName, E=CustPhone,
-// F=OrderNum, G=ReqType, H=Reason, I=NumItems, J=ProductSKU,
-// K=OrigSKU, L=ReqSKU, M=ShippingFees, N=Refund, O=BostaTicket,
-// P=Photos, Q=Notes, R=ExchangeStatus, S=FulfilNote
-const EX2 = {ts:0,email:1,agent:2,name:3,phone:4,order:5,
-             type:6,reason:7,items:8,sku:9,origSku:10,reqSku:11,
-             ship:12,refund:13,bosta:14,photos:15,notes:16,status:17,fnote:18};
+// A=ff B=Email C=AgentName D=CustName E=CustPhone F=OrderNum
+// G=ReqType H=Reason I=NumItems J=ProductSKU K=OrigSKU L=ReqSKU
+// M=ShippingFees N=Refund O=BostaTicket P=Photos Q=Notes
+// R=ExchangeStatus S=FulfilNote
+const EX2 = {
+  ts:0, email:1, agent:2, name:3, phone:4, order:5,
+  type:6, reason:7, items:8, sku:9, origSku:10, reqSku:11,
+  ship:12, refund:13, bosta:14, photos:15, notes:16,
+  status:17, fnote:18
+};
 
 // ── Export columns (0-based) ───────────────────────────────────────────
-// A=Timestamp, B=Email, C=T&C(long text-skip), D=AgentName,
-// E=OrderNum, F=CustName, G=CustPhone, H=Reason, I=Amount,
-// J=RefundType, K=Method, L=BankName, M=BankAccount, N=AccountHolder,
-// O=WalletProvider, P=WalletPhone, Q=WalletHolder, R=Notes,
-// S=CustEmail, T=GiftCardEmail, U=AffectedSKUs, V=TransactionID,
-// W=Verification, X=VerifiedAmount, Y=RefundStatus, Z=SubmissionDate,
-// AA=FulfilNote, AB=AgentAmount, AC=RequestDate, AD=HELPER
-const EX = {ts:0,email:1,tc:2,agent:3,order:4,name:5,phone:6,
-            reason:7,amount:8,refundType:9,method:10,bank:11,
-            bankAcc:12,holder:13,wallet:14,walletPh:15,walletHolder:16,
-            notes:17,custEmail:18,giftEmail:19,skus:20,txnId:21,
-            verify:22,verifiedAmt:23,status:24,subDate:25,
-            fnote:26,agentAmt:27,reqDate:28};
+// A=Timestamp B=Email C=T&C(skip) D=AgentName E=OrderNum
+// F=CustName G=CustPhone H=Reason I=Amount J=RefundType
+// K=Method L=BankName M=BankAccount N=AccountHolder
+// O=WalletProvider P=WalletPhone Q=WalletHolder R=Notes
+// S=CustEmail T=GiftEmail U=AffectedSKUs V=TransactionID
+// W=Verification X=VerifiedAmount Y=RefundStatus Z=SubmissionDate
+// AA=FulfilNote AB=AgentAmount AC=RequestDate AD=HELPER
+const EX = {
+  ts:0, email:1, tc:2, agent:3, order:4, name:5, phone:6,
+  reason:7, amount:8, refundType:9, method:10, bank:11,
+  bankAcc:12, holder:13, wallet:14, walletPh:15, walletHolder:16,
+  notes:17, custEmail:18, giftEmail:19, skus:20, txnId:21,
+  verify:22, verifiedAmt:23, status:24, subDate:25,
+  fnote:26, agentAmt:27, reqDate:28
+};
 
 // ── SUPABASE HELPER ────────────────────────────────────────────────────
 const sb = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
   headers:{
-    'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,
+    'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`,
     'Content-Type':'application/json',
-    'Prefer':opts.prefer||'return=representation'
+    'Prefer': opts.prefer||'return=representation'
   },
-  method:opts.method||'GET', body:opts.body
+  method: opts.method||'GET', body: opts.body
 });
 
 // ── FETCH SHEET TAB ────────────────────────────────────────────────────
 async function fetchTab(tabName) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}&headers=1`;
   const res  = await fetch(url);
   const text = await res.text();
-  // gviz wraps response in google.visualization.Query.setResponse(...)
   const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
   if (!match) return [];
   const json = JSON.parse(match[1]);
   const rows = json.table?.rows || [];
-  return rows.map(r => (r.c||[]).map(cell => {
-    if (!cell) return '';
-    // formatted value preferred, then raw
-    return (cell.f || (cell.v !== null && cell.v !== undefined ? String(cell.v) : ''));
-  }));
+  return rows.map(r =>
+    (r.c||[]).map(cell => {
+      if (!cell || cell.v === null || cell.v === undefined) return '';
+      // Use formatted value first (better for dates & numbers)
+      return cell.f ? cell.f : String(cell.v);
+    })
+  );
 }
 
 // ── NORMALIZE ROWS ─────────────────────────────────────────────────────
 function normalizeEx2Row(row) {
+  const status = (row[EX2.status]||'').trim();
   return {
-    _source:'Export2',
-    created_at:     row[EX2.ts]    ||'',
-    agent_name:     row[EX2.agent] ||'',
-    customer_name:  row[EX2.name]  ||'',
-    customer_phone: row[EX2.phone] ||'',
-    order_number:   row[EX2.order] ||'',
-    request_type:   row[EX2.type]  ||'',
-    reason:         row[EX2.reason]||'',
-    num_items:      row[EX2.items] ||'',
-    product_sku:    row[EX2.sku]   ||'',
-    original_sku:   row[EX2.origSku]||'',
-    requested_sku:  row[EX2.reqSku] ||'',
-    shipping_fees:  row[EX2.ship]  ||'',
-    refund_amount:  row[EX2.refund]||'',
-    bosta_ticket_id:row[EX2.bosta] ||'',
-    notes:          row[EX2.notes] ||'',
-    exchange_status:row[EX2.status]||'',
-    fulfilment_note:row[EX2.fnote] ||''
+    _source:        'Export2',
+    created_at:     row[EX2.ts]      ||'',
+    agent_name:     row[EX2.agent]   ||'',
+    customer_name:  row[EX2.name]    ||'',
+    customer_phone: row[EX2.phone]   ||'',
+    order_number:   row[EX2.order]   ||'',
+    request_type:   row[EX2.type]    ||'',
+    reason:         row[EX2.reason]  ||'',
+    num_items:      row[EX2.items]   ||'',
+    product_sku:    row[EX2.sku]     ||'',
+    original_sku:   row[EX2.origSku] ||'',
+    requested_sku:  row[EX2.reqSku]  ||'',
+    shipping_fees:  row[EX2.ship]    ||'',
+    refund_amount:  row[EX2.refund]  ||'',
+    bosta_ticket_id:row[EX2.bosta]   ||'',
+    notes:          row[EX2.notes]   ||'',
+    exchange_status: status || 'Pending',
+    fulfilment_note:row[EX2.fnote]   ||'',
+    refund_method:  '',
+    bank_name:      ''
   };
 }
 
 function normalizeExRow(row) {
+  // Priority for date: SubmissionDate (Z=25) → RequestDate (AC=28) → Timestamp (A=0)
+  const dateRaw = row[EX.subDate] || row[EX.reqDate] || row[EX.ts] || '';
+  // Priority for status: RefundStatus (Y=24) → Verification (W=22)
+  const status  = (row[EX.status] || row[EX.verify] || '').trim();
   return {
-    _source:'Export',
-    created_at:     row[EX.ts]     ||row[EX.subDate]||'',
-    agent_name:     row[EX.agent]  ||'',
-    customer_name:  row[EX.name]   ||'',
-    customer_phone: row[EX.phone]  ||'',
-    order_number:   row[EX.order]  ||'',
+    _source:        'Export',
+    created_at:     dateRaw,
+    agent_name:     row[EX.agent]       ||'',
+    customer_name:  row[EX.name]        ||'',
+    customer_phone: row[EX.phone]       ||'',
+    order_number:   row[EX.order]       ||'',
     request_type:   'Refund Request',
-    reason:         row[EX.reason] ||'',
+    reason:         row[EX.reason]      ||'',
     num_items:      '',
-    product_sku:    row[EX.skus]   ||'',
+    product_sku:    row[EX.skus]        ||'',
     original_sku:   '',
     requested_sku:  '',
     shipping_fees:  '',
-    refund_amount:  row[EX.amount] ||row[EX.verifiedAmt]||'',
-    bosta_ticket_id:row[EX.txnId]  ||'',
-    notes:          row[EX.notes]  ||'',
-    exchange_status:row[EX.status] ||'',
-    fulfilment_note:row[EX.fnote]  ||'',
-    // extra fields
-    refund_method:  row[EX.method] ||'',
-    bank_name:      row[EX.bank]   ||''
+    refund_amount:  row[EX.amount]      || row[EX.verifiedAmt] ||'',
+    bosta_ticket_id:row[EX.txnId]       ||'',
+    notes:          row[EX.notes]       ||'',
+    exchange_status: status || 'Submitted',
+    fulfilment_note:row[EX.fnote]       ||'',
+    refund_method:  row[EX.method]      ||'',
+    bank_name:      row[EX.bank]        ||''
   };
 }
 
@@ -486,7 +505,6 @@ async function doSearch() {
     showToast('Enter at least one search field.','warn'); return;
   }
 
-  // Loading state
   const btn = document.getElementById('searchBtn');
   btn.innerHTML = '<span class="spinw"></span> Searching...';
   btn.disabled  = true;
@@ -495,7 +513,6 @@ async function doSearch() {
   document.getElementById('resultsCount').textContent = '—';
 
   try {
-    // Run all 3 sources in parallel
     const [sbRes, ex2Res, exRes] = await Promise.allSettled([
       searchSupabase(name, order, phone, ticket),
       searchEx2(name, order, phone, ticket),
@@ -506,11 +523,14 @@ async function doSearch() {
     const ex2Data = ex2Res.status === 'fulfilled' ? ex2Res.value : [];
     const exData  = exRes.status  === 'fulfilled' ? exRes.value  : [];
 
-    // Combine all
     const all = [...sbData, ...ex2Data, ...exData];
 
-    // Sort by date desc
-    all.sort((a,b) => new Date(b.created_at||0) - new Date(a.created_at||0));
+    // Sort newest first
+    all.sort((a,b) => {
+      const da = parseAnyDate(a.created_at);
+      const db = parseAnyDate(b.created_at);
+      return db - da;
+    });
 
     renderResults(all, sbData.length, ex2Data.length, exData.length);
   } catch(e) {
@@ -537,8 +557,8 @@ async function searchSupabase(name, order, phone, ticket) {
 async function searchEx2(name, order, phone, ticket) {
   const rows = await fetchTab('Export2');
   return rows
-    .slice(1) // skip header row
-    .filter(row => row.length > 5 && row[EX2.order]) // must have order number
+    .slice(1)
+    .filter(row => row.length > 5 && (row[EX2.order]||'').trim())
     .map(normalizeEx2Row)
     .filter(r => matches(r, name, order, phone, ticket));
 }
@@ -546,8 +566,8 @@ async function searchEx2(name, order, phone, ticket) {
 async function searchEx(name, order, phone, ticket) {
   const rows = await fetchTab('Export');
   return rows
-    .slice(1) // skip header row
-    .filter(row => row.length > 5 && row[EX.order]) // must have order number
+    .slice(1)
+    .filter(row => row.length > 5 && (row[EX.order]||'').trim())
     .map(normalizeExRow)
     .filter(r => matches(r, name, order, phone, ticket));
 }
@@ -559,7 +579,12 @@ function renderResults(data, sbCount, ex2Count, exCount) {
 
   if (!data.length) {
     count.textContent = '0 results';
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Searched Supabase (${sbCount}) · Export2 (${ex2Count}) · Export (${exCount})</div></div>`;
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div class="empty-text">No results found</div>
+        <div class="empty-sub">Searched — Supabase: ${sbCount} · Export2: ${ex2Count} · Export: ${exCount}</div>
+      </div>`;
     return;
   }
 
@@ -569,34 +594,34 @@ function renderResults(data, sbCount, ex2Count, exCount) {
 
 function renderCard(r) {
   const sc  = statusClass(r.exchange_status);
-  const dt  = r.created_at ? formatDate(r.created_at) : '—';
-  const srcTag = r._source==='Supabase'
+  const dt  = formatDate(r.created_at);
+
+  const srcTag = r._source === 'Supabase'
     ? `<span class="src-tag tag-sb">Supabase</span>`
-    : r._source==='Export2'
+    : r._source === 'Export2'
     ? `<span class="src-tag tag-ex2">Export2</span>`
     : `<span class="src-tag tag-ex">Export</span>`;
 
-  const extraFields = r._source==='Export' ? `
-    <div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${r.refund_method||'—'}</span></div>
-    <div class="result-item"><span class="result-item-label">Bank</span><span class="result-item-val">${r.bank_name||'—'}</span></div>
-  ` : `
-    <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${r.num_items||'—'}</span></div>
-    <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>
-  `;
+  // Extra fields differ per source
+  const extraRow = r._source === 'Export'
+    ? `<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${r.refund_method||'—'}</span></div>
+       <div class="result-item"><span class="result-item-label">Bank</span><span class="result-item-val">${r.bank_name||'—'}</span></div>`
+    : `<div class="result-item"><span class="result-item-label">Items Returned</span><span class="result-item-val">${r.num_items||'—'}</span></div>
+       <div class="result-item"><span class="result-item-label">Shipping Fees</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>`;
 
   return `
   <div class="result-card">
     <div class="result-top">
-      <div>
+      <div class="result-left">
         <div class="result-order">Order #${r.order_number||'—'}</div>
         <div class="result-customer">${r.customer_name||'—'}</div>
         <div class="result-phone">${r.customer_phone||'—'}</div>
       </div>
-      <div class="result-badges">
-        <span class="status-badge ${sc}">${r.exchange_status||'Pending'}</span>
-        <div style="display:flex;gap:5px;align-items:center;justify-content:flex-end">
+      <div class="result-right">
+        <span class="status-badge ${sc}">${r.exchange_status||'—'}</span>
+        <div style="display:flex;gap:5px;align-items:center">
           ${srcTag}
-          <span style="font-size:11px;color:var(--muted)">${dt}</span>
+          <span class="result-date">${dt}</span>
         </div>
       </div>
     </div>
@@ -604,82 +629,104 @@ function renderCard(r) {
       <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${r.request_type||'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${r.reason||'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${r.agent_name||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount ? 'EGP '+r.refund_amount : '—'}</span></div>
       <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${r.product_sku||'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Bosta / Txn ID</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>
-      ${extraFields}
+      ${extraRow}
     </div>
-    ${r.notes?`<div style="margin-top:12px;padding:10px 12px;background:#fafafa;border-radius:8px;font-size:12px;color:var(--muted);border:1px solid var(--border)"><strong>Note:</strong> ${r.notes}</div>`:''}
-    ${r.fulfilment_note?`<div style="margin-top:8px;padding:10px 12px;background:var(--blue-bg);border-radius:8px;font-size:12px;color:var(--blue);border:1px solid var(--blue-bd)"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div>`:''}
+    ${r.notes ? `<div class="note-box note-general"><strong>Note:</strong> ${r.notes}</div>` : ''}
+    ${r.fulfilment_note ? `<div class="note-box note-blue"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div>` : ''}
   </div>`;
 }
 
+// ── DATE HELPERS ──────────────────────────────────────────────────────
+function parseAnyDate(str) {
+  if (!str) return new Date(0);
+  const s = str.toString().trim();
+  // Try ISO
+  let d = new Date(s);
+  if (!isNaN(d)) return d;
+  // Try DD/MM/YYYY or DD/MM/YYYY HH:MM
+  const parts = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (parts) d = new Date(`${parts[3]}-${parts[2].padStart(2,'0')}-${parts[1].padStart(2,'0')}`);
+  return isNaN(d) ? new Date(0) : d;
+}
+
 function formatDate(str) {
-  if (!str) return '—';
-  const d = new Date(str);
-  if (isNaN(d)) return str.toString().slice(0,16);
-  return d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  if (!str || str.toString().trim() === '') return '—';
+  const d = parseAnyDate(str.toString().trim());
+  if (!d || d.getTime() === 0) return str.toString().slice(0,20);
+  return d.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'})
+    + ' ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
 }
 
 function statusClass(s) {
-  const v=(s||'').toLowerCase();
-  if(v.includes('approved')||v.includes('done')||v.includes('completed')) return 's-approved';
-  if(v.includes('rejected')||v.includes('declined')||v.includes('failed')) return 's-rejected';
-  if(v.includes('processing')||v.includes('progress')) return 's-processing';
-  return 's-pending';
+  const v = (s||'').toLowerCase();
+  if (v.includes('approved')||v.includes('done')||v.includes('completed')||v.includes('transferred')) return 's-approved';
+  if (v.includes('rejected')||v.includes('declined')||v.includes('failed')) return 's-rejected';
+  if (v.includes('processing')||v.includes('progress')||v.includes('submitted')) return 's-processing';
+  if (v.includes('pending')) return 's-pending';
+  return 's-default';
 }
 
 function clearSearch() {
-  ['sName','sOrder','sPhone','sTicket'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div></div>`;
-  document.getElementById('resultsCount').textContent='—';
+  ['sName','sOrder','sPhone','sTicket'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('resultsList').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-text">Enter search criteria above</div>
+      <div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div>
+    </div>`;
+  document.getElementById('resultsCount').textContent = '—';
 }
 
 // ── DUPLICATE CHECK ────────────────────────────────────────────────────
 let dupTimer;
-function schedDupCheck(){clearTimeout(dupTimer);dupTimer=setTimeout(dupCheck,700)}
+function schedDupCheck() { clearTimeout(dupTimer); dupTimer = setTimeout(dupCheck, 700); }
 
 async function dupCheck() {
   const order = document.getElementById('fOrderNum').value.trim();
-  if (!order){hideDup();return}
+  if (!order) { hideDup(); return; }
 
   const fiveDaysAgo = new Date(Date.now()-5*24*60*60*1000).toISOString();
 
   // Check Supabase
-  const res  = await sb(`${SB_TABLE}?order_number=eq.${encodeURIComponent(order)}&created_at=gte.${fiveDaysAgo}&select=id,created_at,exchange_status`);
-  const data = await res.json();
-  if(Array.isArray(data)&&data.length>0){
-    const d=data[0];
-    showDup(`Case exists in system (submitted ${formatDate(d.created_at)}). Status: ${d.exchange_status||'Pending'}. Follow up instead.`);
-    return;
-  }
+  try {
+    const res  = await sb(`${SB_TABLE}?order_number=eq.${encodeURIComponent(order)}&created_at=gte.${fiveDaysAgo}&select=id,created_at,exchange_status`);
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      const d = data[0];
+      showDup(`Case exists (submitted ${formatDate(d.created_at)}). Status: ${d.exchange_status||'Pending'}. Please follow up instead of creating a new case.`);
+      return;
+    }
+  } catch(e) {}
 
   // Check Export2
   try {
     const cutoff = Date.now()-5*24*60*60*1000;
     const rows   = await fetchTab('Export2');
-    const found  = rows.slice(1).find(row=>{
-      if((row[EX2.order]||'').trim()!==order) return false;
-      const d=new Date(row[EX2.ts]||0);
-      return !isNaN(d)&&d.getTime()>=cutoff;
+    const found  = rows.slice(1).find(row => {
+      if ((row[EX2.order]||'').trim() !== order) return false;
+      const d = parseAnyDate(row[EX2.ts]);
+      return d.getTime() >= cutoff;
     });
-    if(found){
-      showDup(`Case exists in Export2 sheet (${found[EX2.ts]?.slice(0,10)||'recent'}). Status: ${found[EX2.status]||'—'}. Follow up instead.`);
+    if (found) {
+      showDup(`Case exists in Export2 (${formatDate(found[EX2.ts])}). Status: ${found[EX2.status]||'—'}. Please follow up instead.`);
       return;
     }
-  } catch(e){}
+  } catch(e) {}
 
   hideDup();
 }
 
-function showDup(msg){
-  document.getElementById('dupText').textContent=msg;
+function showDup(msg) {
+  document.getElementById('dupText').textContent = msg;
   document.getElementById('dupAlert').classList.add('show');
-  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('submitBtn').disabled = true;
 }
-function hideDup(){
+function hideDup() {
   document.getElementById('dupAlert').classList.remove('show');
-  document.getElementById('submitBtn').disabled=false;
+  document.getElementById('submitBtn').disabled = false;
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────
@@ -691,76 +738,81 @@ async function submitRefund() {
   const orderN  = document.getElementById('fOrderNum').value.trim();
   const reqType = document.getElementById('fReqType').value;
   const reason  = document.getElementById('fReason').value;
-  if(!email)   return showToast('Agent email required.','error');
-  if(!agentN)  return showToast('Agent name required.','error');
-  if(!custN)   return showToast('Customer name required.','error');
-  if(!custPh)  return showToast('Customer phone required.','error');
-  if(!orderN)  return showToast('Order number required.','error');
-  if(!reqType) return showToast('Request type required.','error');
-  if(!reason)  return showToast('Reason required.','error');
+
+  if (!email)   return showToast('Agent email required.','error');
+  if (!agentN)  return showToast('Agent name required.','error');
+  if (!custN)   return showToast('Customer name required.','error');
+  if (!custPh)  return showToast('Customer phone required.','error');
+  if (!orderN)  return showToast('Order number required.','error');
+  if (!reqType) return showToast('Request type required.','error');
+  if (!reason)  return showToast('Reason required.','error');
 
   setLoading(true);
   try {
     const payload = {
-      agent_email:agentN,agent_name:agentN,
-      customer_name:custN,customer_phone:custPh,order_number:orderN,
-      request_type:reqType,reason,
-      num_items:parseInt(document.getElementById('fNumItems').value)||null,
-      product_sku:document.getElementById('fProductSKU').value.trim(),
-      original_sku:document.getElementById('fOrigSKU').value.trim(),
-      requested_sku:document.getElementById('fReqSKU').value.trim(),
-      shipping_fees:document.getElementById('fShipping').value,
-      refund_amount:document.getElementById('fRefund').value.trim(),
-      bosta_ticket_id:document.getElementById('fBostaTicket').value.trim(),
-      notes:document.getElementById('fNotes').value.trim(),
-      exchange_status:'Pending'
+      agent_email:     email,
+      agent_name:      agentN,
+      customer_name:   custN,
+      customer_phone:  custPh,
+      order_number:    orderN,
+      request_type:    reqType,
+      reason,
+      num_items:       parseInt(document.getElementById('fNumItems').value)||null,
+      product_sku:     document.getElementById('fProductSKU').value.trim(),
+      original_sku:    document.getElementById('fOrigSKU').value.trim(),
+      requested_sku:   document.getElementById('fReqSKU').value.trim(),
+      shipping_fees:   document.getElementById('fShipping').value,
+      refund_amount:   document.getElementById('fRefund').value.trim(),
+      bosta_ticket_id: document.getElementById('fBostaTicket').value.trim(),
+      notes:           document.getElementById('fNotes').value.trim(),
+      exchange_status: 'Pending'
     };
-    const res=await sb(SB_TABLE,{method:'POST',body:JSON.stringify(payload),prefer:'return=minimal'});
-    if(!res.ok) throw new Error(await res.text());
+    const res = await sb(SB_TABLE, {method:'POST', body:JSON.stringify(payload), prefer:'return=minimal'});
+    if (!res.ok) throw new Error(await res.text());
     setLoading(false);
-    showToast('✅ Request submitted!','success');
+    showToast('✅ Request submitted successfully!','success');
     resetForm();
-  } catch(e){
+  } catch(e) {
     setLoading(false);
     showToast('Submit failed: '+e.message,'error');
   }
 }
 
-function setLoading(on){
-  const btn=document.getElementById('submitBtn');
-  btn.disabled=on;
-  btn.innerHTML=on
-    ?'<span class="spinw"></span> Submitting...'
-    :'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request';
+function setLoading(on) {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? '<span class="spinw"></span> Submitting...'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request';
 }
 
-function resetForm(){
+function resetForm() {
   ['fAgentEmail','fAgentName','fCustName','fCustPhone','fOrderNum',
    'fNumItems','fProductSKU','fOrigSKU','fReqSKU','fRefund','fBostaTicket','fNotes'
-  ].forEach(id=>document.getElementById(id).value='');
-  ['fReqType','fReason','fShipping'].forEach(id=>document.getElementById(id).value='');
-  hideDup();setNow();
+  ].forEach(id => document.getElementById(id).value='');
+  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value='');
+  hideDup(); setNow();
 }
 
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-'+name).classList.add('active');
 }
 
-function showToast(msg,type='success'){
-  const t=document.getElementById('toast');
-  t.className=`toast show ${type}`;
-  t.textContent=msg;
-  setTimeout(()=>t.classList.remove('show'),5000);
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.className = `toast show ${type}`;
+  t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 5000);
 }
 
-function setNow(){
-  const now=new Date();
-  const cairo=new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
-  const p=n=>n.toString().padStart(2,'0');
-  document.getElementById('fDate').value=
+function setNow() {
+  const now   = new Date();
+  const cairo = new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
+  const p = n => n.toString().padStart(2,'0');
+  document.getElementById('fDate').value =
     `${cairo.getFullYear()}-${p(cairo.getMonth()+1)}-${p(cairo.getDate())}T${p(cairo.getHours())}:${p(cairo.getMinutes())}`;
 }
 setNow();
