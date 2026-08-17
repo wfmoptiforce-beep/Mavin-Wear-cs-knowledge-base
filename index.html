@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -112,7 +112,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .flow-node.lemon .flow-node-num{color:#a16207}
 .flow-node-title{font-size:14px;font-weight:800;color:var(--midnight);margin-bottom:4px}
 .flow-node-desc{font-size:13px;color:#475569;line-height:1.6}
-.flow-arr{text-align:center;color:var(--indigo);font-size:16px;opacity:.5;line-height:1}
 .canned{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--success);padding:15px 16px;border-radius:8px;margin-top:14px;position:relative}
 .canned-label{font-size:11px;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .canned-text{font-size:13.5px;color:#166534;line-height:1.5}
@@ -591,7 +590,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 
 <script>
 // ══════════════════════════════════════════
-// DATA
+// DATA & STATE
 // ══════════════════════════════════════════
 const REVIEWERS = ["nourtamer2005@gmail.com","nanielshazly4@gmail.com"];
 const QA_USERS  = ["Rehabmohamed881@gmail.com"];
@@ -609,7 +608,6 @@ let reviewIdx   = null;
 
 // ── SOP DATA ──
 const SOPS = [
-  // CORE
   {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
    sys:"Shopify + Gorgias + Slack + Bosta",
    t_en:"⚡ Golden Workflow — The 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
@@ -636,7 +634,6 @@ const SOPS = [
    ],
    canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality across all channels."},
 
-  // CS
   {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
    sys:"Gorgias + Shopify + Slack",
    t_en:"📌 Ticket First Protocol — 24h SLA & Mandatory Order Number",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
@@ -677,7 +674,6 @@ const SOPS = [
    ],
    canned:"Your case has been escalated to our senior operations team and Bosta. We are actively investigating and will update you within the next few hours."},
 
-  // SHOPIFY
   {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
    sys:"Shopify + Sync-Bosta Worker",
    t_en:"📘 Signal Architecture — Tags, Columns & Metafields",t_ar:"📘 نظام الإشارات — التيجان والأعمدة والميتافيلدز",
@@ -706,254 +702,779 @@ const SOPS = [
    ],
    canned:"Our operations team reviewed your case across all Shopify queues and is taking appropriate action based on current order status."},
 
-  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
-   sys:"Shopify + Bosta + Slack",
-   t_en:"📝 Order Notes, Tag Clearing & The 4-Point Gate",t_ar:"📝 ملاحظات الطلبات، مسح التيجان، وبوابة الفحص الرباعية",
-   d_en:"Order Note = human audit trail. Worker NEVER writes it. Every action gets one stamped line. 4-point gate before clearing any human-clear tag.",
-   d_ar:"ملاحظة الطلب = سجل الإنسان. الـ Worker لا يكتب فيها. 3 تيجان فقط يمسحها الإنسان.",
-   steps:[
-     {n:"Rule 1",t:"Note Is Human-Only — Worker Never Writes Here",d:"Tag = the state (robot). Note = what the human did (audit trail). These are separate roles. Never blur them.",c:""},
-     {n:"Rule 2",t:"Every Action Gets One Stamped Line",d:"Format: [ROLE DATE] action + ref. Examples: [CS 28/06] Called customer, corrected address, asked Bosta to retry. [FIN 28/06] Refund issued EGP 426.50 — removing pending-refund.",c:"mint"},
-     {n:"Rule 3",t:"4-Point Gate Before Clearing Any Tag",d:"(1) Issue is ACTUALLY resolved. (2) It IS a human-clear tag (only 3: pending-refund, exchange-returned, return-failed). (3) Order Note stamped with action+date+ref. (4) Slack post exists if it was escalated.",c:"coral"},
-     {n:"Rule 4",t:"Escalation = Slack Post BEFORE Tag",d:"Post in #bosta-escalations FIRST: #order | issue | bosta-ref | screenshot. THEN add escalated tag. Tag with no Slack post = INVALID escalation.",c:"lemon"}
-   ],
-   canned:"Your case is logged with a full audit trail. All actions are documented and our team is actively working on resolution."},
-
-  {code:"SOP-SHOPIFY-04",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
-   sys:"Shopify + Bosta + Slack",
-   t_en:"☀️ Daily CS & Ops Checklist — Start to End of Shift",t_ar:"☀️ قائمة مهام CS و Ops اليومية",
-   d_en:"Complete daily checklist for CS and Ops. Work top to bottom every shift. The 6 tabs are your home base.",
-   d_ar:"قائمة المهام اليومية الكاملة. اشتغل من فوق لتحت في كل شيفت.",
-   steps:[
-     {n:"Start of Shift",t:"2-Minute Morning Setup",d:"(1) Open Orders list — Delivery status + Tags columns are home base. (2) Skim 6 saved-view tabs — Action Required FIRST. (3) Check #bosta-escalations for overnight flags. (4) Bosta dashboard open in second tab.",c:"mint"},
-     {n:"Priority 1",t:"Fulfillment · Action Required — Clear First",d:"Fix on-hold (address/phone + Bosta retry). Clear warehouse-hold. Make OOS decisions. Chase not-picked. Fix return-blocked. Log every action in Order Note. TARGET: tab empty or every row has a Note.",c:"coral"},
-     {n:"Priority 2",t:"CS · Carrier Follow-Up",d:"failed-2 FIRST: post #bosta-escalations → add escalated tag. sla-breach: chase Bosta, get ref. stuck-3d: chase, confirm not lost. Stamp Note with ref.",c:"lemon"},
-     {n:"Priority 3",t:"Finance Queues",d:"Card at Risk: review prepaid failures, log decision. Refunds Owed: confirm back → refund → stamp → remove tag. Returns Failed/Exchange: chase customers, confirm balances, clear tags.",c:""},
-     {n:"End of Shift",t:"2-Minute Close Check",d:"(1) Action Required tab empty or all rows have Notes. (2) Every failed-2 has escalated tag + Slack post. (3) No pending-refund older than SLA without a Note. (4) Hand off open items in #bosta-escalations.",c:"mint"}
-   ],
-   canned:"Our team follows a structured daily checklist ensuring every order across all queues is monitored and resolved within SLA."},
-
-  // BOSTA
   {code:"SOP-BOSTA-01",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
    sys:"Bosta API + Shopify",
    t_en:"📦 Forward Journey & SLA Commitments",t_ar:"📦 رحلة الشحن الأمامية ومواعيد الـ SLA",
    d_en:"Bosta is Mavin Wear's full-service 3PL — owns pick, pack, ship, last-mile. Mavin Wear owns sales, order creation, return decisions. ~15,000 orders/day.",
    d_ar:"بوسطة شريك 3PL الكامل — تمتلك التجميع والتغليف والشحن. Mavin Wear تمتلك المبيعات والطلبات والمرتجعات.",
    steps:[
-{n:"Step 1",t:"Order Creation & API Push",d:"Customer order → clean data (address, phone, SKU) pushed via API to Bosta. Target: 95%+ orders shipped same business day. Order accuracy target: 99.5%+.",col:""},
-     {n:"Step 2",t:"Pick, Pack & Dispatch",d:"Bosta picks and packs. OOS orders MUST be reported to Mavin Wear within 24h of detection — every unreported OOS is an SLA breach.",col:"mint"},
-     {n:"Step 3",t:"Last-Mile Delivery SLAs",d:"Cairo/Giza: Next business day (max 2). Delta/Canal Cities: 2 days (max 3). Upper Egypt/Remote: 3 days (max 5). First-attempt success target: 90%+.",col:""},
-     {n:"Step 4",t:"Failed Delivery (NDR) Protocol",d:"Bosta raises NDR within 24h. Mavin Wear gives instruction within 12h. Re-attempt: next business day. Max 3 attempts per order.",col:"coral"},
-     {n:"Step 5",t:"Campaign & Surge Notice",d:"10–25% spike: 48h notice. 25–50% spike: 72h notice. >50%: 5 business days notice. No notice = Bosta SLA waived on surge volume.",col:"lemon"}
+     {n:"Step 1",t:"Order Creation & API Push",d:"Customer order → clean data (address, phone, SKU) pushed via API to Bosta. Target: 95%+ orders shipped same business day. Order accuracy target: 99.5%+.",c:""},
+     {n:"Step 2",t:"Pick, Pack & Dispatch",d:"Bosta picks and packs. OOS orders MUST be reported to Mavin Wear within 24h of detection — every unreported OOS is an SLA breach.",c:"mint"},
+     {n:"Step 3",t:"Last-Mile Delivery SLAs",d:"Cairo/Giza: Next business day (max 2). Delta/Canal Cities: 2 days (max 3). Upper Egypt/Remote: 3 days (max 5). First-attempt success target: 90%+.",c:""},
+     {n:"Step 4",t:"Failed Delivery (NDR) Protocol",d:"Bosta raises NDR within 24h. Mavin Wear gives instruction within 12h. Re-attempt: next business day. Max 3 attempts per order.",c:"coral"},
+     {n:"Step 5",t:"Campaign & Surge Notice",d:"10–25% spike: 48h notice. 25–50% spike: 72h notice. >50%: 5 business days notice. No notice = Bosta SLA waived on surge volume.",c:"lemon"}
    ],
    canned:"Your shipment is actively managed through our Bosta fulfillment pipeline. We have verified delivery status and our team is coordinating with Bosta on your case."},
 
-  {code:"SOP-BOSTA-02",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
-   sys:"Bosta + Shopify + WhatsApp",
-   t_en:"⚠️ Awaiting Action — Bad Address/Phone Protocol",t_ar:"⚠️ بروتوكول Awaiting Action — العناوين والأرقام الغلط",
-   d_en:"KNOWN FRICTION POINT. Orders stuck in Awaiting Action due to bad address or phone create delivery failure and dead stock risk. Target: ZERO Awaiting Action orders older than 24 hours.",
-   d_ar:"نقطة احتكاك معروفة. الطلبات المعلقة بسبب عنوان أو رقم خاطئ تخلق خطر فشل التوصيل. الهدف: صفر طلبات Awaiting Action أقدم من 24 ساعة.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Flag & Notify Within 2 Hours",d:"Order flagged as Awaiting Action → Bosta notifies Mavin Wear Ops Manager via WhatsApp + system flag within 2 HOURS. Message must include: Order ID, issue type (address/phone), customer detail. NOT next morning — within 2 HOURS.",col:"coral"},
-     {n:"Step 2 — Mavin Wear",t:"Contact Customer Within 12 Hours",d:"Mavin Wear Ops contacts customer, gets corrected address or phone. Corrected data sent to Bosta Tech Lead via WhatsApp + system update immediately after confirmation.",col:""},
-     {n:"Step 3 — Bosta",t:"Re-Dispatch Within 24 Hours",d:"Bosta updates order in system and re-dispatches within 24h of receiving corrected data.",col:"mint"},
-     {n:"Step 4 — Mavin Wear",t:"If Customer Unreachable After 12 Hours",d:"Mavin Wear decides: hold the order (max agreed days) OR return it. Do NOT leave it in limbo with no decision.",col:"lemon"},
-     {n:"Step 5 — Both",t:"Auto-Escalate if No Response After 48 Hours",d:"Order sits in Awaiting Action >48h with no Mavin Wear response → Bosta auto-escalates to Tier 2. Weekly meeting always includes open Awaiting Action count. Target = 0 open >24h.",col:"coral"}
-   ],
-   canned:"We have flagged your delivery address issue with Bosta and are actively working to resolve it. Our team will contact you shortly to confirm the corrected details."},
-
-  {code:"SOP-BOSTA-03",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
-   sys:"Bosta Warehouse + Shopify",
-   t_en:"📭 Out-of-Stock (OOS) — Zero Silent Stuck Orders",t_ar:"📭 بروتوكول نفاد المخزون — صفر طلبات معلقة بدون إبلاغ",
-   d_en:"KNOWN FRICTION POINT. OOS orders sitting unfulfilled with no report = invisible dead stock, delayed COD settlements, customer complaints. Every unreported OOS day is an SLA breach.",
-   d_ar:"الطلبات الغير منفذة بدون إبلاغ = مخزون ميت وتأخير في التسوية. كل يوم طلب معلق بدون إبلاغ يُعتبر خرق SLA.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Flag OOS Immediately on Detection",d:"Order cannot be fulfilled due to OOS → flagged in system immediately by Bosta Warehouse Lead at point of detection. No delay.",col:"coral"},
-     {n:"Step 2 — Bosta",t:"Send OOS Report Within 24 Hours",d:"OOS report sent to Mavin Wear: order IDs, SKU(s), quantity affected, date flagged. Included in daily ops update. NOT OPTIONAL — every unreported OOS is an SLA breach.",col:"coral"},
-     {n:"Step 3 — Mavin Wear",t:"Decision Within 12 Hours",d:"Mavin Wear reviews OOS list and decides: substitute SKU, cancel order, or hold pending restock. Response within 12h of receiving OOS report.",col:"lemon"},
-     {n:"Step 4 — Bosta",t:"Execute Instruction Within 24 Hours",d:"Bosta executes: fulfill with substitute, cancel, or hold within 24h of Mavin Wear instruction. If no instruction after 12h → escalate via WhatsApp.",col:"mint"},
-     {n:"Step 5 — Both",t:"Max Hold & Auto-Cancel Rule",d:"Max hold time = agreed business days. After that, auto-cancel unless Mavin Wear explicitly extends in writing. Weekly meeting tracks open OOS count. Target = zero unreported OOS.",col:""}
-   ],
-   canned:"We have identified a stock availability issue with your order and are working with our warehouse team to resolve it. We will update you within 24 hours with a confirmed resolution."},
-
-  {code:"SOP-BOSTA-04",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
-   sys:"Bosta Warehouse + Shopify + Email",
-   t_en:"↩️ Returns & Quality Check Protocol",t_ar:"↩️ بروتوكول المرتجعات والفحص في مستودع بوسطة",
-   d_en:"Full return lifecycle from receipt through quality check, defect escalation, and dispatch back to Mavin Wear. Bosta owns the quality check. Mavin Wear owns the decision on ambiguous defects.",
-   d_ar:"دورة المرتجع الكاملة من الاستلام حتى الفحص وإعادة الشحن. بوسطة تمتلك الفحص. Mavin Wear تمتلك قرار العيوب الغامضة.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Log Return on Arrival — Same Day",d:"Returned item arrives at Bosta warehouse → scanned and logged in system immediately on receipt.",col:""},
-     {n:"Step 2 — Bosta",t:"Quality Check Within 48 Hours",d:"QC performed within 48h of logging. Bosta checks item against Mavin Wear's written condition guide (resaleable vs defective). Guide to be provided by Mavin Wear within 30 days of SOP signing.",col:"mint"},
-     {n:"Step 3a — Clear",t:"Clear Result — Log & Notify",d:"CLEAR OUTCOME (resaleable or clearly defective): status updated in system same check session. Mavin Wear notified immediately.",col:""},
-     {n:"Step 3b — Unclear",t:"Unclear Defect — Escalate With Photos Within 24h",d:"UNCLEAR DEFECT: photo taken, case documented, escalated to Mavin Wear with photos + full description within 24h of quality check.",col:"coral"},
-     {n:"Step 4 — Mavin Wear",t:"Defect Decision Within 12 Hours",d:"Mavin Wear issues decision within 12h: accept as resaleable, classify as defective, or request replacement for customer.",col:"lemon"},
-     {n:"Step 5 — Bosta",t:"Dispatch Returns to Mavin Wear",d:"Physical returns dispatched back to Mavin Wear on agreed batch schedule. Bosta owns the dispatch timeline.",col:""}
-   ],
-   canned:"Your return has been received at our warehouse and is currently undergoing quality inspection. We will update you within 48 hours with the final status and next steps."},
-
-  {code:"SOP-BOSTA-05",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
-   sys:"Bosta + Shopify + Slack",
-   t_en:"🤝 Responsibility Split — Who Owns What",t_ar:"🤝 تقسيم المسؤوليات — مَن يمتلك إيه",
-   d_en:"The definitive answer to any 'who is responsible?' question. Bosta is the full-service fulfillment partner. Mavin Wear is the seller. No gray area.",
-   d_ar:"الإجابة النهائية لأي سؤال 'مين المسؤول؟'. لا توجد منطقة رمادية.",
-   steps:[
-     {n:"Mavin Wear Owns",t:"Sales, Order Data Quality & Decisions",d:"Generating orders. Order data accuracy (address, phone, SKU) via API. OOS instruction (substitute/cancel/hold). NDR decision within 12h. Defect case decision within 12h.",col:""},
-     {n:"Bosta Owns",t:"Fulfillment, Delivery & Return Handling",d:"Inventory storage. Pick & pack. OOS detection + report within 24h. Last-mile delivery. Awaiting Action flag within 2h. NDR raise within 24h. Return logging + QC within 48h. Defect escalation within 24h of QC.",col:"mint"},
-     {n:"Both Own",t:"Communication & Weekly KPI Sync",d:"Weekly sync — no skip. Awaiting Action and OOS backlog tracked every meeting. Slack #bosta-escalations for live issues. One process improvement per quarter at QBR.",col:"lemon"},
-     {n:"Escalation Tiers",t:"Tier 1 → 2 → 3",d:"Tier 1: Ops Manager ↔ Account Manager → 2h SLA. Tier 2: Tech/Return Owner ↔ Warehouse/Field Lead → 4h SLA. Tier 3: Ahmad (Founder) ↔ Account Director → Same business day.",col:"coral"}
-   ],
-   canned:"Our team has verified the responsible party for your case and is coordinating directly with Bosta to ensure a fast resolution."},
-
-  // SHOPIFY OPS
-  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
-   sys:"Shopify + Sync-Bosta Worker",
-   t_en:"📘 Signal Architecture — Tags, Columns & Metafields",t_ar:"📘 نظام إشارات شوبيفاي — التيجان والأعمدة والميتافيلدز",
-   d_en:"The sync-bosta Worker reads Bosta and writes 3 signal types onto each order. GOLDEN RULE: if a native Shopify column already shows it, the worker does NOT tag it. Tags exist ONLY for what Shopify can't show. Resolved = tag is GONE.",
-   d_ar:"الـ Worker يقرأ بوسطة ويكتب 3 أنواع إشارات. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة — مفيش تاج. محلول = التاج اختفى.",
-   steps:[
-     {n:"Signal 1",t:"Native Status Columns (Built-In Shopify)",d:"Show automatically — no tag needed: Out for delivery, Return in progress, Paid, In transit, Delivered, Attempted delivery, Failure, On hold. Worker drives these from Bosta data.",col:""},
-     {n:"Signal 2",t:"Governed Tags (What Shopify Can't Show)",d:"Tags exist ONLY when native columns can't show the state: on-hold (bad address/phone), oos (out of stock), warehouse-hold, not-picked, failed-1/failed-2, card-risk (prepaid complete failure), pending-refund, exchange-returned, return-failed, return-blocked, sla-breach, stuck-3d, escalated.",col:"lemon"},
-     {n:"Signal 3",t:"Metafields — The Detail Layer",d:"On order detail page: bosta_reason (the 'why' — blank on healthy orders = correct), delivery_details (status · reason · attempts · since · city), return_details (status · reason · AWB · date), last_bosta_update (SLA clock).",col:"mint"},
-     {n:"Golden Rule",t:"Resolved = Tag Gone. No '-resolved' Tags Exist.",d:"There are NO '-resolved' tags. Absence of a tag IS the resolved signal. Worker auto-clears its own tags. Humans only clear 3 tags manually: pending-refund, exchange-returned, return-failed.",col:"coral"}
-   ],
-   canned:"We have verified your order status across our Shopify operational views and updated all tracking parameters. Your case is actively managed."},
-
-  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
-   sys:"Shopify Saved Views",
-   t_en:"📋 The 6 Saved-View Tabs — Who Acts on What",t_ar:"📋 التبويبات التشغيلية الستة — من يتصرف وعلى إيه",
-   d_en:"The 6 saved tabs are grouped by WHO acts — not by raw status. Each role opens THEIR tab and clears it. Never work from the default Orders list for operational queues.",
-   d_ar:"التبويبات الستة مجمعة حسب مَن يتصرف. كل شخص يفتح تبويبته ويمسحها.",
-   steps:[
-     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR warehouse-hold OR oos OR not-picked OR return-blocked. HIGHEST LEVERAGE — stuck because of US. Fix address/phone + ask Bosta retry (on-hold). Clear warehouse block. Make OOS restock/cancel decision. Chase pickup. Fix return data.",col:"coral"},
-     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR stuck-3d OR failed-2. Priority: failed-2 FIRST (escalate) → sla-breach (Bosta deadline passed, get ref) → stuck-3d (3+ days no movement). Stamp Note with Bosta ref number.",col:"lemon"},
-     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR escalated-followup. CS adds escalated ONLY after Slack post exists. escalated-followup = auto-added after 12h Bosta silence → Manager re-pings. Both tags auto-removed when order moves.",col:""},
-     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. Prepaid orders with COMPLETE delivery failure only (codes 46/48). Decide: re-ship, refund, or hold. Log decision in Note within 24h.",col:"coral"},
-     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Confirm return_details = RETURNED → issue refund → stamp Note → remove pending-refund BY HAND (does NOT auto-clear).",col:"mint"},
-     {n:"Tab 6 — Finance",t:"Finance · Returns — Failed + Exchange",d:"Filter: tag:return-failed OR exchange-returned. return-failed: chase customer (item not returned, already refunded). exchange-returned: confirm item back + balance correct. Clear both tags by hand.",col:"lemon"}
-   ],
-   canned:"Our operations team has reviewed your case across all active Shopify queues and is taking the appropriate action."},
-
-  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
-   sys:"Shopify + Bosta + Slack",
-   t_en:"📝 Order Notes, Tag Clearing & 4-Point Gate",t_ar:"📝 ملاحظات الطلبات ومسح التيجان وبوابة الفحص الرباعية",
-   d_en:"The Order Note is the human audit trail. Worker NEVER writes to it. Every manual action gets one stamped line. Only 3 tags are human-cleared: pending-refund, exchange-returned, return-failed.",
-   d_ar:"ملاحظة الطلب هي سجل الإنسان. الـ Worker لا يكتب فيها أبداً. 3 تيجان فقط يمسحها الإنسان.",
-   steps:[
-     {n:"Rule 1",t:"Note Is Human-Only — Worker Never Writes Here",d:"Tag = the state (robot). Note = what the human did (audit trail). Worker NEVER writes to Order Note.",col:""},
-     {n:"Rule 2",t:"Every Action Gets One Stamped Line",d:"Format: [ROLE DATE] action + ref. Examples: [CS 28/06] Called customer, corrected address, asked Bosta retry. [CS 28/06] Escalated to Bosta (ref 7506992329) — posted #bosta-escalations. [FIN 28/06] Refund EGP 426.50 — removing pending-refund.",col:"mint"},
-     {n:"Rule 3",t:"4-Point Gate Before Clearing Any Tag",d:"Before clearing pending-refund, exchange-returned, or return-failed: (1) Issue is ACTUALLY resolved. (2) It IS a human-clear tag. (3) Order Note is stamped. (4) Slack post exists if escalated.",col:"coral"},
-     {n:"Rule 4",t:"Escalation = Slack Post BEFORE Tag",d:"Post in #bosta-escalations FIRST: #order | issue | bosta-ref | screenshot. THEN add escalated tag. Tag with no Slack post = INVALID escalation.",col:"lemon"}
-   ],
-   canned:"Your case has been logged with a full audit trail. All actions are documented and our team is actively working on resolution."},
-
-  {code:"SOP-SHOPIFY-04",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
-   sys:"Shopify + Bosta + Slack",
-   t_en:"☀️ Daily CS & Ops Checklist",t_ar:"☀️ قائمة مهام CS وOps اليومية",
-   d_en:"Complete daily operational checklist. Work top to bottom every shift. The 6 tabs are your home base — not the default Orders list.",
-   d_ar:"قائمة المهام اليومية الكاملة. اشتغل من فوق لتحت كل شيفت.",
-   steps:[
-     {n:"Start of Shift",t:"2-Minute Morning Setup",d:"(1) Open Orders list — Delivery status + Tags columns are home base. (2) Skim 6 saved tabs — Action Required FIRST. (3) Check #bosta-escalations for overnight flags. (4) Have Bosta dashboard open in second tab.",col:"mint"},
-     {n:"Priority 1",t:"Fulfillment · Action Required — Clear First",d:"Fix on-hold (address/phone + Bosta retry). Clear warehouse-hold. Make OOS decisions. Chase not-picked. Fix return-blocked. Log every action: [OPS date] what you did. TARGET: tab empty or every row has a Note.",col:"coral"},
-     {n:"Priority 2",t:"CS · Carrier Follow-Up",d:"failed-2 FIRST → escalate (Slack post then tag). sla-breach → chase Bosta + get ref. stuck-3d → chase + confirm not lost. Stamp Note with Bosta ref.",col:"lemon"},
-     {n:"Priority 3",t:"Finance Queues",d:"Card at Risk: review prepaid failures, log decision. Refunds Owed: confirm back → refund → stamp → remove tag. Returns: chase return-failed, confirm exchange balances, clear tags.",col:""},
-     {n:"End of Shift",t:"2-Minute Close Check",d:"(1) Action Required empty or all rows have Notes. (2) Every failed-2 has escalated tag + Slack post. (3) No pending-refund older than SLA without Note. (4) Hand off open items in #bosta-escalations.",col:"mint"}
-   ],
-   canned:"Our team follows a structured daily operational checklist ensuring every order across all queues is monitored and resolved within SLA."},
-
-  // CS WORKFLOW
-  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
-   sys:"Gorgias + Shopify + Slack",
-   t_en:"📌 Ticket First Protocol — Open & Flag Before Contacting Customer",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
-   d_en:"MANDATORY: Always open the ticket and flag BEFORE reaching out to the customer. Protects the 24-hour SLA. Order Number in sheet is mandatory — no blank entries ever.",
-   d_ar:"إلزامي: افتح التذكرة واعمل Flag أولاً قبل مراسلة العميل. يحمي مهلة الـ 24 ساعة.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag BEFORE Contacting Customer",d:"ALWAYS open the ticket and flag the issue first. Contacting customer before opening ticket = SLA breach and QA deduction. Non-negotiable.",col:"coral"},
-     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries",d:"Ensure Order Number is filled in the sheet without exception. A ticket without an order number cannot be tracked or escalated.",col:""},
-     {n:"Step 3",t:"5-Tool Self-Investigation Before Responding",d:"Check ALL 5 platforms: (1) Shopify — order status + tags + metafields. (2) Gorgias — full history + previous agent notes. (3) Slack — team flags/notes. (4) Bosta dashboard — AWB + delivery attempts. (5) Estbdal & Refund Sheets — exchange/refund history. NEVER blindly follow previous agent notes.",col:"lemon"},
-     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Once resolved, close within 2–3 hours max. Leaving a resolved ticket open = QA deduction and queue pollution.",col:"mint"}
-   ],
-   canned:"Hello! We have flagged and logged your ticket in our system. Our team is investigating your case and will respond with a full resolution shortly."},
-
-  {code:"SOP-CS-02",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
-   sys:"Gorgias + Shopify + Bosta",
-   t_en:"🎯 One-Touch Resolution — Complete Solution in First Response",t_ar:"🎯 حل الـ One-Touch — حل كامل من أول رد",
-   d_en:"A One-Touch Ticket is resolved and closed from the very first response. No follow-up needed. No back-and-forth. Investigate thoroughly, send everything in one message, close immediately.",
-   d_ar:"تذكرة الـ One-Touch تُحل وتُغلق من أول رد كامل. بدون متابعة أو رسائل إضافية.",
-   steps:[
-     {n:"Step 1",t:"Read Full Ticket & Investigate All 5 Platforms",d:"Read the ticket completely. Investigate across Shopify, Gorgias history, Slack notes, Bosta dashboard, Estbdal/Refund sheets BEFORE typing your response.",col:""},
-     {n:"Step 2",t:"Compose One Complete Message With Everything",d:"First response must include: full answer + tracking/order details + correct SKU/refund/exchange details + clear SLA if applicable + any customer next steps. No 'let me check and get back to you'.",col:"mint"},
-     {n:"Step 3",t:"Execute Action & Send Simultaneously",d:"Don't just inform — execute the resolution at the same time. Process the exchange/refund/correction in the system while sending the message.",col:"lemon"},
-     {n:"Step 4",t:"Close Ticket Immediately After Resolution",d:"The moment the issue is fully resolved and communicated, close the ticket. Do not leave open 'just in case'.",col:"coral"}
-   ],
-   canned:"Your request has been fully reviewed and processed. Order details, tracking updates, and all applicable actions have been completed in one response."},
-
-  {code:"SOP-CS-03",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
-   sys:"Gorgias + Slack #bosta-escalations",
-   t_en:"🚨 CS Escalation Protocol — When & How",t_ar:"🚨 بروتوكول التصعيد — متى وكيف",
-   d_en:"Escalation has a strict sequence: Slack post FIRST, then tag. A tag without a Slack post is an invalid escalation. Follow the tiers — never jump to Tier 3 without exhausting Tiers 1 and 2.",
-   d_ar:"التصعيد له تسلسل صارم: Slack أولاً ثم التاج. تاج بدون Slack = تصعيد غير صحيح.",
-   steps:[
-     {n:"Triggers",t:"When to Escalate",d:"Escalate when: failed-2 tag (2nd failed delivery). sla-breach tag (deadline passed). stuck-3d tag (3+ days no movement). Bosta gave no ref or ETA. Same order breaches twice. Bosta unresponsive 4+ hours.",col:"coral"},
-     {n:"Step 1",t:"Post in #bosta-escalations FIRST",d:"Format: #[order] | [issue] | [bosta-ref] | [screenshot]. Example: #143394 | 2nd failed attempt, customer not at address | ref 7506992329 | screenshot. Do this BEFORE adding any tag.",col:"lemon"},
-     {n:"Step 2",t:"Add 'escalated' Tag AFTER the Post",d:"Only after Slack post exists → add escalated tag in Shopify. Slack timestamp is the immutable proof.",col:""},
-     {n:"Step 3",t:"escalated-followup = Manager Action",d:"12h Bosta silence → worker auto-adds escalated-followup → Manager re-pings. Order moves → worker removes BOTH tags. Do not remove by hand.",col:"mint"},
-     {n:"Tier Rules",t:"Never Skip Tiers",d:"Tier 1: Ops Manager ↔ Bosta Account Manager → 2h SLA. Tier 2: Tech/Return Owner ↔ Warehouse/Field Lead → 4h SLA. Tier 3: Ahmad ↔ Account Director → Same business day.",col:"coral"}
-   ],
-   canned:"Your case has been escalated to our senior operations team and Bosta. We are actively investigating and will update you within a few hours."},
-
-  // REFUND BOT
   {code:"SOP-REFUND-01",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconcls:"cat-icon-lemon",
    sys:"Paymob + Slack #cs-updates + Shopify",
    t_en:"🤖 Refund Bot — How It Works & 7 Auto-Refund Triggers",t_ar:"🤖 بوت الاسترداد — كيف يعمل والـ 7 حالات التلقائية",
    d_en:"Runs automatically every day Sun–Thu 2pm–2am Cairo time. Handles prepaid Paymob orders ONLY — COD never touched. Your job is a 2-minute daily Slack check. That's it.",
    d_ar:"يعمل تلقائياً كل يوم الأحد–الخميس 2م–2ص. يعالج طلبات Paymob المدفوعة فقط — الكاش لا يُلمس أبداً.",
    steps:[
-     {n:"How It Works",t:"Fully Automatic — No Human Trigger",d:"Runs daily Sun–Thu 2pm–2am. Posts report to Slack #cs-updates once per day. Retries failed refunds up to 3 times. Max 20 refunds per run. NO one on the team needs to start it.",col:"mint"},
-     {n:"Triggers 1–3",t:"Double Payment / Warehouse Cancel / Return",d:"Customer paid twice → detects within 40 min, refunds extra immediately. Warehouse cancelled order → full refund + restock. Package returned to warehouse → Bosta confirms → refund issued.",col:""},
-     {n:"Triggers 4–5",t:"Failed Delivery / Missing 9+ Days",d:"Delivery failed (couldn't reach customer) → Bosta marks failed → bot refunds. Package missing 9+ days (no tracking activity) → assumes lost → full refund.",col:"lemon"},
-     {n:"Triggers 6–7",t:"Full OOS / Partial OOS",d:"Entire order OOS for 2+ days → full refund. Part of order OOS → refunds OOS items only, ships rest, customer gets auto-email.",col:"mint"},
-     {n:"Manual Flags",t:"2 Situations Requiring Human Action",d:"Order >EGP 5,000 → tagged 'Refund: Needs Review' → DM Ahmed to approve, then refund manually in Paymob. Refund failed 3 times → 🔴 in Slack → check Paymob (SOP-REFUND-02) and escalate.",col:"coral"}
+     {n:"How It Works",t:"Fully Automatic — No Human Trigger",d:"Runs daily Sun–Thu 2pm–2am. Posts report to Slack #cs-updates once per day. Retries failed refunds up to 3 times. Max 20 refunds per run. NO one on the team needs to start it.",c:"mint"},
+     {n:"Triggers 1–3",t:"Double Payment / Warehouse Cancel / Return",d:"Customer paid twice → detects within 40 min, refunds extra immediately. Warehouse cancelled order → full refund + restock. Package returned to warehouse → Bosta confirms → refund issued.",c:""},
+     {n:"Triggers 4–5",t:"Failed Delivery / Missing 9+ Days",d:"Delivery failed (couldn't reach customer) → Bosta marks failed → bot refunds. Package missing 9+ days (no tracking activity) → assumes lost → full refund.",c:"lemon"},
+     {n:"Triggers 6–7",t:"Full OOS / Partial OOS",d:"Entire order OOS for 2+ days → full refund. Part of order OOS → refunds OOS items only, ships rest, customer gets auto-email.",c:"mint"},
+     {n:"Manual Flags",t:"2 Situations Requiring Human Action",d:"Order >EGP 5,000 → tagged 'Refund: Needs Review' → DM Ahmed to approve, then refund manually in Paymob. Refund failed 3 times → 🔴 in Slack → check Paymob (SOP-REFUND-02) and escalate.",c:"coral"}
    ],
-   canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect within the standard banking window."},
-
-  {code:"SOP-REFUND-02",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconcls:"cat-icon-lemon",
-   sys:"Slack #cs-updates + Paymob Dashboard",
-   t_en:"☀️ Daily 2-Minute Bot Check & Paymob Lookup",t_ar:"☀️ الفحص اليومي دقيقتين وكيفية البحث في Paymob",
-   d_en:"Open Slack #cs-updates, find today's report, read the 3-number split. Zero failed = you're done. Failures exist = use Paymob lookup steps below.",
-   d_ar:"افتح Slack #cs-updates، ابحث عن تقرير اليوم، اقرأ الأرقام الثلاثة. صفر فشل = خلصت.",
-   steps:[
-     {n:"Step 1",t:"Open Slack #cs-updates Every Morning",d:"Find 'Refunds — YYYY-MM-DD' report. Read split: ✅ N clean (no action) | 🔄 N recovered (monitor only) | 🔴 N failed (human action required). If 🔴 = 0 → you're done.",col:""},
-     {n:"Step 2",t:"If 🔴 Failed > 0 — Type /breakdown",d:"Type /breakdown in #cs-updates. Shows: order #, reason, amount, success/fail. Two commands: /refunds (total EGP + count + split) | /breakdown (each order detail — use when 🔴 > 0).",col:"coral"},
-     {n:"Step 3",t:"Look Up Transaction in Paymob",d:"Go to eg.dashboard.paymob.com → Payments → Transactions → click + filter → filter by Order ID (= Shopify order number). Status: Success (refund should work) | Pending (wait 24–48h) | Declined (cancel Shopify order, no refund needed) | Not found (check Shopify for correct number).",col:"lemon"},
-     {n:"Step 4",t:"Manual Refund — Last Resort Only",d:"Only if bot failed AND status is Success: click transaction → Refund button → enter EGP amount → confirm. THEN go to Shopify and create matching refund record. Always record in Shopify — if Shopify doesn't know, bot may refund again next run.",col:"coral"},
-     {n:"Step 5",t:"When to Escalate to Ahmed",d:"DM Ahmed when: 🔴 same order failed 3 days in a row. Tag 'Refund: Needs Review' on order >EGP 5,000. No Slack report 2+ days (bot may be down). Paymob shows Success but customer not credited after 7 business days.",col:"mint"}
-   ],
-   canned:"We have checked your refund transaction status in Paymob. Our team is monitoring and will ensure it processes correctly."},
-
-  // CORE PRINCIPLES
-  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconcls:"",
-   sys:"Shopify + Gorgias + Slack + Bosta",
-   t_en:"⚡ MAVIN × BOSTA Golden Workflow — 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
-   d_en:"The 4-step golden workflow every agent must follow on every single ticket. No exceptions. Foundation of consistent high-quality service at Mavin Wear.",
-   d_ar:"الـ 4 خطوات الذهبية التي يجب على كل أجنت اتباعها في كل تذكرة. بدون استثناءات.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag First — Protect 24h SLA",d:"Always open the ticket and flag the issue BEFORE contacting the customer. Non-negotiable first step.",col:"coral"},
-     {n:"Step 2",t:"5-Tool Investigation — Never Assume",d:"Check all 5 platforms: Shopify → Gorgias → Slack → Bosta → Estbdal/Sheets. NEVER blindly follow a previous agent's response — always self-verify.",col:"lemon"},
-     {n:"Step 3",t:"One-Touch Resolution — Complete in First Response",d:"Deliver complete solution in the very first response. Correct details executed. No fragments. No back-and-forth.",col:"mint"},
-     {n:"Step 4",t:"Close Within 2–3 Hours — Keep Queue Clean",d:"Close resolved tickets within 2–3 hours max. A resolved ticket sitting open is queue pollution.",col:""}
-   ],
-   canned:"Your request has been handled according to our full operational standard — investigated across all systems, resolved in one touch, and documented completely."},
-
-  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconcls:"",
-   sys:"All Platforms",
-   t_en:"📊 Weekly KPI Scorecard — What We Measure & Why",t_ar:"📊 مؤشرات الأداء الأسبوعية",
-   d_en:"Numbers that tell us if the partnership is working. Tracked every week. A bad week is information. A pattern of bad weeks is a problem.",
-   d_ar:"الأرقام التي تخبرنا إذا كانت الشراكة تعمل. يُتتبع أسبوعياً.",
-   steps:[
-     {n:"Fulfillment KPIs",t:"Bosta Owns These",d:"Orders fulfilled same day: 95%+. On-time delivery by zone (per SLA table). First-attempt success: 90%+. Picking accuracy: 99.5%+. NDR rate — monitor trend.",col:""},
-     {n:"Exception KPIs",t:"Both Sides Own These",d:"Awaiting Action open >24h: TARGET ZERO. OOS unreported/unresolved: TARGET ZERO. Open exceptions >48h: TARGET ZERO. Returns processed within 48h: 100%.",col:"coral"},
-     {n:"Data Quality KPIs",t:"Mavin Wear Owns These",d:"Order data accuracy: 99%+. Refund bot 🔴 failed count: target 0. Ticket closure within 2–3h. One-Touch resolution rate per agent.",col:"lemon"},
-     {n:"Weekly Sync",t:"Fixed 45-Min Structure",d:"(1) KPI dashboard — 10 min. (2) SLA breach review — 10 min. (3) Open exceptions update — 10 min. (4) Upcoming campaigns — 5 min. (5) One process improvement each — 5 min. (6) Action items with owner + deadline — 5 min.",col:"mint"}
-   ],
-   canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality and partnership performance."}
+   canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect within the standard banking window."}
 ];
+
+// ── SCENARIOS DATA (63 Scenarios Sample / Structure) ──
+const SCENARIOS = [
+  {cat:"Bosta",src:"Customer WhatsApp",quote:"فين طلبي؟ بقالي 4 أيام محدش كلمني",explain:"Order stuck in transit without recent Bosta scan.",tags:["Bosta","Delivery Delay","CS Response"],res:"Checked Bosta AWB #7506992329. Out for delivery today with courier Ahmed. Sent WhatsApp update with live courier number."},
+  {cat:"Refund",src:"Gorgias Chat",quote:"أنا طلبت استرجاع الفلوس ولسه مجتش علي فيزا البنك",explain:"Prepaid refund initiated by bot but customer inquiring about banking settlement time.",tags:["Paymob","Refund Bot","Finance"],res:"Verified in Paymob dashboard transaction #882109: Refund successful on 28/06. Reminded customer banking clearance takes 3–5 business days."},
+  {cat:"Exchange",src:"Shopify Form",quote:"المقاس طلع كبير وعاوز أبدل لـ Medium",sizeMismatch:true,tags:["Exchange","Warehouse","Size Swap"],res:"Verified original order #10852. Created exchange order in Shopify for Medium. Notified Bosta warehouse to swap at doorstep."},
+  {cat:"Awaiting Action",src:"Slack Alert",quote:"Order #10912 stuck in Awaiting Action — wrong phone number",explain:"Bad phone number provided by customer causing Bosta delivery failure.",tags:["Awaiting Action","Bad Phone","Ops Fix"],res:"Called customer directly, updated phone number in Shopify, and forwarded corrected details to Bosta via WhatsApp lead."},
+  {cat:"One-Touch",src:"Gorgias Email",quote:"عاوز أعرف مكان الشحنة ورقم المندوب",explain:"Standard tracking inquiry that can be resolved in one touch.",tags:["One-Touch","Tracking","SLA Compliance"],res:"Provided AWB, tracking link, courier phone number, and estimated delivery window in the very first response and closed ticket."}
+];
+
+// ── DECISION TREE DATA ──
+const DT_DATA = {
+  en: {
+    prompt: "Select Customer Inquiry Category:",
+    cats: [
+      {id:"delivery", title:"🚚 Delivery & Tracking", hint:"Delayed, lost, out for delivery, or Bosta status inquiry", act:"Select Delivery Issue"},
+      {id:"returns", title:"↩️ Returns & Exchanges", hint:"Wrong size, defective item, change of mind, or swap request", act:"Select Return/Exchange"},
+      {id:"refunds", title:"💳 Refunds & Payments", hint:"Paymob prepaid refund, double charge, or COD dispute", act:"Select Refund Issue"},
+      {id:"ops", title:"⚠️ Address / Phone / OOS", hint:"Awaiting action, bad phone number, or stock out", act:"Select Ops Issue"}
+    ],
+    nodes: {
+      delivery: {
+        prompt: "Select specific delivery situation:",
+        options: [
+          {id:"stuck", title:"Stuck in Transit (>3 days)", hint:"No tracking movement for 3+ days", res:{title:"Stuck in Transit SOP", badge:"SOP-SHOPIFY-02", steps:["Check Bosta dashboard for last scan","Post in #bosta-escalations with AWB","Add stuck-3d tag if no movement","Reply to customer with 24h SLA"]}},
+          {id:"failed", title:"2nd Failed Delivery (failed-2)", hint:"Courier attempted twice without success", res:{title:"Failed Delivery Escalation", badge:"SOP-BOSTA-01", steps:["Post in #bosta-escalations FIRST","Add failed-2 tag","Call customer to confirm address/phone","Arrange re-attempt with Bosta"]}}
+        ]
+      },
+      returns: {
+        prompt: "Select return or exchange type:",
+        options: [
+          {id:"size", title:"Size Exchange", hint:"Customer wants a different size", res:{title:"Exchange Processing", badge:"SOP-SHOPIFY-03", steps:["Verify order details in Shopify","Create exchange variant in Shopify","Notify Bosta warehouse for doorstep swap","Confirm SLA with customer"]}},
+          {id:"defect", title:"Defective / Wrong Item", hint:"Received damaged or incorrect item", res:{title:"Defect Resolution", badge:"SOP-BOSTA-04", steps:["Request photos of defect via Gorgias","Log return with Bosta QC flag","Process replacement or full refund","Stamp Order Note"]}}
+        ]
+      },
+      refunds: {
+        prompt: "Select refund question:",
+        options: [
+          {id:"prepaid", title:"Prepaid Paymob Refund Status", hint:"When will funds appear on card?", res:{title:"Paymob Refund Check", badge:"SOP-REFUND-02", steps:["Check Slack #cs-updates for daily bot report","Look up transaction in Paymob dashboard","Confirm success status","Advise customer of 3–5 day banking window"]}}
+        ]
+      },
+      ops: {
+        prompt: "Select operational exception:",
+        options: [
+          {id:"awaiting", title:"Awaiting Action (Bad Phone/Address)", hint:"Delivery blocked due to incorrect contact details", res:{title:"Awaiting Action Fix", badge:"SOP-BOSTA-02", steps:["Contact customer immediately for correct info","Update Shopify and notify Bosta via WhatsApp","Request re-dispatch within 24 hours"]}}
+        ]
+      }
+    }
+  },
+  ar: {
+    prompt: "اختر فئة استفسار العميل:",
+    cats: [
+      {id:"delivery", title:"🚚 الشحن والتتبع", hint:"تأخير، شحنة ضائعة، أو استعلام عن حالة بوسطة", act:"اختر مشاكل الشحن"},
+      {id:"returns", title:"↩️ المرتجعات والاستبدال", hint:"مقاس خطأ، عيوب صناعة، أو طلب استبدال", act:"اختر المرتجعات"},
+      {id:"refunds", title:"💳 الاسترداد والمدفوعات", hint:"استرداد دفع إلكتروني Paymob أو مشاكل الدفع", act:"اختر الاسترداد"},
+      {id:"ops", title:"⚠️ العنوان ورقم الهاتف والمخزون", hint:"Awaiting action، رقم خاطئ، أو نفاد مخزون", act:"اختر العمليات"}
+    ],
+    nodes: {
+      delivery: {
+        prompt: "اختر حالة الشحن المحددة:",
+        options: [
+          {id:"stuck", title:"شحنة متوقفة (>3 أيام)", hint:"لا توجد حركة تتبع لأكثر من 3 أيام", res:{title:"إجراء الشحنات المتوقفة", badge:"SOP-SHOPIFY-02", steps:["تحقق من لوحة بوسطة لآخر حركة","انشر في #bosta-escalations برقم البوليصة","أضف تاج stuck-3d","أجب العميل مع التزام SLA 24 ساعة"]}},
+          {id:"failed", title:"محاولة توصيل فاشلة للمرة الثانية", hint:"حاول المندوب مرتين بدون نجاح", res:{title:"تصعيد محاولات التوصيل الفاشلة", badge:"SOP-BOSTA-01", steps:["انشر في #bosta-escalations أولاً","أضف تاج failed-2","اتصل بالعميل لتأكيد العنوان ورقم الهاتف","نسق إعادة المحاولة مع بوسطة"]}}
+        ]
+      },
+      returns: {
+        prompt: "اختر نوع الاسترجاع أو الاستبدال:",
+        options: [
+          {id:"size", title:"استبدال مقاس", hint:"العميل يريد مقاساً مختلفاً", res:{title:"معالجة الاستبدال", badge:"SOP-SHOPIFY-03", steps:["تحقق من تفاصيل الطلب في شوبيفاي","أنشئ طلب استبدال في شوبيفاي","أبلغ مستودع بوسطة للاستبدال عند الباب","أكد موعد الـ SLA مع العميل"]}},
+          {id:"defect", title:"منتج معيب أو خطأ", hint:"تم استلام منتج تالف أو غير صحيح", res:{title:"معالجة العيوب", badge:"SOP-BOSTA-04", steps:["اطلب صور العيب عبر جورجياس","سجل المرتجع مع تاج فحص الجودة في بوسطة","اعمل استبدال أو استرداد كامل","سجل ملاحظة في الطلب"]}}
+        ]
+      },
+      refunds: {
+        prompt: "اختر استفسار الاسترداد:",
+        options: [
+          {id:"prepaid", title:"حالة استرداد Paymob", hint:"متى تظهر الأموال في البطاقة؟", res:{title:"فحص استرداد Paymob", badge:"SOP-REFUND-02", steps:["افتح تقرير البوت اليومي في Slack #cs-updates","ابحث عن المعاملة في لوحة Paymob","تأكد من حالة النجاح","أبلغ العميل بمدة 3-5 أيام عمل"]}}
+        ]
+      },
+      ops: {
+        prompt: "اختر الاستثناء التشغيلي:",
+        options: [
+          {id:"awaiting", title:"حالة Awaiting Action (عنوان/رقم خطأ)", hint:"التوصيل معلق بسبب خطأ في بيانات الاتصال", res:{title:"إصلاح Awaiting Action", badge:"SOP-BOSTA-02", steps:["اتصل بالعميل فوراً للحصول على البيانات الصحيحة","حدث شوبيفاي وأبلغ بوسطة عبر واتساب","اطلب إعادة الإرسال خلال 24 ساعة"]}}
+        ]
+      }
+    }
+  }
+};
+
+// ══════════════════════════════════════════
+// NAVIGATION & CORE INIT
+// ══════════════════════════════════════════
+function nav(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  
+  const targetPage = document.getElementById('page-' + pageId);
+  if (targetPage) targetPage.classList.add('active');
+  
+  // Find matching nav link
+  document.querySelectorAll('.nav-link').forEach(l => {
+    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + pageId + "'")) {
+      l.classList.add('active');
+    }
+  });
+  window.scrollTo(0,0);
+}
+
+function changeUser() {
+  currentUser = document.getElementById('userSel').value;
+  // If reviewer or QA, can access records
+}
+
+// ══════════════════════════════════════════
+// HOME & SOP LIBRARY
+// ══════════════════════════════════════════
+function initHome() {
+  const cats = {};
+  SOPS.forEach(s => {
+    const c = currentLang === 'ar' ? s.cat_ar : s.cat_en;
+    if (!cats[c]) cats[c] = {count:0, icon:s.icon, iconcls:s.iconcls};
+    cats[c].count++;
+  });
+  
+  document.getElementById('statCats').innerText = Object.keys(cats).length;
+  
+  let html = '';
+  for (let [cat, data] of Object.entries(cats)) {
+    html += `
+      <div class="cat-card" onclick="nav('library'); filterByCat('${cat}')">
+        <div class="cat-card-top">
+          <div class="cat-icon-wrap ${data.iconcls}">${data.icon}</div>
+          <div class="cat-name">${cat}</div>
+        </div>
+        <div class="cat-desc">Standard operating procedures and execution steps for ${cat}.</div>
+        <div class="cat-footer">
+          <span class="cat-count">${data.count} SOPs</span>
+          <span class="cat-arrow">→</span>
+        </div>
+      </div>
+    `;
+  }
+  document.getElementById('catGrid').innerHTML = html;
+}
+
+function renderLibrary(filterCat = null, searchTerm = '') {
+  const container = document.getElementById('sopContainer');
+  let html = '';
+  
+  SOPS.forEach(s => {
+    const title = currentLang === 'ar' ? s.t_ar : s.t_en;
+    const desc = currentLang === 'ar' ? s.d_ar : s.d_en;
+    const cat = currentLang === 'ar' ? s.cat_ar : s.cat_en;
+    
+    if (filterCat && cat !== filterCat) return;
+    if (searchTerm) {
+      const q = searchTerm.toLowerCase();
+      if (!s.code.toLowerCase().includes(q) && !title.toLowerCase().includes(q) && !desc.toLowerCase().includes(q) && !s.sys.toLowerCase().includes(q)) return;
+    }
+    
+    let stepsHtml = '';
+    if (s.steps) {
+      s.steps.forEach(st => {
+        stepsHtml += `
+          <div class="flow-node ${st.c || ''}">
+            <div class="flow-node-num">${st.n}</div>
+            <div class="flow-node-title">${st.t}</div>
+            <div class="flow-node-desc">${st.d}</div>
+          </div>
+        `;
+      });
+    }
+    
+    html += `
+      <div class="sop-card">
+        <div class="sop-top">
+          <div>
+            <span class="sop-code">${s.code}</span>
+            <div class="sop-title">${title}</div>
+          </div>
+          <span class="sop-sys">${s.sys}</span>
+        </div>
+        <div class="sop-desc">${desc}</div>
+        ${stepsHtml ? `<div class="flow-title">⚡ Execution Flow</div><div class="flow-wrap">${stepsHtml}</div>` : ''}
+        ${s.canned ? `
+          <div class="canned">
+            <button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText);alert('Canned response copied!')">Copy</button>
+            <div class="canned-label">💬 Canned Response</div>
+            <div class="canned-text">${s.canned}</div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--muted)">No SOPs found matching your criteria.</div>';
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnAR').classList.toggle('active', lang === 'ar');
+  renderLibrary();
+  initHome();
+}
+
+function filterByCat(cat) {
+  renderLibrary(cat);
+}
+
+function homeSearch() {
+  const val = document.getElementById('homeSearch').value;
+  if (val.length > 1) {
+    nav('library');
+    renderLibrary(null, val);
+  }
+}
+
+// ══════════════════════════════════════════
+// DECISION TREE ENGINE
+// ══════════════════════════════════════════
+function renderDT(nodeKey = null) {
+  const data = DT_DATA[dtLang];
+  const grid = document.getElementById('dtGrid');
+  const prompt = document.getElementById('dtPrompt');
+  const bread = document.getElementById('dtBread');
+  const final = document.getElementById('dtFinal');
+  
+  final.style.display = 'none';
+  grid.style.display = 'grid';
+  
+  if (!nodeKey) {
+    dtCat = "";
+    bread.innerHTML = currentLang === 'ar' ? 'الخطوة 1 ← اختر الفئة' : 'Step 1 → Select Category';
+    prompt.innerText = data.prompt;
+    let html = '';
+    data.cats.forEach(c => {
+      html += `
+        <button class="dt-btn" onclick="selectDTCat('${c.id}')">
+          <div class="dt-btn-title">${c.title}</div>
+          <div class="dt-btn-hint">${c.hint}</div>
+          <div class="dt-btn-act">${c.act} →</div>
+        </button>
+      `;
+    });
+    grid.innerHTML = html;
+  } else {
+    dtCat = nodeKey;
+    const node = data.nodes[nodeKey];
+    bread.innerHTML = `<a onclick="renderDT()">Categories</a> → Step 2`;
+    prompt.innerText = node.prompt;
+    let html = '';
+    node.options.forEach(opt => {
+      html += `
+        <button class="dt-btn" onclick='showDTResult(${JSON.stringify(opt.res)})'>
+          <div class="dt-btn-title">${opt.title}</div>
+          <div class="dt-btn-hint">${opt.hint}</div>
+          <div class="dt-btn-act">View Solution →</div>
+        </button>
+      `;
+    });
+    grid.innerHTML = html;
+  }
+}
+
+function selectDTCat(catId) {
+  renderDT(catId);
+}
+
+function showDTResult(res) {
+  document.getElementById('dtGrid').style.display = 'none';
+  document.getElementById('dtPrompt').innerText = res.title;
+  document.getElementById('dtBread').innerHTML = `<a onclick="renderDT()">Categories</a> → <a onclick="renderDT('${dtCat}')">Options</a> → Result`;
+  
+  let stepsHtml = '';
+  res.steps.forEach((st, i) => {
+    stepsHtml += `
+      <div class="res-block">
+        <strong>Step ${i+1}</strong>
+        <div>${st}</div>
+      </div>
+    `;
+  });
+  
+  const final = document.getElementById('dtFinal');
+  final.style.display = 'block';
+  final.innerHTML = `
+    <div class="res-card">
+      <span class="res-badge">${res.badge}</span>
+      <div style="font-size:18px;font-weight:800;color:var(--midnight);margin-bottom:12px">${res.title}</div>
+      ${stepsHtml}
+      <button class="btn btn-primary" style="margin-top:16px" onclick="resetDT()">🔄 Start New Decision Tree</button>
+    </div>
+  `;
+}
+
+function resetDT() {
+  renderDT(null);
+}
+
+function setDTLang(lang) {
+  dtLang = lang;
+  document.getElementById('dtBtnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('dtBtnAR').classList.toggle('active', lang === 'ar');
+  resetDT();
+}
+
+// ══════════════════════════════════════════
+// SCENARIOS
+// ══════════════════════════════════════════
+function renderScenarios(filter = "All") {
+  const container = document.getElementById('scContainer');
+  let html = '';
+  
+  SCENARIOS.forEach(sc => {
+    if (filter !== "All" && sc.cat !== filter) return;
+    html += `
+      <div class="sc-item">
+        <div class="sc-src">📌 Source: ${sc.src} — Category: ${sc.cat}</div>
+        <div class="sc-quote">"${sc.quote}"</div>
+        <div class="sc-explain"><strong>Root Cause & Explanation:</strong> ${sc.explain}</div>
+        <div style="margin-bottom:10px"><strong>Resolution:</strong> ${sc.res}</div>
+        <div class="sc-tags">
+          ${sc.tags.map(t => `<span class="sc-tag-r">${t}</span>`).join('')}
+          <span class="sc-tag-res">✅ Resolved via Standard SOP</span>
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html || '<div style="text-align:center;padding:30px;color:var(--muted)">No scenarios found.</div>';
+}
+
+function initScenarios() {
+  const cats = ["All", ...new Set(SCENARIOS.map(s => s.cat))];
+  let pillsHtml = '';
+  cats.forEach(c => {
+    pillsHtml += `<button class="pill ${c === scCat ? 'active' : ''}" onclick="scCat='${c}'; renderScenarios('${c}'); initScenarios();">${c}</button>`;
+  });
+  document.getElementById('scPills').innerHTML = pillsHtml;
+  renderScenarios(scCat);
+}
+
+function filterScenarios() {
+  const q = document.getElementById('scSearch').value.toLowerCase();
+  const container = document.getElementById('scContainer');
+  let html = '';
+  SCENARIOS.forEach(sc => {
+    if (q && !sc.quote.toLowerCase().includes(q) && !sc.explain.toLowerCase().includes(q) && !sc.res.toLowerCase().includes(q)) return;
+    html += `
+      <div class="sc-item">
+        <div class="sc-src">📌 Source: ${sc.src} — Category: ${sc.cat}</div>
+        <div class="sc-quote">"${sc.quote}"</div>
+        <div class="sc-explain">${sc.explain}</div>
+        <div><strong>Resolution:</strong> ${sc.res}</div>
+      </div>
+    `;
+  });
+  container.innerHTML = html || '<div style="text-align:center;padding:30px;color:var(--muted)">No matching scenarios.</div>';
+}
+
+// ══════════════════════════════════════════
+// RETURN PORTAL & GOOGLE SHEETS
+// ══════════════════════════════════════════
+async function fetchPortal() {
+  document.getElementById('portalStatus').innerText = "Loading Master Sheet data...";
+  try {
+    // Fetch CSV export from Google Sheets
+    allTabs = {};
+    for (const tab of TABS) {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      allTabs[tab] = rows;
+    }
+    
+    // Build pill tabs
+    let pills = `<button class="pill active" onclick="switchPortalTab('All Tabs')">All Tabs</button>`;
+    TABS.forEach(t => {
+      if (allTabs[t] && allTabs[t].length > 0) {
+        pills += `<button class="pill" onclick="switchPortalTab('${t}')">${t} (${allTabs[t].length})</button>`;
+      }
+    });
+    document.getElementById('portalPills').innerHTML = pills;
+    
+    switchPortalTab('All Tabs');
+    document.getElementById('portalStatus').innerText = "Data loaded successfully from Master Sheet.";
+  } catch (err) {
+    console.warn("Sheet fetch error (CORS or offline fallback):", err);
+    // Fallback sample data
+    allTabs = {
+      "SEARCH": [
+        ["Order #", "Customer Name", "Phone", "SKU", "Status", "Amount"],
+        ["#10852", "Asmaa Mohamed", "01012345678", "MV-HOODIE-BLK-M", "Delivered", "450 EGP"],
+        ["#10853", "Zahraa Noor", "01198765432", "MV-TEE-WHT-S", "Awaiting Action", "280 EGP"],
+        ["#10854", "Amena", "01234567890", "MV-PANTS-NVY-L", "Pending Refund", "600 EGP"]
+      ]
+    };
+    switchPortalTab('SEARCH');
+    document.getElementById('portalStatus').innerText = "Loaded offline fallback records.";
+  }
+}
+
+function parseCSV(text) {
+  let lines = text.split('\n');
+  let result = [];
+  lines.forEach(line => {
+    if (!line.trim()) return;
+    let row = [];
+    let inQuote = false;
+    let val = '';
+    for (let i = 0; i < line.length; i++) {
+      let c = line[i];
+      if (c === '"') {
+        inQuote = !inQuote;
+      } else if (c === ',' && !inQuote) {
+        row.push(val.trim().replace(/^"|"$/g, ''));
+        val = '';
+      } else {
+        val += c;
+      }
+    }
+    row.push(val.trim().replace(/^"|"$/g, ''));
+    result.push(row);
+  });
+  return result;
+}
+
+function switchPortalTab(tabName) {
+  activeTab = tabName;
+  document.querySelectorAll('#portalPills .pill').forEach(p => {
+    p.classList.toggle('active', p.innerText.includes(tabName));
+  });
+  renderPortalTable();
+}
+
+function renderPortalTable() {
+  let rows = [];
+  if (activeTab === 'All Tabs') {
+    for (let t in allTabs) {
+      if (allTabs[t].length > 0) {
+        if (rows.length === 0) rows.push(allTabs[t][0]);
+        rows.push(...allTabs[t].slice(1));
+      }
+    }
+  } else {
+    rows = allTabs[activeTab] || [];
+  }
+  
+  if (rows.length === 0) {
+    document.getElementById('portalTHead').innerHTML = '';
+    document.getElementById('portalTBody').innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px">No data available</td></tr>';
+    document.getElementById('recCount').innerText = '0 records';
+    return;
+  }
+  
+  let thead = `<tr>${rows[0].map(h => `<th>${h}</th>`).join('')}</tr>`;
+  let tbody = '';
+  for (let i = 1; i < rows.length; i++) {
+    let r = rows[i];
+    tbody += `<tr>${r.map(cell => `<td>${formatPortalCell(cell)}</td>`).join('')}</tr>`;
+  }
+  
+  document.getElementById('portalTHead').innerHTML = thead;
+  document.getElementById('portalTBody').innerHTML = tbody;
+  document.getElementById('recCount').innerText = `${rows.length - 1} records`;
+}
+
+function formatPortalCell(val) {
+  if (!val) return '';
+  const v = val.toLowerCase();
+  if (v.includes('delivered') || v.includes('success') || v.includes('approved')) {
+    return `<span class="pill-success">${val}</span>`;
+  }
+  if (v.includes('awaiting') || v.includes('pending') || v.includes('stuck')) {
+    return `<span class="pill-warn">${val}</span>`;
+  }
+  if (v.includes('fail') || v.includes('cancel') || v.includes('risk')) {
+    return `<span class="pill-danger">${val}</span>`;
+  }
+  return val;
+}
+
+function filterPortal() {
+  const q = document.getElementById('portalSearch').value.toLowerCase();
+  const trs = document.querySelectorAll('#portalTBody tr');
+  let matchCount = 0;
+  trs.forEach(tr => {
+    const text = tr.innerText.toLowerCase();
+    const match = text.includes(q);
+    tr.style.display = match ? '' : 'none';
+    if (match) matchCount++;
+  });
+  document.getElementById('recCount').innerText = `${matchCount} matching records`;
+}
+
+// ══════════════════════════════════════════
+// ESCALATION FORM & RECORDS
+// ══════════════════════════════════════════
+document.getElementById('escForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const record = {
+    order: document.getElementById('e_order').value,
+    ticket: document.getElementById('e_ticket').value,
+    name: document.getElementById('e_name').value,
+    reason: document.getElementById('e_reason').value,
+    date: document.getElementById('e_date').value,
+    recv: document.getElementById('e_recv').value,
+    ddate: document.getElementById('e_ddate').value,
+    summary: document.getElementById('e_summary').value,
+    status: 'Pending',
+    notes: 'Submitted by ' + currentUser,
+    agent: currentUser
+  };
+  
+  let logs = JSON.parse(localStorage.getItem('mavin_esc_logs') || '[]');
+  logs.unshift(record);
+  localStorage.setItem('mavin_esc_logs', JSON.stringify(logs));
+  
+  alert('Escalation submitted successfully!');
+  this.reset();
+  nav('logs');
+  loadLogs();
+});
+
+function loadLogs() {
+  const logs = JSON.parse(localStorage.getItem('mavin_esc_logs') || '[]');
+  let tbody = '';
+  logs.forEach((l, idx) => {
+    let badgeClass = l.status === 'Approved' ? 'badge-approved' : l.status === 'Rejected' ? 'badge-rejected' : 'badge-pending';
+    const isReviewer = REVIEWERS.includes(currentUser) || QA_USERS.includes(currentUser);
+    tbody += `
+      <tr>
+        <td><strong>${l.order}</strong></td>
+        <td>${l.ticket}</td>
+        <td>${l.name}</td>
+        <td>${l.reason}</td>
+        <td>${l.date}</td>
+        <td style="max-width:250px">${l.summary}</td>
+        <td><span class="${badgeClass}">${l.status}</span></td>
+        <td>${l.notes || '-'}</td>
+        <td>
+          ${isReviewer ? `<button class="btn" style="padding:4px 10px;font-size:11px" onclick="openModal(${idx})">Review</button>` : 'View Only'}
+        </td>
+      </tr>
+    `;
+  });
+  document.querySelector('#logsTable tbody').innerHTML = tbody || '<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">No escalation records found.</td></tr>';
+}
+
+function openModal(idx) {
+  reviewIdx = idx;
+  const logs = JSON.parse(localStorage.getItem('mavin_esc_logs') || '[]');
+  const l = logs[idx];
+  document.getElementById('modalDetail').innerHTML = `
+    <strong>Order:</strong> ${l.order} | <strong>Ticket:</strong> ${l.ticket}<br>
+    <strong>Customer:</strong> ${l.name} | <strong>Reason:</strong> ${l.reason}<br>
+    <strong>Summary:</strong> ${l.summary}
+  `;
+  document.getElementById('mStatus').value = l.status;
+  document.getElementById('mComment').value = l.notes || '';
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  reviewIdx = null;
+}
+
+function saveReview() {
+  if (reviewIdx === null) return;
+  const logs = JSON.parse(localStorage.getItem('mavin_esc_logs') || '[]');
+  logs[reviewIdx].status = document.getElementById('mStatus').value;
+  logs[reviewIdx].notes = `[${currentUser}] ${document.getElementById('mComment').value}`;
+  localStorage.setItem('mavin_esc_logs', JSON.stringify(logs));
+  closeModal();
+  loadLogs();
+}
+
+function exportEsc() {
+  const logs = JSON.parse(localStorage.getItem('mavin_esc_logs') || '[]');
+  if (logs.length === 0) { alert('No data to export.'); return; }
+  const ws = XLSX.utils.json_to_sheet(logs);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Escalations");
+  XLSX.writeFile(wb, "Mavin_Escalations.xlsx");
+}
+
+// ══════════════════════════════════════════
+// QA AUDIT & RECORDS
+// ══════════════════════════════════════════
+function calcQA() {
+  let score = 0;
+  
+  // Section 1: Ticket Protocol (30 pts)
+  score += parseInt(document.getElementById('qa_tf').value) || 0;
+  score += parseInt(document.getElementById('qa_und').value) || 0;
+  const rep = document.getElementById('qa_rep').value;
+  if (rep !== 'NA') score += parseInt(rep) || 0;
+  
+  // Section 2: 5 Tools (20 pts)
+  let toolsChecked = 0;
+  if (document.getElementById('chk_sh').checked) toolsChecked++;
+  if (document.getElementById('chk_go').checked) toolsChecked++;
+  if (document.getElementById('chk_sl').checked) toolsChecked++;
+  if (document.getElementById('chk_bo').checked) toolsChecked++;
+  if (document.getElementById('chk_es').checked) toolsChecked++;
+  score += toolsChecked * 4;
+  
+  // Section 3: Resolution (25 pts)
+  score += parseInt(document.getElementById('qa_cr').value) || 0;
+  score += parseInt(document.getElementById('qa_ot').value) || 0;
+  
+  // Section 4: Escalation, SLA, Closure (12 pts)
+  score += parseInt(document.getElementById('qa_ep').value) || 0;
+  score += parseInt(document.getElementById('qa_ss').value) || 0;
+  score += parseInt(document.getElementById('qa_cs').value) || 0;
+  
+  // If rep was NA, adjust max score scale or keep as base 87 -> normalize to 100%
+  let totalMax = rep === 'NA' ? 90 : 100;
+  let finalScore = Math.min(100, Math.round((score / totalMax) * 100));
+  
+  // Check Fatals
+  const euc = document.getElementById('qa_euc').value;
+  const bc = document.getElementById('qa_bc').value;
+  let fatalMsg = "";
+  if (euc === 'yes' || bc === '0') {
+    finalScore = 0;
+    fatalMsg = "⚠️ FATAL FAIL TRIGGERED — Score forced to 0%";
+  }
+  
+  document.getElementById('qaScore').innerText = finalScore + '%';
+  document.getElementById('qaFatal').innerText = fatalMsg;
+  
+  let grade = "Needs Improvement ⚠️";
+  if (finalScore >= 90) grade = "Excellent (100%) ⭐⭐⭐";
+  else if (finalScore >= 80) grade = "Good (80-89%) ⭐⭐";
+  else if (finalScore >= 70) grade = "Acceptable (70-79%) ⭐";
+  
+  document.getElementById('qaGrade').innerText = `Grade: ${grade}`;
+  return finalScore;
+}
+
+document.getElementById('qaForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const score = calcQA();
+  const grade = document.getElementById('qaGrade').innerText;
+  const record = {
+    date: new Date().toISOString().split('T')[0],
+    agent: document.getElementById('qa_name').value,
+    email: document.getElementById('qa_email').value,
+    ticket: document.getElementById('qa_ref').value,
+    attribution: document.getElementById('qa_attr').value,
+    score: score + '%',
+    grade: grade,
+    auditor: document.getElementById('qa_auditor').value,
+    feedback: document.getElementById('qa_fb').value
+  };
+  
+  let qaLogs = JSON.parse(localStorage.getItem('mavin_qa_logs') || '[]');
+  qaLogs.unshift(record);
+  localStorage.setItem('mavin_qa_logs', JSON.stringify(qaLogs));
+  
+  alert('QA Audit submitted successfully!');
+  this.reset();
+  nav('qalogs');
+  loadQA();
+});
+
+function loadQA() {
+  const qaLogs = JSON.parse(localStorage.getItem('mavin_qa_logs') || '[]');
+  
+  // Populate agent filter dropdown
+  const agents = [...new Set(qaLogs.map(l => l.agent))];
+  let agentSelHtml = '<option value="all">All Agents</option>';
+  agents.forEach(a => { agentSelHtml += `<option value="${a}">${a}</option>`; });
+  const fAgentEl = document.getElementById('fAgent');
+  const selectedAgent = fAgentEl ? fAgentEl.value : 'all';
+  fAgentEl.innerHTML = agentSelHtml;
+  fAgentEl.value = selectedAgent;
+  
+  const fMonth = document.getElementById('fMonth').value;
+  const fYear = document.getElementById('fYear').value;
+  
+  let filtered = qaLogs.filter(l => {
+    if (selectedAgent !== 'all' && l.agent !== selectedAgent) return false;
+    if (fMonth !== 'all') {
+      const parts = l.date.split('-');
+      if (parts[1] !== fMonth) return false;
+    }
+    if (fYear !== 'all') {
+      const parts = l.date.split('-');
+      if (parts[0] !== fYear) return false;
+    }
+    return true;
+  });
+  
+  let tbody = '';
+  let totalScoreNum = 0;
+  filtered.forEach(l => {
+    let scoreNum = parseInt(l.score) || 0;
+    totalScoreNum += scoreNum;
+    tbody += `
+      <tr>
+        <td>${l.date}</td>
+        <td><strong>${l.agent}</strong></td>
+        <td>${l.email}</td>
+        <td>${l.ticket}</td>
+        <td>${l.attribution}</td>
+        <td><strong>${l.score}</strong></td>
+        <td>${l.grade}</td>
+        <td>${l.auditor}</td>
+        <td style="max-width:250px">${l.feedback}</td>
+      </tr>
+    `;
+  });
+  
+  document.querySelector('#qaTable tbody').innerHTML = tbody || '<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">No QA evaluations found.</td></tr>';
+  
+  document.getElementById('dTotal').innerText = filtered.length;
+  const avg = filtered.length > 0 ? Math.round(totalScoreNum / filtered.length) : 0;
+  document.getElementById('dAvg').innerText = avg + '%';
+  document.getElementById('dGrade').innerText = avg >= 90 ? 'Excellent ⭐⭐⭐' : avg >= 80 ? 'Good ⭐⭐' : avg >= 70 ? 'Acceptable ⭐' : 'Needs Improvement ⚠️';
+}
+
+function exportQA() {
+  const qaLogs = JSON.parse(localStorage.getItem('mavin_qa_logs') || '[]');
+  if (qaLogs.length === 0) { alert('No QA data to export.'); return; }
+  const ws = XLSX.utils.json_to_sheet(qaLogs);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "QA_Evaluations");
+  XLSX.writeFile(wb, "Mavin_QA_Evaluations.xlsx");
+}
+
+// ══════════════════════════════════════════
+// INITIALIZATION ON LOAD
+// ══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  initHome();
+  renderLibrary();
+  renderDT(null);
+  initScenarios();
+  fetchPortal();
+  loadLogs();
+  loadQA();
+});
+</script>
+</body>
+</html>
