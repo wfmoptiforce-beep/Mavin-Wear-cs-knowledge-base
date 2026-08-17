@@ -106,9 +106,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .flow-node.lemon{border-left-color:#d4b800}
 .flow-node.lav{border-left-color:var(--lav)}
 .flow-node-num{font-size:10px;font-weight:800;color:var(--indigo);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
-.flow-node.coral .flow-node-num{color:var(--coral)}
-.flow-node.mint .flow-node-num{color:#059669}
-.flow-node.lemon .flow-node-num{color:#a16207}
 .flow-node-title{font-size:14px;font-weight:800;color:var(--midnight);margin-bottom:4px}
 .flow-node-desc{font-size:13px;color:#475569;line-height:1.6}
 .canned{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--success);padding:15px 16px;border-radius:8px;margin-top:14px;position:relative}
@@ -135,10 +132,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .dt-btn-act{font-size:11.5px;font-weight:700;color:var(--indigo);margin-top:8px}
 .res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
 .res-badge{display:inline-block;background:var(--success);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:12px}
-.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
-.res-info{background:var(--lgrey);border:1px solid var(--border);border-radius:8px;padding:12px}
-.res-info-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
-.res-info-val{font-size:15px;font-weight:800;color:var(--midnight);margin-top:4px}
 .res-block{background:var(--lgrey);border:1px solid var(--border);border-left:4px solid var(--indigo);padding:14px;border-radius:8px;margin:10px 0}
 .res-block strong{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
 .res-block div{font-size:14.5px;color:var(--midnight);line-height:1.5}
@@ -170,7 +163,6 @@ th{background:var(--lgrey);font-weight:800;color:var(--midnight);white-space:now
 .pill-success{background:#dcfce7;color:#166534;border:1px solid #86efac;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
 .pill-warn{background:#fef3c7;color:#854d0e;border:1px solid #fde68a;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
 .pill-danger{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
-.pill-info{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
 
 /* ── FORMS ── */
 .form-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
@@ -207,7 +199,6 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 
 /* ── FOOTER ── */
 .footer{text-align:center;padding:28px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);margin-top:8px}
-.footer a{color:var(--indigo);font-weight:700;text-decoration:none}
 
 @media(max-width:768px){
   .page{padding:16px}
@@ -329,7 +320,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
   <div class="sec-header">
     <div>
       <div class="sec-title">💬 Real Customer Scenarios</div>
-      <div class="sec-sub">Actual scenarios with root-cause analysis and resolution tagging fetched from Master Sheet</div>
+      <div class="sec-sub">Actual scenarios fetched from Decision Tree Sheet</div>
     </div>
     <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
   </div>
@@ -340,16 +331,16 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
   <div id="scContainer"></div>
 </div>
 
-<!-- ══════════════ RETURN PORTAL ══════════════ -->
+<!-- ══════════════ RETURN PORTAL (REFUND SHEET) ══════════════ -->
 <div class="page" id="page-portal">
   <div class="sec-header">
     <div>
       <div class="sec-title">🔍 Return & Refund Portal</div>
-      <div class="sec-sub" id="portalStatus">Loading records...</div>
+      <div class="sec-sub" id="portalStatus">Loading records from Mavin Refunds Sheet...</div>
     </div>
     <div class="btn-group">
       <button class="btn" onclick="fetchPortal()">🔄 Refresh</button>
-      <a href="https://docs.google.com/spreadsheets/d/1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo/edit" target="_blank" class="btn">📊 Master Sheet ↗</a>
+      <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit" target="_blank" class="btn">📊 Refunds Sheet ↗</a>
       <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
@@ -384,7 +375,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
         <div><label>Delivered Date</label><input type="date" id="e_ddate"></div>
       </div>
       <label>Case Summary</label>
-      <textarea id="e_summary" rows="4" placeholder="Explain details after self-investigation across Shopify, Gorgias, Slack, Bosta, Estbdal & Refund sheet..." required></textarea>
+      <textarea id="e_summary" rows="4" placeholder="Explain details after self-investigation..." required></textarea>
       <button type="submit" class="submit-btn">💾 Submit Escalation</button>
     </form>
   </div>
@@ -585,7 +576,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
   </div>
 </div>
 
-<footer class="footer">Powered by <a href="https://evergpt.ai.foundever.com" target="_blank">EverGPT</a> — Foundever AI Platform</footer>
+<footer class="footer">MAVIN Wear Operations Hub — All Rights Reserved</footer>
 
 <script>
 // ══════════════════════════════════════════
@@ -593,8 +584,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 // ══════════════════════════════════════════
 const REVIEWERS = ["nourtamer2005@gmail.com","nanielshazly4@gmail.com"];
 const QA_USERS  = ["Rehabmohamed881@gmail.com"];
-const SHEET_ID  = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
-const TABS      = ["Export2","Return & Exch","Export","SEARCH","Scenarios"];
+
+// شيت الريفوند للبورتال
+const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
+const REFUND_TABS     = ["Export2","Return & Exch","Export","SEARCH"];
+
+// شيت الديسجن تري للسيناريوهات
+const SCENARIO_SHEET_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
 
 let currentUser = "agent@mavinwear.com";
 let currentLang = "en";
@@ -730,7 +726,7 @@ const DT_DATA = {
       delivery: {
         prompt: "Select specific delivery situation:",
         options: [
-          {id:"stuck", title:"Stuck in Transit (>3 days)", hint:"No tracking movement for 3+ days", res:{title:"Stuck in Transit SOP", badge:"SOP-SHOPIFY-02", steps:[".Check Bosta dashboard for last scan","Post in #bosta-escalations with AWB","Add stuck-3d tag if no movement","Reply to customer with 24h SLA"]}},
+          {id:"stuck", title:"Stuck in Transit (>3 days)", hint:"No tracking movement for 3+ days", res:{title:"Stuck in Transit SOP", badge:"SOP-SHOPIFY-02", steps:["Check Bosta dashboard for last scan","Post in #bosta-escalations with AWB","Add stuck-3d tag if no movement","Reply to customer with 24h SLA"]}},
           {id:"failed", title:"2nd Failed Delivery (failed-2)", hint:"Courier attempted twice without success", res:{title:"Failed Delivery Escalation", badge:"SOP-BOSTA-01", steps:["Post in #bosta-escalations FIRST","Add failed-2 tag","Call customer to confirm address/phone","Arrange re-attempt with Bosta"]}}
         ]
       },
@@ -1011,8 +1007,49 @@ function setDTLang(lang) {
 }
 
 // ══════════════════════════════════════════
-// SCENARIOS FROM MASTER SHEET
+// SCENARIOS FROM DECISION TREE SHEET
 // ══════════════════════════════════════════
+async function fetchScenarios() {
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SCENARIO_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Scenarios`;
+    const res = await fetch(url);
+    const text = await res.text();
+    const rows = parseCSV(text);
+    
+    SCENARIOS = [];
+    for (let i = 1; i < rows.length; i++) {
+      let r = rows[i];
+      if (r.length >= 3 && r[2]) {
+        SCENARIOS.push({
+          src: r[0] || "Customer Support",
+          cat: r[1] || "General",
+          quote: r[2] || "",
+          explain: r[3] || "Root cause analysis based on operational guidelines.",
+          res: r[4] || "Resolved according to standard Mavin SOP.",
+          tags: r[5] ? r[5].split(',').map(t => t.trim()) : ["Verified", "SOP"]
+        });
+      }
+    }
+    
+    if (SCENARIOS.length === 0) {
+      loadFallbackScenarios();
+    }
+    initScenarios();
+  } catch (err) {
+    console.warn("Error fetching scenarios from Decision Tree sheet:", err);
+    loadFallbackScenarios();
+    initScenarios();
+  }
+}
+
+function loadFallbackScenarios() {
+  SCENARIOS = [
+    {cat:"Bosta", src:"Customer WhatsApp", quote:"فين طلبي؟ بقالي 4 أيام محدش كلمني", explain:"Order stuck in transit without recent Bosta scan.", res:"Checked Bosta AWB #7506992329. Out for delivery today with courier.", tags:["Bosta","Delivery Delay","CS Response"]},
+    {cat:"Refund", src:"Gorgias Chat", quote:"أنا طلبت استرجاع الفلوس ولسه مجتش علي فيزا البنك", explain:"Prepaid refund initiated by bot but customer inquiring about banking settlement time.", res:"Verified Paymob transaction: Refund successful. Banking clearance takes 3–5 business days.", tags:["Paymob","Refund Bot","Finance"]},
+    {cat:"Exchange", src:"Shopify Form", quote:"المقاس طلع كبير وعاوز أبدل لـ Medium", explain:"Size mismatch reported by customer requesting product exchange.", res:"Created exchange order in Shopify for Medium. Notified Bosta warehouse for doorstep swap.", tags:["Exchange","Warehouse","Size Swap"]}
+  ];
+}
+
 function renderScenarios(filter = "All") {
   const container = document.getElementById('scContainer');
   let html = '';
@@ -1045,7 +1082,7 @@ function initScenarios() {
   if (pillsEl) pillsEl.innerHTML = pillsHtml;
   renderScenarios(scCat);
   const totalEl = document.getElementById('scTotalCount');
-  if (totalEl) totalEl.innerText = SCENARIOS.length || 63;
+  if (totalEl) totalEl.innerText = SCENARIOS.length;
 }
 
 function filterScenarios() {
@@ -1071,57 +1108,22 @@ function filterScenarios() {
 }
 
 // ══════════════════════════════════════════
-// RETURN PORTAL & GOOGLE SHEETS
+// RETURN PORTAL (REFUND SHEET)
 // ══════════════════════════════════════════
 async function fetchPortal() {
-  document.getElementById('portalStatus').innerText = "Loading Master Sheet data...";
+  document.getElementById('portalStatus').innerText = "Loading records from Mavin Refunds Sheet...";
   try {
     allTabs = {};
-    for (const tab of TABS) {
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+    for (const tab of REFUND_TABS) {
+      const url = `https://docs.google.com/spreadsheets/d/${REFUND_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
       const res = await fetch(url);
       const text = await res.text();
       const rows = parseCSV(text);
       allTabs[tab] = rows;
     }
     
-    // Load scenarios from the "Scenarios" tab in the sheet
-    if (allTabs["Scenarios"] && allTabs["Scenarios"].length > 1) {
-      const sRows = allTabs["Scenarios"];
-      SCENARIOS = [];
-      for (let i = 1; i < sRows.length; i++) {
-        let r = sRows[i];
-        if (r.length >= 5 && r[2]) {
-          SCENARIOS.push({
-            src: r[0] || "Customer",
-            cat: r[1] || "General",
-            quote: r[2] || "",
-            explain: r[3] || "Root cause under review",
-            res: r[4] || "Resolved via Standard SOP",
-            tags: r[5] ? r[5].split(',').map(t => t.trim()) : ["Support"]
-          });
-        }
-      }
-    }
-    
-    // Fallback if Scenarios tab is empty
-    if (SCENARIOS.length === 0) {
-      for (let i = 1; i <= 63; i++) {
-        SCENARIOS.push({
-          cat: i % 3 === 0 ? "Bosta" : i % 3 === 1 ? "Refund" : "Exchange",
-          src: i % 2 === 0 ? "Customer WhatsApp" : "Gorgias Chat",
-          quote: `Scenario case #${i} - Customer inquiry regarding order status or payment update.`,
-          explain: "Root cause verified through multi-platform system investigation.",
-          res: "Processed standard resolution according to Mavin SOP guidelines.",
-          tags: ["SOP", "Verified", "Standard"]
-        });
-      }
-    }
-    
-    initScenarios();
-
     let pills = `<button class="pill active" onclick="switchPortalTab('All Tabs')">All Tabs</button>`;
-    TABS.forEach(t => {
+    REFUND_TABS.forEach(t => {
       if (allTabs[t] && allTabs[t].length > 0) {
         pills += `<button class="pill" onclick="switchPortalTab('${t}')">${t} (${allTabs[t].length})</button>`;
       }
@@ -1129,22 +1131,9 @@ async function fetchPortal() {
     document.getElementById('portalPills').innerHTML = pills;
     
     switchPortalTab('All Tabs');
-    document.getElementById('portalStatus').innerText = "Data loaded successfully from Master Sheet.";
+    document.getElementById('portalStatus').innerText = "Data loaded successfully from Mavin Refunds Sheet.";
   } catch (err) {
-    console.warn("Sheet fetch error:", err);
-    SCENARIOS = [];
-    for (let i = 1; i <= 63; i++) {
-      SCENARIOS.push({
-        cat: i % 3 === 0 ? "Bosta" : i % 3 === 1 ? "Refund" : "Exchange",
-        src: i % 2 === 0 ? "Customer WhatsApp" : "Gorgias Chat",
-        quote: `Customer scenario #${i} sample quote description.`,
-        explain: "Root cause analysis explanation for this specific scenario.",
-        res: "Standard resolution applied successfully.",
-        tags: ["Case", "Support"]
-      });
-    }
-    initScenarios();
-    
+    console.warn("Refund sheet fetch error:", err);
     allTabs = {
       "SEARCH": [
         ["Order #", "Customer Name", "Phone", "SKU", "Status", "Amount"],
@@ -1498,6 +1487,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initHome();
   renderLibrary();
   renderDT(null);
+  fetchScenarios();
   fetchPortal();
   loadLogs();
   loadQA();
