@@ -3,1064 +3,957 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAVIN | Operations Hub</title>
+<title>MAVIN OPS HUB</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root {
-  --indigo: #4b4bf9;
-  --midnight: #09092d;
-  --white: #ffffff;
-  --light-grey: #f3f3f7;
-  --lemon: #f9ef77;
-  --coral: #ff8d96;
-  --lavender: #bfa1ff;
-  --mint: #8bf0bb;
-  --text: #09092d;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --card: #ffffff;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  --indigo:#4b4bf9; --midnight:#09092d; --white:#fff; --lgrey:#f3f3f7;
+  --lemon:#f9ef77; --coral:#ff8d96; --lav:#bfa1ff; --mint:#8bf0bb;
+  --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --card:#fff;
+  --bg:#f3f3f7; --success:#10b981; --danger:#ef4444; --warn:#f59e0b;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--light-grey);color:var(--text);-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
-/* ── HEADER ── */
-.site-header{background:var(--midnight);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(9,9,45,.4)}
-.logo-wrap{display:flex;align-items:center;gap:14px}
-.logo-mark{background:var(--indigo);color:#fff;font-size:18px;font-weight:900;width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;letter-spacing:-1px}
-.logo-text{color:#fff;font-size:17px;font-weight:800;letter-spacing:.5px}
-.logo-sub{color:var(--lavender);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
-.header-right{display:flex;align-items:center;gap:12px}
-.user-select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-.user-select option{background:var(--midnight);color:#fff}
-.role-chip{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;background:rgba(139,240,187,.15);color:var(--mint);border:1px solid rgba(139,240,187,.3)}
+/* ── NAV ── */
+.topnav{background:var(--midnight);padding:0 24px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.nav-brand{display:flex;align-items:center;gap:10px;padding:14px 20px 14px 0;border-right:1px solid rgba(255,255,255,.1);margin-right:8px}
+.nav-brand-icon{width:32px;height:32px;background:var(--indigo);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff}
+.nav-brand-text{color:#fff;font-weight:800;font-size:14px;line-height:1.2}
+.nav-brand-sub{color:rgba(255,255,255,.5);font-size:10px;font-weight:500;letter-spacing:1px}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto}
+.nav-link{padding:8px 14px;border-radius:6px;color:rgba(255,255,255,.65);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{background:var(--indigo);color:#fff}
+.nav-right{margin-left:auto;padding-left:16px}
+.user-sel{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+.user-sel option{background:var(--midnight);color:#fff}
 
-/* ── NAV TABS ── */
-.nav-tabs{background:var(--white);border-bottom:2px solid var(--border);padding:0 32px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{padding:14px 16px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:6px;margin-bottom:-2px}
-.nav-tab:hover{color:var(--indigo);background:rgba(75,75,249,.04)}
-.nav-tab.active{color:var(--indigo);border-bottom-color:var(--indigo);background:rgba(75,75,249,.04)}
+/* ── PAGE WRAPPER ── */
+.page{display:none;padding:28px 32px;max-width:1400px;margin:0 auto}
+.page.active{display:block}
 
-/* ── LAYOUT ── */
-.page-wrap{max-width:1280px;margin:0 auto;padding:28px 24px}
-.section-view{display:none}
-.section-view.active{display:block}
+/* ── HOME HERO ── */
+.hero{background:linear-gradient(135deg,var(--indigo) 0%,#3730d4 60%,var(--midnight) 100%);border-radius:16px;padding:40px;margin-bottom:24px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero-title{font-size:32px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.5px}
+.hero-sub{color:rgba(255,255,255,.7);font-size:15px;margin-bottom:24px;max-width:500px}
+.hero-stats{display:flex;gap:12px;flex-wrap:wrap}
+.hero-stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:14px 20px;backdrop-filter:blur(4px)}
+.hero-stat-num{font-size:24px;font-weight:900;color:#fff}
+.hero-stat-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
 
-/* ── HERO BANNER ── */
-.hero{background:linear-gradient(135deg,var(--indigo) 0%,#3a3ad4 60%,#09092d 100%);border-radius:16px;padding:36px 40px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;overflow:hidden;position:relative}
-.hero::before{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%}
-.hero-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:8px}
-.hero-sub{font-size:14px;color:rgba(255,255,255,.75);line-height:1.5;max-width:480px}
-.hero-stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
-.hero-stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:12px 18px;text-align:center;backdrop-filter:blur(4px)}
-.hero-stat-val{font-size:22px;font-weight:900;color:#fff}
-.hero-stat-label{font-size:11px;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-
-/* ── FLOW STEPS (workflow banner) ── */
-.flow-bar{background:var(--midnight);border-radius:14px;padding:24px 28px;margin-bottom:28px}
-.flow-bar-title{font-size:14px;font-weight:800;color:var(--mint);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.flow-steps{display:flex;gap:0;align-items:stretch;overflow-x:auto}
-.flow-step{flex:1;min-width:180px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:16px 18px;position:relative}
-.flow-step:first-child{border-radius:10px 0 0 10px}
-.flow-step:last-child{border-radius:0 10px 10px 0}
-.flow-step-n{font-size:10px;font-weight:800;color:var(--lavender);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.flow-step-title{font-size:13.5px;font-weight:800;color:#fff;margin-bottom:4px}
-.flow-step-desc{font-size:12px;color:rgba(255,255,255,.6);line-height:1.4}
-.flow-step::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--indigo);font-size:16px;font-weight:900;z-index:1}
-.flow-step:last-child::after{display:none}
-
-/* ── GRID CARDS ── */
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:28px}
-.cat-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:24px;cursor:pointer;transition:.25s;display:flex;flex-direction:column;gap:12px}
-.cat-card:hover{border-color:var(--indigo);transform:translateY(-3px);box-shadow:0 12px 28px rgba(75,75,249,.12)}
-.cat-card-top{display:flex;align-items:center;gap:12px}
-.cat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.cat-icon.blue{background:rgba(75,75,249,.1)}
-.cat-icon.mint{background:rgba(139,240,187,.15)}
-.cat-icon.coral{background:rgba(255,141,150,.15)}
-.cat-icon.lemon{background:rgba(249,239,119,.2)}
-.cat-icon.lavender{background:rgba(191,161,255,.15)}
-.cat-name{font-size:16px;font-weight:800;color:var(--midnight)}
-.cat-desc{font-size:13px;color:var(--muted);line-height:1.5}
-.cat-footer{display:flex;justify-content:space-between;align-items:center}
-.cat-count{font-size:12px;font-weight:700;color:var(--indigo);background:rgba(75,75,249,.08);padding:4px 10px;border-radius:20px}
-.cat-arrow{color:var(--indigo);font-size:16px;font-weight:900}
+/* ── GOLDEN WORKFLOW ── */
+.workflow-bar{background:var(--midnight);border-radius:14px;padding:24px;margin-bottom:24px;border:1px solid rgba(75,75,249,.3)}
+.workflow-label{font-size:11px;font-weight:800;color:var(--lemon);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.workflow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
+.wf-step{background:rgba(255,255,255,.04);padding:18px;position:relative}
+.wf-step::after{content:'→';position:absolute;right:-1px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.2);font-size:18px;z-index:1}
+.wf-step:last-child::after{display:none}
+.wf-num{font-size:10px;font-weight:800;color:var(--indigo);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.wf-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:5px}
+.wf-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
 
 /* ── SEARCH ── */
-.search-bar{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;font-size:15px;width:100%;margin-bottom:24px;transition:.2s}
-.search-bar:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.1)}
+.search-wrap{position:relative;margin-bottom:24px}
+.search-wrap input{width:100%;padding:16px 20px 16px 48px;border:2px solid var(--border);border-radius:12px;font-size:15px;background:var(--card);transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.search-wrap input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 4px rgba(75,75,249,.1)}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted)}
+
+/* ── CATEGORY CARDS ── */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px}
+.cat-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:22px;cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:10px}
+.cat-card:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 8px 24px rgba(75,75,249,.12)}
+.cat-card-top{display:flex;align-items:center;gap:12px}
+.cat-icon-wrap{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cat-icon-indigo{background:rgba(75,75,249,.12)}
+.cat-icon-mint{background:rgba(139,240,187,.2)}
+.cat-icon-lemon{background:rgba(249,239,119,.2)}
+.cat-icon-coral{background:rgba(255,141,150,.2)}
+.cat-icon-lav{background:rgba(191,161,255,.2)}
+.cat-name{font-size:16px;font-weight:800;color:var(--midnight)}
+.cat-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.cat-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border)}
+.cat-count{font-size:12px;font-weight:700;color:var(--indigo);background:rgba(75,75,249,.08);padding:4px 10px;border-radius:20px}
+.cat-arrow{color:var(--muted);font-size:16px}
+
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.sec-title{font-size:22px;font-weight:800;color:var(--midnight)}
+.sec-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s;border:1px solid var(--border);background:var(--card);color:var(--text);text-decoration:none}
+.btn:hover{background:var(--lgrey)}
+.btn-primary{background:var(--midnight);color:#fff;border-color:var(--midnight)}
+.btn-primary:hover{background:#1a1a4e}
+.btn-indigo{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn-indigo:hover{background:#3a3ae0}
+.btn-dark{background:#18181b;color:#fff;border-color:#18181b}
+.btn-qa{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
 
 /* ── SOP CARDS ── */
-.sop-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:26px;margin-bottom:18px;transition:.2s}
-.sop-card:hover{border-color:var(--indigo);box-shadow:0 8px 20px rgba(75,75,249,.08)}
-.sop-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.sop-code{background:var(--indigo);color:#fff;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:800;display:inline-block;margin-bottom:6px}
-.sop-title{font-size:18px;font-weight:800;color:var(--midnight)}
-.sop-system{font-size:12px;font-weight:700;background:var(--light-grey);color:var(--muted);padding:5px 12px;border-radius:8px;border:1px solid var(--border)}
-.sop-desc{background:rgba(75,75,249,.05);border-left:4px solid var(--indigo);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14px;color:#334155;line-height:1.6;margin-bottom:18px}
-
-/* ── FLOWCHART NODES ── */
-.flowchart{display:flex;flex-direction:column;gap:0;margin:16px 0}
-.fc-node{background:var(--white);border:1.5px solid var(--border);border-left:5px solid var(--indigo);border-radius:0 10px 10px 0;padding:16px 20px;transition:.2s}
-.fc-node:hover{border-color:var(--indigo);box-shadow:0 4px 12px rgba(75,75,249,.08)}
-.fc-node.mint{border-left-color:var(--mint)}
-.fc-node.coral{border-left-color:var(--coral)}
-.fc-node.lemon{border-left-color:var(--warning)}
-.fc-node.lavender{border-left-color:var(--lavender)}
-.fc-num{display:inline-block;background:rgba(75,75,249,.1);color:var(--indigo);font-size:10px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px;text-transform:uppercase}
-.fc-title{font-size:14.5px;font-weight:800;color:var(--midnight);margin-bottom:4px}
-.fc-desc{font-size:13.5px;color:#334155;line-height:1.6}
-.fc-arrow{text-align:center;color:var(--indigo);font-size:18px;font-weight:900;padding:4px 0;line-height:1}
-
-/* ── CANNED REPLY BOX ── */
-.canned-box{background:#f0fdf4;border:1px solid #bbf7d0;border-left:5px solid var(--success);padding:16px 18px;border-radius:0 8px 8px 0;margin-top:16px;position:relative}
-.canned-label{font-size:12px;font-weight:800;color:var(--success);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.canned-text{font-size:13.5px;color:#166534;line-height:1.6}
-.copy-btn{position:absolute;top:12px;right:12px;background:var(--success);color:#fff;border:none;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+.sop-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.sop-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.sop-code{display:inline-block;background:var(--indigo);color:#fff;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:800;margin-bottom:6px}
+.sop-title{font-size:19px;font-weight:800;color:var(--midnight)}
+.sop-sys{background:var(--lgrey);color:var(--muted);padding:5px 12px;border-radius:6px;font-size:12px;font-weight:700;border:1px solid var(--border)}
+.sop-desc{background:rgba(75,75,249,.06);border-left:4px solid var(--indigo);padding:14px 16px;border-radius:6px;font-size:14px;color:#334155;line-height:1.6;margin-bottom:18px}
+.flow-title{font-size:14px;font-weight:800;color:var(--midnight);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.flow-wrap{display:flex;flex-direction:column;gap:4px}
+.flow-node{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--indigo);border-radius:8px;padding:15px 18px;transition:.15s}
+.flow-node:hover{border-left-color:var(--indigo);box-shadow:0 3px 10px rgba(75,75,249,.08)}
+.flow-node.coral{border-left-color:var(--coral)}
+.flow-node.mint{border-left-color:var(--mint)}
+.flow-node.lemon{border-left-color:#d4b800}
+.flow-node.lav{border-left-color:var(--lav)}
+.flow-node-num{font-size:10px;font-weight:800;color:var(--indigo);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.flow-node.coral .flow-node-num{color:var(--coral)}
+.flow-node.mint .flow-node-num{color:#059669}
+.flow-node.lemon .flow-node-num{color:#a16207}
+.flow-node-title{font-size:14px;font-weight:800;color:var(--midnight);margin-bottom:4px}
+.flow-node-desc{font-size:13px;color:#475569;line-height:1.6}
+.flow-arr{text-align:center;color:var(--indigo);font-size:16px;opacity:.5;line-height:1}
+.canned{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--success);padding:15px 16px;border-radius:8px;margin-top:14px;position:relative}
+.canned-label{font-size:11px;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.canned-text{font-size:13.5px;color:#166534;line-height:1.5}
+.copy-btn{position:absolute;top:12px;right:12px;background:var(--success);color:#fff;border:none;padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer}
 .copy-btn:hover{background:#059669}
 
-/* ── PAGE HEADER ── */
-.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px}
-.page-title{font-size:22px;font-weight:900;color:var(--midnight)}
-.page-sub{font-size:13px;color:var(--muted);margin-top:3px}
+/* ── LANG TOGGLE ── */
+.lang-tog{display:flex;background:var(--lgrey);border-radius:8px;padding:3px;border:1px solid var(--border);gap:2px}
+.lang-btn{border:none;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted)}
+.lang-btn.active{background:#fff;color:var(--midnight);box-shadow:0 1px 4px rgba(0,0,0,.08)}
 
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.2s;border:1.5px solid transparent;text-decoration:none}
-.btn-ghost{background:var(--white);border-color:var(--border);color:var(--midnight)}
-.btn-ghost:hover{border-color:var(--indigo);color:var(--indigo)}
-.btn-primary{background:var(--midnight);color:#fff;border-color:var(--midnight)}
-.btn-primary:hover{background:#1e1e4a}
-.btn-indigo{background:var(--indigo);color:#fff;border-color:var(--indigo)}
-.btn-indigo:hover{background:#3a3ad4}
-.btn-mint{background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none}
-.btn-purple{background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border:none}
-.btn-dark{background:#18181b;color:#fff;border:none}
+/* ── DECISION TREE ── */
+.dt-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.dt-breadcrumb{font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:600}
+.dt-breadcrumb a{color:var(--indigo);text-decoration:underline;cursor:pointer}
+.dt-prompt{font-size:20px;font-weight:800;color:var(--midnight);margin-bottom:20px}
+.dt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.dt-btn{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;text-align:left;transition:.2s}
+.dt-btn:hover{border-color:var(--indigo);background:#f5f5ff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(75,75,249,.1)}
+.dt-btn-title{font-size:15px;font-weight:700;color:var(--midnight);margin-bottom:5px}
+.dt-btn-hint{font-size:12.5px;color:var(--muted);line-height:1.4}
+.dt-btn-act{font-size:11.5px;font-weight:700;color:var(--indigo);margin-top:8px}
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
+.res-badge{display:inline-block;background:var(--success);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:12px}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.res-info{background:var(--lgrey);border:1px solid var(--border);border-radius:8px;padding:12px}
+.res-info-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.res-info-val{font-size:15px;font-weight:800;color:var(--midnight);margin-top:4px}
+.res-block{background:var(--lgrey);border:1px solid var(--border);border-left:4px solid var(--indigo);padding:14px;border-radius:8px;margin:10px 0}
+.res-block strong{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+.res-block div{font-size:14.5px;color:var(--midnight);line-height:1.5}
 
-/* ── SCENARIO CARDS ── */
-.scenario-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:14px;transition:.2s}
-.scenario-card:hover{border-color:var(--indigo);box-shadow:0 6px 18px rgba(75,75,249,.08)}
-.sc-source{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-.sc-quote{font-size:15px;font-weight:700;color:var(--midnight);background:rgba(75,75,249,.05);padding:12px 16px;border-radius:8px;border:1px solid rgba(75,75,249,.1);margin-bottom:10px}
-.sc-analysis{font-size:13.5px;color:#334155;line-height:1.6;margin-bottom:12px}
+/* ── SCENARIOS ── */
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;transition:.15s}
+.sc-item:hover{border-color:var(--indigo);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.sc-src{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.sc-quote{font-size:15px;font-weight:700;color:var(--midnight);background:rgba(75,75,249,.06);border:1px solid rgba(75,75,249,.15);padding:11px 14px;border-radius:8px;margin-bottom:10px;direction:ltr;unicode-bidi:plaintext}
+.sc-explain{font-size:13.5px;color:#475569;line-height:1.6;margin-bottom:10px}
 .sc-tags{display:flex;gap:8px;flex-wrap:wrap}
-.sc-tag{font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px}
-.sc-tag.reason{background:#e0e7ff;color:#3730a3}
-.sc-tag.res{background:#dcfce7;color:#166534}
+.sc-tag-r{background:#e0e7ff;color:#3730a3;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px}
+.sc-tag-res{background:#dcfce7;color:#166534;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px}
 
 /* ── PILL TABS ── */
-.pill-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.pill{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--muted);font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s}
+.pill-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pill{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12.5px;font-weight:700;cursor:pointer;transition:.15s}
 .pill:hover{border-color:var(--indigo);color:var(--indigo)}
 .pill.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
 
-/* ── PORTAL ── */
-.portal-header{background:rgba(75,75,249,.05);border:1.5px solid rgba(75,75,249,.15);border-radius:14px;padding:22px;margin-bottom:20px}
-.portal-search{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.portal-input{flex:1;min-width:260px;padding:13px 18px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;background:var(--white);transition:.2s}
-.portal-input:focus{outline:none;border-color:var(--indigo)}
-
-/* ── TABLE ── */
-.table-wrap{background:var(--white);border-radius:12px;border:1.5px solid var(--border);overflow-x:auto}
+/* ── PORTAL / TABLE ── */
+.portal-banner{background:rgba(75,75,249,.06);border:1px solid rgba(75,75,249,.15);border-radius:12px;padding:20px;margin-bottom:18px}
+.portal-search{width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:14.5px;background:#fff;margin-top:10px}
+.portal-search:focus{outline:none;border-color:var(--indigo)}
+.table-wrap{background:var(--card);border-radius:10px;border:1px solid var(--border);overflow-x:auto;padding:20px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{border-bottom:1px solid var(--border);padding:12px 14px;text-align:left;vertical-align:middle}
-th{background:var(--light-grey);font-weight:800;color:var(--midnight);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
-tr:hover td{background:#fafafa}
-.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:800}
-.s-green{background:#dcfce7;color:#166534;border:1px solid #86efac}
-.s-yellow{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
-.s-red{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
-.s-blue{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe}
-
-/* ── DECISION TREE ── */
-.dt-wrap{background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:28px;margin-bottom:24px}
-.dt-breadcrumb{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:18px}
-.dt-breadcrumb span{color:var(--indigo)}
-.dt-prompt{font-size:20px;font-weight:900;color:var(--midnight);margin-bottom:20px}
-.dt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
-.dt-card{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:.2s;text-align:left}
-.dt-card:hover{border-color:var(--indigo);background:rgba(75,75,249,.03);transform:translateY(-2px);box-shadow:0 6px 16px rgba(75,75,249,.1)}
-.dt-card-title{font-size:15px;font-weight:700;color:var(--midnight);margin-bottom:6px}
-.dt-card-hint{font-size:12.5px;color:var(--muted)}
-.dt-card-cta{font-size:12px;font-weight:800;color:var(--indigo);margin-top:10px}
-
-/* ── RESOLUTION CARD ── */
-.res-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:26px;margin-top:16px}
-.res-badge{display:inline-block;background:var(--success);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:14px}
-.res-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
-.res-info-card{background:var(--light-grey);border-radius:10px;padding:14px;border:1px solid var(--border)}
-.res-info-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.res-info-val{font-size:15px;font-weight:800;color:var(--midnight);margin-top:4px}
-.res-block{background:var(--light-grey);border-left:5px solid var(--indigo);padding:14px 18px;border-radius:0 10px 10px 0;margin:10px 0}
-.res-block strong{font-size:13px;font-weight:800;color:var(--midnight)}
-.res-block div{font-size:14px;color:#334155;margin-top:5px;line-height:1.5}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:middle}
+th{background:var(--lgrey);font-weight:800;color:var(--midnight);white-space:nowrap}
+.pill-success{background:#dcfce7;color:#166534;border:1px solid #86efac;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
+.pill-warn{background:#fef3c7;color:#854d0e;border:1px solid #fde68a;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
+.pill-danger{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
+.pill-info{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:800;display:inline-block}
 
 /* ── FORMS ── */
-.form-wrap{background:var(--white);border-radius:14px;border:1.5px solid var(--border);padding:28px}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-label{display:block;font-size:13px;font-weight:700;color:var(--midnight);margin-bottom:5px}
-input,select,textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;color:var(--midnight);background:var(--white);transition:.2s}
+.form-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+label{display:block;margin-top:14px;font-weight:700;font-size:13px;color:var(--midnight)}
+input[type=text],input[type=email],input[type=date],select,textarea{width:100%;padding:10px 13px;margin-top:5px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:#fff;color:var(--midnight)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.1)}
-.form-field{margin-bottom:16px}
-.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--indigo),#3a3ad4);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;margin-top:20px;transition:.2s;box-shadow:0 4px 14px rgba(75,75,249,.3)}
-.submit-btn:hover{opacity:.9;transform:translateY(-1px)}
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:800;margin-top:20px;cursor:pointer;box-shadow:0 4px 14px rgba(139,92,246,.3)}
+.submit-btn:hover{opacity:.9}
 
-/* ── FATAL BANNER ── */
-.fatal-banner{background:#fff5f5;border:2px solid #fca5a5;border-radius:12px;padding:18px;margin-bottom:16px}
-
-/* ── QA HEADER ── */
-.qa-hero{background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border-radius:14px;padding:26px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;box-shadow:0 10px 28px rgba(139,92,246,.3)}
-.qa-circle{background:#fff;color:#7c3aed;width:88px;height:88px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,.15);flex-shrink:0}
-.qa-circle span{font-size:10px;font-weight:700;color:var(--muted)}
-
-/* ── QA SECTION ── */
-.qa-section{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
-.qa-section-title{font-size:15px;font-weight:800;color:var(--midnight);margin-bottom:14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--light-grey);padding-bottom:10px}
-.check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--light-grey);padding:14px;border-radius:10px;border:1.5px solid var(--border)}
+/* ── QA ── */
+.qa-hero{background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;box-shadow:0 8px 24px rgba(124,58,237,.25)}
+.qa-score-circle{background:#fff;color:#7c3aed;width:88px;height:88px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.qa-score-circle span{font-size:10px;font-weight:700;color:var(--muted)}
+.qa-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
+.qa-sec-title{font-size:15px;font-weight:800;color:var(--midnight);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--lgrey);display:flex;align-items:center;gap:8px}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:var(--lgrey);padding:14px;border-radius:8px;border:1px solid var(--border)}
 .check-item{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;cursor:pointer}
+.fatal-box{background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;padding:18px;margin-bottom:14px}
 
-/* ── DASHBOARD METRICS ── */
-.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px}
-.metric-card{background:rgba(75,75,249,.06);border:1.5px solid rgba(75,75,249,.15);border-radius:10px;padding:16px;text-align:center}
+/* ── DASHBOARD ── */
+.dash-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+.metric-card{background:rgba(75,75,249,.06);border:1px solid rgba(75,75,249,.15);border-radius:10px;padding:16px;text-align:center}
 .metric-val{font-size:26px;font-weight:900;color:var(--indigo);margin-top:4px}
-.metric-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
 
-/* ── REVIEW STATUS ── */
-.badge-approved{background:#dcfce7;color:#166534;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:800}
-.badge-rejected{background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:800}
-.badge-pending{background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:800}
+/* ── STATUS BADGES ── */
+.badge-approved{background:#dcfce7;color:#166534;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
+.badge-rejected{background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
+.badge-pending{background:#fef3c7;color:#854d0e;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
 
 /* ── MODAL ── */
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(9,9,45,.65);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
-.modal-box{background:var(--white);border-radius:16px;max-width:580px;width:100%;padding:30px;box-shadow:0 24px 48px rgba(0,0,0,.2)}
-.modal-title{font-size:18px;font-weight:900;color:var(--midnight);margin-bottom:16px}
+.modal-ov{position:fixed;inset:0;background:rgba(9,9,45,.6);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+.modal-box{background:#fff;border-radius:14px;max-width:580px;width:100%;padding:28px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
 
-/* ── LANG TOGGLE ── */
-.lang-toggle{display:flex;background:var(--light-grey);border-radius:8px;padding:3px;border:1.5px solid var(--border)}
-.lang-btn{border:none;padding:6px 14px;border-radius:6px;font-size:12.5px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:.2s}
-.lang-btn.active{background:var(--white);color:var(--midnight);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+/* ── FOOTER ── */
+.footer{text-align:center;padding:28px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);margin-top:8px}
+.footer a{color:var(--indigo);font-weight:700;text-decoration:none}
 
-/* ── DIVIDER SECTION LABEL ── */
-.section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:28px 0 14px 0;display:flex;align-items:center;gap:10px}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* ── CHEAT SHEET GRID ── */
-.tag-ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:16px}
-.tag-ref-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;gap:12px;align-items:flex-start;transition:.2s}
-.tag-ref-card:hover{border-color:var(--indigo);transform:translateY(-2px)}
-.tag-badge{font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;white-space:nowrap;flex-shrink:0}
-.tag-red{background:#fee2e2;color:#991b1b}
-.tag-orange{background:#fef3c7;color:#92400e}
-.tag-yellow{background:#fefce8;color:#713f12}
-.tag-purple{background:#ede9fe;color:#5b21b6}
-.tag-blue{background:#e0e7ff;color:#3730a3}
-.tag-green{background:#dcfce7;color:#166534}
-.tag-ref-content .tag-meaning{font-size:13px;font-weight:700;color:var(--midnight);margin-bottom:3px}
-.tag-ref-content .tag-action{font-size:12.5px;color:var(--muted);line-height:1.4}
-
-/* ── TABLE TABS ── */
-.sla-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-.sla-table th,.sla-table td{border:1px solid var(--border);padding:10px 14px;text-align:left}
-.sla-table th{background:var(--light-grey);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
-.sla-table tr:hover td{background:#fafafa}
-
-/* ── POWERED BY ── */
-.powered-by{text-align:center;padding:24px;font-size:12px;color:var(--muted);font-weight:600;margin-top:16px;border-top:1px solid var(--border)}
-.powered-by a{color:var(--indigo);font-weight:800;text-decoration:none}
-
-@media(max-width:640px){
-  .site-header{padding:0 16px}
-  .page-wrap{padding:16px}
-  .hero{padding:24px 20px}
-  .hero-title{font-size:20px}
-  .nav-tabs{padding:0 16px}
+@media(max-width:768px){
+  .page{padding:16px}
+  .workflow-steps{grid-template-columns:1fr 1fr}
+  .wf-step::after{display:none}
+  .hero-title{font-size:22px}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-     SITE HEADER
-════════════════════════════════════════ -->
-<header class="site-header">
-  <div class="logo-wrap">
-    <div class="logo-mark">M</div>
+<!-- NAV -->
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-brand-icon">M</div>
     <div>
-      <div class="logo-text">MAVIN OPS HUB</div>
-      <div class="logo-sub">Bosta · Shopify · QA · CS</div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA · CS</div>
     </div>
   </div>
-  <div class="header-right">
-    <select class="user-select" id="userSelector" onchange="changeUser()">
+  <div class="nav-links">
+    <button class="nav-link active" onclick="nav('home')">🏠 Home</button>
+    <button class="nav-link" onclick="nav('library')">📚 SOP Library</button>
+    <button class="nav-link" onclick="nav('dt')">🌳 Decision Tree</button>
+    <button class="nav-link" onclick="nav('scenarios')">💬 63 Scenarios</button>
+    <button class="nav-link" onclick="nav('portal')">🔍 Return Portal</button>
+    <button class="nav-link" onclick="nav('esc')">🚨 Escalation</button>
+    <button class="nav-link" onclick="nav('logs')">📊 Case Records</button>
+    <button class="nav-link" onclick="nav('qa')">⭐ QA Audit</button>
+    <button class="nav-link" onclick="nav('qalogs')">📈 QA Records</button>
+  </div>
+  <div class="nav-right">
+    <select class="user-sel" id="userSel" onchange="changeUser()">
       <option value="agent@mavinwear.com">Support Agent</option>
       <option value="nourtamer2005@gmail.com">Nour Tamer (Reviewer)</option>
       <option value="nanielshazly4@gmail.com">Nani El Shazly (Reviewer)</option>
       <option value="Rehabmohamed881@gmail.com">Rehab Mohamed (QA)</option>
     </select>
-    <div class="role-chip" id="roleChip">General CS</div>
   </div>
-</header>
-
-<!-- ═══════════════════════════════════════
-     NAV TABS
-════════════════════════════════════════ -->
-<nav class="nav-tabs">
-  <div class="nav-tab active" onclick="switchTab('home')">🏠 Home</div>
-  <div class="nav-tab" onclick="switchTab('sops')">📚 SOP Library</div>
-  <div class="nav-tab" onclick="switchTab('tree')">🌳 Decision Tree</div>
-  <div class="nav-tab" onclick="switchTab('scenarios')">🗣️ 63 Scenarios</div>
-  <div class="nav-tab" onclick="switchTab('portal')">🔍 Return Portal</div>
-  <div class="nav-tab" onclick="switchTab('escalation')">🚨 Escalation</div>
-  <div class="nav-tab" onclick="switchTab('logs')">📊 Case Records</div>
-  <div class="nav-tab" onclick="switchTab('qa')">⭐ QA Audit</div>
-  <div class="nav-tab" onclick="switchTab('qalogs')">📈 QA Records</div>
 </nav>
 
-<!-- ═══════════════════════════════════════
-     PAGE WRAP
-════════════════════════════════════════ -->
-<div class="page-wrap">
-
-<!-- ────────────────────────────────
-     HOME
-──────────────────────────────── -->
-<div id="view-home" class="section-view active">
-
-  <!-- Hero -->
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div class="page active" id="page-home">
   <div class="hero">
-    <div>
-      <div class="hero-title">MAVIN × BOSTA Operations Hub</div>
-      <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Every SOP, workflow, scenario, and checklist — built to run fast.</div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-label">SOP Categories</div></div>
-        <div class="hero-stat"><div class="hero-stat-val">63</div><div class="hero-stat-label">Real Scenarios</div></div>
-        <div class="hero-stat"><div class="hero-stat-val">~15K</div><div class="hero-stat-label">Daily Orders</div></div>
-        <div class="hero-stat"><div class="hero-stat-val">24h</div><div class="hero-stat-label">SLA Target</div></div>
-      </div>
+    <div class="hero-title">MAVIN × BOSTA Operations Hub</div>
+    <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Every SOP, workflow, scenario, and checklist — built to run fast.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" id="statCats">0</div><div class="hero-stat-label">SOP Categories</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">63</div><div class="hero-stat-label">Real Scenarios</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">~15K</div><div class="hero-stat-label">Daily Orders</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">24h</div><div class="hero-stat-label">SLA Target</div></div>
     </div>
   </div>
 
-  <!-- Golden Workflow -->
-  <div class="flow-bar">
-    <div class="flow-bar-title">⚡ Agent Golden Workflow — Every Ticket, Every Time</div>
-    <div class="flow-steps">
-      <div class="flow-step">
-        <div class="flow-step-n">Step 1</div>
-        <div class="flow-step-title">Open & Flag Ticket First</div>
-        <div class="flow-step-desc">Always log order # before contacting customer. Protects 24h SLA.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-step-n">Step 2</div>
-        <div class="flow-step-title">5-Tool Investigation</div>
-        <div class="flow-step-desc">Check Shopify, Gorgias, Slack, Bosta & Sheets. Never assume.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-step-n">Step 3</div>
-        <div class="flow-step-title">One-Touch Resolution</div>
-        <div class="flow-step-desc">Complete solution in the very first response. No fragments.</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-step-n">Step 4</div>
-        <div class="flow-step-title">Close Within 2–3 Hours</div>
-        <div class="flow-step-desc">Close resolved tickets immediately. Keep the queue clean.</div>
-      </div>
+  <div class="workflow-bar">
+    <div class="workflow-label">⚡ Agent Golden Workflow — Every Ticket, Every Time</div>
+    <div class="workflow-steps">
+      <div class="wf-step"><div class="wf-num">Step 1</div><div class="wf-title">Open & Flag Ticket First</div><div class="wf-desc">Always log order # before contacting customer. Protects 24h SLA.</div></div>
+      <div class="wf-step"><div class="wf-num">Step 2</div><div class="wf-title">5-Tool Investigation</div><div class="wf-desc">Check Shopify, Gorgias, Slack, Bosta & Sheets. Never assume.</div></div>
+      <div class="wf-step"><div class="wf-num">Step 3</div><div class="wf-title">One-Touch Resolution</div><div class="wf-desc">Complete solution in the very first response. No fragments.</div></div>
+      <div class="wf-step"><div class="wf-num">Step 4</div><div class="wf-title">Close Within 2–3 Hours</div><div class="wf-desc">Close resolved tickets immediately. Keep the queue clean.</div></div>
     </div>
   </div>
 
-  <!-- Search -->
-  <input class="search-bar" id="homeSearch" placeholder="🔍 Search SOPs, topics, tags... (e.g. Awaiting Action, Refund Bot, pending-refund)" onkeyup="handleHomeSearch()">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="homeSearch" placeholder="Search SOPs, topics, tags... (e.g. Awaiting Action, Refund Bot, pending-refund)" onkeyup="homeSearch()">
+  </div>
 
-  <!-- Category grid -->
   <div class="cat-grid" id="catGrid"></div>
-
 </div>
 
-<!-- ────────────────────────────────
-     SOP LIBRARY
-──────────────────────────────── -->
-<div id="view-sops" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ SOP LIBRARY ══════════════ -->
+<div class="page" id="page-library">
+  <div class="sec-header">
     <div>
-      <div class="page-title" id="sopLibTitle">SOP Library</div>
-      <div class="page-sub" id="sopLibSub">Select a category from Home to browse SOPs</div>
+      <div class="sec-title" id="libTitle">SOP Library</div>
+      <div class="sec-sub" id="libSub">Browse all procedures</div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btnEn" onclick="setLang('en')">English</button>
-        <button class="lang-btn" id="btnAr" onclick="setLang('ar')">العربية</button>
+    <div class="btn-group">
+      <div class="lang-tog">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">English</button>
+        <button class="lang-btn" id="btnAR" onclick="setLang('ar')">العربية</button>
       </div>
-      <button class="btn btn-ghost" onclick="switchTab('home')">🏠 Home</button>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
-  <div id="sopsContainer"></div>
+  <div id="sopContainer"></div>
 </div>
 
-<!-- ────────────────────────────────
-     DECISION TREE
-──────────────────────────────── -->
-<div id="view-tree" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ DECISION TREE ══════════════ -->
+<div class="page" id="page-dt">
+  <div class="sec-header">
     <div>
-      <div class="page-title">🌳 Interactive Decision Tree</div>
-      <div class="page-sub">Follow the guided path to find the correct resolution.</div>
+      <div class="sec-title">🌳 Decision Tree Engine</div>
+      <div class="sec-sub">Structured from the MAVIN Master Decision Tree Map</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-ghost" onclick="resetDT()">🔄 Restart</button>
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="dtBtnEn" onclick="setDTLang('en')">English</button>
-        <button class="lang-btn" id="dtBtnAr" onclick="setDTLang('ar')">العربية</button>
-      </div>
+    <div class="btn-group">
+      <button class="btn" onclick="resetDT()">🔄 Restart</button>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
   <div class="dt-wrap">
-    <div class="dt-breadcrumb" id="dtBreadcrumb"><span>Step 1</span> → Select Category</div>
-    <div class="dt-prompt" id="dtPrompt">What is the main type of issue?</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div class="dt-breadcrumb" id="dtBread">Step 1 → Select Category</div>
+      <div class="lang-tog">
+        <button class="lang-btn active" id="dtBtnEN" onclick="setDTLang('en')">English</button>
+        <button class="lang-btn" id="dtBtnAR" onclick="setDTLang('ar')">العربية</button>
+      </div>
+    </div>
+    <div class="dt-prompt" id="dtPrompt">Select Customer Inquiry Category:</div>
     <div class="dt-grid" id="dtGrid"></div>
     <div id="dtFinal" style="display:none"></div>
   </div>
 </div>
 
-<!-- ────────────────────────────────
-     SCENARIOS
-──────────────────────────────── -->
-<div id="view-scenarios" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ SCENARIOS ══════════════ -->
+<div class="page" id="page-scenarios">
+  <div class="sec-header">
     <div>
-      <div class="page-title">🗣️ Real Customer Scenarios</div>
-      <div class="page-sub">63 actual cases with root-cause analysis and resolution tags.</div>
+      <div class="sec-title">💬 Real Customer Scenarios</div>
+      <div class="sec-sub">63 actual scenarios with root-cause analysis and resolution tagging</div>
     </div>
-    <button class="btn btn-ghost" onclick="switchTab('home')">🏠 Home</button>
+    <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
   </div>
-  <div class="portal-header">
-    <input class="portal-input" style="width:100%" id="scSearch" placeholder="🔍 Search scenarios (e.g. One Touch, Bosta, Awaiting Action, 10% bonus)..." onkeyup="filterScenarios()">
-    <div class="pill-tabs" id="scPills" style="margin-top:12px;margin-bottom:0"></div>
+  <div class="portal-banner">
+    <input type="text" class="portal-search" id="scSearch" placeholder="🔍 Search scenarios (e.g. Bosta, refund, exchange, One Touch)..." onkeyup="filterScenarios()">
+    <div class="pill-tabs" id="scPills" style="margin-top:12px"></div>
   </div>
   <div id="scContainer"></div>
 </div>
 
-<!-- ────────────────────────────────
-     RETURN PORTAL
-──────────────────────────────── -->
-<div id="view-portal" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ RETURN PORTAL ══════════════ -->
+<div class="page" id="page-portal">
+  <div class="sec-header">
     <div>
-      <div class="page-title">🔍 Return & Refund Portal</div>
-      <div class="page-sub" id="portalStatus">Loading live records...</div>
+      <div class="sec-title">🔍 Return & Refund Portal</div>
+      <div class="sec-sub" id="portalStatus">Loading records...</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-ghost" onclick="fetchPortal()">🔄 Refresh</button>
-      <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit" target="_blank" class="btn btn-ghost">📊 Master Sheet ↗</a>
+    <div class="btn-group">
+      <button class="btn" onclick="fetchPortal()">🔄 Refresh</button>
+      <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit" target="_blank" class="btn">📊 Master Sheet ↗</a>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
-  <div class="portal-header">
+  <div class="portal-banner">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-      <div>
-        <strong style="font-size:14px">Universal Search — All Tabs</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">Search by Phone, Order #, Customer Name, SKU, or Status</div>
-      </div>
-      <span id="recCount" style="font-size:12px;font-weight:700;background:var(--white);padding:4px 10px;border-radius:8px;border:1px solid var(--border)">0 records</span>
+      <div><strong style="font-size:14px">Universal Search</strong><div style="font-size:12px;color:var(--muted);margin-top:2px">Search by Phone, Order #, Name, SKU, or Status</div></div>
+      <span id="recCount" style="font-weight:700;font-size:12px;background:#fff;padding:4px 10px;border-radius:6px;border:1px solid var(--border)">0 records</span>
     </div>
-    <div class="portal-search">
-      <input class="portal-input" id="portalSearch" placeholder="Type Phone, Order #, Name, SKU, Status..." onkeyup="filterPortal()">
-    </div>
-    <div class="pill-tabs" id="portalPills" style="margin-top:12px;margin-bottom:0"></div>
+    <input type="text" class="portal-search" id="portalSearch" placeholder="Type to search all tabs..." onkeyup="filterPortal()">
+    <div class="pill-tabs" id="portalPills" style="margin-top:12px"></div>
   </div>
   <div class="table-wrap">
-    <table id="portalTable">
-      <thead id="portalHead"></thead>
-      <tbody id="portalBody"></tbody>
-    </table>
+    <table id="portalTable"><thead id="portalTHead"></thead><tbody id="portalTBody"></tbody></table>
   </div>
 </div>
 
-<!-- ────────────────────────────────
-     ESCALATION FORM
-──────────────────────────────── -->
-<div id="view-escalation" class="section-view">
-  <div class="page-header">
-    <div class="page-title">🚨 CS Escalation Form</div>
-    <button class="btn btn-ghost" onclick="switchTab('home')">🏠 Home</button>
+<!-- ══════════════ ESCALATION FORM ══════════════ -->
+<div class="page" id="page-esc">
+  <div class="sec-header">
+    <div class="sec-title">🚨 CS Product Escalation Form</div>
+    <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
   </div>
   <div class="form-wrap">
     <form id="escForm">
-      <div class="form-grid">
-        <div class="form-field"><label>Order Number</label><input id="esc_order" placeholder="#10852" required></div>
-        <div class="form-field"><label>Ticket Number</label><input id="esc_ticket" placeholder="#TK-304" required></div>
-        <div class="form-field"><label>Customer Name</label><input id="esc_customer" required></div>
-        <div class="form-field"><label>Contact Reason</label><input id="esc_reason" placeholder="e.g. Production Defect / Awaiting Action" required></div>
-        <div class="form-field"><label>Ticket Date</label><input type="date" id="esc_date" required></div>
-        <div class="form-field"><label>Order Received by Customer?</label><select id="esc_received"><option value="false">No</option><option value="true">Yes</option></select></div>
-        <div class="form-field"><label>Delivered Date (if applicable)</label><input type="date" id="esc_delivered"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <div><label>Order Number</label><input type="text" id="e_order" placeholder="#10852" required></div>
+        <div><label>Ticket Number</label><input type="text" id="e_ticket" placeholder="#TK-304" required></div>
+        <div><label>Customer Name</label><input type="text" id="e_name" required></div>
+        <div><label>Contact Reason</label><input type="text" id="e_reason" placeholder="e.g. Bosta Awaiting Action" required></div>
+        <div><label>Ticket Date</label><input type="date" id="e_date" required></div>
+        <div><label>Received Order?</label><select id="e_recv"><option value="false">No</option><option value="true">Yes</option></select></div>
+        <div><label>Delivered Date</label><input type="date" id="e_ddate"></div>
       </div>
-      <div class="form-field"><label>Case Summary</label><textarea id="esc_summary" rows="4" placeholder="Investigation details across Shopify, Gorgias, Slack, Bosta, Refund sheet..." required></textarea></div>
+      <label>Case Summary</label>
+      <textarea id="e_summary" rows="4" placeholder="Explain details after self-investigation across Shopify, Gorgias, Slack, Bosta, Estbdal & Refund sheet..." required></textarea>
       <button type="submit" class="submit-btn">💾 Submit Escalation</button>
     </form>
   </div>
 </div>
 
-<!-- ────────────────────────────────
-     CASE RECORDS
-──────────────────────────────── -->
-<div id="view-logs" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ CASE RECORDS ══════════════ -->
+<div class="page" id="page-logs">
+  <div class="sec-header">
     <div>
-      <div class="page-title">📊 Escalation Records & Review</div>
-      <div class="page-sub">Authorized reviewers can validate actions and add comments.</div>
+      <div class="sec-title">📊 Escalation Records & Case Review</div>
+      <div class="sec-sub">Authorized reviewers can validate actions and add comments</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <div class="btn-group">
       <button class="btn btn-dark" onclick="exportEsc()">📥 Export Excel</button>
-      <button class="btn btn-ghost" onclick="loadLogs()">🔄 Refresh</button>
+      <button class="btn" onclick="loadLogs()">🔄 Refresh</button>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
   <div class="table-wrap">
     <table id="logsTable">
-      <thead><tr><th>Order #</th><th>Ticket #</th><th>Customer</th><th>Reason</th><th>Date</th><th>Summary</th><th>Status</th><th>Reviewer Notes</th><th>Action</th></tr></thead>
-      <tbody id="logsTbody"></tbody>
+      <thead><tr><th>Order #</th><th>Ticket #</th><th>Customer</th><th>Reason</th><th>Date</th><th>Summary</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead>
+      <tbody></tbody>
     </table>
   </div>
 </div>
 
-<!-- ────────────────────────────────
-     QA FORM
-──────────────────────────────── -->
-<div id="view-qa" class="section-view">
-  <div class="page-header">
-    <div class="page-title">⭐ Quality Audit Form</div>
-    <button class="btn btn-ghost" onclick="switchTab('home')">🏠 Home</button>
+<!-- ══════════════ QA AUDIT ══════════════ -->
+<div class="page" id="page-qa">
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">⭐ Quality Assurance Smart Audit</div>
+      <div class="sec-sub">Dynamic scoring with duplicate check, Fatal flags & Multi-Tool Investigation</div>
+    </div>
+    <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
   </div>
 
-  <!-- Live Score Banner -->
   <div class="qa-hero">
     <div>
-      <div style="font-size:20px;font-weight:900">Audit Scorecard</div>
-      <div id="qaGradeText" style="font-size:14px;margin-top:6px;opacity:.9">Grade: Excellent (100%) ⭐⭐⭐</div>
-      <div id="qaFatalText" style="font-size:12px;margin-top:4px;font-weight:700;color:#fef08a"></div>
+      <h3 style="color:#fff;font-size:20px;font-weight:800;margin-bottom:6px">Audit Scorecard Performance</h3>
+      <div id="qaGrade" style="color:rgba(255,255,255,.85);font-size:14px">Grade: Excellent (100%) ⭐⭐⭐</div>
+      <div id="qaFatal" style="color:#fef08a;font-size:12.5px;font-weight:700;margin-top:4px"></div>
     </div>
-    <div class="qa-circle">
-      <div id="qaScore">100%</div>
-      <span>SCORE</span>
-    </div>
+    <div class="qa-score-circle"><span id="qaScore">100%</span><span>SCORE</span></div>
   </div>
 
   <form id="qaForm">
-    <!-- Identification -->
     <div class="qa-section">
-      <div class="qa-section-title">📌 Agent & Interaction Details</div>
-      <div class="form-grid">
-        <div class="form-field"><label>Agent Name</label><input id="qa_agent" placeholder="e.g. Asmaa Mohamed" required></div>
-        <div class="form-field"><label>Agent Email</label><input type="email" id="qa_aemail" placeholder="agent@mavinwear.com" required></div>
-        <div class="form-field"><label>Auditor</label><input id="qa_auditor" value="Rehabmohamed881@gmail.com" readonly style="background:var(--light-grey)"></div>
-        <div class="form-field"><label>Ticket Reference #</label><input id="qa_ticket" placeholder="#TK-9801" required></div>
-        <div class="form-field"><label>Root Cause Attribution</label>
+      <div class="qa-sec-title">📌 Interaction & Agent Identification</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px">
+        <div><label>Agent Name</label><input type="text" id="qa_name" placeholder="e.g. Asmaa Mohamed" required></div>
+        <div><label>Agent Email</label><input type="email" id="qa_email" placeholder="agent@mavinwear.com" required></div>
+        <div><label>Auditor</label><input type="text" id="qa_auditor" value="Rehabmohamed881@gmail.com" readonly style="background:var(--lgrey)"></div>
+        <div><label>Ticket / Chat Ref #</label><input type="text" id="qa_ref" placeholder="#TK-9801" required></div>
+        <div><label>Root Cause Attribution</label>
           <select id="qa_attr">
-            <option value="Agent Related">Agent Related</option>
-            <option value="Contacted Customer Before Opening/Flagging Ticket">Contacted Customer Before Opening Ticket ⚠️</option>
-            <option value="Missing Order Number in Sheet">Missing Order Number ⚠️</option>
-            <option value="Missed One-Touch Resolution">Missed One-Touch Resolution</option>
-            <option value="Unclosed Resolved Ticket">Unclosed Resolved Ticket (>2-3h) ⚠️</option>
-            <option value="Blindly Followed Previous Agent">Blindly Followed Previous Agent ❌</option>
-            <option value="Bosta Awaiting Action Delay">Bosta Awaiting Action Delay</option>
-            <option value="Production Quality Issue">Production / Factory Defect</option>
-            <option value="Refund System Delay">Refund System Delay</option>
-            <option value="Non-Agent Courier Issue">Non-Agent (Courier Issue)</option>
+            <option>Agent Related</option>
+            <option>Contacted Customer Before Opening/Flagging Ticket</option>
+            <option>Missing Order Number in Sheet</option>
+            <option>Missed One-Touch Resolution</option>
+            <option>Unclosed Resolved Ticket SLA Breach</option>
+            <option>Blindly Followed Previous Agent</option>
+            <option>Bosta Fulfillment / Awaiting Action Delay</option>
+            <option>Production / Quality Issue</option>
+            <option>Refund System Update / Delay</option>
+            <option>Non-Agent Related - Courier</option>
           </select>
         </div>
       </div>
     </div>
 
-    <!-- Fatal Parameters -->
-    <div class="fatal-banner">
-      <strong style="color:var(--danger);font-size:14px">⚠️ Critical Auto-Fail Parameters</strong>
-      <div class="form-grid" style="margin-top:12px">
-        <div class="form-field">
-          <label style="color:var(--danger)">End-User Critical (Wrong info / Misleading SLA dates)</label>
-          <select id="qa_eu" onchange="calcQA()">
-            <option value="no">No Fatal — Correct Info & Dates</option>
-            <option value="yes">FATAL: Misleading / Wrong SLA Date ❌</option>
+    <div class="fatal-box">
+      <strong style="color:var(--danger);font-size:14px">⚠️ Critical Parameters (Auto-Fail)</strong>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-top:12px">
+        <div><label style="color:var(--danger)">End-User Critical</label>
+          <select id="qa_euc" onchange="calcQA()">
+            <option value="no">No Fatal — Correct Information</option>
+            <option value="yes">Fatal Fail — Misleading info / Wrong SLA date ❌</option>
           </select>
         </div>
-        <div class="form-field">
-          <label style="color:var(--danger)">Business Critical (Policy breach / Financial loss)</label>
-          <select id="qa_biz" onchange="calcQA()">
+        <div><label style="color:var(--danger)">Business Critical (Score 3 or 0)</label>
+          <select id="qa_bc" onchange="calcQA()">
             <option value="3">Score 3 — Policy Compliant ✅</option>
-            <option value="0">Score 0 — Policy Breach / Financial Loss ❌</option>
+            <option value="0">Score 0 — Policy Breach ❌</option>
           </select>
         </div>
       </div>
     </div>
 
-    <!-- Section 1 -->
     <div class="qa-section">
-      <div class="qa-section-title">🧠 1. Issue Understanding & Ticket Protocol</div>
-      <div class="form-grid">
-        <div class="form-field">
-          <label>Opened ticket & flagged BEFORE contacting customer?</label>
-          <select id="qa_ticket_first" onchange="calcQA()">
-            <option value="10">Yes (10/10) — Ticket opened first ✅</option>
-            <option value="0">No (0/10) — Contacted customer first ❌</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>Understood root issue correctly?</label>
-          <select id="qa_understand" onchange="calcQA()">
-            <option value="10">Yes (10/10) — Accurate diagnosis</option>
-            <option value="0">No (0/10) — Misunderstood issue</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>Avoided repetitive questions?</label>
-          <select id="qa_repq" onchange="calcQA()">
-            <option value="10">Yes (10/10) — Clean diagnostic</option>
-            <option value="0">No (0/10) — Repeated questions</option>
-            <option value="NA">N/A</option>
-          </select>
-        </div>
+      <div class="qa-sec-title">🧠 1. Issue Understanding & Ticket Protocol</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px">
+        <div><label>Opened ticket & flagged BEFORE contacting customer?</label>
+          <select id="qa_tf" onchange="calcQA()"><option value="10">Yes (10/10)</option><option value="0">No (0/10)</option></select></div>
+        <div><label>Understood root issue correctly?</label>
+          <select id="qa_und" onchange="calcQA()"><option value="10">Yes (10/10)</option><option value="0">No (0/10)</option></select></div>
+        <div><label>Avoided repetitive questions?</label>
+          <select id="qa_rep" onchange="calcQA()"><option value="10">Yes (10/10)</option><option value="0">No (0/10)</option><option value="NA">N/A</option></select></div>
       </div>
     </div>
 
-    <!-- Section 2 -->
     <div class="qa-section">
-      <div class="qa-section-title">🔍 2. Independent 5-Platform Investigation (20 pts)</div>
+      <div class="qa-sec-title">🔍 2. Independent Investigation — All 5 Platforms (20 Pts)</div>
       <div class="check-grid">
-        <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calcQA()"> 🛍️ Shopify</label>
-        <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calcQA()"> 📥 Gorgias</label>
-        <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calcQA()"> 💬 Slack</label>
-        <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calcQA()"> 🚚 Bosta</label>
-        <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calcQA()"> 🔄 Estbdal & Sheets</label>
-      </div>
-    </div>
-
-    <!-- Section 3 -->
-    <div class="qa-section">
-      <div class="qa-section-title">🎯 3. Resolution Delivery & One-Touch (25 pts)</div>
-      <div class="form-grid">
-        <div class="form-field">
-          <label>Delivered correct resolution?</label>
-          <select id="qa_res" onchange="calcQA()">
-            <option value="15">Yes (15/15) ✅</option>
-            <option value="0">No (0/15) ❌</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>One-Touch Resolution?</label>
-          <select id="qa_ot" onchange="calcQA()">
-            <option value="10">Yes (10/10) — First touch complete</option>
-            <option value="5">Partial (5/10) — Minor follow-up</option>
-            <option value="0">No (0/10) — Fragmented back-and-forth</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 4 -->
-    <div class="qa-section">
-      <div class="qa-section-title">⏱️ 4. Escalation, SLA & Closure (12 pts)</div>
-      <div class="form-grid">
-        <div class="form-field">
-          <label>Correct escalation path followed?</label>
-          <select id="qa_esc" onchange="calcQA()">
-            <option value="4">Yes (4/4) ✅</option>
-            <option value="0">No (0/4) ❌</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>SLA stated clearly to customer?</label>
-          <select id="qa_sla" onchange="calcQA()">
-            <option value="4">Yes (4/4) ✅</option>
-            <option value="0">No (0/4) ❌</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label>Resolved ticket closed within 2–3 hours?</label>
-          <select id="qa_close" onchange="calcQA()">
-            <option value="4">Yes (4/4) ✅</option>
-            <option value="0">No (0/4) ❌</option>
-          </select>
-        </div>
+        <label class="check-item"><input type="checkbox" id="chk_sh" checked onchange="calcQA()"> 🛍️ Shopify</label>
+        <label class="check-item"><input type="checkbox" id="chk_go" checked onchange="calcQA()"> 📥 Gorgias</label>
+        <label class="check-item"><input type="checkbox" id="chk_sl" checked onchange="calcQA()"> 💬 Slack</label>
+        <label class="check-item"><input type="checkbox" id="chk_bo" checked onchange="calcQA()"> 🚚 Bosta</label>
+        <label class="check-item"><input type="checkbox" id="chk_es" checked onchange="calcQA()"> 🔄 Estbdal & Sheets</label>
       </div>
     </div>
 
     <div class="qa-section">
-      <div class="form-field"><label>Auditor Feedback & Coaching Notes</label><textarea id="qa_feedback" rows="4" placeholder="Specific strengths, One Touch gaps, coaching points..." required></textarea></div>
+      <div class="qa-sec-title">🎯 3. Resolution Delivery & One-Touch (25 Pts)</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px">
+        <div><label>Delivered correct resolution?</label>
+          <select id="qa_cr" onchange="calcQA()"><option value="15">Yes (15/15)</option><option value="0">No (0/15)</option></select></div>
+        <div><label>One-Touch efficiency?</label>
+          <select id="qa_ot" onchange="calcQA()"><option value="10">Yes (10/10)</option><option value="5">Partial (5/10)</option><option value="0">No (0/10)</option></select></div>
+      </div>
     </div>
 
-    <button type="submit" class="submit-btn">📤 Submit QA Evaluation</button>
+    <div class="qa-section">
+      <div class="qa-sec-title">⏱️ 4. Escalation, SLA & Closure (12 Pts)</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px">
+        <div><label>Escalation process correct?</label>
+          <select id="qa_ep" onchange="calcQA()"><option value="4">Yes (4/4)</option><option value="0">No (0/4)</option></select></div>
+        <div><label>SLA stated explicitly?</label>
+          <select id="qa_ss" onchange="calcQA()"><option value="4">Yes (4/4)</option><option value="0">No (0/4)</option></select></div>
+        <div><label>Closed within 2–3h?</label>
+          <select id="qa_cs" onchange="calcQA()"><option value="4">Yes (4/4)</option><option value="0">No (0/4)</option></select></div>
+      </div>
+    </div>
+
+    <div class="qa-section">
+      <label>Auditor Feedback & Coaching Plan</label>
+      <textarea id="qa_fb" rows="3" placeholder="Strengths, gaps, coaching points..." required></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">📤 Submit QA Evaluation & Email Report</button>
   </form>
 </div>
 
-<!-- ────────────────────────────────
-     QA RECORDS
-──────────────────────────────── -->
-<div id="view-qalogs" class="section-view">
-  <div class="page-header">
+<!-- ══════════════ QA RECORDS ══════════════ -->
+<div class="page" id="page-qalogs">
+  <div class="sec-header">
     <div>
-      <div class="page-title">📈 QA Evaluation Records</div>
-      <div class="page-sub">Filter by agent, month and year. Monthly averages auto-calculated.</div>
+      <div class="sec-title">📈 QA Evaluation Records & Dashboard</div>
+      <div class="sec-sub">Filter by agent, month, year — auto-calculates monthly scores</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <div class="btn-group">
       <button class="btn btn-dark" onclick="exportQA()">📥 Export Excel</button>
-      <button class="btn btn-ghost" onclick="loadQALogs()">🔄 Refresh</button>
+      <button class="btn" onclick="loadQA()">🔄 Refresh</button>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
 
-  <!-- Filters & Dashboard -->
-  <div class="qa-section" style="margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:14px">
-      <div style="font-weight:800;font-size:15px">📊 Monthly Performance Dashboard</div>
+  <div class="dash-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+      <strong style="font-size:15px">📊 Monthly Performance Overview</strong>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-        <div><label style="font-size:11px;margin-bottom:2px">Agent</label><select id="fAgent" onchange="loadQALogs()" style="padding:6px;font-size:12px"></select></div>
-        <div><label style="font-size:11px;margin-bottom:2px">Month</label>
-          <select id="fMonth" onchange="loadQALogs()" style="padding:6px;font-size:12px">
-            <option value="all">All</option>
-            <option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option>
-            <option value="04">Apr</option><option value="05">May</option><option value="06">Jun</option>
-            <option value="07">Jul</option><option value="08" selected>Aug</option><option value="09">Sep</option>
-            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-          </select>
-        </div>
-        <div><label style="font-size:11px;margin-bottom:2px">Year</label>
-          <select id="fYear" onchange="loadQALogs()" style="padding:6px;font-size:12px">
-            <option value="2026" selected>2026</option><option value="2025">2025</option>
-          </select>
-        </div>
+        <div><label style="margin:0;font-size:11px;display:block">Agent</label><select id="fAgent" onchange="loadQA()" style="padding:6px;font-size:12px"></select></div>
+        <div><label style="margin:0;font-size:11px;display:block">Month</label>
+          <select id="fMonth" onchange="loadQA()" style="padding:6px;font-size:12px">
+            <option value="all">All</option><option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option><option value="05">May</option><option value="06">Jun</option><option value="07">Jul</option><option value="08" selected>Aug</option><option value="09">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+          </select></div>
+        <div><label style="margin:0;font-size:11px;display:block">Year</label>
+          <select id="fYear" onchange="loadQA()" style="padding:6px;font-size:12px"><option value="2026" selected>2026</option><option value="2025">2025</option></select></div>
       </div>
     </div>
-    <div class="metrics-grid">
-      <div class="metric-card"><div class="metric-label">Total Evaluations</div><div class="metric-val" id="dashCount">0</div></div>
-      <div class="metric-card"><div class="metric-label">Avg Score</div><div class="metric-val" id="dashScore">0%</div></div>
-      <div class="metric-card"><div class="metric-label">Overall Grade</div><div class="metric-val" id="dashGrade" style="font-size:16px">N/A</div></div>
+    <div class="metric-grid">
+      <div class="metric-card"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Total Evaluations</div><div class="metric-val" id="dTotal">0</div></div>
+      <div class="metric-card"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Avg Score</div><div class="metric-val" id="dAvg">0%</div></div>
+      <div class="metric-card"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">Overall Grade</div><div class="metric-val" id="dGrade" style="font-size:16px;color:var(--success)">N/A</div></div>
     </div>
   </div>
 
   <div class="table-wrap">
     <table id="qaTable">
       <thead><tr><th>Date</th><th>Agent</th><th>Email</th><th>Ticket</th><th>Attribution</th><th>Score</th><th>Grade</th><th>Auditor</th><th>Feedback</th></tr></thead>
-      <tbody id="qaTbody"></tbody>
+      <tbody></tbody>
     </table>
   </div>
 </div>
 
 <!-- MODAL -->
-<div class="modal-overlay" id="reviewModal">
+<div class="modal-ov" id="modal">
   <div class="modal-box">
-    <div class="modal-title">📝 Review Escalation Case</div>
-    <div id="modalDetails" style="background:var(--light-grey);padding:14px;border-radius:10px;font-size:13px;line-height:1.6;margin-bottom:16px;border:1px solid var(--border)"></div>
-    <div class="form-field"><label>Decision</label>
-      <select id="modal_status">
-        <option value="Approved">Approved ✅</option>
-        <option value="Rejected">Rejected ❌</option>
-        <option value="Pending">Pending ⏳</option>
-      </select>
-    </div>
-    <div class="form-field"><label>Reviewer Notes</label><textarea id="modal_notes" rows="3"></textarea></div>
-    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-indigo" onclick="saveReview()">Save Decision</button>
+    <h3 style="margin-bottom:14px;color:var(--midnight)">📝 Review Escalation Case</h3>
+    <div id="modalDetail" style="background:var(--lgrey);padding:12px;border-radius:8px;font-size:13px;line-height:1.6;margin-bottom:14px;border:1px solid var(--border)"></div>
+    <label>Decision</label>
+    <select id="mStatus"><option value="Approved">Approved ✅</option><option value="Rejected">Rejected ❌</option><option value="Pending">Pending ⏳</option></select>
+    <label>Reviewer Notes</label>
+    <textarea id="mComment" rows="3" placeholder="Feedback on this case..."></textarea>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReview()">Save Decision</button>
     </div>
   </div>
 </div>
 
-<!-- Powered By -->
-<div class="powered-by">Powered by <a href="https://evergpt.ai.foundever.com" target="_blank">EverGPT</a> — Foundever AI Platform</div>
-
-</div><!-- /page-wrap -->
+<footer class="footer">Powered by <a href="https://evergpt.ai.foundever.com" target="_blank">EverGPT</a> — Foundever AI Platform</footer>
 
 <script>
-// ═══════════════════════════════════════════════════
-// CONSTANTS & STATE
-// ═══════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
 const REVIEWERS = ["nourtamer2005@gmail.com","nanielshazly4@gmail.com"];
-const QA_SPEC = ["Rehabmohamed881@gmail.com"];
+const QA_USERS  = ["Rehabmohamed881@gmail.com"];
+const SHEET_ID  = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
+const TABS      = ["Export2","Return & Exch","Export","SEARCH"];
+
 let currentUser = "agent@mavinwear.com";
-let sopLang = 'en';
-let dtLang = 'en';
-let dtSelectedCat = '';
-let scCat = 'All';
-let portalTabs = {};
-let activePortalTab = 'All Tabs';
-let activeReviewIdx = null;
+let currentLang = "en";
+let dtLang      = "en";
+let dtCat       = "";
+let allTabs     = {};
+let activeTab   = "All Tabs";
+let scCat       = "All";
+let reviewIdx   = null;
 
-// ═══════════════════════════════════════════════════
-// FULL SOP DATA — ALL 8 CATEGORIES
-// ═══════════════════════════════════════════════════
+// ── SOP DATA ──
 const SOPS = [
-
-  // ─── CORE PRINCIPLES ───
-  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconClass:"lemon",
-   system:"Gorgias + All Platforms",
-   title_en:"🎯 One-Touch Ticket Resolution",title_ar:"🎯 حل التذكرة من أول رد (One Touch)",
-   desc_en:"A One-Touch Ticket is resolved and closed from the very first response — no customer follow-up needed, no back-and-forth. This is the gold standard for CS efficiency at Mavin Wear.",
-   desc_ar:"الـ One Touch Ticket هي التذكرة التي تُحل وتُغلق من أول رد — بدون متابعة من العميل وبدون ذهاب وإياب.",
+  // CORE
+  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
+   sys:"Shopify + Gorgias + Slack + Bosta",
+   t_en:"⚡ Golden Workflow — The 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
+   d_en:"The 4-step standard every agent must follow on every ticket. No exceptions.",
+   d_ar:"الـ 4 خطوات التي يجب على كل أجنت اتباعها في كل تذكرة بدون استثناءات.",
    steps:[
-     {n:"Step 1",t:"Read the Full Ticket",d:"Read the entire ticket history before typing anything. Check Gorgias history, Shopify order, Slack messages, and Bosta dashboard.",col:""},
-     {n:"Step 2",t:"Investigate Independently",d:"Check all 5 platforms (Shopify, Gorgias, Slack, Bosta, Refund Sheet) before responding. Never rely on what a previous agent said.",col:"mint"},
-     {n:"Step 3",t:"Craft a Complete Single Response",d:"Address every question and action in one message. Include: tracking info, resolution taken, SLA, and any compensation or next step.",col:""},
-     {n:"Step 4",t:"Execute & Close",d:"Execute the resolution immediately (process refund, initiate exchange, update Bosta). Close the ticket within 2–3 hours of resolution. Never leave a resolved ticket open.",col:"coral"}
-   ],
-   canned:"Your request has been fully reviewed and processed. All details, tracking updates, and resolution steps are included in this message — no further action is needed from your side. We appreciate your patience."},
-
-  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconClass:"lemon",
-   system:"Gorgias + Operations Sheet",
-   title_en:"📌 Ticket Opening First & 24H SLA Protocol",title_ar:"📌 فتح التذكرة أولاً وبروتوكول مهلة الـ 24 ساعة",
-   desc_en:"Mandatory protocol: Always open the ticket AND flag the issue in the system BEFORE reaching out to the customer. This protects the 24-hour SLA clock and ensures no order is missed.",
-   desc_ar:"توجيه إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل — لضمان مهلة الـ 24 ساعة وعدم تفويت أي طلب.",
-   steps:[
-     {n:"Rule 1",t:"Open Ticket First — Always",d:"Before calling, WhatsApping, or messaging any customer: open the Gorgias ticket, log the order number, and flag the issue category. The SLA clock starts when you open the ticket.",col:"coral"},
-     {n:"Rule 2",t:"Order Number is Mandatory",d:"Every row in the Operations Sheet MUST have an order number. A row with no order number is invalid and must be corrected immediately.",col:""},
-     {n:"Rule 3",t:"Real-Time Sheet Updates",d:"Update the sheet status in real-time as you work through each case. Don't batch update at the end of the day — status must be current.",col:"mint"},
-     {n:"Rule 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Once a ticket is resolved, close it in Gorgias within 2 to 3 hours maximum. An open resolved ticket inflates your queue and skews SLA metrics.",col:""}
-   ],
-   canned:"Hello! We have flagged and logged your ticket in our system. Your case is now in our active queue and you will receive a full response within our SLA window. Thank you for reaching out."},
-
-  // ─── SHOPIFY OPS ───
-  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"blue",
-   system:"Shopify + Sync-Bosta Worker",
-   title_en:"📘 Shopify Order Tracking — Tags, Status Columns & Metafields",title_ar:"📘 نظام تتبع الطلبات في شوبيفاي — التيجان والأعمدة والميتافيلدز",
-   desc_en:"The sync-bosta Worker reads Bosta (single source of truth for delivery and COD) and writes three signal types onto each Shopify order. Golden Rule: if a native Shopify column already shows it, the worker does NOT tag it. Tags exist ONLY for what Shopify cannot show natively. Resolved = tag is gone.",
-   desc_ar:"الـ Worker يقرأ بوسطة ويكتب ثلاثة أنواع من الإشارات على كل طلب. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة، الـ Worker مبيضيفش تاج. التاج المحذوف = المشكلة انحلت.",
-   steps:[
-     {n:"Signal 1",t:"Native Status Columns (Built-in)",d:"Out for delivery · Return in progress · Paid — These are Shopify's own columns. The Worker drives them automatically from Bosta data. You read them, you don't set them.",col:""},
-     {n:"Signal 2",t:"Governed Tags (Exception Signals)",d:"Tags exist ONLY when Shopify can't show the status natively. Examples: failed-2, card-risk, pending-refund, on-hold, oos. One exception tag per order at a time (highest priority wins). All auto-clear when Bosta resolves — except 3 human-clear tags.",col:"mint"},
-     {n:"Signal 3",t:"Metafields (The Detail — On Order Page)",d:"bosta_reason: the 'why' (blank on healthy orders — correct, not a bug). delivery_details: full forward line (status · reason · attempts · since · city). return_details: full return line (status · reason · AWB · date). last_bosta_update: SLA clock timestamp.",col:""},
-     {n:"Golden Rule",t:"The 4-Point Gate Before Clearing Any Tag",d:"Only 3 tags are human-cleared: pending-refund, exchange-returned, return-failed. Before clearing: (1) Issue is truly resolved. (2) It IS a manual-clear tag. (3) Order Note is stamped with action/date/ref. (4) Slack post exists if escalated. Everything else the Worker auto-clears.",col:"coral"},
-     {n:"Audit Trail",t:"Order Notes Are Human-Only",d:"The Worker NEVER writes to the Order Note. It is reserved for the CS/Ops team. Every manual action gets one stamped line: [CS 28/06] Called customer, corrected address in Bosta, asked for re-attempt. The tag = robot state. The Note = human audit trail.",col:"lemon"}
-   ],
-   canned:"We have verified your order status across our Shopify operational views. All tracking parameters have been updated and your case is actively managed."},
-
-  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"blue",
-   system:"Shopify Saved Views",
-   title_en:"📋 The 6 Saved-View Tabs — Who Acts on What",title_ar:"📋 التبويبات التشغيلية الستة — من يتصرف وعلى إيه",
-   desc_en:"The 6 saved-view tabs in Shopify are grouped by WHO acts — not by raw status. Each person opens THEIR tab and clears it. Never work from the default Orders list for operational queues.",
-   desc_ar:"التبويبات الستة مجمعة حسب مَن يتصرف، مش حسب الحالة. كل شخص يفتح التبويبة بتاعته ويمسحها. ماتشتغلش من القائمة الافتراضية.",
-   steps:[
-     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR warehouse-hold OR oos OR not-picked OR return-blocked. HIGHEST LEVERAGE — these are stuck because of US. Actions: fix address/phone, clear warehouse blocks, make OOS decisions, chase pickup, fix return data. Log every action in the Order Note.",col:"coral"},
-     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR stuck-3d OR failed-2. Priority order: failed-2 first → escalate immediately. sla-breach → chase Bosta for ref. stuck-3d → chase, confirm not lost. Stamp Order Note with Bosta ref number obtained.",col:""},
-     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR escalated-followup. Rule: post in #bosta-escalations FIRST (order # | issue | bosta-ref | screenshot), THEN add escalated tag. A tag with no Slack post = invalid escalation. escalated-followup is auto-set after 12h Bosta silence — manager re-pings.",col:"lavender"},
-     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. These are PREPAID orders with COMPLETE delivery failure (codes 46/48). NOT raised on simple failed attempts. Finance decides: re-ship, refund, or hold. Note the decision on the order.",col:"mint"},
-     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Item is physically back at FC, refund still owed. Finance: confirm return_details shows RETURNED → issue refund → stamp Note → remove pending-refund tag BY HAND (does NOT auto-clear).",col:""},
-     {n:"Tab 6 — Finance",t:"Finance · Returns — Failed + Exchange",d:"Filter: tag:return-failed OR exchange-returned. return-failed: item never came back but customer was refunded — chase customer. exchange-returned: size swap, confirm balance is correct. Remove tag by hand after resolution (both are manual-clear).",col:"lemon"}
-   ],
-   canned:"We have checked your order in our active operational queue and updated the relevant tracking view. Your case is prioritized and being handled by the correct team."},
-
-  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"blue",
-   system:"Shopify + Bosta Dashboard",
-   title_en:"⚡ Return Lifecycle — The 4 Return Tags",title_ar:"⚡ دورة حياة المرتجعات — التيجان الأربعة",
-   desc_en:"Returns are separate Bosta orders (type RETURN). Shopify's native Return-status column can't tell you whether the item physically came back. These 4 tags fill that gap.",
-   desc_ar:"المرتجعات طلبات Bosta منفصلة. عمود الحالة في Shopify مبيقدرش يقولك إذا القطعة رجعت فعلياً. التيجان الأربعة دي بتسد الفجوة دي.",
-   steps:[
-     {n:"Tag 1",t:"pending-refund — Item Back, Refund Owed",d:"Bosta status: RETURNED (plain). Item is physically back at FC. Finance must: confirm return_details shows RETURNED → issue refund in Shopify → stamp Note → remove tag MANUALLY.",col:"coral"},
-     {n:"Tag 2",t:"exchange-returned — Size Swap Back",d:"Bosta status: RETURNED via EXCHANGE. A size/item swap, NOT a refund. CS/Finance: confirm swapped item is back AND balance (top-up or refund) is correct. Remove tag manually after confirmation.",col:""},
-     {n:"Tag 3",t:"return-failed — Item Never Came Back",d:"Bosta status: TERMINATED. Customer has both the item AND the money. Finance must chase the customer to recover the item or payment. Remove tag only after recovery.",col:"lemon"},
-     {n:"Tag 4",t:"return-blocked — Return Pickup Blocked",d:"Bosta status: AWAITING_YOUR_ACTION. Return pickup is blocked on bad data (wrong address/phone for pickup). CS: fix the data so Bosta can collect. This tag AUTO-CLEARS when Bosta unblocks the return.",col:"mint"}
-   ],
-   canned:"We have tracked your return in the Bosta return system. Your item status has been verified and the appropriate action (refund/exchange/follow-up) is now being processed."},
-{code:"SOP-BOSTA-02",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconClass:"mint",
-   system:"Bosta + Shopify + WhatsApp",
-   title_en:"⚠️ Awaiting Action — Bad Address/Phone Protocol",title_ar:"⚠️ بروتوكول Awaiting Action — العناوين والأرقام الغلط",
-   desc_en:"THIS IS A KNOWN FRICTION POINT. Orders stuck in Awaiting Action due to bad address or phone data create delivery failure and dead stock risk. Target: ZERO Awaiting Action orders older than 24 hours.",
-   desc_ar:"نقطة احتكاك معروفة. الطلبات المعلقة بسبب عنوان أو رقم خاطئ تخلق خطر فشل التوصيل. الهدف: صفر طلبات Awaiting Action أقدم من 24 ساعة.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Flag & Notify Within 2 Hours",d:"Order flagged as Awaiting Action. Bosta notifies Mavin Wear Ops Manager via WhatsApp + system flag within 2 HOURS of detection. Message must include: Order ID, issue type (address/phone), and customer detail. NOT the next morning.",col:"coral"},
-     {n:"Step 2 — Mavin Wear",t:"Contact Customer Within 12 Hours",d:"Mavin Wear Ops contacts customer, obtains corrected address or phone. Corrected data sent to Bosta Tech Lead immediately via WhatsApp + system update.",col:""},
-     {n:"Step 3 — Bosta",t:"Re-Dispatch Within 24 Hours",d:"Bosta updates order in system and re-dispatches within 24h of receiving corrected data.",col:"mint"},
-     {n:"Step 4 — Mavin Wear",t:"If Customer Unreachable After 12 Hours",d:"Mavin Wear decides: hold the order (max agreed days) OR return it. Do NOT leave it in limbo.",col:"lemon"},
-     {n:"Step 5 — Both",t:"Auto-Escalate if No Response After 48 Hours",d:"If order sits in Awaiting Action >48h with no response from Mavin Wear → Bosta auto-escalates to Tier 2. Weekly meeting agenda always includes open Awaiting Action count. Target = 0 open >24h.",col:"coral"}
-   ],
-   canned:"We have flagged your delivery address issue with our courier partner Bosta and are actively working to resolve it. Our team will contact you shortly to confirm the corrected details."},
-
-  {code:"SOP-BOSTA-03",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconClass:"mint",
-   system:"Bosta Warehouse + Shopify",
-   title_en:"📭 Out-of-Stock (OOS) Orders — Zero Silent Stuck Orders",title_ar:"📭 بروتوكول نفاد المخزون — صفر طلبات معلقة بدون إبلاغ",
-   desc_en:"THIS IS A KNOWN FRICTION POINT. OOS orders sitting unfulfilled with no report = invisible dead stock, COD settlements delayed, customer complaints. Every day an order sits unfulfilled without a report is an SLA breach. OOS report is NOT optional.",
-   desc_ar:"الطلبات الغير منفذة بدون إبلاغ = مخزون ميت غير مرئي وتأخير في التسوية. كل يوم طلب معلق بدون إبلاغ يُعتبر خرق SLA.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Flag OOS Immediately on Detection",d:"Order cannot be fulfilled due to OOS → flagged in system immediately by Bosta Warehouse Lead at point of detection.",col:"coral"},
-     {n:"Step 2 — Bosta",t:"Send OOS Report Within 24 Hours",d:"OOS report sent to Mavin Wear including: order IDs, SKU(s) affected, quantity, date flagged. This is included in the daily ops update sent to Mavin Wear Ops Manager. NOT OPTIONAL.",col:"coral"},
-     {n:"Step 3 — Mavin Wear",t:"Decision Within 12 Hours of OOS Report",d:"Mavin Wear reviews OOS list and decides: substitute SKU, cancel order, or hold pending restock. Response must arrive within 12h of receiving the OOS report.",col:"lemon"},
-     {n:"Step 4 — Bosta",t:"Execute Instruction Within 24 Hours",d:"Bosta executes: fulfill with substitute, cancel, or hold within 24h of receiving Mavin Wear instruction.",col:"mint"},
-     {n:"Step 5 — Both",t:"Max Hold Time & Auto-Cancel Rule",d:"Max hold time for OOS order = agreed business days. After that, auto-cancel unless Mavin Wear explicitly extends in writing. Weekly meeting tracks open OOS count and resolution status. Target = zero unreported OOS.",col:""}
-   ],
-   canned:"We have identified a stock availability issue with your order and are working with our warehouse team to resolve it. We will update you within 24 hours with a confirmed resolution."},
-
-  {code:"SOP-BOSTA-04",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconClass:"mint",
-   system:"Bosta + Shopify + Email",
-   title_en:"↩️ Returns & Quality Check Protocol",title_ar:"↩️ بروتوكول المرتجعات والفحص في مستودع بوسطة",
-   desc_en:"Full return lifecycle from customer return request through warehouse quality check, defect escalation, and physical dispatch back to Mavin Wear. Bosta owns the quality check. Mavin Wear owns the decision on ambiguous defects.",
-   desc_ar:"دورة المرتجع الكاملة من طلب العميل حتى الفحص في المستودع وإرسالها لـ Mavin Wear. بوسطة تمتلك الفحص. Mavin Wear تمتلك قرار العيوب الغامضة.",
-   steps:[
-     {n:"Step 1 — Bosta",t:"Log Return on Arrival — Same Day",d:"Returned item arrives at Bosta warehouse → scanned and logged in system immediately on receipt. No delays on logging.",col:""},
-     {n:"Step 2 — Bosta",t:"Quality Check Within 48 Hours",d:"QC performed within 48h of logging. Bosta checks item against Mavin Wear's written condition guide (resaleable vs defective criteria). Guide must be provided by Mavin Wear within 30 days of SOP signing.",col:"mint"},
-     {n:"Step 3a — Bosta",t:"Clear Result — Log & Notify",d:"CLEAR OUTCOME (resaleable or clearly defective): status updated in system same check session. Mavin Wear notified immediately.",col:""},
-     {n:"Step 3b — Bosta",t:"Unclear Defect — Escalate With Photos Within 24 Hours",d:"UNCLEAR DEFECT: photo taken, case documented, escalated to Mavin Wear with photos + full description within 24h of quality check. Only genuine ambiguities escalated once condition guide is provided.",col:"coral"},
-     {n:"Step 4 — Mavin Wear",t:"Defect Decision Within 12 Hours",d:"Mavin Wear reviews escalated defect case and issues decision within 12h: accept return as resaleable, classify as defective, or request replacement for customer.",col:"lemon"},
-     {n:"Step 5 — Bosta",t:"Dispatch Returns Back to Mavin Wear",d:"Physical returns dispatched back to Mavin Wear warehouse on agreed batch schedule. Bosta owns the dispatch timeline.",col:""}
-   ],
-   canned:"Your return has been received at our warehouse and is currently undergoing quality inspection. We will update you within 48 hours with the final status and next steps."},
-
-  {code:"SOP-BOSTA-05",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconClass:"mint",
-   system:"Bosta + Shopify + Slack",
-   title_en:"🤝 Responsibility Split — Who Owns What",title_ar:"🤝 تقسيم المسؤوليات — مَن يمتلك إيه",
-   desc_en:"The definitive answer to any 'who is responsible for this?' question. Bosta is the full-service fulfillment partner. Mavin Wear is the seller. There is no gray area in this table.",
-   desc_ar:"الإجابة النهائية لأي سؤال 'مين المسؤول؟'. بوسطة هي شريك التنفيذ الكامل. Mavin Wear هي البائع. لا توجد منطقة رمادية.",
-   steps:[
-     {n:"Mavin Wear Owns",t:"Sales, Order Data Quality & OOS Decisions",d:"MAVIN WEAR: Generating orders. Order data accuracy (address, phone, SKU) via API. OOS instruction (substitute/cancel/hold). NDR decision (re-attempt/return/hold) within 12h. Decision on escalated defect cases within 12h. Return/re-attempt instruction after NDR.",col:""},
-     {n:"Bosta Owns",t:"Fulfillment, Delivery & Return Handling",d:"BOSTA: Inventory storage. Pick & pack. Packaging quality and order accuracy. OOS detection and reporting to Mavin Wear within 24h. Last-mile delivery. Awaiting Action flag within 2h. NDR raise within 24h. Physical return handling, logging, and QC within 48h. Ambiguous defect escalation within 24h of QC.",col:"mint"},
-     {n:"Both Own",t:"Communication & SLA Tracking",d:"SHARED: Weekly KPI sync every week no skip. Awaiting Action and OOS backlog tracked in every meeting. Slack #bosta-escalations for live issues. One process improvement per quarter at QBR.",col:"lemon"},
-     {n:"Escalation Tiers",t:"Tier 1 → 2 → 3 Response SLAs",d:"Tier 1: Ops Manager ↔ Account Manager → 2h response SLA. Tier 2: Tech/Return Owner ↔ Warehouse/Field Lead → 4h SLA (triggered if Tier 1 unresolved after 2h). Tier 3: Ahmad (Founder) ↔ Account Director → Same business day (triggered if Tier 2 unresolved after 4h or SLA breach).",col:"coral"}
-   ],
-   canned:"Our team has verified the responsible party for your case and is coordinating directly with Bosta to ensure a fast resolution."},
-
-  // ─── SHOPIFY OPS ───
-  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"lavender",
-   system:"Shopify + Sync-Bosta Worker",
-   title_en:"📘 Shopify Signal Architecture — Tags, Columns & Metafields",title_ar:"📘 نظام إشارات شوبيفاي — التيجان والأعمدة والميتافيلدز",
-   desc_en:"The sync-bosta Worker reads Bosta and writes 3 signal types onto each order: (1) Native status columns, (2) Governed tags, (3) Detail metafields. GOLDEN RULE: if a native Shopify column already shows it, the worker does NOT tag it. Tags exist ONLY for what Shopify can't show. Resolved = tag is GONE.",
-   desc_ar:"الـ Worker يقرأ بوسطة ويكتب 3 أنواع إشارات على كل طلب. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة — مفيش تاج. محلول = التاج اختفى.",
-   steps:[
-     {n:"Signal Type 1",t:"Native Status Columns (Built-In Shopify)",d:"These show automatically — no tag needed: 'Out for delivery', 'Return in progress', 'Paid', 'In transit', 'Delivered', 'Attempted delivery', 'Failure'. Worker drives these columns automatically from Bosta data.",col:""},
-     {n:"Signal Type 2",t:"Governed Tags (What Shopify Can't Show)",d:"Tags exist ONLY when native columns can't show the state: failed-2 (2nd failed attempt), card-risk (prepaid complete failure), pending-refund (item physically back, refund owed), on-hold (bad address/phone), oos (out of stock), return-failed (item never came back), exchange-returned (size swap completed).",col:"lemon"},
-     {n:"Signal Type 3",t:"Metafields — The Detail Layer",d:"On the order detail page: bosta_reason (the 'why' — blank on healthy orders = correct, not a bug). delivery_details (full line: status · reason · attempts · since · city). return_details (full line: status · reason · AWB · date). last_bosta_update (SLA clock timestamp).",col:"mint"},
-     {n:"Golden Rule",t:"Resolved = Tag Gone. No '-resolved' Tags Exist.",d:"There are NO '-resolved' tags in this system. Absence of a tag IS the signal that the issue is resolved. The worker auto-clears its own tags. Humans only clear 3 tags manually: pending-refund, exchange-returned, return-failed.",col:"coral"}
-   ],
-   canned:"We have verified your order status across our Shopify operational views and updated all tracking parameters. Your case is actively managed."},
-
-  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"lavender",
-   system:"Shopify Saved Views",
-   title_en:"📋 The 6 Saved-View Tabs — Who Acts on What",title_ar:"📋 التبويبات التشغيلية الستة — من يتصرف وعلى إيه",
-   desc_en:"The 6 saved tabs are grouped by WHO acts — not by raw status. Each role opens THEIR tab and clears it. Never work from the default Orders list for operational queues.",
-   desc_ar:"التبويبات الستة مجمعة حسب مَن يتصرف وليس حسب الحالة. كل شخص يفتح تبويبته ويمسحها.",
-   steps:[
-     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR tag:warehouse-hold OR tag:oos OR tag:not-picked OR tag:return-blocked. HIGHEST LEVERAGE — these are stuck because of US. Actions: fix address/phone and ask Bosta to retry (on-hold) | clear warehouse block (warehouse-hold) | restock or cancel decision (oos) | chase Bosta pickup (not-picked) | fix return data (return-blocked).",col:"coral"},
-     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR tag:stuck-3d OR tag:failed-2. Priority order: failed-2 FIRST (escalate immediately) → sla-breach (Bosta's deadline passed, chase and get ref number) → stuck-3d (3+ days no movement, chase Bosta). Confirm customer got auto-SMS/email. Stamp Note with Bosta ref number.",col:"lemon"},
-     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR tag:escalated-followup. CS adds escalated tag ONLY after posting in #bosta-escalations first. escalated-followup = worker auto-added after 12h Bosta silence → Manager re-pings. Both tags auto-removed when order moves. A tag with NO Slack post = invalid escalation.",col:""},
-     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. Prepaid orders whose delivery FAILED COMPLETELY (codes 46/48) — NOT raised on simple failed attempts. Actions: decide re-ship, refund, or hold. Stamp Note with decision. Every card-risk order needs a logged decision within 24h.",col:"coral"},
-     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Item is physically back at FC but refund not yet issued. Actions: confirm return_details shows RETURNED → issue refund in Shopify → stamp Note: [FIN date] Refund EGP amount → remove pending-refund tag BY HAND (does NOT auto-clear).",col:"mint"},
-     {n:"Tab 6 — Finance",t:"Finance · Returns — Failed + Exchange",d:"Filter: tag:return-failed OR tag:exchange-returned. return-failed: item never came back but customer was refunded — chase customer. exchange-returned: size swap, confirm item is back and balance is correct. Clear both tags by hand after resolution.",col:"lemon"}
-   ],
-   canned:"Our operations team has reviewed your case across all active Shopify queues and is taking the appropriate action based on the current order status."},
-
-  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"lavender",
-   system:"Shopify + Bosta + Slack",
-   title_en:"📝 Order Notes, Tag Clearing & The 4-Point Gate",title_ar:"📝 ملاحظات الطلبات، مسح التيجان، وبوابة الفحص الرباعية",
-   desc_en:"The Order Note is the human audit trail. The worker NEVER writes to it. Every manual action gets one stamped line. Before clearing any human-clear tag, pass the 4-point gate. Only 3 tags are human-cleared: pending-refund, exchange-returned, return-failed.",
-   desc_ar:"ملاحظة الطلب هي سجل الإنسان. الـ Worker لا يكتب فيها أبداً. كل إجراء يدوي يحصل على سطر مختوم. 3 تيجان فقط يمسحها الإنسان.",
-   steps:[
-     {n:"Rule 1",t:"The Note Is Human-Only — Worker Never Writes Here",d:"The sync-bosta worker NEVER writes to the Order Note. It is strictly reserved for the CS/Ops team. Think of it as: Tag = the state (robot). Note = what the human did (audit trail).",col:""},
-     {n:"Rule 2",t:"Every Manual Action Gets One Stamped Line",d:"Format: [ROLE DATE] Action taken + ref if applicable. Examples: [CS 28/06] Called customer, corrected address in Bosta, asked for re-attempt. [CS 28/06] Escalated to Bosta (ref 7506992329) — posted in #bosta-escalations. [FIN 28/06] Refund issued EGP 426.50 — removing pending-refund.",col:"mint"},
-     {n:"Rule 3",t:"The 4-Point Gate Before Clearing Any Tag",d:"Before clearing pending-refund, exchange-returned, or return-failed: (1) The underlying issue is ACTUALLY resolved — not just looks quiet. (2) It IS a human-clear tag — only those 3. (3) You have stamped the Order Note with what you did + date + ref. (4) If it was escalated, the Slack post exists.",col:"coral"},
-     {n:"Rule 4",t:"Escalation Requires Slack Post BEFORE Tag",d:"When escalating: post in #bosta-escalations FIRST with format: #order | issue | bosta-ref | screenshot. ONLY after the Slack post exists → add escalated tag in Shopify. A tag with no matching Slack post is an INVALID escalation. The Slack timestamp is the immutable proof.",col:"lemon"}
-   ],
-   canned:"Your case has been logged with a full audit trail in our order management system. All actions are documented and our team is actively working on resolution."},
-
-  {code:"SOP-SHOPIFY-04",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconClass:"lavender",
-   system:"Shopify + Bosta + Slack",
-   title_en:"☀️ Daily CS & Ops Checklist — Start to End of Shift",title_ar:"☀️ قائمة مهام CS وOps اليومية — من بداية الشيفت لنهايته",
-   desc_en:"The complete daily operational checklist for CS and Ops teams. Work top to bottom every shift. The 6 tabs are your home base — not the default Orders list.",
-   desc_ar:"قائمة المهام اليومية الكاملة لفريق CS و Ops. اشتغل من فوق لتحت في كل شيفت. التبويبات الستة هي قاعدتك.",
-   steps:[
-     {n:"Start of Shift",t:"2-Minute Morning Setup",d:"(1) Open Orders list — Delivery status + Tags columns are home base. (2) Skim the 6 saved-view tabs for today's volume — Action Required FIRST. (3) Check #bosta-escalations for anything flagged overnight. (4) Have Bosta dashboard open in second tab for retries/lookups.",col:"mint"},
-     {n:"Priority 1",t:"Fulfillment · Action Required (Ops — Clear First)",d:"Fix on-hold orders (address/phone + Bosta retry). Clear warehouse-hold blocks. Make OOS decisions. Chase not-picked pickups. Fix return-blocked data. Log every action in Order Note: [OPS date] what you did. TARGET: tab empty OR every row has a Note explaining why it's still open.",col:"coral"},
-     {n:"Priority 2",t:"CS · Carrier Follow-Up (CS)",d:"failed-2 FIRST: escalate immediately — post in #bosta-escalations then add escalated tag. sla-breach: chase Bosta, get ref number. stuck-3d: chase — confirm not lost. Confirm customer got auto-SMS. Stamp Note with Bosta ref.",col:"lemon"},
-     {n:"Priority 3",t:"Finance Queues (Finance)",d:"Card at Risk: review each prepaid complete failure, log decision. Refunds Owed: confirm item back → issue refund → stamp Note → remove tag by hand. Returns Failed/Exchange: chase return-failed customers, confirm exchange-returned balances, clear tags.",col:""},
-     {n:"End of Shift",t:"2-Minute Close Check",d:"(1) Action Required tab is empty or every row has a Note. (2) Every failed-2 has an escalated tag + Slack post. (3) No pending-refund older than refund SLA without a Note. (4) Hand off anything open in #bosta-escalations to next shift.",col:"mint"}
-   ],
-   canned:"Our team follows a structured daily operational checklist ensuring every order in all queues is actively monitored and resolved within SLA."},
-
-  // ─── CS WORKFLOW ───
-  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconClass:"",
-   system:"Gorgias + Shopify + Slack",
-   title_en:"📌 Ticket First Protocol — Open & Flag Before Contacting Customer",title_ar:"📌 بروتوكول فتح التذكرة أولاً قبل التواصل مع العميل",
-   desc_en:"MANDATORY: Always open the ticket and flag the issue BEFORE reaching out to the customer. This protects the 24-hour SLA. Order Number in the sheet is mandatory — no blank entries ever.",
-   desc_ar:"إلزامي: افتح التذكرة واعمل Flag للمشكلة أولاً قبل مراسلة العميل. هذا يحمي مهلة الـ 24 ساعة.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag BEFORE Contacting Customer",d:"ALWAYS open the ticket and flag the issue in the system first. Contacting the customer BEFORE opening a ticket = SLA breach and QA deduction. This is non-negotiable.",col:"coral"},
-     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries",d:"Ensure the Order Number is filled in the sheet without exception. A ticket without an order number cannot be properly tracked or escalated.",col:""},
-     {n:"Step 3",t:"5-Tool Self-Investigation Before Responding",d:"Check ALL 5 platforms before sending any response: (1) Shopify — order status, tags, metafields. (2) Gorgias — full history, previous agent notes. (3) Slack — any team flags or notes. (4) Bosta dashboard — AWB status, delivery attempts. (5) Estbdal & Refund Sheets — exchange/refund history. NEVER blindly follow a previous agent's notes.",col:"lemon"},
-     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Once a ticket is resolved, close it within 2–3 hours maximum. Leaving a resolved ticket open = QA deduction and queue pollution. Keep the queue clean.",col:"mint"}
-   ],
-   canned:"Hello! We have flagged and logged your ticket in our system. Our team is currently investigating your case and will get back to you with a full resolution shortly."},
-
-  {code:"SOP-CS-02",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconClass:"",
-   system:"Gorgias + Shopify + Bosta",
-   title_en:"🎯 One-Touch Resolution — Complete Solution in First Response",title_ar:"🎯 حل الـ One-Touch — حل كامل من أول رد",
-   desc_en:"A One-Touch Ticket is resolved and closed from the very first response — no customer follow-up needed, no back-and-forth. Investigate thoroughly, send everything in one message, close immediately.",
-   desc_ar:"تذكرة الـ One-Touch تُحل وتُغلق من أول رد كامل — بدون متابعة من العميل أو رسائل إضافية.",
-   steps:[
-     {n:"Step 1",t:"Read the Full Ticket & Investigate All 5 Platforms",d:"Read the ticket thoroughly. Then investigate across all 5 platforms (Shopify, Gorgias history, Slack notes, Bosta dashboard, Estbdal/Refund sheets) BEFORE typing your response. Never respond while still investigating.",col:""},
-     {n:"Step 2",t:"Compose One Complete Message With Everything",d:"Your first response must include: the full answer to their question + any tracking/order details needed + the correct SKU/refund/exchange details + a clear SLA if applicable + any next steps the customer needs to take. No 'let me check and get back to you'.",col:"mint"},
-     {n:"Step 3",t:"Execute the Action & Send Simultaneously",d:"Don't just inform the customer — execute the resolution at the same time. Process the exchange/refund/correction in the system while sending the message.",col:"lemon"},
-     {n:"Step 4",t:"Close the Ticket Immediately After Resolution",d:"The moment the issue is fully resolved and communicated, close the ticket. Do not leave it open 'just in case'. If the customer replies after, it opens a new interaction.",col:"coral"}
-   ],
-   canned:"Your request has been fully reviewed and processed in our systems. Your order details, tracking updates, and any applicable actions have been completed. Please don't hesitate to reach out if you need anything else."},
-
-  {code:"SOP-CS-03",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconClass:"",
-   system:"Gorgias + Slack #bosta-escalations",
-   title_en:"🚨 CS Escalation Protocol — When & How to Escalate",title_ar:"🚨 بروتوكول التصعيد — متى وكيف تصعد",
-   desc_en:"Escalation has a strict sequence: Slack post FIRST, then tag. A tag without a Slack post is an invalid escalation. Follow the tiers — never jump to Tier 3 without exhausting Tiers 1 and 2.",
-   desc_ar:"التصعيد له تسلسل صارم: Slack أولاً ثم التاج. تاج بدون Slack = تصعيد غير صحيح.",
-   steps:[
-     {n:"Trigger Points",t:"When to Escalate",d:"Escalate when you see: failed-2 tag (2nd failed delivery attempt). sla-breach tag (Bosta's deadline passed). stuck-3d tag (3+ days no movement). Any case where Bosta gave no ref or no ETA. Same order breaches twice. Bosta is unresponsive for 4+ hours.",col:"coral"},
-     {n:"Step 1",t:"Post in #bosta-escalations FIRST",d:"Format: #[order number] | [the issue] | [bosta ref if you have one] | [screenshot]. Example: #143394 | 2nd failed attempt, customer not at address | ref 7506992329 | [screenshot]. Do this BEFORE adding any tag.",col:"lemon"},
-     {n:"Step 2",t:"Add the 'escalated' Tag AFTER the Post",d:"Only after the Slack post exists, add the escalated tag in Shopify. The Slack timestamp is the immutable proof. Manager spot-checks this channel regularly.",col:""},
-     {n:"Step 3",t:"escalated-followup — Manager Action Required",d:"If Bosta stays silent for 12h, the worker auto-adds escalated-followup tag. This signals the Manager to re-ping Bosta. When the order finally moves, the worker removes BOTH tags automatically — do not remove by hand.",col:"mint"},
-     {n:"Tier Rules",t:"Never Skip Escalation Tiers",d:"Tier 1 (Ops Manager ↔ Bosta Account Manager): 2h SLA → Tier 2 (Tech/Return Owner ↔ Warehouse/Field Lead): 4h SLA → Tier 3 (Ahmad Founder ↔ Bosta Account Director): Same business day. Only escalate to next tier if current tier is unresolved within SLA.",col:"coral"}
-   ],
-   canned:"Your case has been escalated to our senior operations team and our courier partner Bosta. We are actively investigating and will provide you with an update within the next few hours."},
-
-  // ─── REFUND BOT ───
-  {code:"SOP-REFUND-01",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconClass:"lemon",
-   system:"Paymob + Slack #cs-updates + Shopify",
-   title_en:"🤖 Refund Bot — How It Works & 7 Auto-Refund Triggers",title_ar:"🤖 بوت الاسترداد — كيف يعمل والـ 7 حالات التلقائية",
-   desc_en:"The Mavin Wear Refund Bot runs automatically every day (Sun–Thu, 2pm–2am Cairo time) and handles prepaid Paymob orders only — COD orders are NEVER touched. Your job is a 2-minute daily Slack check. That's it.",
-   desc_ar:"بوت الاسترداد يعمل تلقائياً كل يوم (الأحد–الخميس، 2م–2ص) ويعالج طلبات Paymob المدفوعة مسبقاً فقط — طلبات الكاش لا تُلمس أبداً.",
-   steps:[
-     {n:"How It Works",t:"Fully Automatic — No Human Trigger Needed",d:"Runs daily Sun–Thu 2pm–2am Cairo time. Handles prepaid (Paymob) orders ONLY. Posts a report to Slack #cs-updates once per day. Retries failed refunds automatically up to 3 times. Max 20 refunds per run — anything above rolls to next run. NO one on the team needs to start it.",col:"mint"},
-     {n:"Trigger 1–3",t:"Double Payment / Warehouse Cancel / Return",d:"Customer paid twice by accident → detects within 40 min, refunds extra charge immediately. Warehouse cancelled order → Bosta cancels → full refund + restock. Package returned to warehouse → Bosta confirms return → refund issued.",col:""},
-     {n:"Trigger 4–5",t:"Failed Delivery / Missing 9+ Days",d:"Delivery failed (couldn't reach customer) → Bosta marks failed → bot refunds after confirmation. Package missing for 9+ days (no tracking activity) → bot assumes lost → full refund issued automatically.",col:"lemon"},
-     {n:"Trigger 6–7",t:"Full OOS / Partial OOS",d:"Entire order is out of stock for 2+ days → full refund issued automatically. Part of order is out of stock → refunds OOS items only, ships the rest, customer gets auto-email notification.",col:"mint"},
-     {n:"Manual Review Flags",t:"2 Situations That Require Human Action",d:"Order OVER EGP 5,000 → tagged 'Refund: Needs Review' → DM Ahmed to approve, then refund manually in Paymob. Refund failed 3 times in a row → 🔴 in Slack report → check Paymob (SOP-REFUND-02) and escalate if needed.",col:"coral"}
-   ],
-   canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect in your account within the standard banking processing window."},
-
-  {code:"SOP-REFUND-02",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconClass:"lemon",
-   system:"Slack #cs-updates + Paymob Dashboard",
-   title_en:"☀️ Daily 2-Minute Bot Check & Paymob Lookup",title_ar:"☀️ الفحص اليومي دقيقتين وكيفية البحث في Paymob",
-   desc_en:"Your daily check takes 2 minutes. Open Slack #cs-updates, find today's report, read the 3-number split. If zero failed — you're done. If failures exist, use the Paymob lookup steps below.",
-   desc_ar:"فحصك اليومي يأخذ دقيقتين. افتح Slack #cs-updates، ابحث عن تقرير اليوم، اقرأ الأرقام الثلاثة. صفر فشل = خلصت.",
-   steps:[
-     {n:"Step 1",t:"Open Slack #cs-updates Every Morning",d:"Find today's Refunds report titled 'Refunds — YYYY-MM-DD'. Read the 3-number split: ✅ N clean (refunded first try — no action) | 🔄 N recovered (failed first try but succeeded on retry — monitor only) | 🔴 N failed (failed 3 times — human action required).",col:""},
-     {n:"Step 2",t:"If 🔴 Failed > 0 — Type /breakdown",d:"Type /breakdown in #cs-updates to see which orders failed. The breakdown shows: order #, reason for refund, amount, success or fail. Two Slack commands: /refunds (total EGP refunded today, count, split) | /breakdown (each order detail — use when 🔴 > 0).",col:"coral"},
-     {n:"Step 3",t:"Look Up the Transaction in Paymob",d:"Go to eg.dashboard.paymob.com → log in as Mavin Wear. Left sidebar → Payments → Transactions. Click + filter → filter by Order ID (= Shopify order number, e.g. 143157). Check Status column: Success (refund should work) | Pending (wait 24–48h, bot retries) | Declined (cancel Shopify order, no refund needed) | Not found (check Shopify for correct order number).",col:"lemon"},
-     {n:"Step 4",t:"Manual Refund (Last Resort Only)",d:"Only if bot failed and status is Success: (1) Click transaction → click Refund button top-right. (2) Enter EGP amount from Shopify order. (3) Confirm. (4) Go to Shopify → create matching refund record. WARNING: Always record in Shopify too — if Shopify doesn't know, bot may try to refund again next run.",col:"coral"},
-     {n:"Step 5",t:"When to Escalate to Ahmed",d:"DM Ahmed when: 🔴 same order failed 3 days in a row (include order # + failure reason from /breakdown). Tag 'Refund: Needs Review' on order >EGP 5,000 (don't refund without sign-off). No Slack report for 2+ days (bot may be down). Paymob shows Success but customer not credited after 7 business days (share Paymob refund ID with customer — normal processing).",col:"mint"}
-   ],
-   canned:"We have checked your refund status in our payment system. Our team is actively monitoring the transaction and will ensure it is processed correctly."},
-
-  // ─── CORE PRINCIPLES ───
-  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconClass:"",
-   system:"Shopify + Gorgias + Slack + Bosta",
-   title_en:"⚡ MAVIN × BOSTA Golden Workflow — The 4-Step Agent Standard",title_ar:"⚡ الـ Golden Workflow لـ MAVIN × BOSTA — معيار الأجنت الأربع خطوات",
-   desc_en:"The 4-step golden workflow every agent must follow on every single ticket. No exceptions. This is the foundation of consistent, high-quality customer service at Mavin Wear.",
-   desc_ar:"الـ 4 خطوات الذهبية التي يجب على كل أجنت اتباعها في كل تذكرة. بدون استثناءات.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag First — Protect 24h SLA",d:"Always open the ticket and flag the issue BEFORE contacting the customer. This is the non-negotiable first step that protects the 24-hour SLA. No customer contact before ticket is open and flagged.",col:"coral"},
-     {n:"Step 2",t:"5-Tool Self-Investigation — Never Assume",d:"Check all 5 platforms before responding: Shopify (order status + tags) → Gorgias (full history + previous responses) → Slack (team notes + flags) → Bosta dashboard (AWB + delivery attempts) → Estbdal & Refund Sheets (exchange/refund history). NEVER blindly follow a previous agent's response — always self-verify.",col:"lemon"},
-     {n:"Step 3",t:"One-Touch Resolution — Complete Solution in First Response",d:"Deliver the complete solution in the very first response. Correct SKU/refund/exchange details executed. No 'I'll check and get back to you'. No fragmented back-and-forth. Everything in one clean, professional message.",col:"mint"},
-     {n:"Step 4",t:"Close Within 2–3 Hours — Keep Queue Clean",d:"Close resolved tickets within 2–3 hours maximum. Keep the queue clean and real-time SLA metrics accurate. A resolved ticket sitting open is queue pollution.",col:""}
+     {n:"Step 1",t:"Open Ticket & Flag First",d:"ALWAYS open the ticket and flag the issue BEFORE contacting the customer. Non-negotiable. Protects the 24h SLA.",c:"coral"},
+     {n:"Step 2",t:"5-Tool Self-Investigation",d:"Check all 5 platforms: Shopify (tags+status) → Gorgias (full history) → Slack (team notes) → Bosta (AWB+attempts) → Estbdal/Refund Sheets. NEVER blindly follow a previous agent.",c:"lemon"},
+     {n:"Step 3",t:"One-Touch Resolution",d:"Deliver the complete solution in the very first response. Correct SKU/refund/exchange executed simultaneously. No back-and-forth.",c:"mint"},
+     {n:"Step 4",t:"Close Within 2–3 Hours",d:"Close resolved tickets within 2–3h maximum. Queue pollution = QA deduction.",c:""}
    ],
    canned:"Your request has been handled according to our full operational standard — investigated across all systems, resolved in one touch, and documented completely."},
 
-  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconClass:"",
-   system:"All Platforms",
-   title_en:"📊 Weekly KPI Scorecard — What We Measure & Why",title_ar:"📊 مؤشرات الأداء الأسبوعية — ما نقيسه ولماذا",
-   desc_en:"These are the numbers that tell us if the partnership is working. Tracked every week. A bad week is information. A pattern of bad weeks is a problem. Spot the pattern early.",
-   desc_ar:"هذه الأرقام تخبرنا إذا كانت الشراكة تعمل. يُتتبع أسبوعياً. أسبوع سيء هو معلومة. نمط من الأسابيع السيئة مشكلة.",
+  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
+   sys:"All Platforms",
+   t_en:"📊 Weekly KPI Scorecard — What We Measure & Why",t_ar:"📊 مؤشرات الأداء الأسبوعية",
+   d_en:"Numbers that tell us if the partnership is working. Tracked every week. A bad week is information. A pattern is a problem.",
+   d_ar:"الأرقام التي تخبرنا هل الشراكة تعمل. يُتتبع أسبوعياً.",
    steps:[
-     {n:"Fulfillment KPIs",t:"Bosta Owns These",d:"Orders fulfilled same day: target 95%+. On-time delivery rate by zone (per SLA table). First-attempt delivery success: target 90%+. Order picking accuracy: target 99.5%+. NDR rate (failed delivery %) — monitor trend.",col:""},
-     {n:"Exception KPIs",t:"Both Sides Own These",d:"Awaiting Action open orders >24h: TARGET ZERO. OOS orders unreported or unresolved: TARGET ZERO. Open exceptions unresolved >48h: TARGET ZERO. Return processed within 48h: 100% target.",col:"coral"},
-     {n:"Data Quality KPIs",t:"Mavin Wear Owns These",d:"Order data accuracy (address, phone, SKU via API): target 99%+. Refund bot: 🔴 failed count = target 0. Ticket closure rate within 2–3h. One-Touch resolution rate per agent.",col:"lemon"},
-     {n:"Weekly Sync Agenda",t:"Fixed 45-Min Structure Every Week",d:"(1) KPI dashboard review — 10 min. (2) SLA breach review, responsible party presents — 10 min. (3) Open exceptions update (Awaiting Action, OOS, NDRs, damage claims) — 10 min. (4) Upcoming campaigns/volume changes — 5 min. (5) One process improvement each — 5 min. (6) Action items with named owner + deadline — 5 min.",col:"mint"}
+     {n:"Fulfillment KPIs",t:"Bosta Owns These",d:"Orders fulfilled same day: 95%+. On-time delivery by zone. First-attempt success: 90%+. Picking accuracy: 99.5%+. NDR rate — monitor trend.",c:""},
+     {n:"Exception KPIs",t:"Target Zero — Both Sides",d:"Awaiting Action open >24h: ZERO. OOS unreported/unresolved: ZERO. Open exceptions >48h: ZERO. Returns processed within 48h: 100%.",c:"coral"},
+     {n:"Data KPIs",t:"Mavin Wear Owns These",d:"Order data accuracy: 99%+. Refund bot 🔴 count: target 0. Ticket closure within 2–3h. One-Touch rate per agent.",c:"lemon"},
+     {n:"Weekly Sync",t:"Fixed 45-Min Structure",d:"(1) KPI review 10min (2) SLA breach review 10min (3) Open exceptions 10min (4) Upcoming campaigns 5min (5) One improvement each 5min (6) Action items with owners 5min.",c:"mint"}
    ],
-   canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality and partnership performance across all channels."}
+   canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality across all channels."},
+
+  // CS
+  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Shopify + Slack",
+   t_en:"📌 Ticket First Protocol — 24h SLA & Mandatory Order Number",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
+   d_en:"MANDATORY: Always open and flag the ticket BEFORE contacting the customer. Order Number in sheet is non-negotiable.",
+   d_ar:"إلزامي: افتح التذكرة واعمل Flag أولاً قبل التواصل مع العميل.",
+   steps:[
+     {n:"Step 1",t:"Open Ticket & Flag BEFORE Customer Contact",d:"Contacting customer BEFORE opening ticket = SLA breach + QA auto-deduction. This is non-negotiable.",c:"coral"},
+     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries Ever",d:"Every sheet entry must have the Order Number. A ticket without order number cannot be tracked or escalated properly.",c:""},
+     {n:"Step 3",t:"5-Tool Investigation Before Any Response",d:"Shopify (order status, tags, metafields) → Gorgias (history, previous agents) → Slack (team flags) → Bosta (AWB, attempts) → Estbdal/Refund Sheets. Never assume — always self-verify.",c:"lemon"},
+     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Resolved ticket sitting open = QA deduction + queue pollution. Close the moment the issue is fully resolved and communicated.",c:"mint"}
+   ],
+   canned:"Hello! We have flagged and logged your ticket. Our team is investigating your case and will provide a full resolution shortly."},
+
+  {code:"SOP-CS-02",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Shopify + Bosta",
+   t_en:"🎯 One-Touch Resolution — Complete Solution in First Response",t_ar:"🎯 حل الـ One-Touch من أول رد",
+   d_en:"A One-Touch ticket is resolved and closed from the very first response — no customer follow-up, no back-and-forth.",
+   d_ar:"تذكرة الـ One-Touch تُحل وتُغلق من أول رد كامل.",
+   steps:[
+     {n:"Step 1",t:"Read Full Ticket & Investigate All 5 Platforms",d:"Never respond while still investigating. Complete your full investigation first. Read every prior note.",c:""},
+     {n:"Step 2",t:"Compose One Complete Message With Everything",d:"First response must include: full answer + tracking/order details + correct SKU/refund/exchange + clear SLA + next steps. No 'let me check and get back to you'.",c:"mint"},
+     {n:"Step 3",t:"Execute Action & Send Simultaneously",d:"Don't just inform — execute. Process the exchange/refund/correction in the system at the same time as sending the message.",c:"lemon"},
+     {n:"Step 4",t:"Close Ticket Immediately After Resolution",d:"Close the moment the issue is resolved. If customer replies after, it opens a new interaction — that's fine.",c:"coral"}
+   ],
+   canned:"Your request has been fully reviewed and processed. Order details, tracking, and all applicable actions are completed. Reach out if you need anything else."},
+
+  {code:"SOP-CS-03",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Slack #bosta-escalations",
+   t_en:"🚨 CS Escalation Protocol — When & How",t_ar:"🚨 بروتوكول التصعيد — متى وكيف",
+   d_en:"Strict sequence: Slack post FIRST, then tag. A tag without a Slack post is invalid. Never skip tiers.",
+   d_ar:"تسلسل صارم: Slack أولاً ثم التاج. تاج بدون Slack = تصعيد غير صحيح.",
+   steps:[
+     {n:"Trigger",t:"When to Escalate",d:"failed-2 tag. sla-breach tag. stuck-3d tag. Bosta gave no ref or ETA. Same order breaches twice. Bosta unresponsive 4+ hours.",c:"coral"},
+     {n:"Step 1",t:"Post in #bosta-escalations FIRST",d:"Format: #[order] | [issue] | [bosta ref] | [screenshot]. Do this BEFORE adding any tag.",c:"lemon"},
+     {n:"Step 2",t:"Add 'escalated' Tag AFTER the Post",d:"Only after Slack post exists → add escalated tag. Slack timestamp = immutable proof.",c:""},
+     {n:"Step 3",t:"escalated-followup — Manager Action",d:"If Bosta silent 12h → worker auto-adds escalated-followup → Manager re-pings. When order moves → worker removes both tags automatically.",c:"mint"},
+     {n:"Tiers",t:"Never Skip Tiers",d:"Tier 1: Ops ↔ Account Manager (2h SLA) → Tier 2: Tech ↔ Warehouse Lead (4h SLA) → Tier 3: Ahmad ↔ Account Director (same business day).",c:"coral"}
+   ],
+   canned:"Your case has been escalated to our senior operations team and Bosta. We are actively investigating and will update you within the next few hours."},
+
+  // SHOPIFY
+  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
+   sys:"Shopify + Sync-Bosta Worker",
+   t_en:"📘 Signal Architecture — Tags, Columns & Metafields",t_ar:"📘 نظام الإشارات — التيجان والأعمدة والميتافيلدز",
+   d_en:"The Worker reads Bosta and writes 3 signal types: (1) Native status columns, (2) Governed tags, (3) Detail metafields. GOLDEN RULE: if a native column shows it, no tag. Tags exist ONLY for what Shopify can't show. Resolved = tag GONE.",
+   d_ar:"الـ Worker يكتب 3 أنواع إشارات. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة — مفيش تاج. محلول = التاج اختفى.",
+   steps:[
+     {n:"Signal 1",t:"Native Status Columns — No Tag Needed",d:"Auto-shown by Shopify: Out for delivery · In transit · Delivered · Attempted delivery · Return in progress · Paid · Failure. Worker drives these from Bosta data automatically.",c:""},
+     {n:"Signal 2",t:"Governed Tags — Only What Shopify Can't Show",d:"Tags used: failed-2 (2nd failed attempt) · card-risk (prepaid complete failure) · pending-refund (item back, refund owed) · on-hold (bad address/phone) · oos (out of stock) · return-failed (item never came back) · exchange-returned (swap completed) · escalated · sla-breach · stuck-3d.",c:"lemon"},
+     {n:"Signal 3",t:"Metafields — The Detail Layer",d:"On order detail page: bosta_reason (the 'why' — blank on healthy orders = CORRECT, not a bug) · delivery_details (status · reason · attempts · since · city) · return_details (status · reason · AWB · date) · last_bosta_update (SLA clock).",c:"mint"},
+     {n:"Golden Rule",t:"Resolved = Tag Gone. Zero '-resolved' Tags.",d:"There are NO '-resolved' tags. Absence IS the resolved signal. Worker auto-clears its own tags. Humans manually clear only 3: pending-refund, exchange-returned, return-failed.",c:"coral"}
+   ],
+   canned:"We have verified your order status across all Shopify operational views and tracking parameters are updated."},
+
+  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
+   sys:"Shopify Saved Views",
+   t_en:"📋 The 6 Saved-View Tabs — Who Acts on What",t_ar:"📋 التبويبات التشغيلية الستة",
+   d_en:"6 tabs grouped by WHO acts — not status. Each role opens THEIR tab and clears it. Never work from the default Orders list.",
+   d_ar:"التبويبات الستة مجمعة حسب مَن يتصرف. كل شخص يفتح تبويبته ويمسحها.",
+   steps:[
+     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR warehouse-hold OR oos OR not-picked OR return-blocked. HIGHEST LEVERAGE — stuck on US. Fix address/phone+retry (on-hold) · clear warehouse block · restock/cancel (oos) · chase pickup (not-picked) · fix return data (return-blocked).",c:"coral"},
+     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR stuck-3d OR failed-2. Priority: failed-2 FIRST (escalate immediately) → sla-breach (get Bosta ref) → stuck-3d (chase, confirm not lost). Stamp Note with Bosta ref.",c:"lemon"},
+     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR escalated-followup. CS adds escalated ONLY after #bosta-escalations post exists. escalated-followup = 12h Bosta silence → Manager re-pings. Both auto-removed when order moves.",c:""},
+     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. Prepaid orders with COMPLETE delivery failure (46/48) — NOT failed attempts. Decide: re-ship/refund/hold. Log decision within 24h.",c:"coral"},
+     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Item physically back, refund not yet issued. Confirm return_details=RETURNED → issue refund → stamp Note → remove tag BY HAND (does NOT auto-clear).",c:"mint"},
+     {n:"Tab 6 — Finance",t:"Finance · Returns Failed + Exchange",d:"Filter: tag:return-failed OR exchange-returned. return-failed: chase customer (has item AND money). exchange-returned: confirm balance. Clear both tags by hand after resolution.",c:"lemon"}
+   ],
+   canned:"Our operations team reviewed your case across all Shopify queues and is taking appropriate action based on current order status."},
+
+  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
+   sys:"Shopify + Bosta + Slack",
+   t_en:"📝 Order Notes, Tag Clearing & The 4-Point Gate",t_ar:"📝 ملاحظات الطلبات، مسح التيجان، وبوابة الفحص الرباعية",
+   d_en:"Order Note = human audit trail. Worker NEVER writes it. Every action gets one stamped line. 4-point gate before clearing any human-clear tag.",
+   d_ar:"ملاحظة الطلب = سجل الإنسان. الـ Worker لا يكتب فيها. 3 تيجان فقط يمسحها الإنسان.",
+   steps:[
+     {n:"Rule 1",t:"Note Is Human-Only — Worker Never Writes Here",d:"Tag = the state (robot). Note = what the human did (audit trail). These are separate roles. Never blur them.",c:""},
+     {n:"Rule 2",t:"Every Action Gets One Stamped Line",d:"Format: [ROLE DATE] action + ref. Examples: [CS 28/06] Called customer, corrected address, asked Bosta to retry. [FIN 28/06] Refund issued EGP 426.50 — removing pending-refund.",c:"mint"},
+     {n:"Rule 3",t:"4-Point Gate Before Clearing Any Tag",d:"(1) Issue is ACTUALLY resolved. (2) It IS a human-clear tag (only 3: pending-refund, exchange-returned, return-failed). (3) Order Note stamped with action+date+ref. (4) Slack post exists if it was escalated.",c:"coral"},
+     {n:"Rule 4",t:"Escalation = Slack Post BEFORE Tag",d:"Post in #bosta-escalations FIRST: #order | issue | bosta-ref | screenshot. THEN add escalated tag. Tag with no Slack post = INVALID escalation.",c:"lemon"}
+   ],
+   canned:"Your case is logged with a full audit trail. All actions are documented and our team is actively working on resolution."},
+
+  {code:"SOP-SHOPIFY-04",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
+   sys:"Shopify + Bosta + Slack",
+   t_en:"☀️ Daily CS & Ops Checklist — Start to End of Shift",t_ar:"☀️ قائمة مهام CS و Ops اليومية",
+   d_en:"Complete daily checklist for CS and Ops. Work top to bottom every shift. The 6 tabs are your home base.",
+   d_ar:"قائمة المهام اليومية الكاملة. اشتغل من فوق لتحت في كل شيفت.",
+   steps:[
+     {n:"Start of Shift",t:"2-Minute Morning Setup",d:"(1) Open Orders list — Delivery status + Tags columns are home base. (2) Skim 6 saved-view tabs — Action Required FIRST. (3) Check #bosta-escalations for overnight flags. (4) Bosta dashboard open in second tab.",c:"mint"},
+     {n:"Priority 1",t:"Fulfillment · Action Required — Clear First",d:"Fix on-hold (address/phone + Bosta retry). Clear warehouse-hold. Make OOS decisions. Chase not-picked. Fix return-blocked. Log every action in Order Note. TARGET: tab empty or every row has a Note.",c:"coral"},
+     {n:"Priority 2",t:"CS · Carrier Follow-Up",d:"failed-2 FIRST: post #bosta-escalations → add escalated tag. sla-breach: chase Bosta, get ref. stuck-3d: chase, confirm not lost. Stamp Note with ref.",c:"lemon"},
+     {n:"Priority 3",t:"Finance Queues",d:"Card at Risk: review prepaid failures, log decision. Refunds Owed: confirm back → refund → stamp → remove tag. Returns Failed/Exchange: chase customers, confirm balances, clear tags.",c:""},
+     {n:"End of Shift",t:"2-Minute Close Check",d:"(1) Action Required tab empty or all rows have Notes. (2) Every failed-2 has escalated tag + Slack post. (3) No pending-refund older than SLA without a Note. (4) Hand off open items in #bosta-escalations.",c:"mint"}
+   ],
+   canned:"Our team follows a structured daily checklist ensuring every order across all queues is monitored and resolved within SLA."},
+
+  // BOSTA
+  {code:"SOP-BOSTA-01",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta API + Shopify",
+   t_en:"📦 Forward Journey & SLA Commitments",t_ar:"📦 رحلة الشحن الأمامية ومواعيد الـ SLA",
+   d_en:"Bosta is Mavin Wear's full-service 3PL — owns pick, pack, ship, last-mile. Mavin Wear owns sales, order creation, return decisions. ~15,000 orders/day.",
+   d_ar:"بوسطة شريك 3PL الكامل — تمتلك التجميع والتغليف والشحن. Mavin Wear تمتلك المبيعات والطلبات والمرتجعات.",
+   steps:[
+{n:"Step 1",t:"Order Creation & API Push",d:"Customer order → clean data (address, phone, SKU) pushed via API to Bosta. Target: 95%+ orders shipped same business day. Order accuracy target: 99.5%+.",col:""},
+     {n:"Step 2",t:"Pick, Pack & Dispatch",d:"Bosta picks and packs. OOS orders MUST be reported to Mavin Wear within 24h of detection — every unreported OOS is an SLA breach.",col:"mint"},
+     {n:"Step 3",t:"Last-Mile Delivery SLAs",d:"Cairo/Giza: Next business day (max 2). Delta/Canal Cities: 2 days (max 3). Upper Egypt/Remote: 3 days (max 5). First-attempt success target: 90%+.",col:""},
+     {n:"Step 4",t:"Failed Delivery (NDR) Protocol",d:"Bosta raises NDR within 24h. Mavin Wear gives instruction within 12h. Re-attempt: next business day. Max 3 attempts per order.",col:"coral"},
+     {n:"Step 5",t:"Campaign & Surge Notice",d:"10–25% spike: 48h notice. 25–50% spike: 72h notice. >50%: 5 business days notice. No notice = Bosta SLA waived on surge volume.",col:"lemon"}
+   ],
+   canned:"Your shipment is actively managed through our Bosta fulfillment pipeline. We have verified delivery status and our team is coordinating with Bosta on your case."},
+
+  {code:"SOP-BOSTA-02",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta + Shopify + WhatsApp",
+   t_en:"⚠️ Awaiting Action — Bad Address/Phone Protocol",t_ar:"⚠️ بروتوكول Awaiting Action — العناوين والأرقام الغلط",
+   d_en:"KNOWN FRICTION POINT. Orders stuck in Awaiting Action due to bad address or phone create delivery failure and dead stock risk. Target: ZERO Awaiting Action orders older than 24 hours.",
+   d_ar:"نقطة احتكاك معروفة. الطلبات المعلقة بسبب عنوان أو رقم خاطئ تخلق خطر فشل التوصيل. الهدف: صفر طلبات Awaiting Action أقدم من 24 ساعة.",
+   steps:[
+     {n:"Step 1 — Bosta",t:"Flag & Notify Within 2 Hours",d:"Order flagged as Awaiting Action → Bosta notifies Mavin Wear Ops Manager via WhatsApp + system flag within 2 HOURS. Message must include: Order ID, issue type (address/phone), customer detail. NOT next morning — within 2 HOURS.",col:"coral"},
+     {n:"Step 2 — Mavin Wear",t:"Contact Customer Within 12 Hours",d:"Mavin Wear Ops contacts customer, gets corrected address or phone. Corrected data sent to Bosta Tech Lead via WhatsApp + system update immediately after confirmation.",col:""},
+     {n:"Step 3 — Bosta",t:"Re-Dispatch Within 24 Hours",d:"Bosta updates order in system and re-dispatches within 24h of receiving corrected data.",col:"mint"},
+     {n:"Step 4 — Mavin Wear",t:"If Customer Unreachable After 12 Hours",d:"Mavin Wear decides: hold the order (max agreed days) OR return it. Do NOT leave it in limbo with no decision.",col:"lemon"},
+     {n:"Step 5 — Both",t:"Auto-Escalate if No Response After 48 Hours",d:"Order sits in Awaiting Action >48h with no Mavin Wear response → Bosta auto-escalates to Tier 2. Weekly meeting always includes open Awaiting Action count. Target = 0 open >24h.",col:"coral"}
+   ],
+   canned:"We have flagged your delivery address issue with Bosta and are actively working to resolve it. Our team will contact you shortly to confirm the corrected details."},
+
+  {code:"SOP-BOSTA-03",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta Warehouse + Shopify",
+   t_en:"📭 Out-of-Stock (OOS) — Zero Silent Stuck Orders",t_ar:"📭 بروتوكول نفاد المخزون — صفر طلبات معلقة بدون إبلاغ",
+   d_en:"KNOWN FRICTION POINT. OOS orders sitting unfulfilled with no report = invisible dead stock, delayed COD settlements, customer complaints. Every unreported OOS day is an SLA breach.",
+   d_ar:"الطلبات الغير منفذة بدون إبلاغ = مخزون ميت وتأخير في التسوية. كل يوم طلب معلق بدون إبلاغ يُعتبر خرق SLA.",
+   steps:[
+     {n:"Step 1 — Bosta",t:"Flag OOS Immediately on Detection",d:"Order cannot be fulfilled due to OOS → flagged in system immediately by Bosta Warehouse Lead at point of detection. No delay.",col:"coral"},
+     {n:"Step 2 — Bosta",t:"Send OOS Report Within 24 Hours",d:"OOS report sent to Mavin Wear: order IDs, SKU(s), quantity affected, date flagged. Included in daily ops update. NOT OPTIONAL — every unreported OOS is an SLA breach.",col:"coral"},
+     {n:"Step 3 — Mavin Wear",t:"Decision Within 12 Hours",d:"Mavin Wear reviews OOS list and decides: substitute SKU, cancel order, or hold pending restock. Response within 12h of receiving OOS report.",col:"lemon"},
+     {n:"Step 4 — Bosta",t:"Execute Instruction Within 24 Hours",d:"Bosta executes: fulfill with substitute, cancel, or hold within 24h of Mavin Wear instruction. If no instruction after 12h → escalate via WhatsApp.",col:"mint"},
+     {n:"Step 5 — Both",t:"Max Hold & Auto-Cancel Rule",d:"Max hold time = agreed business days. After that, auto-cancel unless Mavin Wear explicitly extends in writing. Weekly meeting tracks open OOS count. Target = zero unreported OOS.",col:""}
+   ],
+   canned:"We have identified a stock availability issue with your order and are working with our warehouse team to resolve it. We will update you within 24 hours with a confirmed resolution."},
+
+  {code:"SOP-BOSTA-04",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta Warehouse + Shopify + Email",
+   t_en:"↩️ Returns & Quality Check Protocol",t_ar:"↩️ بروتوكول المرتجعات والفحص في مستودع بوسطة",
+   d_en:"Full return lifecycle from receipt through quality check, defect escalation, and dispatch back to Mavin Wear. Bosta owns the quality check. Mavin Wear owns the decision on ambiguous defects.",
+   d_ar:"دورة المرتجع الكاملة من الاستلام حتى الفحص وإعادة الشحن. بوسطة تمتلك الفحص. Mavin Wear تمتلك قرار العيوب الغامضة.",
+   steps:[
+     {n:"Step 1 — Bosta",t:"Log Return on Arrival — Same Day",d:"Returned item arrives at Bosta warehouse → scanned and logged in system immediately on receipt.",col:""},
+     {n:"Step 2 — Bosta",t:"Quality Check Within 48 Hours",d:"QC performed within 48h of logging. Bosta checks item against Mavin Wear's written condition guide (resaleable vs defective). Guide to be provided by Mavin Wear within 30 days of SOP signing.",col:"mint"},
+     {n:"Step 3a — Clear",t:"Clear Result — Log & Notify",d:"CLEAR OUTCOME (resaleable or clearly defective): status updated in system same check session. Mavin Wear notified immediately.",col:""},
+     {n:"Step 3b — Unclear",t:"Unclear Defect — Escalate With Photos Within 24h",d:"UNCLEAR DEFECT: photo taken, case documented, escalated to Mavin Wear with photos + full description within 24h of quality check.",col:"coral"},
+     {n:"Step 4 — Mavin Wear",t:"Defect Decision Within 12 Hours",d:"Mavin Wear issues decision within 12h: accept as resaleable, classify as defective, or request replacement for customer.",col:"lemon"},
+     {n:"Step 5 — Bosta",t:"Dispatch Returns to Mavin Wear",d:"Physical returns dispatched back to Mavin Wear on agreed batch schedule. Bosta owns the dispatch timeline.",col:""}
+   ],
+   canned:"Your return has been received at our warehouse and is currently undergoing quality inspection. We will update you within 48 hours with the final status and next steps."},
+
+  {code:"SOP-BOSTA-05",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta + Shopify + Slack",
+   t_en:"🤝 Responsibility Split — Who Owns What",t_ar:"🤝 تقسيم المسؤوليات — مَن يمتلك إيه",
+   d_en:"The definitive answer to any 'who is responsible?' question. Bosta is the full-service fulfillment partner. Mavin Wear is the seller. No gray area.",
+   d_ar:"الإجابة النهائية لأي سؤال 'مين المسؤول؟'. لا توجد منطقة رمادية.",
+   steps:[
+     {n:"Mavin Wear Owns",t:"Sales, Order Data Quality & Decisions",d:"Generating orders. Order data accuracy (address, phone, SKU) via API. OOS instruction (substitute/cancel/hold). NDR decision within 12h. Defect case decision within 12h.",col:""},
+     {n:"Bosta Owns",t:"Fulfillment, Delivery & Return Handling",d:"Inventory storage. Pick & pack. OOS detection + report within 24h. Last-mile delivery. Awaiting Action flag within 2h. NDR raise within 24h. Return logging + QC within 48h. Defect escalation within 24h of QC.",col:"mint"},
+     {n:"Both Own",t:"Communication & Weekly KPI Sync",d:"Weekly sync — no skip. Awaiting Action and OOS backlog tracked every meeting. Slack #bosta-escalations for live issues. One process improvement per quarter at QBR.",col:"lemon"},
+     {n:"Escalation Tiers",t:"Tier 1 → 2 → 3",d:"Tier 1: Ops Manager ↔ Account Manager → 2h SLA. Tier 2: Tech/Return Owner ↔ Warehouse/Field Lead → 4h SLA. Tier 3: Ahmad (Founder) ↔ Account Director → Same business day.",col:"coral"}
+   ],
+   canned:"Our team has verified the responsible party for your case and is coordinating directly with Bosta to ensure a fast resolution."},
+
+  // SHOPIFY OPS
+  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
+   sys:"Shopify + Sync-Bosta Worker",
+   t_en:"📘 Signal Architecture — Tags, Columns & Metafields",t_ar:"📘 نظام إشارات شوبيفاي — التيجان والأعمدة والميتافيلدز",
+   d_en:"The sync-bosta Worker reads Bosta and writes 3 signal types onto each order. GOLDEN RULE: if a native Shopify column already shows it, the worker does NOT tag it. Tags exist ONLY for what Shopify can't show. Resolved = tag is GONE.",
+   d_ar:"الـ Worker يقرأ بوسطة ويكتب 3 أنواع إشارات. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة — مفيش تاج. محلول = التاج اختفى.",
+   steps:[
+     {n:"Signal 1",t:"Native Status Columns (Built-In Shopify)",d:"Show automatically — no tag needed: Out for delivery, Return in progress, Paid, In transit, Delivered, Attempted delivery, Failure, On hold. Worker drives these from Bosta data.",col:""},
+     {n:"Signal 2",t:"Governed Tags (What Shopify Can't Show)",d:"Tags exist ONLY when native columns can't show the state: on-hold (bad address/phone), oos (out of stock), warehouse-hold, not-picked, failed-1/failed-2, card-risk (prepaid complete failure), pending-refund, exchange-returned, return-failed, return-blocked, sla-breach, stuck-3d, escalated.",col:"lemon"},
+     {n:"Signal 3",t:"Metafields — The Detail Layer",d:"On order detail page: bosta_reason (the 'why' — blank on healthy orders = correct), delivery_details (status · reason · attempts · since · city), return_details (status · reason · AWB · date), last_bosta_update (SLA clock).",col:"mint"},
+     {n:"Golden Rule",t:"Resolved = Tag Gone. No '-resolved' Tags Exist.",d:"There are NO '-resolved' tags. Absence of a tag IS the resolved signal. Worker auto-clears its own tags. Humans only clear 3 tags manually: pending-refund, exchange-returned, return-failed.",col:"coral"}
+   ],
+   canned:"We have verified your order status across our Shopify operational views and updated all tracking parameters. Your case is actively managed."},
+
+  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
+   sys:"Shopify Saved Views",
+   t_en:"📋 The 6 Saved-View Tabs — Who Acts on What",t_ar:"📋 التبويبات التشغيلية الستة — من يتصرف وعلى إيه",
+   d_en:"The 6 saved tabs are grouped by WHO acts — not by raw status. Each role opens THEIR tab and clears it. Never work from the default Orders list for operational queues.",
+   d_ar:"التبويبات الستة مجمعة حسب مَن يتصرف. كل شخص يفتح تبويبته ويمسحها.",
+   steps:[
+     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR warehouse-hold OR oos OR not-picked OR return-blocked. HIGHEST LEVERAGE — stuck because of US. Fix address/phone + ask Bosta retry (on-hold). Clear warehouse block. Make OOS restock/cancel decision. Chase pickup. Fix return data.",col:"coral"},
+     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR stuck-3d OR failed-2. Priority: failed-2 FIRST (escalate) → sla-breach (Bosta deadline passed, get ref) → stuck-3d (3+ days no movement). Stamp Note with Bosta ref number.",col:"lemon"},
+     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR escalated-followup. CS adds escalated ONLY after Slack post exists. escalated-followup = auto-added after 12h Bosta silence → Manager re-pings. Both tags auto-removed when order moves.",col:""},
+     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. Prepaid orders with COMPLETE delivery failure only (codes 46/48). Decide: re-ship, refund, or hold. Log decision in Note within 24h.",col:"coral"},
+     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Confirm return_details = RETURNED → issue refund → stamp Note → remove pending-refund BY HAND (does NOT auto-clear).",col:"mint"},
+     {n:"Tab 6 — Finance",t:"Finance · Returns — Failed + Exchange",d:"Filter: tag:return-failed OR exchange-returned. return-failed: chase customer (item not returned, already refunded). exchange-returned: confirm item back + balance correct. Clear both tags by hand.",col:"lemon"}
+   ],
+   canned:"Our operations team has reviewed your case across all active Shopify queues and is taking the appropriate action."},
+
+  {code:"SOP-SHOPIFY-03",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
+   sys:"Shopify + Bosta + Slack",
+   t_en:"📝 Order Notes, Tag Clearing & 4-Point Gate",t_ar:"📝 ملاحظات الطلبات ومسح التيجان وبوابة الفحص الرباعية",
+   d_en:"The Order Note is the human audit trail. Worker NEVER writes to it. Every manual action gets one stamped line. Only 3 tags are human-cleared: pending-refund, exchange-returned, return-failed.",
+   d_ar:"ملاحظة الطلب هي سجل الإنسان. الـ Worker لا يكتب فيها أبداً. 3 تيجان فقط يمسحها الإنسان.",
+   steps:[
+     {n:"Rule 1",t:"Note Is Human-Only — Worker Never Writes Here",d:"Tag = the state (robot). Note = what the human did (audit trail). Worker NEVER writes to Order Note.",col:""},
+     {n:"Rule 2",t:"Every Action Gets One Stamped Line",d:"Format: [ROLE DATE] action + ref. Examples: [CS 28/06] Called customer, corrected address, asked Bosta retry. [CS 28/06] Escalated to Bosta (ref 7506992329) — posted #bosta-escalations. [FIN 28/06] Refund EGP 426.50 — removing pending-refund.",col:"mint"},
+     {n:"Rule 3",t:"4-Point Gate Before Clearing Any Tag",d:"Before clearing pending-refund, exchange-returned, or return-failed: (1) Issue is ACTUALLY resolved. (2) It IS a human-clear tag. (3) Order Note is stamped. (4) Slack post exists if escalated.",col:"coral"},
+     {n:"Rule 4",t:"Escalation = Slack Post BEFORE Tag",d:"Post in #bosta-escalations FIRST: #order | issue | bosta-ref | screenshot. THEN add escalated tag. Tag with no Slack post = INVALID escalation.",col:"lemon"}
+   ],
+   canned:"Your case has been logged with a full audit trail. All actions are documented and our team is actively working on resolution."},
+
+  {code:"SOP-SHOPIFY-04",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات في شوبيفاي",icon:"🛍️",iconcls:"cat-icon-lavender",
+   sys:"Shopify + Bosta + Slack",
+   t_en:"☀️ Daily CS & Ops Checklist",t_ar:"☀️ قائمة مهام CS وOps اليومية",
+   d_en:"Complete daily operational checklist. Work top to bottom every shift. The 6 tabs are your home base — not the default Orders list.",
+   d_ar:"قائمة المهام اليومية الكاملة. اشتغل من فوق لتحت كل شيفت.",
+   steps:[
+     {n:"Start of Shift",t:"2-Minute Morning Setup",d:"(1) Open Orders list — Delivery status + Tags columns are home base. (2) Skim 6 saved tabs — Action Required FIRST. (3) Check #bosta-escalations for overnight flags. (4) Have Bosta dashboard open in second tab.",col:"mint"},
+     {n:"Priority 1",t:"Fulfillment · Action Required — Clear First",d:"Fix on-hold (address/phone + Bosta retry). Clear warehouse-hold. Make OOS decisions. Chase not-picked. Fix return-blocked. Log every action: [OPS date] what you did. TARGET: tab empty or every row has a Note.",col:"coral"},
+     {n:"Priority 2",t:"CS · Carrier Follow-Up",d:"failed-2 FIRST → escalate (Slack post then tag). sla-breach → chase Bosta + get ref. stuck-3d → chase + confirm not lost. Stamp Note with Bosta ref.",col:"lemon"},
+     {n:"Priority 3",t:"Finance Queues",d:"Card at Risk: review prepaid failures, log decision. Refunds Owed: confirm back → refund → stamp → remove tag. Returns: chase return-failed, confirm exchange balances, clear tags.",col:""},
+     {n:"End of Shift",t:"2-Minute Close Check",d:"(1) Action Required empty or all rows have Notes. (2) Every failed-2 has escalated tag + Slack post. (3) No pending-refund older than SLA without Note. (4) Hand off open items in #bosta-escalations.",col:"mint"}
+   ],
+   canned:"Our team follows a structured daily operational checklist ensuring every order across all queues is monitored and resolved within SLA."},
+
+  // CS WORKFLOW
+  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
+   sys:"Gorgias + Shopify + Slack",
+   t_en:"📌 Ticket First Protocol — Open & Flag Before Contacting Customer",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
+   d_en:"MANDATORY: Always open the ticket and flag BEFORE reaching out to the customer. Protects the 24-hour SLA. Order Number in sheet is mandatory — no blank entries ever.",
+   d_ar:"إلزامي: افتح التذكرة واعمل Flag أولاً قبل مراسلة العميل. يحمي مهلة الـ 24 ساعة.",
+   steps:[
+     {n:"Step 1",t:"Open Ticket & Flag BEFORE Contacting Customer",d:"ALWAYS open the ticket and flag the issue first. Contacting customer before opening ticket = SLA breach and QA deduction. Non-negotiable.",col:"coral"},
+     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries",d:"Ensure Order Number is filled in the sheet without exception. A ticket without an order number cannot be tracked or escalated.",col:""},
+     {n:"Step 3",t:"5-Tool Self-Investigation Before Responding",d:"Check ALL 5 platforms: (1) Shopify — order status + tags + metafields. (2) Gorgias — full history + previous agent notes. (3) Slack — team flags/notes. (4) Bosta dashboard — AWB + delivery attempts. (5) Estbdal & Refund Sheets — exchange/refund history. NEVER blindly follow previous agent notes.",col:"lemon"},
+     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Once resolved, close within 2–3 hours max. Leaving a resolved ticket open = QA deduction and queue pollution.",col:"mint"}
+   ],
+   canned:"Hello! We have flagged and logged your ticket in our system. Our team is investigating your case and will respond with a full resolution shortly."},
+
+  {code:"SOP-CS-02",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
+   sys:"Gorgias + Shopify + Bosta",
+   t_en:"🎯 One-Touch Resolution — Complete Solution in First Response",t_ar:"🎯 حل الـ One-Touch — حل كامل من أول رد",
+   d_en:"A One-Touch Ticket is resolved and closed from the very first response. No follow-up needed. No back-and-forth. Investigate thoroughly, send everything in one message, close immediately.",
+   d_ar:"تذكرة الـ One-Touch تُحل وتُغلق من أول رد كامل. بدون متابعة أو رسائل إضافية.",
+   steps:[
+     {n:"Step 1",t:"Read Full Ticket & Investigate All 5 Platforms",d:"Read the ticket completely. Investigate across Shopify, Gorgias history, Slack notes, Bosta dashboard, Estbdal/Refund sheets BEFORE typing your response.",col:""},
+     {n:"Step 2",t:"Compose One Complete Message With Everything",d:"First response must include: full answer + tracking/order details + correct SKU/refund/exchange details + clear SLA if applicable + any customer next steps. No 'let me check and get back to you'.",col:"mint"},
+     {n:"Step 3",t:"Execute Action & Send Simultaneously",d:"Don't just inform — execute the resolution at the same time. Process the exchange/refund/correction in the system while sending the message.",col:"lemon"},
+     {n:"Step 4",t:"Close Ticket Immediately After Resolution",d:"The moment the issue is fully resolved and communicated, close the ticket. Do not leave open 'just in case'.",col:"coral"}
+   ],
+   canned:"Your request has been fully reviewed and processed. Order details, tracking updates, and all applicable actions have been completed in one response."},
+
+  {code:"SOP-CS-03",cat_en:"Customer Support & Ticket Operations",cat_ar:"بروتوكولات إدارة التذاكر وخدمة العملاء",icon:"🎯",iconcls:"",
+   sys:"Gorgias + Slack #bosta-escalations",
+   t_en:"🚨 CS Escalation Protocol — When & How",t_ar:"🚨 بروتوكول التصعيد — متى وكيف",
+   d_en:"Escalation has a strict sequence: Slack post FIRST, then tag. A tag without a Slack post is an invalid escalation. Follow the tiers — never jump to Tier 3 without exhausting Tiers 1 and 2.",
+   d_ar:"التصعيد له تسلسل صارم: Slack أولاً ثم التاج. تاج بدون Slack = تصعيد غير صحيح.",
+   steps:[
+     {n:"Triggers",t:"When to Escalate",d:"Escalate when: failed-2 tag (2nd failed delivery). sla-breach tag (deadline passed). stuck-3d tag (3+ days no movement). Bosta gave no ref or ETA. Same order breaches twice. Bosta unresponsive 4+ hours.",col:"coral"},
+     {n:"Step 1",t:"Post in #bosta-escalations FIRST",d:"Format: #[order] | [issue] | [bosta-ref] | [screenshot]. Example: #143394 | 2nd failed attempt, customer not at address | ref 7506992329 | screenshot. Do this BEFORE adding any tag.",col:"lemon"},
+     {n:"Step 2",t:"Add 'escalated' Tag AFTER the Post",d:"Only after Slack post exists → add escalated tag in Shopify. Slack timestamp is the immutable proof.",col:""},
+     {n:"Step 3",t:"escalated-followup = Manager Action",d:"12h Bosta silence → worker auto-adds escalated-followup → Manager re-pings. Order moves → worker removes BOTH tags. Do not remove by hand.",col:"mint"},
+     {n:"Tier Rules",t:"Never Skip Tiers",d:"Tier 1: Ops Manager ↔ Bosta Account Manager → 2h SLA. Tier 2: Tech/Return Owner ↔ Warehouse/Field Lead → 4h SLA. Tier 3: Ahmad ↔ Account Director → Same business day.",col:"coral"}
+   ],
+   canned:"Your case has been escalated to our senior operations team and Bosta. We are actively investigating and will update you within a few hours."},
+
+  // REFUND BOT
+  {code:"SOP-REFUND-01",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconcls:"cat-icon-lemon",
+   sys:"Paymob + Slack #cs-updates + Shopify",
+   t_en:"🤖 Refund Bot — How It Works & 7 Auto-Refund Triggers",t_ar:"🤖 بوت الاسترداد — كيف يعمل والـ 7 حالات التلقائية",
+   d_en:"Runs automatically every day Sun–Thu 2pm–2am Cairo time. Handles prepaid Paymob orders ONLY — COD never touched. Your job is a 2-minute daily Slack check. That's it.",
+   d_ar:"يعمل تلقائياً كل يوم الأحد–الخميس 2م–2ص. يعالج طلبات Paymob المدفوعة فقط — الكاش لا يُلمس أبداً.",
+   steps:[
+     {n:"How It Works",t:"Fully Automatic — No Human Trigger",d:"Runs daily Sun–Thu 2pm–2am. Posts report to Slack #cs-updates once per day. Retries failed refunds up to 3 times. Max 20 refunds per run. NO one on the team needs to start it.",col:"mint"},
+     {n:"Triggers 1–3",t:"Double Payment / Warehouse Cancel / Return",d:"Customer paid twice → detects within 40 min, refunds extra immediately. Warehouse cancelled order → full refund + restock. Package returned to warehouse → Bosta confirms → refund issued.",col:""},
+     {n:"Triggers 4–5",t:"Failed Delivery / Missing 9+ Days",d:"Delivery failed (couldn't reach customer) → Bosta marks failed → bot refunds. Package missing 9+ days (no tracking activity) → assumes lost → full refund.",col:"lemon"},
+     {n:"Triggers 6–7",t:"Full OOS / Partial OOS",d:"Entire order OOS for 2+ days → full refund. Part of order OOS → refunds OOS items only, ships rest, customer gets auto-email.",col:"mint"},
+     {n:"Manual Flags",t:"2 Situations Requiring Human Action",d:"Order >EGP 5,000 → tagged 'Refund: Needs Review' → DM Ahmed to approve, then refund manually in Paymob. Refund failed 3 times → 🔴 in Slack → check Paymob (SOP-REFUND-02) and escalate.",col:"coral"}
+   ],
+   canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect within the standard banking window."},
+
+  {code:"SOP-REFUND-02",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconcls:"cat-icon-lemon",
+   sys:"Slack #cs-updates + Paymob Dashboard",
+   t_en:"☀️ Daily 2-Minute Bot Check & Paymob Lookup",t_ar:"☀️ الفحص اليومي دقيقتين وكيفية البحث في Paymob",
+   d_en:"Open Slack #cs-updates, find today's report, read the 3-number split. Zero failed = you're done. Failures exist = use Paymob lookup steps below.",
+   d_ar:"افتح Slack #cs-updates، ابحث عن تقرير اليوم، اقرأ الأرقام الثلاثة. صفر فشل = خلصت.",
+   steps:[
+     {n:"Step 1",t:"Open Slack #cs-updates Every Morning",d:"Find 'Refunds — YYYY-MM-DD' report. Read split: ✅ N clean (no action) | 🔄 N recovered (monitor only) | 🔴 N failed (human action required). If 🔴 = 0 → you're done.",col:""},
+     {n:"Step 2",t:"If 🔴 Failed > 0 — Type /breakdown",d:"Type /breakdown in #cs-updates. Shows: order #, reason, amount, success/fail. Two commands: /refunds (total EGP + count + split) | /breakdown (each order detail — use when 🔴 > 0).",col:"coral"},
+     {n:"Step 3",t:"Look Up Transaction in Paymob",d:"Go to eg.dashboard.paymob.com → Payments → Transactions → click + filter → filter by Order ID (= Shopify order number). Status: Success (refund should work) | Pending (wait 24–48h) | Declined (cancel Shopify order, no refund needed) | Not found (check Shopify for correct number).",col:"lemon"},
+     {n:"Step 4",t:"Manual Refund — Last Resort Only",d:"Only if bot failed AND status is Success: click transaction → Refund button → enter EGP amount → confirm. THEN go to Shopify and create matching refund record. Always record in Shopify — if Shopify doesn't know, bot may refund again next run.",col:"coral"},
+     {n:"Step 5",t:"When to Escalate to Ahmed",d:"DM Ahmed when: 🔴 same order failed 3 days in a row. Tag 'Refund: Needs Review' on order >EGP 5,000. No Slack report 2+ days (bot may be down). Paymob shows Success but customer not credited after 7 business days.",col:"mint"}
+   ],
+   canned:"We have checked your refund transaction status in Paymob. Our team is monitoring and will ensure it processes correctly."},
+
+  // CORE PRINCIPLES
+  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconcls:"",
+   sys:"Shopify + Gorgias + Slack + Bosta",
+   t_en:"⚡ MAVIN × BOSTA Golden Workflow — 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
+   d_en:"The 4-step golden workflow every agent must follow on every single ticket. No exceptions. Foundation of consistent high-quality service at Mavin Wear.",
+   d_ar:"الـ 4 خطوات الذهبية التي يجب على كل أجنت اتباعها في كل تذكرة. بدون استثناءات.",
+   steps:[
+     {n:"Step 1",t:"Open Ticket & Flag First — Protect 24h SLA",d:"Always open the ticket and flag the issue BEFORE contacting the customer. Non-negotiable first step.",col:"coral"},
+     {n:"Step 2",t:"5-Tool Investigation — Never Assume",d:"Check all 5 platforms: Shopify → Gorgias → Slack → Bosta → Estbdal/Sheets. NEVER blindly follow a previous agent's response — always self-verify.",col:"lemon"},
+     {n:"Step 3",t:"One-Touch Resolution — Complete in First Response",d:"Deliver complete solution in the very first response. Correct details executed. No fragments. No back-and-forth.",col:"mint"},
+     {n:"Step 4",t:"Close Within 2–3 Hours — Keep Queue Clean",d:"Close resolved tickets within 2–3 hours max. A resolved ticket sitting open is queue pollution.",col:""}
+   ],
+   canned:"Your request has been handled according to our full operational standard — investigated across all systems, resolved in one touch, and documented completely."},
+
+  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل والتشغيل الأساسية",icon:"⭐",iconcls:"",
+   sys:"All Platforms",
+   t_en:"📊 Weekly KPI Scorecard — What We Measure & Why",t_ar:"📊 مؤشرات الأداء الأسبوعية",
+   d_en:"Numbers that tell us if the partnership is working. Tracked every week. A bad week is information. A pattern of bad weeks is a problem.",
+   d_ar:"الأرقام التي تخبرنا إذا كانت الشراكة تعمل. يُتتبع أسبوعياً.",
+   steps:[
+     {n:"Fulfillment KPIs",t:"Bosta Owns These",d:"Orders fulfilled same day: 95%+. On-time delivery by zone (per SLA table). First-attempt success: 90%+. Picking accuracy: 99.5%+. NDR rate — monitor trend.",col:""},
+     {n:"Exception KPIs",t:"Both Sides Own These",d:"Awaiting Action open >24h: TARGET ZERO. OOS unreported/unresolved: TARGET ZERO. Open exceptions >48h: TARGET ZERO. Returns processed within 48h: 100%.",col:"coral"},
+     {n:"Data Quality KPIs",t:"Mavin Wear Owns These",d:"Order data accuracy: 99%+. Refund bot 🔴 failed count: target 0. Ticket closure within 2–3h. One-Touch resolution rate per agent.",col:"lemon"},
+     {n:"Weekly Sync",t:"Fixed 45-Min Structure",d:"(1) KPI dashboard — 10 min. (2) SLA breach review — 10 min. (3) Open exceptions update — 10 min. (4) Upcoming campaigns — 5 min. (5) One process improvement each — 5 min. (6) Action items with owner + deadline — 5 min.",col:"mint"}
+   ],
+   canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality and partnership performance."}
+];
