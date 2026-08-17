@@ -6,22 +6,22 @@
 <title>MAVIN OPS HUB - QA Audit</title>
 <style>
 :root {
-  --black:#0f0f0f; --dark:#161616; --card:#ffffff; --card2:#f8f8f8;
-  --border:#e5e5e5; --border2:#d0d0d0; --white:#ffffff; --text:#111111;
-  --muted:#888; --muted2:#bbb; --indigo:#4b4bf9;
-  --green:#16a34a; --green-bg:#f0fdf4; --green-border:#bbf7d0;
-  --red:#dc2626; --red-bg:#fef2f2; --red-border:#fecaca;
-  --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-border:#fde68a;
-  --blue:#2563eb; --blue-bg:#eff6ff; --blue-border:#bfdbfe;
-  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-border:#ddd6fe;
+  --bg:#f3f3f7; --dark:#0a0a0a; --card:#ffffff; --card2:#f8f8f8;
+  --border:#e5e5e5; --border2:#d0d0d0; --text:#111111; --muted:#888;
+  --muted2:#bbb; --indigo:#4b4bf9;
+  --green:#16a34a; --green-bg:#f0fdf4; --green-bd:#bbf7d0;
+  --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
+  --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
+  --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
+  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f3f3f7;color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
 
 /* NAV */
 .topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-brand-icon{width:42px;height:42px;background:var(--white);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
+.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
 .nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
 .nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
 .nav-links{display:flex;align-items:center;gap:2px;z-index:2}
@@ -34,7 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .user-sel option{background:#111;color:#fff}
 
 /* TABS */
-.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0}
+.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
 .tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
@@ -45,29 +45,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .tab-content{display:none}
 .tab-content.active{display:block}
 
-/* PAGE HEADER */
-.page-header{margin-bottom:28px}
+/* HEADER */
 .page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
 .page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
-.page-title{font-size:26px;font-weight:900;color:var(--text);letter-spacing:-.5px;margin-bottom:5px}
-.page-sub{color:var(--muted);font-size:13.5px}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
+.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px}
 
 /* CARDS */
 .form-card{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
 .form-card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa}
 .card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .card-icon svg{width:17px;height:17px}
-.card-title{font-size:13px;font-weight:800;color:var(--text);flex:1}
+.card-title{font-size:13px;font-weight:800;flex:1}
 .card-pts{font-size:11.5px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px}
 
-/* META GRID */
+/* META */
 .meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px}
 .meta-field{display:flex;flex-direction:column;gap:5px}
 .meta-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.meta-input{background:#fff;border:1px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
+.meta-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
 .meta-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
 .meta-input::placeholder{color:var(--muted2)}
-select.meta-input option{background:#fff;color:var(--text)}
 
 /* CRITERIA */
 .criteria-grid{padding:4px 0}
@@ -75,7 +73,7 @@ select.meta-input option{background:#fff;color:var(--text)}
 .criteria-row:last-child{border-bottom:none}
 .criteria-row:hover{background:#fafafa}
 .criteria-name{flex:1;font-size:13px;font-weight:600;color:#222}
-.criteria-max{font-size:11px;color:var(--muted);margin-right:4px;white-space:nowrap}
+.criteria-max{font-size:11px;color:var(--muted);white-space:nowrap}
 .radio-group{display:flex;gap:5px}
 .radio-btn{width:36px;height:30px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
 .radio-btn:hover{border-color:#999;color:var(--text)}
@@ -85,13 +83,13 @@ select.meta-input option{background:#fff;color:var(--text)}
 .radio-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
 
 /* CRITICAL */
-.critical-card{background:#fff;border:1.5px solid var(--red-border);border-radius:16px;margin-bottom:16px;overflow:hidden}
-.critical-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--red-border);background:var(--red-bg)}
+.critical-card{background:#fff;border:1.5px solid var(--red-bd);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.critical-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--red-bd);background:var(--red-bg)}
 .critical-title{font-size:13px;font-weight:800;color:var(--red);flex:1}
-.critical-badge{font-size:10px;font-weight:800;color:var(--red);background:#fee2e2;border:1px solid var(--red-border);border-radius:100px;padding:3px 10px;letter-spacing:1px}
+.critical-badge{font-size:10px;font-weight:800;color:var(--red);background:#fee2e2;border:1px solid var(--red-bd);border-radius:100px;padding:3px 10px;letter-spacing:1px}
 .critical-row{display:flex;align-items:center;padding:14px 22px;border-bottom:1px solid #fef2f2;gap:14px}
 .critical-row:last-child{border-bottom:none}
-.crit-name{font-size:13px;font-weight:700;color:var(--text)}
+.crit-name{font-size:13px;font-weight:700}
 .crit-desc{font-size:11.5px;color:var(--muted);margin-top:2px}
 .toggle-group{display:flex;gap:5px}
 .toggle-btn{padding:6px 13px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
@@ -100,62 +98,63 @@ select.meta-input option{background:#fff;color:var(--text)}
 .toggle-btn.sel-no{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .toggle-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
 
-/* LIVE SCORE */
+/* SCORE PANEL */
 .score-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:28px}
-.score-circle{width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0}
-.score-num{font-size:28px;font-weight:900;line-height:1;color:var(--text)}
+.score-circle{width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;transition:.3s}
+.score-num{font-size:28px;font-weight:900;line-height:1;transition:.3s}
 .score-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-top:2px}
 .score-breakdown{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .score-item{background:#fafafa;border:1px solid var(--border);border-radius:9px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between}
 .score-item-name{font-size:11px;color:var(--muted);font-weight:600}
-.score-item-val{font-size:13px;font-weight:800;color:var(--text)}
+.score-item-val{font-size:13px;font-weight:800}
 
 /* SUBMIT */
 .submit-row{display:flex;gap:10px;margin-bottom:40px}
 .btn-submit{background:#111;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
 .btn-submit:hover{background:#333}
+.btn-submit:disabled{background:#555;cursor:not-allowed}
 .btn-reset{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:13px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
 .btn-reset:hover{border-color:#999;color:var(--text)}
 
 /* HISTORY */
 .history-controls{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.hist-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;min-width:180px}
+.hist-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;min-width:200px}
 .hist-input:focus{border-color:var(--indigo)}
-.hist-btn{background:#111;color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.hist-btn{background:#111;color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s}
 .hist-btn:hover{background:#333}
-.hist-btn-sec{background:#fff;color:var(--text);border:1.5px solid var(--border2);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer}
+.hist-btn-sec{background:#fff;color:var(--text);border:1.5px solid var(--border2);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
 .hist-btn-sec:hover{border-color:#999}
 
-/* STATS ROW */
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
 .stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px}
 .stat-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
-.stat-value{font-size:24px;font-weight:900;color:var(--text)}
+.stat-value{font-size:24px;font-weight:900}
 .stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
 
 /* TABLE */
-.table-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.qa-table{width:100%;border-collapse:collapse}
-.qa-table th{padding:11px 16px;font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;background:#fafafa;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-.qa-table td{padding:12px 16px;font-size:12.5px;color:var(--text);border-bottom:1px solid #f5f5f5;vertical-align:middle}
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:auto}
+.qa-table{width:100%;border-collapse:collapse;min-width:900px}
+.qa-table th{padding:11px 14px;font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;background:#fafafa;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+.qa-table td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
 .qa-table tr:last-child td{border-bottom:none}
 .qa-table tr:hover td{background:#fafafa}
-.score-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11.5px;font-weight:800}
-.score-exc{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
-.score-good{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
-.score-meets{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-border)}
-.score-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.score-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap}
+.b-exc{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.b-good{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.b-meets{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}
+.b-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
 .empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-text{font-size:14px;font-weight:600}
 .empty-sub{font-size:12.5px;margin-top:4px}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:#111;color:#fff;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:360px}
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-width:380px}
 .toast.show{display:flex}
-.toast.success{background:#16a34a}
-.toast.error{background:#dc2626}
-.toast.warn{background:#d97706}
+.toast.success{background:var(--green);color:#fff}
+.toast.error{background:var(--red);color:#fff}
+.toast.warn{background:var(--yellow);color:#fff}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -163,21 +162,19 @@ select.meta-input option{background:#fff;color:var(--text)}
 .modal{background:#fff;border-radius:20px;padding:36px;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.15)}
 .modal-score-big{font-size:64px;font-weight:900;line-height:1;margin-bottom:6px}
 .modal-grade{font-size:15px;font-weight:800;margin-bottom:16px;letter-spacing:1px;text-transform:uppercase}
-.modal-agent{font-size:12.5px;color:var(--muted);margin-bottom:20px;line-height:1.5}
-.modal-ztp{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:10px 14px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:16px;display:none}
+.modal-agent{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.modal-ztp{background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:10px 14px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:16px;display:none}
 .modal-breakdown{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;display:flex;flex-direction:column;gap:7px}
-.modal-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.modal-row{display:flex;justify-content:space-between;font-size:12.5px}
 .modal-row-name{color:var(--muted)}
-.modal-row-val{font-weight:700;color:var(--text)}
+.modal-row-val{font-weight:700}
 .modal-btns{display:flex;gap:8px;justify-content:center}
 .modal-btn-close{background:#111;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:800;cursor:pointer}
 .modal-btn-new{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer}
 .modal-btn-new:hover{color:var(--text);border-color:#999}
 
-.loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.section-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
 
 @media(max-width:768px){
   .meta-grid{grid-template-columns:1fr;padding:16px}
@@ -240,21 +237,16 @@ select.meta-input option{background:#fff;color:var(--text)}
   </button>
 </div>
 
-<!-- ══════════════ TAB: AUDIT ══════════════ -->
+<!-- ══ TAB: AUDIT ══ -->
 <div class="page tab-content active" id="tab-audit">
-
-  <div class="page-header">
-    <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
-    <div class="page-title">QA Audit Form</div>
-    <div class="page-sub">Score = 100 pts total. Agent email + ticket number required. Duplicate tickets in same month are blocked.</div>
-  </div>
+  <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
+  <div class="page-title">QA Audit Form</div>
+  <div class="page-sub">Score = 100 pts. Agent email + ticket required. Duplicate tickets in same month are blocked.</div>
 
   <!-- META -->
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#f0f0ff">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
+      <div class="card-icon" style="background:#f0f0ff"><svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       <span class="card-title">Audit Information</span>
     </div>
     <div class="meta-grid">
@@ -289,7 +281,7 @@ select.meta-input option{background:#fff;color:var(--text)}
           <option>Phone Call</option>
         </select>
       </div>
-      <div class="meta-field" style="grid-column:span 3">
+      <div class="meta-field" style="grid-column:1/-1">
         <label class="meta-label">Contact Reason</label>
         <select class="meta-input" id="contactReason">
           <option value="">Select reason</option>
@@ -328,10 +320,10 @@ select.meta-input option{background:#fff;color:var(--text)}
     </div>
   </div>
 
-  <!-- SECTIONS -->
+  <!-- SECTION CARDS -->
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#eff6ff"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div class="card-icon" style="background:var(--blue-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
       <span class="card-title">Issue Understanding</span>
       <span class="card-pts" id="pts1">— / 8 pts</span>
     </div>
@@ -340,7 +332,7 @@ select.meta-input option{background:#fff;color:var(--text)}
 
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#f0fdf4"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="card-icon" style="background:var(--green-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
       <span class="card-title">Solution Quality</span>
       <span class="card-pts" id="pts2">— / 8 pts</span>
     </div>
@@ -349,7 +341,7 @@ select.meta-input option{background:#fff;color:var(--text)}
 
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#fffbeb"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <div class="card-icon" style="background:var(--yellow-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
       <span class="card-title">Customer Experience</span>
       <span class="card-pts" id="pts3">— / 8 pts</span>
     </div>
@@ -358,7 +350,7 @@ select.meta-input option{background:#fff;color:var(--text)}
 
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="card-icon" style="background:var(--purple-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
       <span class="card-title">Communication</span>
       <span class="card-pts" id="pts4">— / 5 pts</span>
     </div>
@@ -391,11 +383,11 @@ select.meta-input option{background:#fff;color:var(--text)}
       <span class="card-title">Evaluator Notes</span>
     </div>
     <div style="padding:16px 22px">
-      <textarea class="meta-input" id="evalNotes" rows="3" placeholder="Coaching notes, observations, or context..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
+      <textarea class="meta-input" id="evalNotes" rows="3" placeholder="Coaching notes, observations..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
     </div>
   </div>
 
-  <div class="submit-row">
+  <div class="submit-row" style="margin-top:20px">
     <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
     <button class="btn-submit" id="submitBtn" onclick="submitAudit()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -404,26 +396,22 @@ select.meta-input option{background:#fff;color:var(--text)}
   </div>
 </div>
 
-<!-- ══════════════ TAB: HISTORY ══════════════ -->
+<!-- ══ TAB: HISTORY ══ -->
 <div class="page tab-content" id="tab-history">
-  <div class="page-header">
-    <div class="page-badge"><span class="page-badge-dot"></span>Analytics</div>
-    <div class="page-title">QA History & Analytics</div>
-    <div class="page-sub">Search by agent email or name. Filter by month. Export to Excel.</div>
-  </div>
+  <div class="page-badge"><span class="page-badge-dot"></span>Analytics</div>
+  <div class="page-title">QA History & Analytics</div>
+  <div class="page-sub">Filter by agent email / name and month. Export to Excel.</div>
 
   <div class="history-controls">
-    <input class="hist-input" id="histEmail" type="text" placeholder="Agent email or name...">
-    <input class="hist-input" id="histMonth" type="month" style="min-width:150px">
+    <input class="hist-input" id="histSearch" type="text" placeholder="Agent email or name...">
+    <input class="hist-input" id="histMonth" type="month" style="min-width:160px">
     <button class="hist-btn" onclick="loadHistory()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Search
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search
     </button>
-    <button class="hist-btn-sec" onclick="exportExcel()">⬇ Export Excel</button>
     <button class="hist-btn-sec" onclick="loadHistory(true)">Show All</button>
+    <button class="hist-btn-sec" onclick="exportCSV()">⬇ Export Excel</button>
   </div>
 
-  <!-- STATS -->
   <div class="stats-row" id="statsRow" style="display:none">
     <div class="stat-card">
       <div class="stat-label">Total Audits</div>
@@ -432,7 +420,7 @@ select.meta-input option{background:#fff;color:var(--text)}
     </div>
     <div class="stat-card">
       <div class="stat-label">Average Score</div>
-      <div class="stat-value" id="statAvg">—</div>
+      <div class="stat-value" id="statAvg" style="color:var(--indigo)">—</div>
       <div class="stat-sub">Out of 100</div>
     </div>
     <div class="stat-card">
@@ -451,22 +439,19 @@ select.meta-input option{background:#fff;color:var(--text)}
     <table class="qa-table">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Agent</th>
-          <th>Ticket #</th>
-          <th>Channel</th>
-          <th>Issue</th>
-          <th>Solution</th>
-          <th>CX</th>
-          <th>Comms</th>
-          <th>Process</th>
-          <th>Final Score</th>
-          <th>Grade</th>
-          <th>Critical</th>
+          <th>Date</th><th>Agent</th><th>Ticket #</th><th>Channel</th>
+          <th>Issue</th><th>Solution</th><th>CX</th><th>Comms</th><th>Process</th>
+          <th>Score</th><th>Grade</th><th>Critical</th>
         </tr>
       </thead>
       <tbody id="histBody">
-        <tr><td colspan="12"><div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Search to load history</div><div class="empty-sub">Enter agent email or name and click Search</div></div></td></tr>
+        <tr><td colspan="12">
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <div class="empty-text">Search to load history</div>
+            <div class="empty-sub">Enter agent email or name and click Search</div>
+          </div>
+        </td></tr>
       </tbody>
     </table>
   </div>
@@ -488,130 +473,86 @@ select.meta-input option{background:#fff;color:var(--text)}
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────────────
 const SB_URL = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
-const SB_KEY = 'sb_publishable_EANn3CY2Zl0KoiJ9XTjueA_azOBV5YB';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 const TABLE  = 'qa_audits';
 
-const API = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
+const sbFetch = (path, opts = {}) => fetch(`${SB_URL}/rest/v1/${path}`, {
   headers: {
     'apikey': SB_KEY,
     'Authorization': `Bearer ${SB_KEY}`,
     'Content-Type': 'application/json',
     'Prefer': opts.prefer || 'return=minimal',
-    ...opts.headers
+    ...opts.extraHeaders
   },
-  ...opts
+  method: opts.method || 'GET',
+  body: opts.body
 });
 
-// ── SECTIONS DATA ──────────────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────────────────────────────
 const SECTIONS = [
-  { id:'sec1', ptsId:'pts1', scoreId:'s1', max:8, dbCol:'score_issue_understanding',
-    items:[
-      {name:'Identified the customer issue', max:2},
-      {name:'Asked clarification questions', max:2, na:true},
-      {name:'Investigated properly', max:2, na:true},
-      {name:'Did not assume the issue', max:2},
-    ]
-  },
-  { id:'sec2', ptsId:'pts2', scoreId:'s2', max:8, dbCol:'score_solution_quality',
-    items:[
-      {name:'Provided correct solution', max:2},
-      {name:'Explained the solution clearly', max:2},
-      {name:'Provided accurate information', max:2},
-      {name:'Confirmed resolution', max:2},
-    ]
-  },
-  { id:'sec3', ptsId:'pts3', scoreId:'s3', max:8, dbCol:'score_customer_experience',
-    items:[
-      {name:'Acknowledged the issue', max:2},
-      {name:'Used empathy statements', max:2},
-      {name:'Showed willingness to help', max:2},
-      {name:'Handled negative emotions', max:2},
-    ]
-  },
-  { id:'sec4', ptsId:'pts4', scoreId:'s4', max:5, dbCol:'score_communication',
-    items:[
-      {name:'Clear and professional language', max:1},
-      {name:'Efficient communication', max:1},
-      {name:'Greeting & Closure', max:2},
-      {name:'Grammar and spelling', max:1, na:true},
-    ]
-  },
-  { id:'sec5', ptsId:'pts5', scoreId:'s5', max:5, dbCol:'score_process_compliance',
-    items:[
-      {name:'Used correct macros / templates', max:2},
-      {name:'Followed internal process', max:1},
-      {name:'Correct documentation', max:1},
-      {name:'Correct case status', max:1},
-    ]
-  }
+  { id:'sec1', ptsId:'pts1', scoreId:'s1', max:8, db:'score_issue_understanding', label:'Issue Understanding',
+    items:[{name:'Identified the customer issue',max:2},{name:'Asked clarification questions',max:2,na:true},{name:'Investigated properly',max:2,na:true},{name:'Did not assume the issue',max:2}]},
+  { id:'sec2', ptsId:'pts2', scoreId:'s2', max:8, db:'score_solution_quality', label:'Solution Quality',
+    items:[{name:'Provided correct solution',max:2},{name:'Explained the solution clearly',max:2},{name:'Provided accurate information',max:2},{name:'Confirmed resolution',max:2}]},
+  { id:'sec3', ptsId:'pts3', scoreId:'s3', max:8, db:'score_customer_experience', label:'Customer Experience',
+    items:[{name:'Acknowledged the issue',max:2},{name:'Used empathy statements',max:2},{name:'Showed willingness to help',max:2},{name:'Handled negative emotions',max:2}]},
+  { id:'sec4', ptsId:'pts4', scoreId:'s4', max:5, db:'score_communication', label:'Communication',
+    items:[{name:'Clear and professional language',max:1},{name:'Efficient communication',max:1},{name:'Greeting & Closure',max:2},{name:'Grammar and spelling',max:1,na:true}]},
+  { id:'sec5', ptsId:'pts5', scoreId:'s5', max:5, db:'score_process_compliance', label:'Process Compliance',
+    items:[{name:'Used correct macros / templates',max:2},{name:'Followed internal process',max:1},{name:'Correct documentation',max:1},{name:'Correct case status',max:1}]}
 ];
 
-const CRITICAL_ITEMS = [
+const CRITS = [
   {id:'bc', name:'Business Critical (BC)', desc:'Action causing direct financial loss or brand damage'},
   {id:'ec', name:'End-User Critical (EC)', desc:'Incorrect info/action that directly harms the customer'},
   {id:'cc', name:'Compliance Critical (CC)', desc:'Violation of policy, legal, or regulatory requirement'},
-  {id:'ztp', name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'},
+  {id:'ztp',name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'}
 ];
 
-const state = {};
-const critState = {};
+const state = {}, critState = {};
 let histData = [];
 
-// ── BUILD FORM ─────────────────────────────────────────────────────────
+// ── BUILD ─────────────────────────────────────────────────────────────
 function buildForm() {
   SECTIONS.forEach(sec => {
-    const container = document.getElementById(sec.id);
+    const el = document.getElementById(sec.id);
     sec.items.forEach((item, i) => {
       const key = `${sec.id}_${i}`;
       state[key] = null;
-      const row = document.createElement('div');
-      row.className = 'criteria-row';
-      const btns = [0,1,2].map(v =>
-        `<button class="radio-btn" data-key="${key}" data-val="${v}" onclick="pick('${key}',${v},this)">${v}</button>`
-      ).join('');
-      const naBtn = item.na
-        ? `<button class="radio-btn" data-key="${key}" data-val="NA" onclick="pickNA('${key}',this)">NA</button>` : '';
-      row.innerHTML = `
+      const naBtn = item.na ? `<button class="radio-btn" data-k="${key}" data-v="NA" onclick="pickNA('${key}',this)">NA</button>` : '';
+      el.innerHTML += `<div class="criteria-row">
         <span class="criteria-name">${item.name}</span>
         <span class="criteria-max">max ${item.max}</span>
-        <div class="radio-group">${btns}${naBtn}</div>`;
-      container.appendChild(row);
+        <div class="radio-group">
+          ${[0,1,2].map(v=>`<button class="radio-btn" data-k="${key}" data-v="${v}" onclick="pick('${key}',${v},this)">${v}</button>`).join('')}
+          ${naBtn}
+        </div></div>`;
     });
   });
-
-  const cc = document.getElementById('sec-critical');
-  CRITICAL_ITEMS.forEach(c => {
+  CRITS.forEach(c => {
     critState[c.id] = null;
-    const row = document.createElement('div');
-    row.className = 'critical-row';
-    row.innerHTML = `
-      <div style="flex:1">
-        <div class="crit-name">${c.name}</div>
-        <div class="crit-desc">${c.desc}</div>
-      </div>
+    document.getElementById('sec-critical').innerHTML += `<div class="critical-row">
+      <div style="flex:1"><div class="crit-name">${c.name}</div><div class="crit-desc">${c.desc}</div></div>
       <div class="toggle-group">
         <button class="toggle-btn" onclick="pickCrit('${c.id}','yes',this)">Yes</button>
         <button class="toggle-btn" onclick="pickCrit('${c.id}','no',this)">No</button>
         <button class="toggle-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button>
-      </div>`;
-    cc.appendChild(row);
+      </div></div>`;
   });
-
   document.getElementById('auditDate').valueAsDate = new Date();
 }
 
-// ── PICK ───────────────────────────────────────────────────────────────
+// ── PICK ──────────────────────────────────────────────────────────────
 function pick(key, val, btn) {
   state[key] = val;
   btn.closest('.radio-group').querySelectorAll('.radio-btn').forEach(b => {
     b.className = 'radio-btn';
-    if (b.dataset.key === key && +b.dataset.val === val) b.classList.add(`sel-${val}`);
+    if (b.dataset.k === key && +b.dataset.v === val) b.classList.add(`sel-${val}`);
   });
   recalc();
 }
@@ -619,7 +560,7 @@ function pickNA(key, btn) {
   state[key] = 'NA';
   btn.closest('.radio-group').querySelectorAll('.radio-btn').forEach(b => {
     b.className = 'radio-btn';
-    if (b.dataset.val === 'NA') b.classList.add('sel-na');
+    if (b.dataset.v === 'NA') b.classList.add('sel-na');
   });
   recalc();
 }
@@ -630,12 +571,11 @@ function pickCrit(id, val, btn) {
   recalc();
 }
 
-// ── RECALC ─────────────────────────────────────────────────────────────
+// ── RECALC ────────────────────────────────────────────────────────────
 function recalc() {
   let totalEarned = 0;
   const secScores = [];
-
-  SECTIONS.forEach((sec, si) => {
+  SECTIONS.forEach(sec => {
     let earned = 0, possible = 0;
     sec.items.forEach((item, i) => {
       const v = state[`${sec.id}_${i}`];
@@ -644,73 +584,75 @@ function recalc() {
       possible += item.max;
     });
     const scaled = possible > 0 ? Math.round((earned / possible) * sec.max) : null;
-    secScores.push({ label: sec.label || '', score: scaled, max: sec.max, dbCol: sec.dbCol });
+    secScores.push({ label: sec.label, score: scaled, max: sec.max, db: sec.db });
     document.getElementById(sec.ptsId).textContent = scaled !== null ? `${scaled} / ${sec.max} pts` : `— / ${sec.max} pts`;
     document.getElementById(sec.scoreId).textContent = scaled !== null ? `${scaled}/${sec.max}` : '—';
     if (scaled !== null) totalEarned += scaled;
   });
 
-  const ztpOn = critState['ztp'] === 'yes';
-  const critErrors = CRITICAL_ITEMS.filter(c => critState[c.id] === 'yes').map(c => c.name);
+  const ztp = critState['ztp'] === 'yes';
+  const critErrors = CRITS.filter(c => critState[c.id] === 'yes').map(c => c.name);
   document.getElementById('s6').textContent = critErrors.length ? critErrors.join(', ') : 'None';
 
-  const allScored = secScores.some(s => s.score !== null);
-  if (!allScored) { document.getElementById('liveScore').textContent = '—'; return null; }
+  if (!secScores.some(s => s.score !== null)) {
+    document.getElementById('liveScore').textContent = '—';
+    return null;
+  }
 
   let final = Math.round((totalEarned / 34) * 100);
-  if (ztpOn) final = 0;
+  if (ztp) final = 0;
 
-  const el = document.getElementById('liveScore');
-  const circ = document.getElementById('scoreCircle');
-  el.textContent = final;
+  const scoreEl = document.getElementById('liveScore');
+  const circle  = document.getElementById('scoreCircle');
+  scoreEl.textContent = final;
   const col = final >= 90 ? 'var(--green)' : final >= 70 ? 'var(--yellow)' : 'var(--red)';
-  el.style.color = col;
-  circ.style.borderColor = col;
+  scoreEl.style.color = col;
+  circle.style.borderColor = col;
 
-  return { final, secScores, ztpOn, critErrors };
+  return { final, secScores, ztp, critErrors };
 }
 
-// ── GRADE ──────────────────────────────────────────────────────────────
 function getGrade(score, ztp) {
-  if (ztp) return { label: 'FAIL — ZTP', color: 'var(--red)' };
-  if (score >= 90) return { label: 'EXCELLENT', color: 'var(--green)' };
-  if (score >= 80) return { label: 'GOOD', color: '#2563eb' };
-  if (score >= 70) return { label: 'MEETS STANDARDS', color: 'var(--yellow)' };
-  if (score >= 60) return { label: 'NEEDS IMPROVEMENT', color: 'var(--yellow)' };
-  return { label: 'BELOW STANDARD', color: 'var(--red)' };
+  if (ztp || score < 60) return { label: ztp ? 'FAIL — ZTP' : 'BELOW STANDARD', color: 'var(--red)', cls: 'b-fail' };
+  if (score >= 90) return { label: 'EXCELLENT', color: 'var(--green)', cls: 'b-exc' };
+  if (score >= 80) return { label: 'GOOD', color: 'var(--blue)', cls: 'b-good' };
+  if (score >= 70) return { label: 'MEETS STANDARDS', color: 'var(--yellow)', cls: 'b-meets' };
+  return { label: 'NEEDS IMPROVEMENT', color: 'var(--yellow)', cls: 'b-meets' };
 }
 
-// ── SUBMIT ─────────────────────────────────────────────────────────────
+// ── SUBMIT ────────────────────────────────────────────────────────────
 async function submitAudit() {
   const email  = document.getElementById('agentEmail').value.trim();
   const ticket = document.getElementById('ticketNum').value.trim();
   const eval_  = document.getElementById('evalName').value.trim();
 
-  if (!email)  return showToast('Agent email is required.', 'error');
-  if (!ticket) return showToast('Ticket number is required.', 'error');
-  if (!eval_)  return showToast('Evaluator name is required.', 'error');
+  if (!email)  return toast('Agent email is required.', 'error');
+  if (!ticket) return toast('Ticket number is required.', 'error');
+  if (!eval_)  return toast('Evaluator name is required.', 'error');
 
   const result = recalc();
-  if (!result) return showToast('Please score at least one section.', 'error');
+  if (!result) return toast('Please score at least one section.', 'error');
 
-  // Duplicate check — same ticket + same month
-  const dateVal = document.getElementById('auditDate').value || new Date().toISOString().slice(0,10);
+  const dateVal    = document.getElementById('auditDate').value || new Date().toISOString().slice(0,10);
   const monthStart = dateVal.slice(0,7) + '-01';
-  const monthEnd   = new Date(new Date(monthStart).setMonth(new Date(monthStart).getMonth()+1)).toISOString().slice(0,10);
+  const nextMonth  = new Date(monthStart); nextMonth.setMonth(nextMonth.getMonth() + 1);
+  const monthEnd   = nextMonth.toISOString().slice(0,10);
 
-  setBtnLoading(true);
+  setLoading(true);
   try {
-    const dupRes = await API(`${TABLE}?agent_email=eq.${encodeURIComponent(email)}&ticket_number=eq.${encodeURIComponent(ticket)}&audit_date=gte.${monthStart}&audit_date=lt.${monthEnd}&select=id`, {
-      headers: { 'Prefer': 'return=representation' }
-    });
+    // Duplicate check
+    const dupRes = await sbFetch(
+      `${TABLE}?agent_email=eq.${encodeURIComponent(email)}&ticket_number=eq.${encodeURIComponent(ticket)}&audit_date=gte.${monthStart}&audit_date=lt.${monthEnd}&select=id`,
+      { extraHeaders: { 'Prefer': 'return=representation' } }
+    );
     const dups = await dupRes.json();
-    if (dups.length > 0) {
-      showToast(`Ticket ${ticket} was already evaluated for this agent this month.`, 'warn');
-      setBtnLoading(false); return;
+    if (Array.isArray(dups) && dups.length > 0) {
+      toast(`Ticket ${ticket} already evaluated for this agent this month.`, 'warn');
+      setLoading(false); return;
     }
 
-    const { final, secScores, ztpOn, critErrors } = result;
-    const grade = getGrade(final, ztpOn);
+    const { final, secScores, ztp, critErrors } = result;
+    const grade = getGrade(final, ztp);
 
     const payload = {
       agent_email: email,
@@ -727,51 +669,61 @@ async function submitAudit() {
       score_process_compliance: secScores[4].score,
       final_score: final,
       grade: grade.label,
-      critical_bc: critState['bc'] === 'yes',
-      critical_ec: critState['ec'] === 'yes',
-      critical_cc: critState['cc'] === 'yes',
+      critical_bc:  critState['bc']  === 'yes',
+      critical_ec:  critState['ec']  === 'yes',
+      critical_cc:  critState['cc']  === 'yes',
       critical_ztp: critState['ztp'] === 'yes',
-      evaluator_notes: document.getElementById('evalNotes').value.trim(),
+      evaluator_notes: document.getElementById('evalNotes').value.trim()
     };
 
-    const res = await API(TABLE, { method:'POST', body: JSON.stringify(payload) });
-    if (!res.ok) throw new Error(await res.text());
+    const res = await sbFetch(TABLE, { method: 'POST', body: JSON.stringify(payload) });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
 
-    setBtnLoading(false);
-    showModal(final, grade, secScores, ztpOn, critErrors, email, ticket, dateVal, eval_);
+    setLoading(false);
+    showModal(final, grade, secScores, ztp, critErrors, email, ticket, dateVal, eval_);
+    toast('Audit saved successfully!', 'success');
 
-  } catch(e) {
-    setBtnLoading(false);
-    showToast('Save failed: ' + e.message, 'error');
+  } catch (e) {
+    setLoading(false);
+    toast('Error: ' + e.message, 'error');
+    console.error(e);
   }
 }
 
-// ── HISTORY ────────────────────────────────────────────────────────────
-async function loadHistory(all=false) {
-  const email = document.getElementById('histEmail').value.trim();
-  const month = document.getElementById('histMonth').value;
+// ── HISTORY ───────────────────────────────────────────────────────────
+async function loadHistory(all = false) {
+  const search = document.getElementById('histSearch').value.trim();
+  const month  = document.getElementById('histMonth').value;
 
-  let query = `${TABLE}?select=*&order=audit_date.desc`;
+  let q = `${TABLE}?select=*&order=audit_date.desc,id.desc`;
+
   if (!all) {
-    if (email) query += `&or=(agent_email.ilike.*${encodeURIComponent(email)}*,agent_name.ilike.*${encodeURIComponent(email)}*)`;
+    if (search) {
+      const enc = encodeURIComponent(search);
+      q += `&or=(agent_email.ilike.*${enc}*,agent_name.ilike.*${enc}*)`;
+    }
     if (month) {
       const start = month + '-01';
-      const end = new Date(new Date(start).setMonth(new Date(start).getMonth()+1)).toISOString().slice(0,10);
-      query += `&audit_date=gte.${start}&audit_date=lt.${end}`;
+      const end   = new Date(new Date(start).setMonth(new Date(start).getMonth()+1)).toISOString().slice(0,10);
+      q += `&audit_date=gte.${start}&audit_date=lt.${end}`;
     }
   }
 
   try {
-    const res = await API(query, { headers: { 'Prefer': 'return=representation' } });
+    const res = await sbFetch(q, { extraHeaders: { 'Prefer': 'return=representation' } });
     histData = await res.json();
+    if (!Array.isArray(histData)) { toast('Load error', 'error'); return; }
     renderHistory(histData);
-  } catch(e) {
-    showToast('Load failed: ' + e.message, 'error');
+  } catch (e) {
+    toast('Load failed: ' + e.message, 'error');
   }
 }
 
 function renderHistory(data) {
-  const tbody = document.getElementById('histBody');
+  const tbody    = document.getElementById('histBody');
   const statsRow = document.getElementById('statsRow');
 
   if (!data.length) {
@@ -779,74 +731,73 @@ function renderHistory(data) {
     statsRow.style.display = 'none'; return;
   }
 
-  // Stats
   statsRow.style.display = 'grid';
   const scores = data.map(r => r.final_score);
-  const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  const avg  = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
   const high = Math.max(...scores);
-  const pass = Math.round((scores.filter(s=>s>=70).length/scores.length)*100);
+  const pass = Math.round(scores.filter(s=>s>=70).length/scores.length*100);
   document.getElementById('statTotal').textContent = data.length;
-  document.getElementById('statAvg').textContent = avg;
-  document.getElementById('statHigh').textContent = high;
-  document.getElementById('statPass').textContent = pass + '%';
+  document.getElementById('statAvg').textContent   = avg;
+  document.getElementById('statHigh').textContent  = high;
+  document.getElementById('statPass').textContent  = pass + '%';
 
   tbody.innerHTML = data.map(r => {
     const g = getGrade(r.final_score, r.critical_ztp);
-    const badgeCls = r.final_score>=90?'score-exc':r.final_score>=80?'score-good':r.final_score>=70?'score-meets':'score-fail';
-    const crits = [r.critical_bc&&'BC',r.critical_ec&&'EC',r.critical_cc&&'CC',r.critical_ztp&&'ZTP'].filter(Boolean).join(', ')||'—';
+    const crits = [r.critical_bc&&'BC',r.critical_ec&&'EC',r.critical_cc&&'CC',r.critical_ztp&&'ZTP'].filter(Boolean).join(', ') || '—';
     return `<tr>
-      <td>${r.audit_date||'—'}</td>
-      <td><div style="font-weight:700">${r.agent_name||'—'}</div><div style="font-size:11px;color:var(--muted)">${r.agent_email||''}</div></td>
-      <td>${r.ticket_number||'—'}</td>
+      <td style="white-space:nowrap">${r.audit_date||'—'}</td>
+      <td><div style="font-weight:700;font-size:13px">${r.agent_name||'—'}</div><div style="font-size:11px;color:var(--muted)">${r.agent_email||''}</div></td>
+      <td style="font-weight:600">${r.ticket_number||'—'}</td>
       <td>${r.channel||'—'}</td>
-      <td>${r.score_issue_understanding??'—'}/8</td>
-      <td>${r.score_solution_quality??'—'}/8</td>
-      <td>${r.score_customer_experience??'—'}/8</td>
-      <td>${r.score_communication??'—'}/5</td>
-      <td>${r.score_process_compliance??'—'}/5</td>
-      <td><strong style="font-size:15px">${r.final_score}</strong></td>
-      <td><span class="score-badge ${badgeCls}">${g.label}</span></td>
+      <td style="text-align:center">${r.score_issue_understanding??'—'}/8</td>
+      <td style="text-align:center">${r.score_solution_quality??'—'}/8</td>
+      <td style="text-align:center">${r.score_customer_experience??'—'}/8</td>
+      <td style="text-align:center">${r.score_communication??'—'}/5</td>
+      <td style="text-align:center">${r.score_process_compliance??'—'}/5</td>
+      <td style="text-align:center;font-size:16px;font-weight:900;color:${g.color}">${r.final_score}</td>
+      <td><span class="score-badge ${g.cls}">${g.label}</span></td>
       <td style="color:${crits!=='—'?'var(--red)':'var(--muted)'};font-weight:${crits!=='—'?'700':'400'}">${crits}</td>
     </tr>`;
   }).join('');
 }
 
-// ── EXPORT EXCEL ───────────────────────────────────────────────────────
-function exportExcel() {
-  if (!histData.length) return showToast('No data to export. Search first.', 'warn');
-  const headers = ['Date','Agent Name','Agent Email','Ticket #','Channel','Contact Reason','Issue Understanding','Solution Quality','Customer Experience','Communication','Process Compliance','Final Score','Grade','BC','EC','CC','ZTP','Notes'];
+// ── EXPORT ────────────────────────────────────────────────────────────
+function exportCSV() {
+  if (!histData.length) return toast('No data. Search first.', 'warn');
+  const hdrs = ['Date','Agent Name','Agent Email','Ticket #','Channel','Contact Reason',
+    'Issue Understanding','Solution Quality','Customer Experience','Communication','Process Compliance',
+    'Final Score','Grade','BC','EC','CC','ZTP','Notes'];
   const rows = histData.map(r => [
-    r.audit_date, r.agent_name, r.agent_email, r.ticket_number, r.channel, r.contact_reason,
-    r.score_issue_understanding, r.score_solution_quality, r.score_customer_experience,
-    r.score_communication, r.score_process_compliance, r.final_score, r.grade,
-    r.critical_bc?'Yes':'No', r.critical_ec?'Yes':'No', r.critical_cc?'Yes':'No', r.critical_ztp?'Yes':'No',
+    r.audit_date,r.agent_name,r.agent_email,r.ticket_number,r.channel,r.contact_reason,
+    r.score_issue_understanding,r.score_solution_quality,r.score_customer_experience,
+    r.score_communication,r.score_process_compliance,r.final_score,r.grade,
+    r.critical_bc?'Yes':'No',r.critical_ec?'Yes':'No',r.critical_cc?'Yes':'No',r.critical_ztp?'Yes':'No',
     r.evaluator_notes
   ]);
-
-  let csv = [headers, ...rows].map(r => r.map(v => `"${(v??'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv], {type:'text/csv'});
+  const csv = [hdrs,...rows].map(r=>r.map(v=>`"${(v??'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `MAVIN_QA_Export_${new Date().toISOString().slice(0,10)}.csv`;
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = `MAVIN_QA_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
-  showToast('Export downloaded!', 'success');
+  toast('Exported!', 'success');
 }
 
-// ── MODAL ──────────────────────────────────────────────────────────────
+// ── MODAL ─────────────────────────────────────────────────────────────
 function showModal(score, grade, secScores, ztp, critErrors, email, ticket, date, eval_) {
   document.getElementById('modalScore').textContent = score;
   document.getElementById('modalScore').style.color = grade.color;
   document.getElementById('modalGrade').textContent = grade.label;
   document.getElementById('modalGrade').style.color = grade.color;
-  document.getElementById('modalAgent').textContent = `Agent: ${email} · Ticket: ${ticket} · Date: ${date} · Evaluator: ${eval_}`;
+  document.getElementById('modalAgent').innerHTML =
+    `Agent: <strong>${email}</strong><br>Ticket: ${ticket} &nbsp;·&nbsp; Date: ${date} &nbsp;·&nbsp; Evaluator: ${eval_}`;
   document.getElementById('modalZtp').style.display = ztp ? 'block' : 'none';
-  document.getElementById('modalBreakdown').innerHTML = secScores.map(s =>
-    `<div class="modal-row"><span class="modal-row-name">${s.label}</span><span class="modal-row-val">${s.score??'—'}/${s.max}</span></div>`
-  ).join('') + (critErrors.length ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)"><span class="modal-row-name" style="color:var(--red)">Critical</span><span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span></div>` : '');
+  document.getElementById('modalBreakdown').innerHTML =
+    secScores.map(s=>`<div class="modal-row"><span class="modal-row-name">${s.label}</span><span class="modal-row-val">${s.score??'—'}/${s.max}</span></div>`).join('')
+    + (critErrors.length ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)"><span class="modal-row-name" style="color:var(--red)">Critical</span><span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span></div>` : '');
   document.getElementById('modalOverlay').classList.add('show');
 }
 
-// ── RESET ──────────────────────────────────────────────────────────────
+// ── RESET ─────────────────────────────────────────────────────────────
 function resetForm() {
   document.getElementById('modalOverlay').classList.remove('show');
   Object.keys(state).forEach(k => state[k] = null);
@@ -867,7 +818,7 @@ function resetForm() {
   document.getElementById('contactReason').value = '';
 }
 
-// ── TABS ───────────────────────────────────────────────────────────────
+// ── TABS ──────────────────────────────────────────────────────────────
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -875,23 +826,21 @@ function switchTab(name, btn) {
   document.getElementById('tab-' + name).classList.add('active');
 }
 
-// ── TOAST ──────────────────────────────────────────────────────────────
-function showToast(msg, type='success') {
+// ── UTILS ─────────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
   const t = document.getElementById('toast');
   t.className = `toast show ${type}`;
   t.innerHTML = `<span>${type==='success'?'✓':type==='error'?'✕':'⚠'}</span> ${msg}`;
   setTimeout(() => t.classList.remove('show'), 4000);
 }
-
-function setBtnLoading(on) {
+function setLoading(on) {
   const btn = document.getElementById('submitBtn');
   btn.disabled = on;
   btn.innerHTML = on
-    ? `<span class="loading"></span> Saving...`
+    ? `<span class="spin"></span> Saving...`
     : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Submit QA Audit`;
 }
 
-// ── INIT ───────────────────────────────────────────────────────────────
 buildForm();
 </script>
 </body>
