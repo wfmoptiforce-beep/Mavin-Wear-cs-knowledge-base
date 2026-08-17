@@ -137,14 +137,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .res-block div{font-size:14.5px;color:var(--midnight);line-height:1.5}
 
 /* ── SCENARIOS ── */
-.sc-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;transition:.15s}
+.sc-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:.15s}
 .sc-item:hover{border-color:var(--indigo);box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.sc-src{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.sc-quote{font-size:15px;font-weight:700;color:var(--midnight);background:rgba(75,75,249,.06);border:1px solid rgba(75,75,249,.15);padding:11px 14px;border-radius:8px;margin-bottom:10px;direction:ltr;unicode-bidi:plaintext}
+.sc-src{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.sc-quote{font-size:15px;font-weight:700;color:var(--midnight);background:rgba(75,75,249,.06);border:1px solid rgba(75,75,249,.15);padding:12px 16px;border-radius:8px;margin-bottom:12px;direction:ltr;unicode-bidi:plaintext}
 .sc-explain{font-size:13.5px;color:#475569;line-height:1.6;margin-bottom:10px}
+.sc-res-box{background:#f0fdf4;border:1px solid #bbf7d0;padding:10px 14px;border-radius:8px;margin-bottom:10px;font-size:13.5px;color:#166534}
 .sc-tags{display:flex;gap:8px;flex-wrap:wrap}
 .sc-tag-r{background:#e0e7ff;color:#3730a3;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px}
-.sc-tag-res{background:#dcfce7;color:#166534;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px}
 
 /* ── PILL TABS ── */
 .pill-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
@@ -223,7 +223,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
     <button class="nav-link active" onclick="nav('home')">🏠 Home</button>
     <button class="nav-link" onclick="nav('library')">📚 SOP Library</button>
     <button class="nav-link" onclick="nav('dt')">🌳 Decision Tree</button>
-    <button class="nav-link" onclick="nav('scenarios')">💬 63 Scenarios</button>
+    <button class="nav-link" onclick="nav('scenarios')">💬 Scenarios</button>
     <button class="nav-link" onclick="nav('portal')">🔍 Return Portal</button>
     <button class="nav-link" onclick="nav('esc')">🚨 Escalation</button>
     <button class="nav-link" onclick="nav('logs')">📊 Case Records</button>
@@ -247,7 +247,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
     <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Every SOP, workflow, scenario, and checklist — built to run fast.</div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num" id="statCats">0</div><div class="hero-stat-label">SOP Categories</div></div>
-      <div class="hero-stat"><div class="hero-stat-num" id="scTotalCount">63</div><div class="hero-stat-label">Real Scenarios</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="scTotalCount">0</div><div class="hero-stat-label">Real Scenarios</div></div>
       <div class="hero-stat"><div class="hero-stat-num">~15K</div><div class="hero-stat-label">Daily Orders</div></div>
       <div class="hero-stat"><div class="hero-stat-num">24h</div><div class="hero-stat-label">SLA Target</div></div>
     </div>
@@ -265,7 +265,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" id="homeSearch" placeholder="Search SOPs, topics, tags... (e.g. Awaiting Action, Refund Bot, pending-refund)" onkeyup="homeSearch()">
+    <input type="text" id="homeSearch" placeholder="Search SOPs, topics, tags..." onkeyup="homeSearch()">
   </div>
 
   <div class="cat-grid" id="catGrid"></div>
@@ -315,17 +315,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
   </div>
 </div>
 
-<!-- ══════════════ SCENARIOS ══════════════ -->
+<!-- ══════════════ SCENARIOS (DECISION TREE SHEET) ══════════════ -->
 <div class="page" id="page-scenarios">
   <div class="sec-header">
     <div>
-      <div class="sec-title">💬 Real Customer Scenarios</div>
-      <div class="sec-sub">Actual scenarios fetched from Decision Tree Sheet</div>
+      <div class="sec-title">💬 Customer Scenarios & Contact Reasons</div>
+      <div class="sec-sub">Fetched from Decision Tree Sheet — Customer quote, analysis, contact reason & resolution</div>
     </div>
-    <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
+    <div class="btn-group">
+      <button class="btn" onclick="fetchScenarios()">🔄 Refresh Scenarios</button>
+      <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
+    </div>
   </div>
   <div class="portal-banner">
-    <input type="text" class="portal-search" id="scSearch" placeholder="🔍 Search scenarios..." onkeyup="filterScenarios()">
+    <input type="text" class="portal-search" id="scSearch" placeholder="🔍 Search by customer quote, contact reason, or resolution..." onkeyup="filterScenarios()">
     <div class="pill-tabs" id="scPills" style="margin-top:12px"></div>
   </div>
   <div id="scContainer"></div>
@@ -591,6 +594,7 @@ const REFUND_TABS     = ["Export2","Return & Exch","Export","SEARCH"];
 
 // شيت الديسجن تري للسيناريوهات
 const SCENARIO_SHEET_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
+const SCENARIO_TABS     = ["Decision Tree Map", "Overall", "Edge Cases", "Policy vs. Courier Issues", "Pre-purchase & General", "Complex Returns"];
 
 let currentUser = "agent@mavinwear.com";
 let currentLang = "en";
@@ -1011,32 +1015,38 @@ function setDTLang(lang) {
 // ══════════════════════════════════════════
 async function fetchScenarios() {
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${SCENARIO_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Scenarios`;
-    const res = await fetch(url);
-    const text = await res.text();
-    const rows = parseCSV(text);
-    
     SCENARIOS = [];
-    for (let i = 1; i < rows.length; i++) {
-      let r = rows[i];
-      if (r.length >= 3 && r[2]) {
-        SCENARIOS.push({
-          src: r[0] || "Customer Support",
-          cat: r[1] || "General",
-          quote: r[2] || "",
-          explain: r[3] || "Root cause analysis based on operational guidelines.",
-          res: r[4] || "Resolved according to standard Mavin SOP.",
-          tags: r[5] ? r[5].split(',').map(t => t.trim()) : ["Verified", "SOP"]
-        });
+    for (const tab of SCENARIO_TABS) {
+      try {
+        const url = `https://docs.google.com/spreadsheets/d/${SCENARIO_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+        const res = await fetch(url);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        
+        // Cols: 0 = Customer Scenario (كلام العميل), 1 = Analysis (التحليل والإجراء), 2 = Contact Reason (السبب), 3 = Resolution (الحل)
+        for (let i = 1; i < rows.length; i++) {
+          let r = rows[i];
+          if (r.length >= 4 && r[0] && r[0].trim().length > 2 && !r[0].includes("كلام العميل")) {
+            SCENARIOS.push({
+              quote: r[0],
+              explain: r[1] || "تحليل الحالة غير متوفر",
+              cat: r[2] || "General",
+              res: r[3] || "Information Given",
+              tabName: tab
+            });
+          }
+        }
+      } catch (e) {
+        console.warn(`Tab ${tab} skipped:`, e);
       }
     }
-    
+
     if (SCENARIOS.length === 0) {
       loadFallbackScenarios();
     }
     initScenarios();
   } catch (err) {
-    console.warn("Error fetching scenarios from Decision Tree sheet:", err);
+    console.warn("Error fetching scenarios:", err);
     loadFallbackScenarios();
     initScenarios();
   }
@@ -1044,9 +1054,9 @@ async function fetchScenarios() {
 
 function loadFallbackScenarios() {
   SCENARIOS = [
-    {cat:"Bosta", src:"Customer WhatsApp", quote:"فين طلبي؟ بقالي 4 أيام محدش كلمني", explain:"Order stuck in transit without recent Bosta scan.", res:"Checked Bosta AWB #7506992329. Out for delivery today with courier.", tags:["Bosta","Delivery Delay","CS Response"]},
-    {cat:"Refund", src:"Gorgias Chat", quote:"أنا طلبت استرجاع الفلوس ولسه مجتش علي فيزا البنك", explain:"Prepaid refund initiated by bot but customer inquiring about banking settlement time.", res:"Verified Paymob transaction: Refund successful. Banking clearance takes 3–5 business days.", tags:["Paymob","Refund Bot","Finance"]},
-    {cat:"Exchange", src:"Shopify Form", quote:"المقاس طلع كبير وعاوز أبدل لـ Medium", explain:"Size mismatch reported by customer requesting product exchange.", res:"Created exchange order in Shopify for Medium. Notified Bosta warehouse for doorstep swap.", tags:["Exchange","Warehouse","Size Swap"]}
+    {quote: "انا استلمت الأوردر من شهر وكنت مسافر ومفتحتوش، ينفع أبدله دلوقتى؟", explain: "العميل بيطلب استثناء لسياسة الـ 14 يوم. يتم رفض الطلب حسب القوانين.", cat: "Late Return", res: "Information Given", tabName: "Decision Tree Map"},
+    {quote: "عايز أرجع البنطلون بس أنا رميت التيكيت والكيس بتاعه.", explain: "العميل بيطلب إرجاع منتج فقد حالته الأصلية. يتم الرفض وتوضيح السياسة.", cat: "Policy Or (Exchanges)", res: "Information Given", tabName: "Decision Tree Map"},
+    {quote: "عملت طلب استرجاع والمندوب أخد الحاجة من 3 أيام، الفلوس هتنزل حسابي إمتى؟", explain: "الأوردر رجع بالفعل والعميل يسأل عن الخطوة المالية.", cat: "Refund not received", res: "Information Given", tabName: "Decision Tree Map"}
   ];
 }
 
@@ -1058,13 +1068,14 @@ function renderScenarios(filter = "All") {
     if (filter !== "All" && sc.cat !== filter) return;
     html += `
       <div class="sc-item">
-        <div class="sc-src">📌 Source: ${sc.src} — Category: ${sc.cat}</div>
-        <div class="sc-quote">"${sc.quote}"</div>
-        <div class="sc-explain"><strong>Root Cause & Explanation:</strong> ${sc.explain}</div>
-        <div style="margin-bottom:10px"><strong>Resolution:</strong> ${sc.res}</div>
+        <div class="sc-src">📁 Section: ${sc.tabName} | 🏷️ Contact Reason: <strong>${sc.cat}</strong></div>
+        <div class="sc-quote">💬 "${sc.quote}"</div>
+        <div class="sc-explain"><strong>🔍 التحليل والإجراء (Analysis & Action):</strong> ${sc.explain}</div>
+        <div class="sc-res-box"><strong>✅ الحل المقترح (Resolution):</strong> ${sc.res}</div>
         <div class="sc-tags">
-          ${sc.tags.map(t => `<span class="sc-tag-r">${t}</span>`).join('')}
-          <span class="sc-tag-res">✅ Resolved via Standard SOP</span>
+          <span class="sc-tag-r">Contact Reason: ${sc.cat}</span>
+          <span class="sc-tag-r">Resolution: ${sc.res}</span>
+          <span style="background:#dcfce7;color:#166534;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px">✅ Verified Standard SOP</span>
         </div>
       </div>
     `;
@@ -1090,16 +1101,16 @@ function filterScenarios() {
   const container = document.getElementById('scContainer');
   let html = '';
   SCENARIOS.forEach(sc => {
-    if (q && !sc.quote.toLowerCase().includes(q) && !sc.explain.toLowerCase().includes(q) && !sc.res.toLowerCase().includes(q)) return;
+    if (q && !sc.quote.toLowerCase().includes(q) && !sc.explain.toLowerCase().includes(q) && !sc.cat.toLowerCase().includes(q) && !sc.res.toLowerCase().includes(q)) return;
     html += `
       <div class="sc-item">
-        <div class="sc-src">📌 Source: ${sc.src} — Category: ${sc.cat}</div>
-        <div class="sc-quote">"${sc.quote}"</div>
-        <div class="sc-explain"><strong>Root Cause & Explanation:</strong> ${sc.explain}</div>
-        <div style="margin-bottom:10px"><strong>Resolution:</strong> ${sc.res}</div>
+        <div class="sc-src">📁 Section: ${sc.tabName} | 🏷️ Contact Reason: <strong>${sc.cat}</strong></div>
+        <div class="sc-quote">💬 "${sc.quote}"</div>
+        <div class="sc-explain"><strong>🔍 التحليل والإجراء (Analysis & Action):</strong> ${sc.explain}</div>
+        <div class="sc-res-box"><strong>✅ الحل المقترح (Resolution):</strong> ${sc.res}</div>
         <div class="sc-tags">
-          ${sc.tags.map(t => `<span class="sc-tag-r">${t}</span>`).join('')}
-          <span class="sc-tag-res">✅ Resolved via Standard SOP</span>
+          <span class="sc-tag-r">Contact Reason: ${sc.cat}</span>
+          <span class="sc-tag-r">Resolution: ${sc.res}</span>
         </div>
       </div>
     `;
