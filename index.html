@@ -266,7 +266,7 @@
   <!-- 1. HOME VIEW -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Handbook, Refund Bot, Awaiting Action, One Touch)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Handbook, Shopify Checklist, Refund Bot, Awaiting Action)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
@@ -781,7 +781,7 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING COMPLETE BOSTA HANDBOOK & SHOPIFY CHECKLIST)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING COMPLETE BOSTA HANDBOOK & SHOPIFY PLAYBOOKS)
   const EMBEDDED_MASTER_SOPS = [
     {
       code: "SOP-BOSTA-HANDBOOK",
@@ -1052,7 +1052,7 @@
     { source: "Edge Cases & Exceptions", scenario: "عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.", explanation: "Cross-product exchange with price adjustment.", reason: "Exchanges", resolution: "Exchange Initiated" },
     { source: "Edge Cases & Exceptions", scenario: "أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟", explanation: "Missing tags/packaging return inquiry. Explain policy.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟", explanation: "No-opening policy pre-check. Politely explain company policy.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "إزاي يعني مفيش معاينة قبل الاستلاستخدام والدفع؟ ده حقي كعميل!", explanation: "Customer objecting to no-inspection policy. Reiterate policy firmly and politely.", reason: "Policy", resolution: "Information Given" },
+    { source: "Policy vs Courier Issues", scenario: "إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!", explanation: "Customer objecting to no-inspection policy. Reiterate policy firmly and politely.", reason: "Policy", resolution: "Information Given" },
     { source: "Policy vs Courier Issues", scenario: "أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.", explanation: "Courier followed policy; customer refused delivery. Cancel order if needed.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
     { source: "Policy vs Courier Issues", scenario: "المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين.", explanation: "Courier rudeness. Escalate to Bosta last-mile lead.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
     { source: "Policy vs Courier Issues", scenario: "المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!", explanation: "Courier refusing door-to-door delivery. Raise dispute with Bosta.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
