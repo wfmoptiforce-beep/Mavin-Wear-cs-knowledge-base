@@ -1,128 +1,423 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="ar" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAVIN OPS HUB</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<title>MAVIN OPS HUB - Home</title>
 <style>
 :root {
-  --indigo:#4b4bf9; --midnight:#09092d; --white:#fff; --lgrey:#f3f3f7;
-  --lemon:#f9ef77; --coral:#ff8d96; --lav:#bfa1ff; --mint:#8bf0bb;
-  --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --card:#fff;
-  --bg:#f3f3f7; --success:#10b981; --danger:#ef4444; --warn:#f59e0b;
+  --black:#0a0a0a;
+  --dark:#111111;
+  --card:#1a1a1a;
+  --border:#2a2a2a;
+  --white:#ffffff;
+  --off-white:#f0f0f0;
+  --muted:#888888;
+  --accent:#ffffff;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--black);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
 
-/* ── NAV BAR (Centered Logo & Clean Links) ── */
-.topnav{background:var(--midnight);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);height:68px}
-.nav-brand{display:flex;align-items:center;gap:12px;cursor:pointer;margin:0 auto;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-brand-icon{width:40px;height:40px;background:var(--indigo);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;box-shadow:0 4px 14px rgba(75,75,249,.4)}
-.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2;text-align:center}
-.nav-brand-sub{color:rgba(255,255,255,.5);font-size:10px;font-weight:600;letter-spacing:1.5px}
+/* ── NAV BAR ── */
+.topnav{
+  background:var(--dark);
+  padding:0 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:72px;
+  border-bottom:1px solid var(--border);
+}
 
-.nav-links{display:flex;align-items:center;gap:4px;z-index:2}
-.nav-link{padding:8px 14px;border-radius:8px;color:rgba(255,255,255,.65);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px}
-.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
-.nav-link.active{background:var(--indigo);color:#fff;box-shadow:0 4px 12px rgba(75,75,249,.3)}
+/* Brand */
+.nav-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+.nav-brand-icon{
+  width:42px;height:42px;
+  background:var(--white);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:20px;color:var(--black);
+}
+.nav-brand-text{color:var(--white);font-weight:800;font-size:15px;line-height:1.2}
+.nav-brand-sub{color:var(--muted);font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
 
+/* Nav Links */
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{
+  padding:8px 14px;border-radius:8px;
+  color:var(--muted);
+  font-size:12.5px;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  transition:.15s;border:none;background:none;
+  text-decoration:none;display:flex;align-items:center;gap:7px;
+}
+.nav-link:hover{background:rgba(255,255,255,.07);color:var(--white)}
+.nav-link.active{background:var(--white);color:var(--black)}
+.nav-link svg{width:15px;height:15px;flex-shrink:0}
+
+/* User Selector */
 .nav-right{z-index:2}
-.user-sel{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
-.user-sel option{background:var(--midnight);color:#fff}
+.user-sel{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--muted);
+  border-radius:8px;
+  padding:7px 12px;
+  font-size:12px;font-weight:600;
+  cursor:pointer;outline:none;
+}
+.user-sel option{background:var(--dark);color:var(--white)}
+.user-sel:hover{border-color:#555;color:var(--white)}
 
-/* ── PAGE WRAPPER ── */
-.page{display:none;padding:32px;max-width:1400px;margin:0 auto}
-.page.active{display:block}
+/* ── PAGE ── */
+.page{padding:40px 32px;max-width:1300px;margin:0 auto}
 
-/* ── HOME HERO (Centered Logo & Header) ── */
-.hero{background:linear-gradient(135deg,var(--indigo) 0%,#3730d4 60%,var(--midnight) 100%);border-radius:18px;padding:50px 32px;margin-bottom:28px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(75,75,249,.2);text-align:center}
-.hero-logo-center{width:64px;height:64px;background:#fff;color:var(--indigo);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:28px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.hero-title{font-size:36px;font-weight:900;color:#fff;margin-bottom:10px;letter-spacing:-.5px}
-.hero-sub{color:rgba(255,255,255,.8);font-size:15.5px;margin:0 auto;max-width:600px;line-height:1.5}
+/* ── HERO ── */
+.hero{
+  background:var(--dark);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:64px 40px;
+  margin-bottom:40px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:5px 14px;
+  font-size:11px;font-weight:700;
+  color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:28px;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--white);border-radius:50%}
+.hero-logo{
+  width:72px;height:72px;
+  background:var(--white);
+  border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:32px;color:var(--black);
+  margin:0 auto 24px;
+}
+.hero-title{
+  font-size:42px;font-weight:900;
+  color:var(--white);
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  line-height:1.1;
+}
+.hero-sub{
+  color:var(--muted);font-size:15px;
+  max-width:520px;margin:0 auto 36px;
+  line-height:1.6;
+}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--white);color:var(--black);
+  border:none;border-radius:10px;
+  padding:12px 24px;font-size:13.5px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:.15s;
+}
+.btn-primary:hover{background:var(--off-white)}
+.btn-secondary{
+  background:transparent;color:var(--white);
+  border:1px solid var(--border);border-radius:10px;
+  padding:12px 24px;font-size:13.5px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:.15s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.06);border-color:#555}
+
+/* ── STATS ROW ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-bottom:40px;
+}
+.stat-card{
+  background:var(--dark);border:1px solid var(--border);
+  border-radius:14px;padding:22px 20px;
+}
+.stat-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.stat-value{font-size:28px;font-weight:900;color:var(--white)}
+.stat-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+/* ── MODULE GRID ── */
+.section-label{
+  font-size:11px;font-weight:700;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.modules-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:16px;margin-bottom:40px;
+}
+.module-card{
+  background:var(--dark);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  text-decoration:none;color:var(--white);
+  display:flex;align-items:flex-start;gap:18px;
+  transition:.15s;cursor:pointer;position:relative;overflow:hidden;
+}
+.module-card:hover{border-color:#444;background:#1f1f1f}
+.module-card:hover .module-arrow{opacity:1;transform:translateX(0)}
+.module-icon{
+  width:48px;height:48px;flex-shrink:0;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.module-icon svg{width:22px;height:22px;color:var(--white)}
+.module-content{flex:1}
+.module-title{font-size:15px;font-weight:700;margin-bottom:5px}
+.module-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+.module-tag{
+  display:inline-block;
+  margin-top:10px;
+  padding:3px 9px;border-radius:100px;
+  font-size:10.5px;font-weight:700;
+  border:1px solid var(--border);color:var(--muted);
+}
+.module-arrow{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%) translateX(4px);
+  opacity:0;transition:.15s;color:var(--muted);font-size:18px;
+}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:32px 0}
 
 /* ── FOOTER ── */
-.footer{text-align:center;padding:28px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);margin-top:40px}
+.footer{
+  text-align:center;padding:28px 32px;
+  font-size:12px;color:var(--muted);
+  border-top:1px solid var(--border);
+}
+.footer span{color:#555}
 
 @media(max-width:992px){
-  .nav-brand{position:static;transform:none;margin:0}
-  .topnav{justify-content:space-between;height:auto;padding:12px 16px;flex-wrap:wrap;gap:10px}
+  .nav-brand{position:static;transform:none}
+  .topnav{height:auto;padding:14px 16px;flex-wrap:wrap;gap:10px;justify-content:space-between}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .modules-grid{grid-template-columns:1fr}
+  .hero-title{font-size:30px}
+  .page{padding:24px 16px}
+}
+@media(max-width:560px){
+  .nav-links{display:none}
+  .stats-row{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- TOP NAVIGATION BAR -->
+<!-- ── TOP NAV ── -->
 <nav class="topnav">
-  <div class="nav-links" id="navLinksContainer">
-    <button class="nav-link active" onclick="nav('home')">🏠 Home</button>
-    <button class="nav-link" onclick="nav('sops')">📚 SOP Library</button>
-    <button class="nav-link" onclick="nav('scenarios')">💬 Scenarios</button>
+  <div class="nav-links">
+
+    <a href="index.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/>
+      </svg>
+      Home
+    </a>
+
+    <a href="sops.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+      </svg>
+      SOP Library
+    </a>
+
+    <a href="scenarios.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      Scenarios
+    </a>
+
+    <a href="portal.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Return Portal
+    </a>
+
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      QA Audit
+    </a>
+
   </div>
 
-  <!-- Centered Logo / Brand -->
-  <div class="nav-brand" onclick="nav('home')" title="Go to Home">
+  <a href="index.html" class="nav-brand">
     <div class="nav-brand-icon">M</div>
     <div>
       <div class="nav-brand-text">MAVIN OPS HUB</div>
       <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
     </div>
-  </div>
+  </a>
 
   <div class="nav-right">
-    <select class="user-sel" id="userSel" onchange="changeUser()">
-      <option value="zahraa@mavinwear.com">زهراء (Support)</option>
-      <option value="nourtamer2005@gmail.com">Nour Tamer</option>
-      <option value="Rehabmohamed881@gmail.com">Rehab Mohamed</option>
+    <select class="user-sel" id="userSel">
+      <option value="zahraa">زهراء — Support</option>
+      <option value="nour">Nour Tamer</option>
+      <option value="rehab">Rehab Mohamed</option>
     </select>
   </div>
 </nav>
 
-<!-- ══════════════ PAGES ══════════════ -->
+<!-- ── PAGE ── -->
+<div class="page">
 
-<!-- 1. HOME PAGE -->
-<div class="page active" id="page-home">
+  <!-- HERO -->
   <div class="hero">
-    <div class="hero-logo-center">M</div>
-    <div class="hero-title">MAVIN × BOSTA Operations Hub</div>
-    <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Built with Mavin Wear brand identity.</div>
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Operations Dashboard
+    </div>
+    <div class="hero-logo">M</div>
+    <div class="hero-title">MAVIN × BOSTA<br>Operations Hub</div>
+    <div class="hero-sub">Single source of truth for CS, Operations, Finance & QA — built for the Mavin Wear team.</div>
+    <div class="hero-actions">
+      <a href="sops.html" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Browse SOPs
+      </a>
+      <a href="qa.html" class="btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Open QA Audit
+      </a>
+    </div>
   </div>
+
+  <!-- STATS -->
+  <p class="section-label">Overview</p>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Active SOPs</div>
+      <div class="stat-value">24</div>
+      <div class="stat-sub">Last updated today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Open Cases</div>
+      <div class="stat-value">7</div>
+      <div class="stat-sub">Pending return review</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">QA Score</div>
+      <div class="stat-value">91%</div>
+      <div class="stat-sub">Weekly average</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Team Members</div>
+      <div class="stat-value">3</div>
+      <div class="stat-sub">CS · Ops · QA</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MODULES -->
+  <p class="section-label">Modules</p>
+  <div class="modules-grid">
+
+    <a href="sops.html" class="module-card">
+      <div class="module-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+        </svg>
+      </div>
+      <div class="module-content">
+        <div class="module-title">SOP Library</div>
+        <div class="module-desc">Standard operating procedures for returns, shipping, escalations, and customer handling.</div>
+        <span class="module-tag">24 Documents</span>
+      </div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a href="scenarios.html" class="module-card">
+      <div class="module-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+      </div>
+      <div class="module-content">
+        <div class="module-title">Scenarios</div>
+        <div class="module-desc">Pre-built customer conversation flows and edge case handling for Bosta & Shopify orders.</div>
+        <span class="module-tag">CS · Escalation</span>
+      </div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a href="portal.html" class="module-card">
+      <div class="module-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <div class="module-content">
+        <div class="module-title">Return Portal</div>
+        <div class="module-desc">Track, manage and process return requests linked to Bosta shipments in real time.</div>
+        <span class="module-tag">Returns · Ops</span>
+      </div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a href="qa.html" class="module-card">
+      <div class="module-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <div class="module-content">
+        <div class="module-title">QA Audit</div>
+        <div class="module-desc">Score and review agent interactions. Track quality metrics and identify coaching opportunities.</div>
+        <span class="module-tag">Quality · Review</span>
+      </div>
+      <span class="module-arrow">→</span>
+    </a>
+
+  </div>
+
 </div>
 
-<!-- 2. SOP LIBRARY PAGE -->
-<div class="page" id="page-sops">
-  <h2 style="color:var(--midnight); margin-bottom:20px;">📚 SOP Library</h2>
-  <p style="color:var(--muted);">قريباً تفاصيل الإجراءات التشغيلية...</p>
-</div>
+<!-- FOOTER -->
+<footer class="footer">
+  MAVIN Wear Operations Hub — All Rights Reserved &nbsp;·&nbsp; <span>Built for internal use only</span>
+</footer>
 
-<!-- 3. SCENARIOS PAGE -->
-<div class="page" id="page-scenarios">
-  <h2 style="color:var(--midnight); margin-bottom:20px;">💬 Customer Scenarios</h2>
-  <p style="color:var(--muted);">قريباً سيناريوهات العملاء...</p>
-</div>
-
-<footer class="footer">MAVIN Wear Operations Hub — All Rights Reserved</footer>
-
-<script>
-function nav(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  
-  const target = document.getElementById('page-' + pageId);
-  if (target) target.classList.add('active');
-  
-  document.querySelectorAll('.nav-link').forEach(l => {
-    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + pageId + "'")) {
-      l.classList.add('active');
-    }
-  });
-  window.scrollTo(0, 0);
-}
-
-function changeUser() {
-  const user = document.getElementById('userSel').value;
-  console.log("Current active user:", user);
-}
-</script>
 </body>
 </html>
+    
