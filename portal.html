@@ -13,12 +13,9 @@
   --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
   --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
   --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
-  --orange:#ea580c; --orange-bg:#fff7ed; --orange-bd:#fed7aa;
-  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
-
 .topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
 .nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
@@ -34,22 +31,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
 .user-name{font-size:12px;font-weight:700;color:#fff}
 .user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
-
 .tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
 .tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
 .tab-btn svg{width:15px;height:15px}
-
 .page{padding:32px;max-width:1100px;margin:0 auto}
 .tab-content{display:none}
 .tab-content.active{display:block}
-
 .page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
 .page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
 .page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
 .page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px}
-
 .search-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
 .search-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .search-field{display:flex;flex-direction:column;gap:5px}
@@ -57,27 +50,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .search-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
 .search-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
 .search-input::placeholder{color:var(--muted2)}
-.search-actions{display:flex;gap:10px;align-items:center}
+.search-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .btn-search{background:#111;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s}
 .btn-search:hover{background:#333}
 .btn-search:disabled{background:#555;cursor:not-allowed}
 .btn-clear{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:11px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
 .btn-clear:hover{border-color:#999;color:var(--text)}
-.source-pills{display:flex;gap:8px;margin-left:auto}
-.source-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid}
+.src-pills{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.src-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid}
 .pill-sb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.pill-gs{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
+.pill-ex2{background:#f5f3ff;color:#7c3aed;border-color:#ddd6fe}
+.pill-ex{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
 .pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-
 .results-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .results-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa;flex-wrap:wrap;gap:8px}
 .results-title{font-size:13px;font-weight:800}
 .results-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .results-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px}
-.src-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:100px;border:1px solid}
-.src-supabase{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.src-sheet{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
-
+.src-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:100px;border:1px solid;display:inline-flex;align-items:center}
+.tag-sb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.tag-ex2{background:#f5f3ff;color:#7c3aed;border-color:#ddd6fe}
+.tag-ex{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
 .result-card{padding:20px;border-bottom:1px solid #f5f5f5;transition:.1s}
 .result-card:last-child{border-bottom:none}
 .result-card:hover{background:#fafafa}
@@ -90,20 +83,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .result-item{display:flex;flex-direction:column;gap:3px}
 .result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
 .result-item-val{font-size:12.5px;font-weight:600}
-
 .status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11.5px;font-weight:800;white-space:nowrap}
 .s-pending{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}
 .s-approved{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
 .s-rejected{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
 .s-processing{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
 .s-default{background:#f3f3f7;color:var(--muted);border:1px solid var(--border)}
-
+.divider{display:flex;align-items:center;gap:12px;padding:10px 20px;background:#fafafa;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-text{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .dup-alert{background:var(--yellow-bg);border:1.5px solid var(--yellow-bd);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none;gap:12px}
 .dup-alert.show{display:flex;align-items:flex-start}
 .dup-icon{font-size:20px;flex-shrink:0}
 .dup-title{font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:4px}
 .dup-text{font-size:12.5px;color:#92400e;line-height:1.5}
-
 .form-card{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
 .form-card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa}
 .card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -117,46 +110,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .form-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
 .form-input::placeholder{color:var(--muted2)}
 .form-span3{grid-column:1/-1}
-
 .submit-row{display:flex;gap:10px;margin-bottom:40px}
 .btn-submit{background:#111;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
 .btn-submit:hover{background:#333}
 .btn-submit:disabled{background:#555;cursor:not-allowed}
 .btn-reset-form{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:13px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
 .btn-reset-form:hover{border-color:#999;color:var(--text)}
-
 .toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-width:400px}
 .toast.show{display:flex}
 .toast.success{background:var(--green);color:#fff}
 .toast.error{background:var(--red);color:#fff}
 .toast.warn{background:var(--yellow);color:#fff}
-
 .empty-state{padding:48px 20px;text-align:center;color:var(--muted)}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-text{font-size:14px;font-weight:600}
 .empty-sub{font-size:12.5px;margin-top:4px}
-
-.loading-bar{display:none;padding:20px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;gap:10px}
-.loading-bar.show{display:flex;align-items:center;justify-content:center}
-
-.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,0,0,.15);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite}
-.spin-white{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+.loading-bar{display:none;padding:20px;text-align:center;color:var(--muted);font-size:13px;font-weight:600;gap:10px;align-items:center;justify-content:center}
+.loading-bar.show{display:flex}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(75,75,249,.2);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite}
+.spinw{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-.divider{display:flex;align-items:center;gap:12px;padding:10px 20px;background:#fafafa;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.divider-line{flex:1;height:1px;background:var(--border)}
-.divider-text{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
-
 @media(max-width:900px){
-  .search-grid,.form-grid,.result-grid{grid-template-columns:repeat(2,1fr)}
+  .search-grid,.result-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:repeat(2,1fr)}
   .page{padding:16px}
   .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
   .nav-brand{position:static;transform:none}
-  .source-pills{display:none}
 }
 @media(max-width:560px){
   .nav-links{display:none}
-  .search-grid,.form-grid,.result-grid{grid-template-columns:1fr}
+  .search-grid,.result-grid,.form-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -213,7 +196,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="page tab-content active" id="tab-search">
   <div class="page-badge"><span class="page-badge-dot"></span>Refund Portal</div>
   <div class="page-title">Search Refund Requests</div>
-  <div class="page-sub">Searches both Supabase (new) and Google Sheet (historical) simultaneously.</div>
+  <div class="page-sub">Searches Supabase + Export2 (Returns) + Export (Refunds) simultaneously.</div>
 
   <div class="search-card">
     <div class="search-grid">
@@ -230,7 +213,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
         <input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238" onkeydown="if(event.key==='Enter')doSearch()">
       </div>
       <div class="search-field">
-        <label class="search-label">Bosta Ticket ID</label>
+        <label class="search-label">Bosta Ticket / Transaction ID</label>
         <input class="search-input" id="sTicket" type="text" placeholder="e.g. 7506992329" onkeydown="if(event.key==='Enter')doSearch()">
       </div>
     </div>
@@ -240,9 +223,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
         Search
       </button>
       <button class="btn-clear" onclick="clearSearch()">Clear</button>
-      <div class="source-pills">
-        <span class="source-pill pill-sb"><span class="pill-dot"></span>Supabase</span>
-        <span class="source-pill pill-gs"><span class="pill-dot"></span>Google Sheet</span>
+      <div class="src-pills">
+        <span class="src-pill pill-sb"><span class="pill-dot"></span>Supabase</span>
+        <span class="src-pill pill-ex2"><span class="pill-dot"></span>Export2</span>
+        <span class="src-pill pill-ex"><span class="pill-dot"></span>Export</span>
       </div>
     </div>
   </div>
@@ -252,19 +236,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <span class="results-title">Results</span>
       <div class="results-meta">
         <span class="results-count" id="resultsCount">—</span>
-        <span id="srcSB" style="display:none" class="src-tag src-supabase">Supabase</span>
-        <span id="srcGS" style="display:none" class="src-tag src-sheet">Google Sheet</span>
       </div>
     </div>
     <div class="loading-bar" id="loadingBar">
-      <span class="spin" style="border-top-color:var(--indigo)"></span>
-      Searching Supabase & Google Sheet...
+      <span class="spin"></span> Searching all sources...
     </div>
     <div id="resultsList">
       <div class="empty-state">
         <div class="empty-icon">🔍</div>
         <div class="empty-text">Enter search criteria above</div>
-        <div class="empty-sub">Results will include both new and historical records</div>
+        <div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div>
       </div>
     </div>
   </div>
@@ -274,13 +255,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="page tab-content" id="tab-submit">
   <div class="page-badge"><span class="page-badge-dot"></span>New Request</div>
   <div class="page-title">Submit Refund / Exchange Request</div>
-  <div class="page-sub">Saved to Supabase. Duplicate orders within 5 days will be blocked automatically.</div>
+  <div class="page-sub">Saved to Supabase. Duplicate orders within 5 days will be blocked.</div>
 
   <div class="dup-alert" id="dupAlert">
     <div class="dup-icon">⚠️</div>
     <div>
       <div class="dup-title">Duplicate Case Detected</div>
-      <div class="dup-text" id="dupText">A case already exists for this order.</div>
+      <div class="dup-text" id="dupText"></div>
     </div>
   </div>
 
@@ -292,41 +273,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <span class="card-title">Agent Information</span>
     </div>
     <div class="form-grid">
-      <div class="form-field">
-        <label class="form-label">Agent Email <span>*</span></label>
-        <input class="form-input" id="fAgentEmail" type="email" placeholder="agent@mavinwear.com">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Agent Name <span>*</span></label>
-        <input class="form-input" id="fAgentName" type="text" placeholder="e.g. Asmaa Hassan">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Submission Date</label>
-        <input class="form-input" id="fDate" type="datetime-local">
-      </div>
+      <div class="form-field"><label class="form-label">Agent Email <span>*</span></label><input class="form-input" id="fAgentEmail" type="email" placeholder="agent@mavinwear.com"></div>
+      <div class="form-field"><label class="form-label">Agent Name <span>*</span></label><input class="form-input" id="fAgentName" type="text" placeholder="e.g. Asmaa Hassan"></div>
+      <div class="form-field"><label class="form-label">Submission Date</label><input class="form-input" id="fDate" type="datetime-local"></div>
     </div>
   </div>
 
   <div class="form-card">
     <div class="form-card-header">
       <div class="card-icon" style="background:#f0fdf4">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
       </div>
       <span class="card-title">Customer Information</span>
     </div>
     <div class="form-grid">
-      <div class="form-field">
-        <label class="form-label">Customer Name <span>*</span></label>
-        <input class="form-input" id="fCustName" type="text" placeholder="e.g. Mohamed Ahmed">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Customer Phone <span>*</span></label>
-        <input class="form-input" id="fCustPhone" type="tel" placeholder="e.g. 01144504238">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Order Number <span>*</span></label>
-        <input class="form-input" id="fOrderNum" type="text" placeholder="e.g. 154929" oninput="schedDupCheck()">
-      </div>
+      <div class="form-field"><label class="form-label">Customer Name <span>*</span></label><input class="form-input" id="fCustName" type="text" placeholder="e.g. Mohamed Ahmed"></div>
+      <div class="form-field"><label class="form-label">Customer Phone <span>*</span></label><input class="form-input" id="fCustPhone" type="tel" placeholder="e.g. 01144504238"></div>
+      <div class="form-field"><label class="form-label">Order Number <span>*</span></label><input class="form-input" id="fOrderNum" type="text" placeholder="e.g. 154929" oninput="schedDupCheck()"></div>
     </div>
   </div>
 
@@ -361,22 +324,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
           <option>Other</option>
         </select>
       </div>
-      <div class="form-field">
-        <label class="form-label">Number of Returned Items</label>
-        <input class="form-input" id="fNumItems" type="number" min="1" placeholder="e.g. 2">
-      </div>
-      <div class="form-field form-span3">
-        <label class="form-label">Product Name & SKU</label>
-        <input class="form-input" id="fProductSKU" type="text" placeholder="e.g. Lounge Stripe Sweatpants White x Grey / M">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Original Item Name & SKU</label>
-        <input class="form-input" id="fOrigSKU" type="text" placeholder="Original item & SKU">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Requested Item Name & SKU</label>
-        <input class="form-input" id="fReqSKU" type="text" placeholder="Requested item & SKU">
-      </div>
+      <div class="form-field"><label class="form-label">Number of Returned Items</label><input class="form-input" id="fNumItems" type="number" min="1" placeholder="e.g. 2"></div>
+      <div class="form-field form-span3"><label class="form-label">Product Name & SKU</label><input class="form-input" id="fProductSKU" type="text" placeholder="e.g. Lounge Stripe Sweatpants / M"></div>
+      <div class="form-field"><label class="form-label">Original Item Name & SKU</label><input class="form-input" id="fOrigSKU" type="text" placeholder="Original item & SKU"></div>
+      <div class="form-field"><label class="form-label">Requested Item Name & SKU</label><input class="form-input" id="fReqSKU" type="text" placeholder="Requested item & SKU"></div>
       <div class="form-field">
         <label class="form-label">Shipping Fees</label>
         <select class="form-input" id="fShipping">
@@ -385,23 +336,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
           <option>No Shipping Fees</option>
         </select>
       </div>
-      <div class="form-field">
-        <label class="form-label">Refund Amount (EGP)</label>
-        <input class="form-input" id="fRefund" type="text" placeholder="e.g. 450.00">
-      </div>
-      <div class="form-field">
-        <label class="form-label">Bosta Ticket ID</label>
-        <input class="form-input" id="fBostaTicket" type="text" placeholder="e.g. 7506992329">
-      </div>
-      <div class="form-field form-span3">
-        <label class="form-label">Notes</label>
-        <textarea class="form-input" id="fNotes" rows="3" placeholder="Any additional notes..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
-      </div>
+      <div class="form-field"><label class="form-label">Refund Amount (EGP)</label><input class="form-input" id="fRefund" type="text" placeholder="e.g. 450.00"></div>
+      <div class="form-field"><label class="form-label">Bosta Ticket ID</label><input class="form-input" id="fBostaTicket" type="text" placeholder="e.g. 7506992329"></div>
+      <div class="form-field form-span3"><label class="form-label">Notes</label><textarea class="form-input" id="fNotes" rows="3" placeholder="Any additional notes..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea></div>
     </div>
-    <div style="padding:0 22px 16px;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:4px">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Fields marked with <span style="color:var(--red);margin:0 3px">*</span> are required
-    </div>
+    <div style="padding:0 22px 16px;font-size:11.5px;color:var(--muted)">* Required fields</div>
   </div>
 
   <div class="submit-row">
@@ -416,70 +355,127 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────
+// ── CONFIG ──────────────────────────────────────────────────────────────
 const SB_URL   = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
 const SB_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 const SB_TABLE = 'refund_requests';
+const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
 
-const SHEET_ID  = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
-const SHEET_TAB = 'Export2';
+// ── Export2 columns (0-based) ──────────────────────────────────────────
+// A=ff/timestamp, B=Email, C=AgentName, D=CustName, E=CustPhone,
+// F=OrderNum, G=ReqType, H=Reason, I=NumItems, J=ProductSKU,
+// K=OrigSKU, L=ReqSKU, M=ShippingFees, N=Refund, O=BostaTicket,
+// P=Photos, Q=Notes, R=ExchangeStatus, S=FulfilNote
+const EX2 = {ts:0,email:1,agent:2,name:3,phone:4,order:5,
+             type:6,reason:7,items:8,sku:9,origSku:10,reqSku:11,
+             ship:12,refund:13,bosta:14,photos:15,notes:16,status:17,fnote:18};
 
-// Export2 column mapping (0-based)
-// A=timestamp, B=email, C=agentName, D=custName, E=custPhone,
-// F=orderNum, G=reqType, H=reason, I=numItems, J=productSKU,
-// K=origSKU, L=reqSKU, M=shipping, N=refund, O=bostaTicket,
-// P=photos, Q=notes, R=exchangeStatus, S=fulfilNote
-const C = {ts:0,email:1,agent:2,name:3,phone:4,order:5,type:6,reason:7,
-           items:8,sku:9,origSku:10,reqSku:11,ship:12,refund:13,
-           bosta:14,photos:15,notes:16,status:17,fnote:18};
+// ── Export columns (0-based) ───────────────────────────────────────────
+// A=Timestamp, B=Email, C=T&C(long text-skip), D=AgentName,
+// E=OrderNum, F=CustName, G=CustPhone, H=Reason, I=Amount,
+// J=RefundType, K=Method, L=BankName, M=BankAccount, N=AccountHolder,
+// O=WalletProvider, P=WalletPhone, Q=WalletHolder, R=Notes,
+// S=CustEmail, T=GiftCardEmail, U=AffectedSKUs, V=TransactionID,
+// W=Verification, X=VerifiedAmount, Y=RefundStatus, Z=SubmissionDate,
+// AA=FulfilNote, AB=AgentAmount, AC=RequestDate, AD=HELPER
+const EX = {ts:0,email:1,tc:2,agent:3,order:4,name:5,phone:6,
+            reason:7,amount:8,refundType:9,method:10,bank:11,
+            bankAcc:12,holder:13,wallet:14,walletPh:15,walletHolder:16,
+            notes:17,custEmail:18,giftEmail:19,skus:20,txnId:21,
+            verify:22,verifiedAmt:23,status:24,subDate:25,
+            fnote:26,agentAmt:27,reqDate:28};
 
-// ── SUPABASE HELPER ─────────────────────────────────────────────────────
+// ── SUPABASE HELPER ────────────────────────────────────────────────────
 const sb = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
   headers:{
     'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,
     'Content-Type':'application/json',
-    'Prefer': opts.prefer||'return=representation',
-    ...opts.extra
+    'Prefer':opts.prefer||'return=representation'
   },
-  method: opts.method||'GET', body: opts.body
+  method:opts.method||'GET', body:opts.body
 });
 
-// ── GOOGLE SHEET HELPER ─────────────────────────────────────────────────
-async function fetchSheet() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}`;
+// ── FETCH SHEET TAB ────────────────────────────────────────────────────
+async function fetchTab(tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
   const res  = await fetch(url);
   const text = await res.text();
-  const json = JSON.parse(text.substring(47).slice(0,-2));
-  return (json.table.rows||[]).map(r =>
-    (r.c||[]).map(cell => cell ? (cell.f||cell.v||'').toString() : '')
-  );
+  // gviz wraps response in google.visualization.Query.setResponse(...)
+  const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+  if (!match) return [];
+  const json = JSON.parse(match[1]);
+  const rows = json.table?.rows || [];
+  return rows.map(r => (r.c||[]).map(cell => {
+    if (!cell) return '';
+    // formatted value preferred, then raw
+    return (cell.f || (cell.v !== null && cell.v !== undefined ? String(cell.v) : ''));
+  }));
 }
 
-function sheetRowToObj(row) {
+// ── NORMALIZE ROWS ─────────────────────────────────────────────────────
+function normalizeEx2Row(row) {
   return {
-    _source:        'sheet',
-    created_at:     row[C.ts]   || '',
-    agent_email:    row[C.email] || '',
-    agent_name:     row[C.agent] || '',
-    customer_name:  row[C.name]  || '',
-    customer_phone: row[C.phone] || '',
-    order_number:   row[C.order] || '',
-    request_type:   row[C.type]  || '',
-    reason:         row[C.reason]|| '',
-    num_items:      row[C.items] || '',
-    product_sku:    row[C.sku]   || '',
-    original_sku:   row[C.origSku]|| '',
-    requested_sku:  row[C.reqSku] || '',
-    shipping_fees:  row[C.ship]  || '',
-    refund_amount:  row[C.refund]|| '',
-    bosta_ticket_id:row[C.bosta] || '',
-    notes:          row[C.notes] || '',
-    exchange_status:row[C.status]|| '',
-    fulfilment_note:row[C.fnote] || ''
+    _source:'Export2',
+    created_at:     row[EX2.ts]    ||'',
+    agent_name:     row[EX2.agent] ||'',
+    customer_name:  row[EX2.name]  ||'',
+    customer_phone: row[EX2.phone] ||'',
+    order_number:   row[EX2.order] ||'',
+    request_type:   row[EX2.type]  ||'',
+    reason:         row[EX2.reason]||'',
+    num_items:      row[EX2.items] ||'',
+    product_sku:    row[EX2.sku]   ||'',
+    original_sku:   row[EX2.origSku]||'',
+    requested_sku:  row[EX2.reqSku] ||'',
+    shipping_fees:  row[EX2.ship]  ||'',
+    refund_amount:  row[EX2.refund]||'',
+    bosta_ticket_id:row[EX2.bosta] ||'',
+    notes:          row[EX2.notes] ||'',
+    exchange_status:row[EX2.status]||'',
+    fulfilment_note:row[EX2.fnote] ||''
   };
 }
 
-// ── SEARCH ──────────────────────────────────────────────────────────────
+function normalizeExRow(row) {
+  return {
+    _source:'Export',
+    created_at:     row[EX.ts]     ||row[EX.subDate]||'',
+    agent_name:     row[EX.agent]  ||'',
+    customer_name:  row[EX.name]   ||'',
+    customer_phone: row[EX.phone]  ||'',
+    order_number:   row[EX.order]  ||'',
+    request_type:   'Refund Request',
+    reason:         row[EX.reason] ||'',
+    num_items:      '',
+    product_sku:    row[EX.skus]   ||'',
+    original_sku:   '',
+    requested_sku:  '',
+    shipping_fees:  '',
+    refund_amount:  row[EX.amount] ||row[EX.verifiedAmt]||'',
+    bosta_ticket_id:row[EX.txnId]  ||'',
+    notes:          row[EX.notes]  ||'',
+    exchange_status:row[EX.status] ||'',
+    fulfilment_note:row[EX.fnote]  ||'',
+    // extra fields
+    refund_method:  row[EX.method] ||'',
+    bank_name:      row[EX.bank]   ||''
+  };
+}
+
+// ── MATCH HELPER ──────────────────────────────────────────────────────
+function matches(row, name, order, phone, ticket) {
+  const n = (row.customer_name  ||'').toLowerCase();
+  const o = (row.order_number   ||'').toLowerCase();
+  const p = (row.customer_phone ||'').toLowerCase();
+  const t = (row.bosta_ticket_id||'').toLowerCase();
+  if (name   && !n.includes(name.toLowerCase()))   return false;
+  if (order  && !o.includes(order.toLowerCase()))  return false;
+  if (phone  && !p.includes(phone.toLowerCase()))  return false;
+  if (ticket && !t.includes(ticket.toLowerCase())) return false;
+  return true;
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────
 async function doSearch() {
   const name   = document.getElementById('sName').value.trim();
   const order  = document.getElementById('sOrder').value.trim();
@@ -490,51 +486,36 @@ async function doSearch() {
     showToast('Enter at least one search field.','warn'); return;
   }
 
-  // Show loading
+  // Loading state
   const btn = document.getElementById('searchBtn');
-  btn.innerHTML = '<span class="spin-white"></span> Searching...';
+  btn.innerHTML = '<span class="spinw"></span> Searching...';
   btn.disabled  = true;
   document.getElementById('loadingBar').classList.add('show');
   document.getElementById('resultsList').innerHTML = '';
-  document.getElementById('srcSB').style.display = 'none';
-  document.getElementById('srcGS').style.display = 'none';
+  document.getElementById('resultsCount').textContent = '—';
 
   try {
-    // Run both in parallel
-    const [sbResults, gsResults] = await Promise.allSettled([
+    // Run all 3 sources in parallel
+    const [sbRes, ex2Res, exRes] = await Promise.allSettled([
       searchSupabase(name, order, phone, ticket),
-      searchSheet(name, order, phone, ticket)
+      searchEx2(name, order, phone, ticket),
+      searchEx(name, order, phone, ticket)
     ]);
 
-    const sbData = sbResults.status === 'fulfilled' ? sbResults.value : [];
-    const gsData = gsResults.status === 'fulfilled' ? gsResults.value : [];
+    const sbData  = sbRes.status  === 'fulfilled' ? sbRes.value  : [];
+    const ex2Data = ex2Res.status === 'fulfilled' ? ex2Res.value : [];
+    const exData  = exRes.status  === 'fulfilled' ? exRes.value  : [];
 
-    // Mark source
-    sbData.forEach(r => r._source = 'supabase');
-    gsData.forEach(r => r._source = 'sheet');
-
-    // Merge — deduplicate by order_number + customer_phone
-    const seen   = new Set(sbData.map(r => `${r.order_number}|${r.customer_phone}`));
-    const unique = [...sbData];
-    gsData.forEach(r => {
-      const key = `${r.order_number}|${r.customer_phone}`;
-      if (!seen.has(key)) { seen.add(key); unique.push(r); }
-    });
+    // Combine all
+    const all = [...sbData, ...ex2Data, ...exData];
 
     // Sort by date desc
-    unique.sort((a,b) => {
-      const da = new Date(a.created_at||0);
-      const db = new Date(b.created_at||0);
-      return db - da;
-    });
+    all.sort((a,b) => new Date(b.created_at||0) - new Date(a.created_at||0));
 
-    // Show source tags
-    if (sbData.length) document.getElementById('srcSB').style.display = 'inline-flex';
-    if (gsData.length) document.getElementById('srcGS').style.display = 'inline-flex';
-
-    renderResults(unique);
+    renderResults(all, sbData.length, ex2Data.length, exData.length);
   } catch(e) {
     showToast('Search error: '+e.message,'error');
+    console.error(e);
   }
 
   document.getElementById('loadingBar').classList.remove('show');
@@ -543,74 +524,65 @@ async function doSearch() {
 }
 
 async function searchSupabase(name, order, phone, ticket) {
-  let q = `${SB_TABLE}?select=*&order=created_at.desc&limit=100`;
+  let q = `${SB_TABLE}?select=*&order=created_at.desc&limit=200`;
   if (order)  q += `&order_number=ilike.*${encodeURIComponent(order)}*`;
   if (phone)  q += `&customer_phone=ilike.*${encodeURIComponent(phone)}*`;
   if (name)   q += `&customer_name=ilike.*${encodeURIComponent(name)}*`;
   if (ticket) q += `&bosta_ticket_id=ilike.*${encodeURIComponent(ticket)}*`;
   const res  = await sb(q);
   const data = await res.json();
-  return Array.isArray(data) ? data : [];
+  return (Array.isArray(data) ? data : []).map(r => ({...r, _source:'Supabase'}));
 }
 
-async function searchSheet(name, order, phone, ticket) {
-  const rows = await fetchSheet();
+async function searchEx2(name, order, phone, ticket) {
+  const rows = await fetchTab('Export2');
   return rows
-    .filter(row => row.length > 5 && (row[C.name]||row[C.order]||row[C.phone]))
-    .filter(row => {
-      const rName  = (row[C.name] ||'').toLowerCase();
-      const rOrder = (row[C.order]||'').toString().toLowerCase();
-      const rPhone = (row[C.phone]||'').toString().toLowerCase();
-      const rBosta = (row[C.bosta]||'').toLowerCase();
-      if (name   && !rName.includes(name.toLowerCase()))   return false;
-      if (order  && !rOrder.includes(order.toLowerCase()))  return false;
-      if (phone  && !rPhone.includes(phone.toLowerCase()))  return false;
-      if (ticket && !rBosta.includes(ticket.toLowerCase())) return false;
-      return true;
-    })
-    .map(sheetRowToObj);
+    .slice(1) // skip header row
+    .filter(row => row.length > 5 && row[EX2.order]) // must have order number
+    .map(normalizeEx2Row)
+    .filter(r => matches(r, name, order, phone, ticket));
 }
 
-// ── RENDER ───────────────────────────────────────────────────────────────
-function renderResults(data) {
+async function searchEx(name, order, phone, ticket) {
+  const rows = await fetchTab('Export');
+  return rows
+    .slice(1) // skip header row
+    .filter(row => row.length > 5 && row[EX.order]) // must have order number
+    .map(normalizeExRow)
+    .filter(r => matches(r, name, order, phone, ticket));
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+function renderResults(data, sbCount, ex2Count, exCount) {
   const list  = document.getElementById('resultsList');
   const count = document.getElementById('resultsCount');
 
   if (!data.length) {
     count.textContent = '0 results';
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Searched Supabase (${sbCount}) · Export2 (${ex2Count}) · Export (${exCount})</div></div>`;
     return;
   }
 
-  count.textContent = `${data.length} result${data.length>1?'s':''}`;
-
-  // Group: Supabase first, then Sheet with divider
-  const sbItems = data.filter(r=>r._source==='supabase');
-  const gsItems = data.filter(r=>r._source==='sheet');
-
-  let html = '';
-  if (sbItems.length) {
-    html += sbItems.map(r=>renderCard(r)).join('');
-  }
-  if (gsItems.length) {
-    if (sbItems.length) {
-      html += `<div class="divider"><div class="divider-line"></div><span class="divider-text">Historical — Google Sheet</span><div class="divider-line"></div></div>`;
-    }
-    html += gsItems.map(r=>renderCard(r)).join('');
-  }
-  list.innerHTML = html;
+  count.textContent = `${data.length} result${data.length>1?'s':''} · SB:${sbCount} EX2:${ex2Count} EX:${exCount}`;
+  list.innerHTML = data.map(renderCard).join('');
 }
 
 function renderCard(r) {
   const sc  = statusClass(r.exchange_status);
-  const dt  = r.created_at
-    ? (r._source==='supabase'
-        ? new Date(r.created_at).toLocaleDateString('en-GB')
-        : r.created_at.toString().slice(0,16))
-    : '—';
-  const srcTag = r._source==='supabase'
-    ? `<span class="src-tag src-supabase">Supabase</span>`
-    : `<span class="src-tag src-sheet">Sheet</span>`;
+  const dt  = r.created_at ? formatDate(r.created_at) : '—';
+  const srcTag = r._source==='Supabase'
+    ? `<span class="src-tag tag-sb">Supabase</span>`
+    : r._source==='Export2'
+    ? `<span class="src-tag tag-ex2">Export2</span>`
+    : `<span class="src-tag tag-ex">Export</span>`;
+
+  const extraFields = r._source==='Export' ? `
+    <div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${r.refund_method||'—'}</span></div>
+    <div class="result-item"><span class="result-item-label">Bank</span><span class="result-item-val">${r.bank_name||'—'}</span></div>
+  ` : `
+    <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${r.num_items||'—'}</span></div>
+    <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>
+  `;
 
   return `
   <div class="result-card">
@@ -622,7 +594,7 @@ function renderCard(r) {
       </div>
       <div class="result-badges">
         <span class="status-badge ${sc}">${r.exchange_status||'Pending'}</span>
-        <div style="display:flex;gap:5px;justify-content:flex-end;align-items:center">
+        <div style="display:flex;gap:5px;align-items:center;justify-content:flex-end">
           ${srcTag}
           <span style="font-size:11px;color:var(--muted)">${dt}</span>
         </div>
@@ -632,82 +604,82 @@ function renderCard(r) {
       <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${r.request_type||'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${r.reason||'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${r.agent_name||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div>
       <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${r.product_sku||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Refund</span><span class="result-item-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${r.num_items||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Bosta / Txn ID</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>
+      ${extraFields}
     </div>
     ${r.notes?`<div style="margin-top:12px;padding:10px 12px;background:#fafafa;border-radius:8px;font-size:12px;color:var(--muted);border:1px solid var(--border)"><strong>Note:</strong> ${r.notes}</div>`:''}
     ${r.fulfilment_note?`<div style="margin-top:8px;padding:10px 12px;background:var(--blue-bg);border-radius:8px;font-size:12px;color:var(--blue);border:1px solid var(--blue-bd)"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div>`:''}
   </div>`;
 }
 
+function formatDate(str) {
+  if (!str) return '—';
+  const d = new Date(str);
+  if (isNaN(d)) return str.toString().slice(0,16);
+  return d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+
 function statusClass(s) {
-  const v = (s||'').toLowerCase();
-  if (v.includes('approved')||v.includes('done')||v.includes('completed')) return 's-approved';
-  if (v.includes('rejected')||v.includes('declined')) return 's-rejected';
-  if (v.includes('processing')||v.includes('progress')) return 's-processing';
+  const v=(s||'').toLowerCase();
+  if(v.includes('approved')||v.includes('done')||v.includes('completed')) return 's-approved';
+  if(v.includes('rejected')||v.includes('declined')||v.includes('failed')) return 's-rejected';
+  if(v.includes('processing')||v.includes('progress')) return 's-processing';
   return 's-pending';
 }
 
 function clearSearch() {
   ['sName','sOrder','sPhone','sTicket'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Results will include both new and historical records</div></div>`;
+  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div></div>`;
   document.getElementById('resultsCount').textContent='—';
-  document.getElementById('srcSB').style.display='none';
-  document.getElementById('srcGS').style.display='none';
 }
 
-// ── DUPLICATE CHECK ───────────────────────────────────────────────────
+// ── DUPLICATE CHECK ────────────────────────────────────────────────────
 let dupTimer;
-function schedDupCheck() {
-  clearTimeout(dupTimer);
-  dupTimer = setTimeout(dupCheck, 700);
-}
+function schedDupCheck(){clearTimeout(dupTimer);dupTimer=setTimeout(dupCheck,700)}
 
 async function dupCheck() {
   const order = document.getElementById('fOrderNum').value.trim();
-  if (!order) { hideDup(); return; }
+  if (!order){hideDup();return}
 
-  // Check Supabase (last 5 days)
   const fiveDaysAgo = new Date(Date.now()-5*24*60*60*1000).toISOString();
+
+  // Check Supabase
   const res  = await sb(`${SB_TABLE}?order_number=eq.${encodeURIComponent(order)}&created_at=gte.${fiveDaysAgo}&select=id,created_at,exchange_status`);
   const data = await res.json();
-
-  if (Array.isArray(data) && data.length > 0) {
-    const d  = data[0];
-    const dt = new Date(d.created_at).toLocaleDateString('en-GB');
-    showDup(`A case for Order #${order} already exists in the system — submitted on ${dt}. Status: ${d.exchange_status||'Pending'}. Please follow up on the existing case.`);
+  if(Array.isArray(data)&&data.length>0){
+    const d=data[0];
+    showDup(`Case exists in system (submitted ${formatDate(d.created_at)}). Status: ${d.exchange_status||'Pending'}. Follow up instead.`);
     return;
   }
 
-  // Also check Google Sheet (last 5 days)
+  // Check Export2
   try {
-    const rows   = await fetchSheet();
-    const cutoff = Date.now() - 5*24*60*60*1000;
-    const found  = rows.find(row => {
-      if ((row[C.order]||'').toString().trim() !== order) return false;
-      const d = new Date(row[C.ts]||0);
-      return !isNaN(d) && d.getTime() >= cutoff;
+    const cutoff = Date.now()-5*24*60*60*1000;
+    const rows   = await fetchTab('Export2');
+    const found  = rows.slice(1).find(row=>{
+      if((row[EX2.order]||'').trim()!==order) return false;
+      const d=new Date(row[EX2.ts]||0);
+      return !isNaN(d)&&d.getTime()>=cutoff;
     });
-    if (found) {
-      showDup(`A case for Order #${order} exists in the historical sheet (submitted: ${found[C.ts].slice(0,10)}). Status: ${found[C.status]||'—'}. Please follow up on it.`);
+    if(found){
+      showDup(`Case exists in Export2 sheet (${found[EX2.ts]?.slice(0,10)||'recent'}). Status: ${found[EX2.status]||'—'}. Follow up instead.`);
       return;
     }
-  } catch(e) {}
+  } catch(e){}
 
   hideDup();
 }
 
-function showDup(msg) {
-  document.getElementById('dupText').textContent = msg;
+function showDup(msg){
+  document.getElementById('dupText').textContent=msg;
   document.getElementById('dupAlert').classList.add('show');
-  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').disabled=true;
 }
-function hideDup() {
+function hideDup(){
   document.getElementById('dupAlert').classList.remove('show');
-  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').disabled=false;
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────────────
@@ -719,62 +691,55 @@ async function submitRefund() {
   const orderN  = document.getElementById('fOrderNum').value.trim();
   const reqType = document.getElementById('fReqType').value;
   const reason  = document.getElementById('fReason').value;
-
-  if (!email)   return showToast('Agent email is required.','error');
-  if (!agentN)  return showToast('Agent name is required.','error');
-  if (!custN)   return showToast('Customer name is required.','error');
-  if (!custPh)  return showToast('Customer phone is required.','error');
-  if (!orderN)  return showToast('Order number is required.','error');
-  if (!reqType) return showToast('Request type is required.','error');
-  if (!reason)  return showToast('Reason is required.','error');
+  if(!email)   return showToast('Agent email required.','error');
+  if(!agentN)  return showToast('Agent name required.','error');
+  if(!custN)   return showToast('Customer name required.','error');
+  if(!custPh)  return showToast('Customer phone required.','error');
+  if(!orderN)  return showToast('Order number required.','error');
+  if(!reqType) return showToast('Request type required.','error');
+  if(!reason)  return showToast('Reason required.','error');
 
   setLoading(true);
   try {
     const payload = {
-      agent_email:    email,
-      agent_name:     agentN,
-      customer_name:  custN,
-      customer_phone: custPh,
-      order_number:   orderN,
-      request_type:   reqType,
-      reason,
-      num_items:      parseInt(document.getElementById('fNumItems').value)||null,
-      product_sku:    document.getElementById('fProductSKU').value.trim(),
-      original_sku:   document.getElementById('fOrigSKU').value.trim(),
-      requested_sku:  document.getElementById('fReqSKU').value.trim(),
-      shipping_fees:  document.getElementById('fShipping').value,
-      refund_amount:  document.getElementById('fRefund').value.trim(),
+      agent_email:agentN,agent_name:agentN,
+      customer_name:custN,customer_phone:custPh,order_number:orderN,
+      request_type:reqType,reason,
+      num_items:parseInt(document.getElementById('fNumItems').value)||null,
+      product_sku:document.getElementById('fProductSKU').value.trim(),
+      original_sku:document.getElementById('fOrigSKU').value.trim(),
+      requested_sku:document.getElementById('fReqSKU').value.trim(),
+      shipping_fees:document.getElementById('fShipping').value,
+      refund_amount:document.getElementById('fRefund').value.trim(),
       bosta_ticket_id:document.getElementById('fBostaTicket').value.trim(),
-      notes:          document.getElementById('fNotes').value.trim(),
+      notes:document.getElementById('fNotes').value.trim(),
       exchange_status:'Pending'
     };
-
-    const res = await sb(SB_TABLE,{method:'POST',body:JSON.stringify(payload),prefer:'return=minimal'});
-    if (!res.ok) throw new Error(await res.text());
-
+    const res=await sb(SB_TABLE,{method:'POST',body:JSON.stringify(payload),prefer:'return=minimal'});
+    if(!res.ok) throw new Error(await res.text());
     setLoading(false);
-    showToast('✅ Request submitted successfully!','success');
+    showToast('✅ Request submitted!','success');
     resetForm();
-  } catch(e) {
+  } catch(e){
     setLoading(false);
     showToast('Submit failed: '+e.message,'error');
   }
 }
 
-function setLoading(on) {
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = on;
-  btn.innerHTML = on
-    ? `<span class="spin-white"></span> Submitting...`
-    : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request`;
+function setLoading(on){
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=on;
+  btn.innerHTML=on
+    ?'<span class="spinw"></span> Submitting...'
+    :'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request';
 }
 
-function resetForm() {
+function resetForm(){
   ['fAgentEmail','fAgentName','fCustName','fCustPhone','fOrderNum',
    'fNumItems','fProductSKU','fOrigSKU','fReqSKU','fRefund','fBostaTicket','fNotes'
   ].forEach(id=>document.getElementById(id).value='');
   ['fReqType','fReason','fShipping'].forEach(id=>document.getElementById(id).value='');
-  hideDup(); setNow();
+  hideDup();setNow();
 }
 
 function switchTab(name,btn){
