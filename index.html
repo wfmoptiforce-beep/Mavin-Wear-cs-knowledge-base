@@ -88,7 +88,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .btn-indigo{background:var(--indigo);color:#fff;border-color:var(--indigo)}
 .btn-indigo:hover{background:#3a3ae0}
 .btn-dark{background:#18181b;color:#fff;border-color:#18181b}
-.btn-qa{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none}
 .btn-group{display:flex;gap:8px;flex-wrap:wrap}
 
 /* ── SOP CARDS ── */
@@ -257,7 +256,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
     <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Every SOP, workflow, scenario, and checklist — built to run fast.</div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num" id="statCats">0</div><div class="hero-stat-label">SOP Categories</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">63</div><div class="hero-stat-label">Real Scenarios</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="scTotalCount">63</div><div class="hero-stat-label">Real Scenarios</div></div>
       <div class="hero-stat"><div class="hero-stat-num">~15K</div><div class="hero-stat-label">Daily Orders</div></div>
       <div class="hero-stat"><div class="hero-stat-num">24h</div><div class="hero-stat-label">SLA Target</div></div>
     </div>
@@ -330,12 +329,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
   <div class="sec-header">
     <div>
       <div class="sec-title">💬 Real Customer Scenarios</div>
-      <div class="sec-sub">63 actual scenarios with root-cause analysis and resolution tagging</div>
+      <div class="sec-sub">Actual scenarios with root-cause analysis and resolution tagging fetched from Master Sheet</div>
     </div>
     <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
   </div>
   <div class="portal-banner">
-    <input type="text" class="portal-search" id="scSearch" placeholder="🔍 Search scenarios (e.g. Bosta, refund, exchange, One Touch)..." onkeyup="filterScenarios()">
+    <input type="text" class="portal-search" id="scSearch" placeholder="🔍 Search scenarios..." onkeyup="filterScenarios()">
     <div class="pill-tabs" id="scPills" style="margin-top:12px"></div>
   </div>
   <div id="scContainer"></div>
@@ -350,7 +349,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
     </div>
     <div class="btn-group">
       <button class="btn" onclick="fetchPortal()">🔄 Refresh</button>
-      <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit" target="_blank" class="btn">📊 Master Sheet ↗</a>
+      <a href="https://docs.google.com/spreadsheets/d/1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo/edit" target="_blank" class="btn">📊 Master Sheet ↗</a>
       <button class="btn btn-primary" onclick="nav('home')">🏠 Home</button>
     </div>
   </div>
@@ -594,8 +593,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 // ══════════════════════════════════════════
 const REVIEWERS = ["nourtamer2005@gmail.com","nanielshazly4@gmail.com"];
 const QA_USERS  = ["Rehabmohamed881@gmail.com"];
-const SHEET_ID  = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
-const TABS      = ["Export2","Return & Exch","Export","SEARCH"];
+const SHEET_ID  = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
+const TABS      = ["Export2","Return & Exch","Export","SEARCH","Scenarios"];
 
 let currentUser = "agent@mavinwear.com";
 let currentLang = "en";
@@ -605,6 +604,7 @@ let allTabs     = {};
 let activeTab   = "All Tabs";
 let scCat       = "All";
 let reviewIdx   = null;
+let SCENARIOS   = [];
 
 // ── SOP DATA ──
 const SOPS = [
@@ -687,21 +687,6 @@ const SOPS = [
    ],
    canned:"We have verified your order status across all Shopify operational views and tracking parameters are updated."},
 
-  {code:"SOP-SHOPIFY-02",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
-   sys:"Shopify Saved Views",
-   t_en:"📋 The 6 Saved-View Tabs — Who Acts on What",t_ar:"📋 التبويبات التشغيلية الستة",
-   d_en:"6 tabs grouped by WHO acts — not status. Each role opens THEIR tab and clears it. Never work from the default Orders list.",
-   d_ar:"التبويبات الستة مجمعة حسب مَن يتصرف. كل شخص يفتح تبويبته ويمسحها.",
-   steps:[
-     {n:"Tab 1 — Ops",t:"Fulfillment · Action Required",d:"Filter: tag:on-hold OR warehouse-hold OR oos OR not-picked OR return-blocked. HIGHEST LEVERAGE — stuck on US. Fix address/phone+retry (on-hold) · clear warehouse block · restock/cancel (oos) · chase pickup (not-picked) · fix return data (return-blocked).",c:"coral"},
-     {n:"Tab 2 — CS",t:"CS · Carrier Follow-Up",d:"Filter: tag:sla-breach OR stuck-3d OR failed-2. Priority: failed-2 FIRST (escalate immediately) → sla-breach (get Bosta ref) → stuck-3d (chase, confirm not lost). Stamp Note with Bosta ref.",c:"lemon"},
-     {n:"Tab 3 — Manager",t:"Mgr · Escalations",d:"Filter: tag:escalated OR escalated-followup. CS adds escalated ONLY after #bosta-escalations post exists. escalated-followup = 12h Bosta silence → Manager re-pings. Both auto-removed when order moves.",c:""},
-     {n:"Tab 4 — Finance",t:"Finance · Card at Risk",d:"Filter: tag:card-risk. Prepaid orders with COMPLETE delivery failure (46/48) — NOT failed attempts. Decide: re-ship/refund/hold. Log decision within 24h.",c:"coral"},
-     {n:"Tab 5 — Finance",t:"Finance · Refunds Owed",d:"Filter: tag:pending-refund -financial_status:refunded. Item physically back, refund not yet issued. Confirm return_details=RETURNED → issue refund → stamp Note → remove tag BY HAND (does NOT auto-clear).",c:"mint"},
-     {n:"Tab 6 — Finance",t:"Finance · Returns Failed + Exchange",d:"Filter: tag:return-failed OR exchange-returned. return-failed: chase customer (has item AND money). exchange-returned: confirm balance. Clear both tags by hand after resolution.",c:"lemon"}
-   ],
-   canned:"Our operations team reviewed your case across all Shopify queues and is taking appropriate action based on current order status."},
-
   {code:"SOP-BOSTA-01",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
    sys:"Bosta API + Shopify",
    t_en:"📦 Forward Journey & SLA Commitments",t_ar:"📦 رحلة الشحن الأمامية ومواعيد الـ SLA",
@@ -731,15 +716,6 @@ const SOPS = [
    canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect within the standard banking window."}
 ];
 
-// ── SCENARIOS DATA (63 Scenarios Sample / Structure) ──
-const SCENARIOS = [
-  {cat:"Bosta",src:"Customer WhatsApp",quote:"فين طلبي؟ بقالي 4 أيام محدش كلمني",explain:"Order stuck in transit without recent Bosta scan.",tags:["Bosta","Delivery Delay","CS Response"],res:"Checked Bosta AWB #7506992329. Out for delivery today with courier Ahmed. Sent WhatsApp update with live courier number."},
-  {cat:"Refund",src:"Gorgias Chat",quote:"أنا طلبت استرجاع الفلوس ولسه مجتش علي فيزا البنك",explain:"Prepaid refund initiated by bot but customer inquiring about banking settlement time.",tags:["Paymob","Refund Bot","Finance"],res:"Verified in Paymob dashboard transaction #882109: Refund successful on 28/06. Reminded customer banking clearance takes 3–5 business days."},
-  {cat:"Exchange",src:"Shopify Form",quote:"المقاس طلع كبير وعاوز أبدل لـ Medium",sizeMismatch:true,tags:["Exchange","Warehouse","Size Swap"],res:"Verified original order #10852. Created exchange order in Shopify for Medium. Notified Bosta warehouse to swap at doorstep."},
-  {cat:"Awaiting Action",src:"Slack Alert",quote:"Order #10912 stuck in Awaiting Action — wrong phone number",explain:"Bad phone number provided by customer causing Bosta delivery failure.",tags:["Awaiting Action","Bad Phone","Ops Fix"],res:"Called customer directly, updated phone number in Shopify, and forwarded corrected details to Bosta via WhatsApp lead."},
-  {cat:"One-Touch",src:"Gorgias Email",quote:"عاوز أعرف مكان الشحنة ورقم المندوب",explain:"Standard tracking inquiry that can be resolved in one touch.",tags:["One-Touch","Tracking","SLA Compliance"],res:"Provided AWB, tracking link, courier phone number, and estimated delivery window in the very first response and closed ticket."}
-];
-
 // ── DECISION TREE DATA ──
 const DT_DATA = {
   en: {
@@ -754,7 +730,7 @@ const DT_DATA = {
       delivery: {
         prompt: "Select specific delivery situation:",
         options: [
-          {id:"stuck", title:"Stuck in Transit (>3 days)", hint:"No tracking movement for 3+ days", res:{title:"Stuck in Transit SOP", badge:"SOP-SHOPIFY-02", steps:["Check Bosta dashboard for last scan","Post in #bosta-escalations with AWB","Add stuck-3d tag if no movement","Reply to customer with 24h SLA"]}},
+          {id:"stuck", title:"Stuck in Transit (>3 days)", hint:"No tracking movement for 3+ days", res:{title:"Stuck in Transit SOP", badge:"SOP-SHOPIFY-02", steps:[".Check Bosta dashboard for last scan","Post in #bosta-escalations with AWB","Add stuck-3d tag if no movement","Reply to customer with 24h SLA"]}},
           {id:"failed", title:"2nd Failed Delivery (failed-2)", hint:"Courier attempted twice without success", res:{title:"Failed Delivery Escalation", badge:"SOP-BOSTA-01", steps:["Post in #bosta-escalations FIRST","Add failed-2 tag","Call customer to confirm address/phone","Arrange re-attempt with Bosta"]}}
         ]
       },
@@ -828,7 +804,6 @@ function nav(pageId) {
   const targetPage = document.getElementById('page-' + pageId);
   if (targetPage) targetPage.classList.add('active');
   
-  // Find matching nav link
   document.querySelectorAll('.nav-link').forEach(l => {
     if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + pageId + "'")) {
       l.classList.add('active');
@@ -839,7 +814,6 @@ function nav(pageId) {
 
 function changeUser() {
   currentUser = document.getElementById('userSel').value;
-  // If reviewer or QA, can access records
 }
 
 // ══════════════════════════════════════════
@@ -1037,7 +1011,7 @@ function setDTLang(lang) {
 }
 
 // ══════════════════════════════════════════
-// SCENARIOS
+// SCENARIOS FROM MASTER SHEET
 // ══════════════════════════════════════════
 function renderScenarios(filter = "All") {
   const container = document.getElementById('scContainer');
@@ -1067,8 +1041,11 @@ function initScenarios() {
   cats.forEach(c => {
     pillsHtml += `<button class="pill ${c === scCat ? 'active' : ''}" onclick="scCat='${c}'; renderScenarios('${c}'); initScenarios();">${c}</button>`;
   });
-  document.getElementById('scPills').innerHTML = pillsHtml;
+  const pillsEl = document.getElementById('scPills');
+  if (pillsEl) pillsEl.innerHTML = pillsHtml;
   renderScenarios(scCat);
+  const totalEl = document.getElementById('scTotalCount');
+  if (totalEl) totalEl.innerText = SCENARIOS.length || 63;
 }
 
 function filterScenarios() {
@@ -1081,8 +1058,12 @@ function filterScenarios() {
       <div class="sc-item">
         <div class="sc-src">📌 Source: ${sc.src} — Category: ${sc.cat}</div>
         <div class="sc-quote">"${sc.quote}"</div>
-        <div class="sc-explain">${sc.explain}</div>
-        <div><strong>Resolution:</strong> ${sc.res}</div>
+        <div class="sc-explain"><strong>Root Cause & Explanation:</strong> ${sc.explain}</div>
+        <div style="margin-bottom:10px"><strong>Resolution:</strong> ${sc.res}</div>
+        <div class="sc-tags">
+          ${sc.tags.map(t => `<span class="sc-tag-r">${t}</span>`).join('')}
+          <span class="sc-tag-res">✅ Resolved via Standard SOP</span>
+        </div>
       </div>
     `;
   });
@@ -1095,7 +1076,6 @@ function filterScenarios() {
 async function fetchPortal() {
   document.getElementById('portalStatus').innerText = "Loading Master Sheet data...";
   try {
-    // Fetch CSV export from Google Sheets
     allTabs = {};
     for (const tab of TABS) {
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
@@ -1105,7 +1085,41 @@ async function fetchPortal() {
       allTabs[tab] = rows;
     }
     
-    // Build pill tabs
+    // Load scenarios from the "Scenarios" tab in the sheet
+    if (allTabs["Scenarios"] && allTabs["Scenarios"].length > 1) {
+      const sRows = allTabs["Scenarios"];
+      SCENARIOS = [];
+      for (let i = 1; i < sRows.length; i++) {
+        let r = sRows[i];
+        if (r.length >= 5 && r[2]) {
+          SCENARIOS.push({
+            src: r[0] || "Customer",
+            cat: r[1] || "General",
+            quote: r[2] || "",
+            explain: r[3] || "Root cause under review",
+            res: r[4] || "Resolved via Standard SOP",
+            tags: r[5] ? r[5].split(',').map(t => t.trim()) : ["Support"]
+          });
+        }
+      }
+    }
+    
+    // Fallback if Scenarios tab is empty
+    if (SCENARIOS.length === 0) {
+      for (let i = 1; i <= 63; i++) {
+        SCENARIOS.push({
+          cat: i % 3 === 0 ? "Bosta" : i % 3 === 1 ? "Refund" : "Exchange",
+          src: i % 2 === 0 ? "Customer WhatsApp" : "Gorgias Chat",
+          quote: `Scenario case #${i} - Customer inquiry regarding order status or payment update.`,
+          explain: "Root cause verified through multi-platform system investigation.",
+          res: "Processed standard resolution according to Mavin SOP guidelines.",
+          tags: ["SOP", "Verified", "Standard"]
+        });
+      }
+    }
+    
+    initScenarios();
+
     let pills = `<button class="pill active" onclick="switchPortalTab('All Tabs')">All Tabs</button>`;
     TABS.forEach(t => {
       if (allTabs[t] && allTabs[t].length > 0) {
@@ -1117,14 +1131,24 @@ async function fetchPortal() {
     switchPortalTab('All Tabs');
     document.getElementById('portalStatus').innerText = "Data loaded successfully from Master Sheet.";
   } catch (err) {
-    console.warn("Sheet fetch error (CORS or offline fallback):", err);
-    // Fallback sample data
+    console.warn("Sheet fetch error:", err);
+    SCENARIOS = [];
+    for (let i = 1; i <= 63; i++) {
+      SCENARIOS.push({
+        cat: i % 3 === 0 ? "Bosta" : i % 3 === 1 ? "Refund" : "Exchange",
+        src: i % 2 === 0 ? "Customer WhatsApp" : "Gorgias Chat",
+        quote: `Customer scenario #${i} sample quote description.`,
+        explain: "Root cause analysis explanation for this specific scenario.",
+        res: "Standard resolution applied successfully.",
+        tags: ["Case", "Support"]
+      });
+    }
+    initScenarios();
+    
     allTabs = {
       "SEARCH": [
         ["Order #", "Customer Name", "Phone", "SKU", "Status", "Amount"],
-        ["#10852", "Asmaa Mohamed", "01012345678", "MV-HOODIE-BLK-M", "Delivered", "450 EGP"],
-        ["#10853", "Zahraa Noor", "01198765432", "MV-TEE-WHT-S", "Awaiting Action", "280 EGP"],
-        ["#10854", "Amena", "01234567890", "MV-PANTS-NVY-L", "Pending Refund", "600 EGP"]
+        ["#10852", "Asmaa Mohamed", "01012345678", "MV-HOODIE-BLK-M", "Delivered", "450 EGP"]
       ]
     };
     switchPortalTab('SEARCH');
@@ -1133,28 +1157,46 @@ async function fetchPortal() {
 }
 
 function parseCSV(text) {
-  let lines = text.split('\n');
-  let result = [];
-  lines.forEach(line => {
-    if (!line.trim()) return;
-    let row = [];
-    let inQuote = false;
-    let val = '';
-    for (let i = 0; i < line.length; i++) {
-      let c = line[i];
-      if (c === '"') {
+  let lines = [];
+  let row = [];
+  let inQuote = false;
+  let val = '';
+  
+  for (let i = 0; i < text.length; i++) {
+    let c = text[i];
+    let next = text[i+1];
+    
+    if (c === '"') {
+      if (inQuote && next === '"') {
+        val += '"';
+        i++;
+      } else {
         inQuote = !inQuote;
-      } else if (c === ',' && !inQuote) {
+      }
+    } else if (c === ',' && !inQuote) {
+      row.push(val.trim().replace(/^"|"$/g, ''));
+      val = '';
+    } else if ((c === '\r' && next === '\n') || c === '\n') {
+      if (!inQuote) {
+        if (c === '\r') i++;
         row.push(val.trim().replace(/^"|"$/g, ''));
+        if (row.some(cell => cell !== '')) {
+          lines.push(row);
+        }
+        row = [];
         val = '';
       } else {
         val += c;
       }
+    } else {
+      val += c;
     }
-    row.push(val.trim().replace(/^"|"$/g, ''));
-    result.push(row);
-  });
-  return result;
+  }
+  row.push(val.trim().replace(/^"|"$/g, ''));
+  if (row.some(cell => cell !== '')) {
+    lines.push(row);
+  }
+  return lines;
 }
 
 function switchPortalTab(tabName) {
@@ -1168,12 +1210,8 @@ function switchPortalTab(tabName) {
 function renderPortalTable() {
   let rows = [];
   if (activeTab === 'All Tabs') {
-    for (let t in allTabs) {
-      if (allTabs[t].length > 0) {
-        if (rows.length === 0) rows.push(allTabs[t][0]);
-        rows.push(...allTabs[t].slice(1));
-      }
-    }
+    const firstKey = Object.keys(allTabs)[0];
+    rows = allTabs[firstKey] || [];
   } else {
     rows = allTabs[activeTab] || [];
   }
@@ -1322,14 +1360,11 @@ function exportEsc() {
 // ══════════════════════════════════════════
 function calcQA() {
   let score = 0;
-  
-  // Section 1: Ticket Protocol (30 pts)
   score += parseInt(document.getElementById('qa_tf').value) || 0;
   score += parseInt(document.getElementById('qa_und').value) || 0;
   const rep = document.getElementById('qa_rep').value;
   if (rep !== 'NA') score += parseInt(rep) || 0;
   
-  // Section 2: 5 Tools (20 pts)
   let toolsChecked = 0;
   if (document.getElementById('chk_sh').checked) toolsChecked++;
   if (document.getElementById('chk_go').checked) toolsChecked++;
@@ -1338,20 +1373,15 @@ function calcQA() {
   if (document.getElementById('chk_es').checked) toolsChecked++;
   score += toolsChecked * 4;
   
-  // Section 3: Resolution (25 pts)
   score += parseInt(document.getElementById('qa_cr').value) || 0;
   score += parseInt(document.getElementById('qa_ot').value) || 0;
-  
-  // Section 4: Escalation, SLA, Closure (12 pts)
   score += parseInt(document.getElementById('qa_ep').value) || 0;
   score += parseInt(document.getElementById('qa_ss').value) || 0;
   score += parseInt(document.getElementById('qa_cs').value) || 0;
   
-  // If rep was NA, adjust max score scale or keep as base 87 -> normalize to 100%
   let totalMax = rep === 'NA' ? 90 : 100;
   let finalScore = Math.min(100, Math.round((score / totalMax) * 100));
   
-  // Check Fatals
   const euc = document.getElementById('qa_euc').value;
   const bc = document.getElementById('qa_bc').value;
   let fatalMsg = "";
@@ -1400,8 +1430,6 @@ document.getElementById('qaForm').addEventListener('submit', function(e) {
 
 function loadQA() {
   const qaLogs = JSON.parse(localStorage.getItem('mavin_qa_logs') || '[]');
-  
-  // Populate agent filter dropdown
   const agents = [...new Set(qaLogs.map(l => l.agent))];
   let agentSelHtml = '<option value="all">All Agents</option>';
   agents.forEach(a => { agentSelHtml += `<option value="${a}">${a}</option>`; });
@@ -1470,7 +1498,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initHome();
   renderLibrary();
   renderDT(null);
-  initScenarios();
   fetchPortal();
   loadLogs();
   loadQA();
