@@ -83,6 +83,10 @@
     .flowchart-container { margin: 20px 0; display: flex; flex-direction: column; gap: 0px; }
     .flowchart-node { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; position: relative; border-left: 5px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.2s; }
     .flowchart-node:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
+    .flowchart-node.node-warning { border-left-color: var(--warning); }
+    .flowchart-node.node-success { border-left-color: var(--success); }
+    .flowchart-node.node-danger { border-left-color: var(--danger); }
+    .flowchart-node.node-purple { border-left-color: var(--purple); }
     .flowchart-arrow { text-align: center; color: var(--accent); font-size: 20px; font-weight: bold; margin: 6px 0; line-height: 1; }
     .flow-node-num { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase; }
     .flow-node-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
@@ -183,26 +187,19 @@
 <body>
 <div class="container">
   
-  <!-- Header with MAVIN Logo -->
   <div class="header">
     <div class="brand-logo-wrap">
       <svg width="220" height="42" viewBox="0 0 260 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- M -->
         <path d="M10 42V6H20.5L34 26.5L47.5 6H58V42H48V19L36.5 36.5H31.5L20 19V42H10Z" fill="#09090B"/>
-        <!-- Λ (A without bar) -->
         <path d="M72 42L91 6H101L120 42H109L96 17L83 42H72Z" fill="#09090B"/>
-        <!-- V -->
         <path d="M132 6H143L156 31L169 6H180L161 42H151L132 6Z" fill="#09090B"/>
-        <!-- I -->
         <path d="M198 6H208V42H198V6Z" fill="#09090B"/>
-        <!-- N -->
         <path d="M224 42V6H234L250 29V6H260V42H250L234 19V42H224Z" fill="#09090B"/>
       </svg>
     </div>
     <div class="brand-sub">Operations, Bosta Partnership, Shopify Workflows & QA Intelligence Hub</div>
   </div>
 
-  <!-- User Session Header -->
   <div class="top-bar">
     <div class="user-badge">
       <span>👤 Active User:</span>
@@ -229,7 +226,6 @@
     <button class="nav-btn qa-btn" id="btnQALogs" onclick="showSection('qualityLogs')">📈 QA Evaluation Logs</button>
   </div>
 
-  <!-- INTERACTIVE AGENT WORKFLOW GUIDE -->
   <div class="workflow-banner">
     <div class="workflow-title">⚡ MAVIN × BOSTA Agent Golden Workflow</div>
     <div class="flow-container">
@@ -276,11 +272,10 @@
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
       </div>
     </div>
-    
     <div class="category-grid" id="categoryGrid"></div>
   </div>
 
-  <!-- 2. INTERACTIVE DECISION TREE WIZARD -->
+  <!-- 2. DECISION TREE -->
   <div id="decisionTreeSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -292,55 +287,37 @@
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
-
     <div class="dt-wrapper">
       <div class="dt-top-controls">
-        <div class="dt-breadcrumb" id="dtBreadcrumbs">
-          <span>Step 1</span> ➔ Select Main Category
-        </div>
+        <div class="dt-breadcrumb" id="dtBreadcrumbs"><span>Step 1</span> ➔ Select Main Category</div>
         <div class="lang-toggle">
           <button id="btnLangEn" class="lang-btn active" onclick="setDTLanguage('en')">English</button>
           <button id="btnLangAr" class="lang-btn" onclick="setDTLanguage('ar')">العربية</button>
         </div>
       </div>
-
       <div class="dt-prompt" id="dtPromptTitle">Select Customer Inquiry Category:</div>
       <div class="dt-grid" id="dtOptionsGrid"></div>
-
       <div id="dtFinalView" style="display:none;">
         <div class="dt-resolution-card">
           <span class="res-badge">Recommended Official Resolution</span>
           <h3 id="resTitle" style="margin:0 0 10px 0; font-size:18px; color:var(--primary);"></h3>
-
           <div class="res-grid-info">
-            <div class="res-info-card">
-              <div class="res-info-label">Contact Reason</div>
-              <div class="res-info-val" id="resReasonBadge"></div>
-            </div>
-            <div class="res-info-card">
-              <div class="res-info-label">Resolution Code</div>
-              <div class="res-info-val" id="resResolutionBadge"></div>
-            </div>
+            <div class="res-info-card"><div class="res-info-label">Contact Reason</div><div class="res-info-val" id="resReasonBadge"></div></div>
+            <div class="res-info-card"><div class="res-info-label">Resolution Code</div><div class="res-info-val" id="resResolutionBadge"></div></div>
           </div>
-
-          <div class="res-block">
-            <strong>Action to Take:</strong>
-            <div id="resActionText"></div>
-          </div>
-
+          <div class="res-block"><strong>Action to Take:</strong><div id="resActionText"></div></div>
           <div class="canned-box" id="resReplyBox">
             <button class="copy-btn" onclick="copyReplyText()">📋 Copy Response</button>
             <strong style="color:var(--primary);">Approved Customer Response:</strong>
             <div id="resReplyText" style="margin-top:6px; color:#27272a; font-size:13.5px; line-height:1.5;"></div>
           </div>
-
           <button class="nav-btn primary" onclick="resetDecisionTree()" style="margin-top:20px;">🔄 Start Another Case</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. REAL CUSTOMER SCENARIOS (63 Cases) -->
+  <!-- 3. SCENARIOS -->
   <div id="scenariosSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -349,16 +326,14 @@
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-
     <div class="portal-banner">
-      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Bosta fulfillment, Awaiting Action, 10% bonus)..." onkeyup="filterScenarios()">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes..." onkeyup="filterScenarios()">
       <div class="tab-pills" id="scenarioCategoryPills"></div>
     </div>
-
     <div id="scenariosContainer"></div>
   </div>
 
-  <!-- 4. AGENT MULTI-TAB RETURN & REFUND PORTAL VIEW -->
+  <!-- 4. REFUND PORTAL -->
   <div id="refundPortalSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -367,29 +342,23 @@
       </div>
       <div style="display:flex; gap:8px;">
         <button class="nav-btn" onclick="fetchLiveRefundPortal()">🔄 Refresh All Tabs</button>
-        <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn">
-          📊 Master Sheet ↗
-        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk/edit?usp=sharing" target="_blank" class="nav-btn">📊 Master Sheet ↗</a>
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
-
     <div class="portal-banner">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-          <strong style="color:var(--primary); font-size:14px;">Universal Multi-Tab Search (Clean Columns & Live Status)</strong>
-          <div style="font-size:12.5px; color:var(--muted); margin-top:2px;">Search by Phone (e.g. 01061350023), Order # (e.g. 150773), Customer Name, Fitting Issue, or SKU.</div>
+          <strong style="color:var(--primary); font-size:14px;">Universal Multi-Tab Search</strong>
+          <div style="font-size:12.5px; color:var(--muted); margin-top:2px;">Search by Phone, Order #, Customer Name, or SKU.</div>
         </div>
         <span id="recordCounter" style="font-weight:bold; font-size:12px; color:var(--primary); background:white; padding:4px 8px; border-radius:4px; border:1px solid var(--border);">0 records</span>
       </div>
-
       <div class="portal-search-row">
-        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Phone, Order #, Customer Name, SKU, or Status to search..." onkeyup="filterPortalRecords()">
+        <input type="text" id="refundSearchInput" class="portal-search-input" placeholder="Type Phone, Order #, Customer Name, SKU, or Status..." onkeyup="filterPortalRecords()">
       </div>
-
       <div class="tab-pills" id="tabPillsContainer"></div>
     </div>
-
     <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
       <table id="refundsTable">
         <thead id="refundsTableHead"></thead>
@@ -398,7 +367,7 @@
     </div>
   </div>
 
-  <!-- 5. DETAIL VIEW (SOP View) -->
+  <!-- 5. DETAIL VIEW -->
   <div id="detailSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
       <div>
@@ -410,7 +379,7 @@
     <div id="sopsContainer"></div>
   </div>
 
-  <!-- 6. ESCALATION FORM VIEW -->
+  <!-- 6. ESCALATION FORM -->
   <div id="escalationSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <h2 style="margin:0; color:var(--primary); font-size:22px;">🚨 CS Product Escalation Form</h2>
@@ -420,37 +389,26 @@
       <form id="escForm">
         <label>Order Number:</label>
         <input type="text" id="order_number" placeholder="e.g. #10852" required>
-
         <label>Ticket Number:</label>
         <input type="text" id="ticket_number" placeholder="e.g. #TK-304" required>
-
         <label>Customer Name:</label>
         <input type="text" id="customer_name" required>
-
         <label>Contact Reason:</label>
         <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Bosta Awaiting Action / Refund Bot Issue" required>
-
         <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
-
         <label>Did the customer receive the order?</label>
-        <select id="received_order">
-          <option value="false">No</option>
-          <option value="true">Yes</option>
-        </select>
-
+        <select id="received_order"><option value="false">No</option><option value="true">Yes</option></select>
         <label>Delivered Date (if applicable):</label>
         <input type="date" id="delivered_date">
-
-        <label>Case Summary (Action & Investigation Details):</label>
+        <label>Case Summary:</label>
         <textarea id="case_summary" rows="3" placeholder="Explain details after self-investigation across Shopify, Gorgias, Slack, Bosta, Estbdal & Refund sheet..." required></textarea>
-
         <button type="submit" class="submit-btn">💾 Submit Escalation to Database</button>
       </form>
     </div>
   </div>
 
-  <!-- 7. ESCALATION RECORDS & REVIEW VIEW -->
+  <!-- 7. ESCALATION RECORDS -->
   <div id="logsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -467,15 +425,7 @@
       <table id="logsTable">
         <thead>
           <tr>
-            <th>Order #</th>
-            <th>Ticket #</th>
-            <th>Customer</th>
-            <th>Reason</th>
-            <th>Date</th>
-            <th>Summary</th>
-            <th>Review Status</th>
-            <th>Reviewer Notes</th>
-            <th>Action</th>
+            <th>Order #</th><th>Ticket #</th><th>Customer</th><th>Reason</th><th>Date</th><th>Summary</th><th>Review Status</th><th>Reviewer Notes</th><th>Action</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -483,7 +433,7 @@
     </div>
   </div>
 
-  <!-- 8. ADVANCED QUALITY AUDIT FORM VIEW -->
+  <!-- 8. QUALITY AUDIT FORM -->
   <div id="qualityFormSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -492,8 +442,6 @@
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
-
-    <!-- Live Score Banner -->
     <div class="qa-header-card">
       <div>
         <h3 style="margin:0; font-size:20px; font-weight:800;">Audit Scorecard Performance</h3>
@@ -505,27 +453,14 @@
         <span>SCORE</span>
       </div>
     </div>
-
     <form id="qaForm">
       <div class="qa-section">
         <div class="qa-section-title">📌 Interaction & Agent Identification</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:15px;">
-          <div>
-            <label>Agent Name:</label>
-            <input type="text" id="qa_agent_name" placeholder="e.g. Asmaa Mohamed" required>
-          </div>
-          <div>
-            <label>Agent Email:</label>
-            <input type="email" id="qa_agent_email" placeholder="agent@mavinwear.com" required>
-          </div>
-          <div>
-            <label>Auditor Name / Email:</label>
-            <input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f4f4f5;">
-          </div>
-          <div>
-            <label>Ticket / Chat Reference #:</label>
-            <input type="text" id="qa_ticket_ref" placeholder="e.g. #TK-9801" required>
-          </div>
+          <div><label>Agent Name:</label><input type="text" id="qa_agent_name" placeholder="e.g. Asmaa Mohamed" required></div>
+          <div><label>Agent Email:</label><input type="email" id="qa_agent_email" placeholder="agent@mavinwear.com" required></div>
+          <div><label>Auditor Name / Email:</label><input type="text" id="qa_auditor_email" value="Rehabmohamed881@gmail.com" readonly style="background:#f4f4f5;"></div>
+          <div><label>Ticket / Chat Reference #:</label><input type="text" id="qa_ticket_ref" placeholder="e.g. #TK-9801" required></div>
           <div>
             <label>Root Cause Attribution:</label>
             <select id="qa_attribution">
@@ -534,7 +469,7 @@
               <option value="Missing Order Number in Sheet">Missing Order Number in Sheet ⚠️</option>
               <option value="Missed One-Touch Resolution">Missed One-Touch Resolution</option>
               <option value="Unclosed Resolved Ticket SLA Breach">Unclosed Resolved Ticket (> 2-3 hours) ⚠️</option>
-              <option value="Blindly Followed Previous Agent">Blindly Followed Previous Agent (No self-check) ❌</option>
+              <option value="Blindly Followed Previous Agent">Blindly Followed Previous Agent ❌</option>
               <option value="Bosta Fulfillment / Awaiting Action Delay">Bosta Fulfillment / Awaiting Action Delay</option>
               <option value="Production / Quality Issue">Production / Factory Defect</option>
               <option value="Refund System Update / Delay">Refund System Update Delay</option>
@@ -543,20 +478,18 @@
           </div>
         </div>
       </div>
-
-      <!-- Critical Failures / Fatals -->
       <div class="fatal-banner">
         <strong style="color:var(--danger); font-size:14px;">⚠️ Critical Business & End-User Parameters (Auto-Fail):</strong>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px; margin-top:10px;">
           <div>
-            <label style="color:var(--danger);">End-User Critical (Wrong info / Misleading SLA dates):</label>
+            <label style="color:var(--danger);">End-User Critical:</label>
             <select id="qa_end_user_critical" onchange="calculateQAScore()">
               <option value="no">No Fatal - Correct Information & Dates</option>
               <option value="yes">Fatal Fail (Misleading info / Wrong SLA date ❌)</option>
             </select>
           </div>
           <div>
-            <label style="color:var(--danger);">Business Critical (Policy breach / Financial loss - Score 3 or 0):</label>
+            <label style="color:var(--danger);">Business Critical (Score 3 or 0):</label>
             <select id="qa_business_critical" onchange="calculateQAScore()">
               <option value="3">Score 3 - Protected Business & Policy Compliant</option>
               <option value="0">Score 0 - Policy Breach / Unauthorized Financial Loss ❌</option>
@@ -564,109 +497,98 @@
           </div>
         </div>
       </div>
-
-      <!-- 1. Issue Understanding & Ticket Protocol -->
       <div class="qa-section">
         <div class="qa-section-title">🧠 1. Issue Understanding & Ticket Protocol</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
             <label>Did the agent open ticket & flag issue BEFORE contacting customer?</label>
             <select id="qa_ticket_first" onchange="calculateQAScore()">
-              <option value="10">Yes (10/10) - Opened & Flagged ticket first (24h SLA protected)</option>
-              <option value="0">No (0/10) - Contacted customer before opening/flagging ticket</option>
+              <option value="10">Yes (10/10)</option>
+              <option value="0">No (0/10)</option>
             </select>
           </div>
           <div>
             <label>Did the agent understand the customer's root issue correctly?</label>
             <select id="qa_understand" onchange="calculateQAScore()">
-              <option value="10">Yes (10/10) - Accurate diagnostic understanding</option>
-              <option value="0">No (0/10) - Misunderstood customer's root problem</option>
+              <option value="10">Yes (10/10)</option>
+              <option value="0">No (0/10)</option>
             </select>
           </div>
           <div>
-            <label>Were repetitive questions avoided? (Clean diagnostic check):</label>
+            <label>Were repetitive questions avoided?</label>
             <select id="qa_repetitive" onchange="calculateQAScore()">
-              <option value="10">Yes (10/10) - Clear questions without repetition</option>
-              <option value="0">No (0/10) - Asked repeated fragmented questions</option>
-              <option value="NA">N/A (Not Applicable - Reallocate weight)</option>
+              <option value="10">Yes (10/10)</option>
+              <option value="0">No (0/10)</option>
+              <option value="NA">N/A</option>
             </select>
           </div>
         </div>
       </div>
-
-      <!-- 2. 5-Tool Investigation -->
       <div class="qa-section">
         <div class="qa-section-title">🔍 2. Independent Investigation Across All 5 Platforms (20 Pts)</div>
-        <div style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">Did the agent independently verify the case across all platforms before responding?</div>
         <div class="check-grid">
-          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify (Orders & Tags)</label>
-          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias (History & Chats)</label>
-          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack (Team Notes)</label>
-          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta (AWB & Courier)</label>
-          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 Estbdal & Refund Sheets (SKU/Duplicate)</label>
+          <label class="check-item"><input type="checkbox" id="chk_shopify" checked onchange="calculateQAScore()"> 🛍️ Shopify</label>
+          <label class="check-item"><input type="checkbox" id="chk_gorgias" checked onchange="calculateQAScore()"> 📥 Gorgias</label>
+          <label class="check-item"><input type="checkbox" id="chk_slack" checked onchange="calculateQAScore()"> 💬 Slack</label>
+          <label class="check-item"><input type="checkbox" id="chk_bosta" checked onchange="calculateQAScore()"> 🚚 Bosta</label>
+          <label class="check-item"><input type="checkbox" id="chk_estbdal" checked onchange="calculateQAScore()"> 🔄 Estbdal & Refund Sheets</label>
         </div>
       </div>
-
-      <!-- 3. Resolution Delivery & One-Touch -->
       <div class="qa-section">
         <div class="qa-section-title">🎯 3. Resolution Delivery & One-Touch Efficiency (25 Pts)</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
             <label>Did the agent deliver the exact right resolution?</label>
             <select id="qa_correct_res" onchange="calculateQAScore()">
-              <option value="15">Yes (15/15) - Delivered correct approved resolution</option>
-              <option value="0">No (0/15) - Incorrect action or wrong resolution</option>
+              <option value="15">Yes (15/15)</option>
+              <option value="0">No (0/15)</option>
             </select>
           </div>
           <div>
-            <label>One-Touch Resolution Efficiency (Solved in 1st touch?):</label>
+            <label>One-Touch Resolution Efficiency:</label>
             <select id="qa_one_touch" onchange="calculateQAScore()">
-              <option value="10">Yes (10/10) - Complete solution in 1st response</option>
-              <option value="5">Partial (5/10) - Minor follow-up required</option>
-              <option value="0">No (0/10) - Unnecessary fragmented back-and-forth</option>
+              <option value="10">Yes (10/10)</option>
+              <option value="5">Partial (5/10)</option>
+              <option value="0">No (0/10)</option>
             </select>
           </div>
         </div>
       </div>
-
-      <!-- 4. Escalation Process, SLA & Closure -->
       <div class="qa-section">
         <div class="qa-section-title">⏱️ 4. Escalation Process, SLA & Ticket Closure (12 Pts)</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
           <div>
             <label>Escalation Process followed correctly?</label>
             <select id="qa_esc_process" onchange="calculateQAScore()">
-              <option value="4">Yes (4/4) - Correct escalation path</option>
-              <option value="0">No (0/4) - Wrong escalation or unnecessary tag</option>
+              <option value="4">Yes (4/4)</option>
+              <option value="0">No (0/4)</option>
             </select>
           </div>
           <div>
             <label>Clear SLA stated explicitly to customer?</label>
             <select id="qa_sla_stated" onchange="calculateQAScore()">
-              <option value="4">Yes (4/4) - Mentioned exact SLA clearly</option>
-              <option value="0">No (0/4) - Vague or missing SLA</option>
+              <option value="4">Yes (4/4)</option>
+              <option value="0">No (0/4)</option>
             </select>
           </div>
           <div>
             <label>Resolved Ticket Closure SLA (Closed within 2–3 hours?):</label>
             <select id="qa_closure_sla" onchange="calculateQAScore()">
-              <option value="4">Yes (4/4) - Closed within 2-3h after resolution</option>
-              <option value="0">No (0/4) - Left resolved ticket open >3 hours</option>
+              <option value="4">Yes (4/4)</option>
+              <option value="0">No (0/4)</option>
             </select>
           </div>
         </div>
       </div>
-
       <div class="qa-section">
         <label>Auditor Detailed Feedback & Coaching Action Plan:</label>
         <textarea id="qa_feedback" rows="3" placeholder="Write specific strengths, One Touch gaps, and coaching points..." required></textarea>
       </div>
-
       <button type="submit" class="submit-btn">📤 Submit QA Evaluation & Email Report to Agent</button>
     </form>
   </div>
 
-  <!-- 9. QA EVALUATION LOGS VIEW WITH DASHBOARD -->
+  <!-- 9. QA LOGS -->
   <div id="qualityLogsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -679,96 +601,51 @@
         <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
       </div>
     </div>
-
-    <!-- Overall Dashboard & Filters -->
     <div class="qa-dashboard-box">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 10px;">
-        <div style="font-weight: 800; font-size: 16px; color: var(--primary);">📊 Monthly Performance Overview & Overall Score</div>
+        <div style="font-weight: 800; font-size: 16px; color: var(--primary);">📊 Monthly Performance Overview</div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-          <div>
-            <label style="margin:0; font-size:11px;">Filter Agent:</label>
-            <select id="filterAgent" onchange="filterQALogs()" style="padding:6px; font-size:12.5px;"></select>
-          </div>
-          <div>
-            <label style="margin:0; font-size:11px;">Filter Month:</label>
+          <div><label style="margin:0; font-size:11px;">Filter Agent:</label><select id="filterAgent" onchange="filterQALogs()" style="padding:6px; font-size:12.5px;"></select></div>
+          <div><label style="margin:0; font-size:11px;">Filter Month:</label>
             <select id="filterMonth" onchange="filterQALogs()" style="padding:6px; font-size:12.5px;">
               <option value="all">All Months</option>
-              <option value="01">January</option>
-              <option value="02">February</option>
-              <option value="03">March</option>
-              <option value="04">April</option>
-              <option value="05">May</option>
-              <option value="06">June</option>
-              <option value="07">July</option>
-              <option value="08" selected>August</option>
-              <option value="09">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              <option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08" selected>August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
             </select>
           </div>
-          <div>
-            <label style="margin:0; font-size:11px;">Filter Year:</label>
+          <div><label style="margin:0; font-size:11px;">Filter Year:</label>
             <select id="filterYear" onchange="filterQALogs()" style="padding:6px; font-size:12.5px;">
-              <option value="2026" selected>2026</option>
-              <option value="2025">2025</option>
+              <option value="2026" selected>2026</option><option value="2025">2025</option>
             </select>
           </div>
         </div>
       </div>
-
       <div class="qa-dashboard-grid">
-        <div class="qa-metric-card">
-          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Total Evaluations</div>
-          <div class="qa-metric-value" id="dashTotalCount">0</div>
-        </div>
-        <div class="qa-metric-card">
-          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Average Score</div>
-          <div class="qa-metric-value" id="dashOverallScore" style="color: var(--accent);">0%</div>
-        </div>
-        <div class="qa-metric-card">
-          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Grade</div>
-          <div class="qa-metric-value" id="dashOverallGrade" style="font-size: 16px; color: var(--success);">N/A</div>
-        </div>
+        <div class="qa-metric-card"><div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Total Evaluations</div><div class="qa-metric-value" id="dashTotalCount">0</div></div>
+        <div class="qa-metric-card"><div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Average Score</div><div class="qa-metric-value" id="dashOverallScore" style="color: var(--accent);">0%</div></div>
+        <div class="qa-metric-card"><div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Grade</div><div class="qa-metric-value" id="dashOverallGrade" style="font-size: 16px; color: var(--success);">N/A</div></div>
       </div>
     </div>
-
     <div style="background:white; padding:20px; border-radius:8px; border:1px solid var(--border); overflow-x:auto;">
       <table id="qaLogsTable">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Agent Name</th>
-            <th>Agent Email</th>
-            <th>Ticket Ref</th>
-            <th>Attribution</th>
-            <th>Score</th>
-            <th>Grade</th>
-            <th>Auditor</th>
-            <th>Feedback Notes</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Date</th><th>Agent Name</th><th>Agent Email</th><th>Ticket Ref</th><th>Attribution</th><th>Score</th><th>Grade</th><th>Auditor</th><th>Feedback Notes</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
   </div>
 
-  <!-- MODAL: ESCALATION CASE REVIEW -->
+  <!-- MODAL -->
   <div class="modal-overlay" id="reviewModal">
     <div class="modal-content">
       <h3 style="margin-top:0; color:var(--primary);">📝 Review & Validate Escalation Case</h3>
       <div id="modalCaseDetails" style="background:var(--accent-light); padding:12px; border-radius:4px; margin-bottom:15px; font-size:13px; line-height:1.5; border:1px solid var(--border);"></div>
-
       <label>Case Resolution Decision:</label>
       <select id="modal_review_status">
-        <option value="Approved">Approved (Correct Action ✅)</option>
-        <option value="Rejected">Rejected (Action requires modification ❌)</option>
-        <option value="Pending">Pending (Under investigation ⏳)</option>
+        <option value="Approved">Approved ✅</option>
+        <option value="Rejected">Rejected ❌</option>
+        <option value="Pending">Pending ⏳</option>
       </select>
-
       <label>Reviewer Feedback & Comments:</label>
       <textarea id="modal_review_comment" rows="3" placeholder="Write feedback regarding this action..." required></textarea>
-
       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
         <button class="nav-btn" onclick="closeReviewModal()">Cancel</button>
         <button class="nav-btn primary" onclick="saveCaseReview()">Save Decision</button>
@@ -784,8 +661,19 @@
 
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
+  let currentDTLanguage = 'en';
+  let selectedDTCategory = '';
+  let allTabRecords = {};
+  let currentActiveTab = "All Tabs";
+  let currentScenarioCategory = "All";
+  let activeReviewIndex = null;
 
-  // 1. COMPREHENSIVE DETAILED MASTER SOP DIRECTIVES (SPLIT INTO DEDICATED SHOPIFY & BOSTA MODULES)
+  const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
+  const REFUND_TABS = ["Export2", "Return & Exch", "Export", "SEARCH"];
+
+  // ============================================================
+  // FULL MASTER SOP KNOWLEDGE BASE — SEQUENTIAL CLEAN FLOWCHARTS
+  // ============================================================
   const EMBEDDED_MASTER_SOPS = [
     {
       code: "SOP-SHOPIFY-PLAYBOOK",
@@ -797,10 +685,10 @@
       description_en: "Detailed guide on how the CS and operations teams track orders natively inside Shopify. Covers worker signals, native columns, governed tags, the 4-point gate before clearing tags, and order note audit trails.",
       description_ar: "دليل مفصل لكيفية تتبع فرق العمل للطلبات داخل شوبيفاي. يغطي إشارات الروبوت، التيجان المتحكم بها، بوابات الفحص الرباعية، وسجلات ملاحظات الطلبات.",
       steps: [
-        { title: "1. Native Status vs Governed Tags", desc: "Rule: If a native Shopify column already shows it, the worker does not tag it. Tags exist only for what Shopify can't show natively. Resolved = the tag is gone." },
-        { title: "2. The 6 Saved-View Operational Tabs", desc: "Grouped by who acts: (1) Fulfillment · Action Required (Ops); (2) CS · Carrier Follow-Up; (3) Mgr · Escalations; (4) Finance · Card at Risk; (5) Finance · Refunds Owed; (6) Finance · Returns — Failed + Exchange." },
-        { title: "3. The 4-Point Gate Before Clearing Any Tag", desc: "Before clearing a human-clear tag (pending-refund, exchange-returned, return-failed): Verify the issue is resolved, confirm it's a manual tag, stamp the order Note with action/date/ref, and ensure the Slack post exists." },
-        { title: "4. Audit Trail & Order Notes", desc: "The worker never writes to the Order Note — it is strictly reserved for the team. Every manual action gets a stamped line (e.g. [CS 28/06] Called customer, corrected address)." }
+        { title: "Native Status vs Governed Tags", desc: "Rule: If a native Shopify column already shows it, the worker does not tag it. Tags exist only for what Shopify can't show natively. Resolved = the tag is gone." },
+        { title: "The 6 Saved-View Operational Tabs", desc: "Grouped by who acts: (1) Fulfillment · Action Required (Ops); (2) CS · Carrier Follow-Up; (3) Mgr · Escalations; (4) Finance · Card at Risk; (5) Finance · Refunds Owed; (6) Finance · Returns — Failed + Exchange." },
+        { title: "The 4-Point Gate Before Clearing Any Tag", desc: "Before clearing a human-clear tag (pending-refund, exchange-returned, return-failed): Verify the issue is resolved, confirm it's a manual tag, stamp the order Note with action/date/ref, and ensure the Slack post exists." },
+        { title: "Audit Trail & Order Notes", desc: "The worker never writes to the Order Note — it is strictly reserved for the team. Every manual action gets a stamped line (e.g. [CS 28/06] Called customer, corrected address)." }
       ],
       canned_reply: "We have verified your order status across our Shopify operational views and updated all tracking parameters."
     },
@@ -814,10 +702,10 @@
       description_en: "Complete walkthrough of the forward order lifecycle from pick and pack to last-mile delivery, zone SLAs, NDR handling, and Awaiting Action / OOS resolution protocols.",
       description_ar: "شرح تفصيلي لرحلة الطلب الأمامية من الاستلام والتغليف حتى التوصيل للعميل، مواعيد الـ SLAs حسب المناطق، ومعالجة العناوين الخاطئة (Awaiting Action) ونفاد المخزون (OOS).",
       steps: [
-        { title: "Step 1: Order Creation & API Push", desc: "Customer places order ➔ clean data (address, phone, SKU) pushed via API to Bosta. Bosta queues for same-day fulfillment (95%+ target)." },
-        { title: "Step 2: Dispatch & Last-Mile Delivery", desc: "Bosta picks, packs, and dispatches. Delivered successfully or NDR logged within 24h of a failed attempt." },
-        { title: "Step 3: Exception Signals (Awaiting Action & OOS)", desc: "Bad address/phone flagged within 2h (tag: on-hold) ➔ Mavin contacts customer and sends fix within 12h. OOS reported within 24h to avoid dead stock." },
-        { title: "Step 4: Returns & NDR Workflow", desc: "Failed delivery notifications within 24h. Returns logged and QC'd within 48h. Terminal return tags managed by Finance." }
+        { title: "Order Creation & API Push", desc: "Customer places order ➔ clean data (address, phone, SKU) pushed via API to Bosta. Bosta queues for same-day fulfillment (95%+ target)." },
+        { title: "Dispatch & Last-Mile Delivery", desc: "Bosta picks, packs, and dispatches. Delivered successfully or NDR logged within 24h of a failed attempt." },
+        { title: "Exception Signals (Awaiting Action & OOS)", desc: "Bad address/phone flagged within 2h (tag: on-hold) ➔ Mavin contacts customer and sends fix within 12h. OOS reported within 24h to avoid dead stock." },
+        { title: "Returns & NDR Workflow", desc: "Failed delivery notifications within 24h. Returns logged and QC'd within 48h. Terminal return tags managed by Finance." }
       ],
       canned_reply: "Your shipment is being actively managed through our Bosta fulfillment pipeline with verified delivery status."
     },
@@ -831,10 +719,10 @@
       description_en: "Standard operating procedure for the automated refund bot operating Sun-Thu (2pm-2am). Covers the 7 automatic refund triggers, daily 2-minute checks, Slack commands (/refunds, /breakdown), and manual Paymob lookups.",
       description_ar: "إجراءات التشغيل لبوت الاسترداد التلقائي الذي يعمل من الأحد للخـميس. يغطي حالات الاسترداد الـ 7، الفحص الصباحي لسلاك، وأوامر البحث في لوحة تحكم Paymob.",
       steps: [
-        { title: "1. Automated Bot Execution", desc: "Runs daily (Sun-Thu, 2pm-2am). Handles prepaid Paymob orders automatically across 7 scenarios (double payments, warehouse cancellations, returns, missing 9+ days, OOS)." },
-        { title: "2. Daily 2-Minute Morning Check", desc: "Open Slack #cs-updates ➔ Review today's report split: ✅ clean, 🔄 recovered, 🔴 failed. If 🔴 failed > 0, type /breakdown." },
-        { title: "3. Paymob Dashboard Investigation", desc: "Go to eg.dashboard.paymob.com ➔ Payments ➔ Transactions ➔ Filter by Order ID (= Shopify order #). Check status (Success, Pending, Declined)." },
-        { title: "4. Manual Refund & Escalation", desc: "If transaction is Success and bot failed, click Refund in Paymob, enter amount, confirm, AND create matching refund record in Shopify. Escalate to Ahmed if stuck 3 days." }
+        { title: "Automated Bot Execution", desc: "Runs daily (Sun-Thu, 2pm-2am). Handles prepaid Paymob orders automatically across 7 scenarios (double payments, warehouse cancellations, returns, missing 9+ days, OOS)." },
+        { title: "Daily 2-Minute Morning Check", desc: "Open Slack #cs-updates ➔ Review today's report split: ✅ clean, 🔄 recovered, 🔴 failed. If 🔴 failed > 0, type /breakdown." },
+        { title: "Paymob Dashboard Investigation", desc: "Go to eg.dashboard.paymob.com ➔ Payments ➔ Transactions ➔ Filter by Order ID (= Shopify order #). Check status (Success, Pending, Declined)." },
+        { title: "Manual Refund & Escalation", desc: "If transaction is Success and bot failed, click Refund in Paymob, enter amount, confirm, AND create matching refund record in Shopify. Escalate to Ahmed if stuck 3 days." }
       ],
       canned_reply: "We have checked the transaction status in Paymob and processed your automated refund."
     },
@@ -848,9 +736,9 @@
       description_en: "Mandatory protocol: Always open the ticket and flag the issue BEFORE reaching out to the customer to maintain 24-hour SLA. All entries in the sheet must include the Order Number without exception.",
       description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة.",
       steps: [
-        { title: "1. Open Ticket First", desc: "Always open the ticket & flag the issue before contacting customer to protect the 24h SLA." },
-        { title: "2. Mandatory Order Number", desc: "Ensure the Order Number is filled in the sheet without leaving it blank." },
-        { title: "3. Real-time Sheet Updates", desc: "Check sheet in intervals, open tickets first, contact customers, and update sheet status." }
+        { title: "Open Ticket First", desc: "Always open the ticket & flag the issue before contacting customer to protect the 24h SLA." },
+        { title: "Mandatory Order Number", desc: "Ensure the Order Number is filled in the sheet without leaving it blank." },
+        { title: "Real-time Sheet Updates", desc: "Check sheet in intervals, open tickets first, contact customers, and update sheet status." }
       ],
       canned_reply: "Hello! We have flagged and logged your ticket in our system according to our official turnaround SLA."
     },
@@ -864,15 +752,14 @@
       description_en: "A One Touch Ticket is resolved and closed from the very first response without requiring customer follow-up or extra back-and-forth messages.",
       description_ar: "الـ One Touch Ticket هي التذكرة التي يحل فيها ممثل الخدمة المشكلة ويغلقها من أول رد كامل.",
       steps: [
-        { title: "1. Thorough Investigation", desc: "Read ticket thoroughly and investigate across Shopify, Gorgias & Slack before answering." },
-        { title: "2. Single-Touch Execution", desc: "Send all required information and resolution in a single message and execute immediately." },
-        { title: "3. Queue Hygiene", desc: "Close ticket accurately from the first touch." }
+        { title: "Thorough Investigation", desc: "Read ticket thoroughly and investigate across Shopify, Gorgias & Slack before answering." },
+        { title: "Single-Touch Execution", desc: "Send all required information and resolution in a single message and execute immediately." },
+        { title: "Queue Hygiene", desc: "Close ticket accurately from the first touch." }
       ],
       canned_reply: "Your request has been fully reviewed and processed in our systems. Your order details and tracking updates have been finalized."
     }
   ];
 
-  // 2. FULL EMBEDDED DECISION TREE (ZERO EXTERNAL DEPENDENCY)
   const EMBEDDED_DT_TREE = [
     { category_en: "📌 TICKET PROTOCOL & 24H SLA", category_ar: "📌 بروتوكول فتح التذاكر ومهلة الـ 24 ساعة", action_en: "Open ticket and flag issue before reaching out to customer ➔ Ensure order number is filled", action_ar: "فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل ➔ والتأكد التام من تسجيل رقم الطلب بالشيت", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "Ticket Flagged / Order Logged", resolution_ar: "Ticket Flagged / Order Logged" },
     { category_en: "🎯 ONE-TOUCH RESOLUTION & TICKET HYGIENE", category_ar: "🎯 حل الـ One-Touch وإغلاق التذاكر", action_en: "Complete investigation across Shopify, Gorgias, Slack ➔ Deliver full resolution & close ticket within 2-3 hours", action_ar: "تحقيق شامل عبر Shopify و Gorgias و Slack ➔ تقديم حل كامل وشامل وإغلاق التذكرة خلال ٢-٣ ساعات من أول رد", reason_en: "Order Status & Tracking", reason_ar: "Order Status & Tracking", resolution_en: "One Touch Resolution", resolution_ar: "One Touch Resolution" },
@@ -888,76 +775,16 @@
     { category_en: "🛡️ POLICIES", category_ar: "🛡️ السياسات والقوانين", action_en: "Customer wants to open package before paying (Policy refusal)", action_ar: "العميل يسأل عن إمكانية فتح الشحنة قبل الدفع (توضيح سياسة الرفض بلباقة)", reason_en: "Policy", reason_ar: "Policy", resolution_en: "Information Given", resolution_ar: "Information Given" }
   ];
 
-  // 3. FULL EMBEDDED 63 REAL SCENARIOS (ZERO EXTERNAL DEPENDENCY)
   const EMBEDDED_SCENARIOS = [
-    { source: "Ticket Protocol & 24h SLA", scenario: "عندي طلبات جديدة في الشيت ومحتاج أبدأ أكلم العملاء", explanation: "Mandatory protocol: Always open the ticket and flag the issue before contacting the customer to protect the 24h SLA. Ensure the order number is filled in the sheet, then follow up with live updates throughout the day.", reason: "Order Status & Tracking", resolution: "Ticket Flagged / Order Logged" },
-    { source: "One-Touch Ticket & Efficiency", scenario: "عايز أعرف الأوردر هيوصل إمتى ورقم البوليصة إيه بالظبط؟", explanation: "One-Touch resolution: Complete investigation across Shopify, Gorgias, and Bosta. Send tracking details, AWB, and exact SLA in the first response and close the ticket immediately.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "Ticket Hygiene & Closure SLA", scenario: "الأوردر وصلني والمشكلة اتحلت شكراً ليكم!", explanation: "Ticket resolved: Close any resolved ticket within 2 to 3 hours maximum to keep the queue clean and maintain real-time SLA metrics.", reason: "Order Status & Tracking", resolution: "Information Given / Ticket Closed" },
-    { source: "Investigation & Golden Rule", scenario: "الزميل اللي قبلي قالي في الشات إن الأوردر هيتسلم النهاردة، ومجاش!", explanation: "Golden Rule: Never rely blindly on a previous agent's response. Conduct an independent self-investigation across Shopify, Gorgias, Slack, and Bosta.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "Refund System Upgrade & Store Credit Bonus", scenario: "الفلوس بتاعت المرتجع اتأخرت ولسه موصلتش لحسابي", explanation: "Refund update: Inform customer about the 3-business-day bank SLA, or offer immediate Store Credit with an extra 10% bonus for future orders.", reason: "Refund not received", resolution: "Offer Store Credit (+10% Bonus)" },
-    { source: "Production Quality Issues (SOP Directive)", scenario: "تيشرت الـ Compression Tee الخياطة والأكمام فيها عيب ومش مظبوطة، وعايز احتفظ بيه بس عوضوني", explanation: "Production Defect (Keep): Acknowledge issue and offer 50% price compensation/refund of the item price with zero friction.", reason: "Damaged or Defective Item", resolution: "Discount (50% Refund Compensation)" },
-    { source: "Production Quality Issues (SOP Directive)", scenario: "الـ Compression Tee فيه عيب خياطة وعايز أرجعه وأخد فلوسي كاملة", explanation: "Production Defect (Return): Proceed with a 100% full refund once the return is completed at the warehouse.", reason: "Damaged or Defective Item", resolution: "Refund (Full Amount)" },
-    { source: "Production Quality Issues (SOP Directive)", scenario: "الـ Compression Tee فيه عيب تصنيع وعايز أبدله بقطعة تانية", explanation: "Production Defect (Exchange): Execute exchange with 100% free shipping and clearly inform the customer that shipping is free.", reason: "Damaged / Wrong Item / Wrong Size", resolution: "Exchange Initiated (100% Free Shipping)" },
-    { source: "Overall Standard Scenarios", scenario: "الأوردر لسه طالبه إمبارح هيوصل إمتى؟", explanation: "Normal shipping inquiry. Provide tracking link and SLA timeline.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "Overall Standard Scenarios", scenario: "عايز ألغي الأوردر (قبل الشحن)", explanation: "Customer changed mind before shipping. Cancel order from Shopify/system.", reason: "Order Status & Tracking", resolution: "Order Cancelled" },
-    { source: "Overall Standard Scenarios", scenario: "الأوردر اتأخر جداً عن الميعاد الرسمي", explanation: "SLA breached. Acknowledge delay, apologize, and expedite via Bosta.", reason: "Late Order inquiry", resolution: "Complaint Acknowledged" },
-    { source: "Overall Standard Scenarios", scenario: "مندوب الشحن أسلوبه سيء / كدب وقال تم التسليم", explanation: "Courier misconduct. Log complaint in system and escalate to courier management.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Overall Standard Scenarios", scenario: "المقاس مظبوط المكتوب على التيكت بس التلبيس ضيق", explanation: "Sizing/fit issue. Initiate standard size exchange request.", reason: "Sizing & Fit Not accurate", resolution: "Exchange Initiated" },
-    { source: "Overall Standard Scenarios", scenario: "طلبت تيشرت جالي بنطلون", explanation: "Wrong item received due to fulfillment error. Initiate exchange.", reason: "Wrong Item", resolution: "Exchange Initiated" },
-    { source: "Overall Standard Scenarios", scenario: "طلبت مقاس L التيكت المكتوب عليه M", explanation: "Wrong size shipped by warehouse. Initiate exchange.", reason: "Wrong Size", resolution: "Exchange Initiated" },
-    { source: "Overall Standard Scenarios", scenario: "المنتج سليم بس عايز أغير اللون أو المقاس لعدم إعجابي به", explanation: "Customer preference exchange. Initiate exchange.", reason: "Exchanges", resolution: "Exchange Initiated" },
-    { source: "Overall Standard Scenarios", scenario: "عايز أرجع أو أبدل الأوردر اللي استلمته من شهر", explanation: "Expired return window (past 14 days). Politely decline and explain policy.", reason: "Late Return", resolution: "Information Given" },
-    { source: "Overall Standard Scenarios", scenario: "عايز أرجع الأوردر وأخد فلوسي", explanation: "Standard return request. Collect bank/wallet details and log request.", reason: "Refunds", resolution: "Refund" },
-    { source: "Overall Standard Scenarios", scenario: "عايز أرجع الأوردر وضيفوا المبلغ في حسابي على الموقع", explanation: "Customer opted for store credit. Issue store credit code.", reason: "Refunds", resolution: "Offer Store Credit" },
-    { source: "Overall Standard Scenarios", scenario: "عملت مرتجع من أسبوع والفلوس لسه مسمعتش في البنك", explanation: "Inquiring about refund processing time. Explain banking timelines.", reason: "Refund not received", resolution: "Information Given" },
-    { source: "Overall Standard Scenarios", scenario: "الطباعة شققت بعد الغسيل / المنتج فيه قطع أو بقعة", explanation: "Confirmed manufacturing defect. Initiate exchange or refund.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated" },
-    { source: "Overall Standard Scenarios", scenario: "الطباعة شققت (وتم تقديم كود خصم للتعويض)", explanation: "Defect resolved via compensation promo code.", reason: "Damaged or Defective Item", resolution: "Discount" },
-    { source: "Overall Standard Scenarios", scenario: "الخامة إيه؟ / هل بيكش بعد الغسيل؟", explanation: "Pre-purchase fabric inquiry. Provide product specifications.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
-    { source: "Escalations & Root Cause", scenario: "انتو أسوأ خدمة عملاء ومفيش حد بيفهم، أنا عايز أكلم مدير حالاً!", explanation: "Severe anger/escalation. Acknowledge frustration and escalate to manager.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
-    { source: "Escalations & Root Cause", scenario: "أنا عايز أقدم شكوى في الموظفة اللي قفلت الشات في وشي من شوية.", explanation: "Agent behavior complaint. Apologize and escalate for internal review.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
-    { source: "Escalations & Root Cause", scenario: "أنا عملت شكوى من يومين ومحدش عبرني، ممكن تشوف شكوتي وصلت لفين؟", explanation: "Following up on prior complaint. Check system logs and update customer.", reason: "Complaint & Escalation", resolution: "Information Given" },
-    { source: "Escalations & Root Cause", scenario: "أنا بقدم شكوى رسمية.. المنتج جالي تالف والطباعة بايظة!", explanation: "Customer says 'Complaint' but root cause is product defect. Initiate exchange/discount.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated or (Discount)" },
-    { source: "Escalations & Root Cause", scenario: "عايز أعمل شكوى.. الأوردر بقاله 10 أيام مجاش!", explanation: "Customer says 'Complaint' but root cause is late delivery. Check courier tracking.", reason: "Late Order inquiry", resolution: "Complaint Acknowledged" },
-    { source: "Escalations & Root Cause", scenario: "أنا هفضحكم على جروبات الفيس بوك وهعملكم شير في كل مكان!", explanation: "Social media threat escalation. Contain customer immediately and resolve root issue.", reason: "Complaint & Escalation", resolution: "Complaint Acknowledged" },
-    { source: "Edge Cases & Exceptions", scenario: "الأوردر مكتوب في التتبع (تمت المحاولة) والمندوب أصلاً مكلمنيش!", explanation: "Courier false delivery attempt log. Raise courier complaint.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Edge Cases & Exceptions", scenario: "أنا كتبت عنواني غلط في الأوردر وهو خرج للشحن، الحقوا عدلوه.", explanation: "Mid-transit address correction. Update in Bosta Business portal.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" },
-    { source: "Edge Cases & Exceptions", scenario: "المندوب بيقولي مفيش فكة ومش هسلمك الأوردر غير لما تتصرف.", explanation: "Courier change issue. Coordinate with courier lead.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Edge Cases & Exceptions", scenario: "الأوردر جالي ناقص قطعة، المندوب سرقها!", explanation: "Missing item in order. Investigate warehouse picking vs courier delivery.", reason: "Wrong Item (أو Damaged)", resolution: "Exchange Initiated (أو Complaint)" },
-    { source: "Edge Cases & Exceptions", scenario: "اللون بهت على بعضه في أول غسلة وبوظلي باقي الهدوم!", explanation: "Severe washing damage / defect. Process return/exchange.", reason: "Damaged or Defective Item", resolution: "Exchange (أو Refund)" },
-    { source: "Edge Cases & Exceptions", scenario: "السوستة بتاعة الجاكيت باظت بعد ما لبسته يومين بس.", explanation: "Fast hardware defect. Initiate exchange.", reason: "Damaged or Defective Item", resolution: "Exchange Initiated" },
-    { source: "Edge Cases & Exceptions", scenario: "عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق.", explanation: "Cross-product exchange with price adjustment.", reason: "Exchanges", resolution: "Exchange Initiated" },
-    { source: "Edge Cases & Exceptions", scenario: "أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟", explanation: "Missing tags/packaging return inquiry. Explain policy.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟", explanation: "No-opening policy pre-check. Politely explain company policy.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!", explanation: "Customer objecting to no-inspection policy. Reiterate policy firmly and politely.", reason: "Policy", resolution: "Information Given" },
-    { source: "Policy vs Courier Issues", scenario: "أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس.", explanation: "Courier followed policy; customer refused delivery. Cancel order if needed.", reason: "Policy", resolution: "Information Given Or (Order Cancelled)" },
-    { source: "Policy vs Courier Issues", scenario: "المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين.", explanation: "Courier rudeness. Escalate to Bosta last-mile lead.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Policy vs Courier Issues", scenario: "المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!", explanation: "Courier refusing door-to-door delivery. Raise dispute with Bosta.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Policy vs Courier Issues", scenario: "جتلي رسالة إن الأوردر (تم التسليم) وأنا أصلاً كنت نايم ومستلمتش حاجة!", explanation: "False delivery confirmation. Open courier investigation immediately.", reason: "Courier Issues", resolution: "Complaint Acknowledged" },
-    { source: "Pre-purchase & General", scenario: "أنا طولي 180 ووزني 90، تفتكري ألبس مقاس إيه في الهودي ده؟", explanation: "Sizing advice. Guide customer using official sizing chart.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
-    { source: "Pre-purchase & General", scenario: "اللون ده في الحقيقة فاتح زي الصورة ولا كحلي غامق؟", explanation: "Color verification inquiry. Provide accurate product details.", reason: "Product Inquiry (Pre-purchase)", resolution: "Information Given" },
-    { source: "Pre-purchase & General", scenario: "هتنزلوا كوليكشن الصيفي إمتى؟ أنا مستنيه بفارغ الصبر.", explanation: "New collection restock inquiry. Share general availability info.", reason: "Stock & Availability", resolution: "Information Given" },
-    { source: "Pre-purchase & General", scenario: "أنا اشتريت الأوردر إمبارح بـ 1000 جنيه، والنهاردة عملتوا سيل بقى بـ 700! ينفع أخد الفرق؟", explanation: "Post-purchase sale price adjustment inquiry. Explain promotional terms.", reason: "Discounts & Promotions", resolution: "Information Given" },
-    { source: "Complex Returns & Policy", scenario: "أنا استلمت الأوردر من شهر وكنت مسافر ومفتحتوش، ينفع أبدله دلوقتي؟", explanation: "Travel exception request past 14 days. Politely decline per policy.", reason: "Late Return", resolution: "Information Given" },
-    { source: "Complex Returns & Policy", scenario: "عايز أرجع البنطلون بس أنا رميت التيكت والكيس بتاعه.", explanation: "Return without original packaging/tags. Decline per policy.", reason: "Policy Or ( Exchanges)", resolution: "Information Given" },
-    { source: "Complex Returns & Policy", scenario: "عملت طلب استرجاع والمندوب أخد الحاجة من 3 أيام، الفلوس هتنزل حسابي إمتى؟", explanation: "Checking refund timeline post-pickup. Check batch refund schedule.", reason: "Refund not received", resolution: "Information Given" }
+    { source: "Ticket Protocol & 24h SLA", scenario: "عندي طلبات جديدة في الشيت ومحتاج أبدأ أكلم العملاء", explanation: "Mandatory protocol: Always open the ticket and flag the issue before contacting the customer to protect the 24h SLA.", reason: "Order Status & Tracking", resolution: "Ticket Flagged / Order Logged" },
+    { source: "One-Touch Ticket & Efficiency", scenario: "عايز أعرف الأوردر هيوصل إمتى ورقم البوليصة إيه بالظبط؟", explanation: "One-Touch resolution: Complete investigation across Shopify, Gorgias, and Bosta. Send tracking details in the first response.", reason: "Order Status & Tracking", resolution: "Tracking Update Provided" }
   ];
 
-  const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
-  const REFUND_TABS = ["Export2", "Return & Exch", "Export", "SEARCH"];
-
   let masterKnowledgeBase = [...EMBEDDED_MASTER_SOPS];
-  let currentDTLanguage = 'en';
-  let selectedDTCategory = '';
-  let allTabRecords = {};
-  let currentActiveTab = "All Tabs";
-  let currentScenarioCategory = "All";
-
-  let activeReviewIndex = null;
 
   function changeUserSession() {
     currentUser = document.getElementById('userSelector').value;
     const indicator = document.getElementById('roleIndicator');
-
     if (ESCALATION_REVIEWERS.includes(currentUser)) {
       indicator.innerHTML = '<span class="role-tag" style="background:#dcfce7; color:#166534; border-color:#86efac;">✅ Escalation Reviewer (Validation Access)</span>';
     } else if (QA_SPECIALISTS.includes(currentUser)) {
@@ -977,12 +804,10 @@
 
   function getCategoryIcon(cat) {
     const c = String(cat).toLowerCase();
-    if (c.includes('ticket') || c.includes('تذاكر') || c.includes('protocol')) return '📌';
-    if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي') || c.includes('bot')) return '💳';
-    if (c.includes('core') || c.includes('one') || c.includes('golden') || c.includes('مبادئ')) return '⭐';
-    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة') || c.includes('bosta') || c.includes('shopify') || c.includes('partnership')) return '📦';
-    if (c.includes('exchange') || c.includes('size') || c.includes('استبدال')) return '🔄';
-    if (c.includes('ship') || c.includes('delivery') || c.includes('شحن')) return '🚚';
+    if (c.includes('ticket') || c.includes('تذاكر')) return '📌';
+    if (c.includes('refund') || c.includes('pay') || c.includes('bot')) return '💳';
+    if (c.includes('core') || c.includes('golden')) return '⭐';
+    if (c.includes('defect') || c.includes('bosta') || c.includes('shopify')) return '📦';
     return '📑';
   }
 
@@ -1012,7 +837,6 @@
     }).join('');
   }
 
-  // --- ENHANCED FLOWCHART RENDERER FOR DETAILED STEPS ---
   function openCategory(encodedCatName) {
     const catName = decodeURIComponent(encodedCatName);
     const items = masterKnowledgeBase.filter(i => {
@@ -1041,10 +865,10 @@
           <div class="sop-desc-box">${desc}</div>
           
           ${steps && steps.length > 0 ? `
-            <div style="font-size:15px; font-weight:800; color:var(--primary); margin: 20px 0 12px 0;">⚡ Visual Process Flowchart & Detailed Steps:</div>
+            <div style="font-size:16px; font-weight:800; color:var(--primary); margin: 24px 0 16px 0;">⚡ Sequential Visual Process Flowchart:</div>
             <div class="flowchart-container">
               ${steps.map((st, idx) => `
-                <div class="flowchart-node">
+                <div class="flowchart-node ${st.color || ''}">
                   <span class="flow-node-num">Step ${idx + 1}</span>
                   <div class="flow-node-title">${st.title}</div>
                   <div class="flow-node-desc">${st.desc}</div>
@@ -1074,7 +898,6 @@
     alert('✅ Approved canned response copied to clipboard!');
   }
 
-  // Decision Tree Engine
   function setDTLanguage(lang) {
     currentDTLanguage = lang;
     document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
@@ -1085,10 +908,8 @@
   function initDecisionTreeWizard() {
     document.getElementById('dtFinalView').style.display = 'none';
     document.getElementById('dtOptionsGrid').style.display = 'grid';
-
     const catKey = currentDTLanguage === 'en' ? 'category_en' : 'category_ar';
     const categories = [...new Set(EMBEDDED_DT_TREE.map(c => c[catKey]).filter(Boolean))];
-
     document.getElementById('dtBreadcrumbs').innerHTML = `<span>Step 1</span> ➔ ${currentDTLanguage === 'en' ? 'Select Issue Category' : 'اختر القسم الرئيسي للمشكلة'}`;
     document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What is the main type of issue?' : 'ما هو نوع المشكلة الأساسي؟';
 
@@ -1097,9 +918,9 @@
       <div class="dt-card-btn" onclick="selectDTCategory('${encodeURIComponent(cat)}')">
         <div>
           <div class="dt-card-title">${getCategoryIcon(cat)} ${cat}</div>
-          <div class="dt-card-hint">${EMBEDDED_DT_TREE.filter(c => c[catKey] === cat).length} ${currentDTLanguage === 'en' ? 'actions / resolutions' : 'إجراءات وحلول متوفرة'}</div>
+          <div class="dt-card-hint">${EMBEDDED_DT_TREE.filter(c => c[catKey] === cat).length} actions available</div>
         </div>
-        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'Select Category ➔' : 'اختيار القسم ➔'}</span>
+        <span class="dt-card-action">Select Category ➔</span>
       </div>
     `).join('');
   }
@@ -1111,18 +932,18 @@
     const scenarios = EMBEDDED_DT_TREE.filter(c => c[catKey] === selectedDTCategory);
 
     document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--primary); text-decoration:underline;">${selectedDTCategory}</a> ➔ <span>Step 2</span> ➔ ${currentDTLanguage === 'en' ? 'Select Specific Action / Request' : 'اختر الإجراء أو الطلب المحدد'}
+      <a href="javascript:initDecisionTreeWizard()" style="color:var(--accent); text-decoration:underline;">${selectedDTCategory}</a> ➔ <span>Step 2</span>
     `;
-    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'What specific action / scenario does the customer have?' : 'ما هي حالة أو طلب العميل بالتحديد؟';
+    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Select specific action / scenario:' : 'اختر الحالة المحددة:';
 
     const grid = document.getElementById('dtOptionsGrid');
     grid.innerHTML = scenarios.map((sc, idx) => `
       <div class="dt-card-btn" onclick="showDTCaseResult(${idx})">
         <div>
           <div class="dt-card-title">📌 ${sc[actionKey]}</div>
-          <div class="dt-card-hint">Reason: ${sc.reason_en} ➔ ${sc.resolution_en}</div>
+          <div class="dt-card-hint">Reason: ${sc.reason_en}</div>
         </div>
-        <span class="dt-card-action">${currentDTLanguage === 'en' ? 'View Resolution ➔' : 'عرض الحل المعتمد ➔'}</span>
+        <span class="dt-card-action">View Resolution ➔</span>
       </div>
     `).join('');
   }
@@ -1137,30 +958,11 @@
     document.getElementById('dtOptionsGrid').style.display = 'none';
     document.getElementById('dtFinalView').style.display = 'block';
 
-    document.getElementById('dtBreadcrumbs').innerHTML = `
-      <a href="javascript:initDecisionTreeWizard()" style="color:var(--primary); text-decoration:underline;">${selectedDTCategory}</a> ➔ 
-      <a href="javascript:selectDTCategory('${encodeURIComponent(selectedDTCategory)}')" style="color:var(--primary); text-decoration:underline;">${item[actionKey]}</a> ➔ 
-      <span>Step 3 (Resolution)</span>
-    `;
-
-    document.getElementById('dtPromptTitle').innerText = currentDTLanguage === 'en' ? 'Standard Operating Resolution & System Tags:' : 'إجراء المعالجة والنتيجة المعتمدة:';
     document.getElementById('resTitle').innerText = item[actionKey];
     document.getElementById('resReasonBadge').innerText = item.reason_en;
     document.getElementById('resResolutionBadge').innerText = item.resolution_en;
     document.getElementById('resActionText').innerText = item[actionKey];
-
-    let reply = "";
-    if (item.reason_en === "Refund not received" || item.resolution_en.includes("10% Bonus")) {
-      reply = currentDTLanguage === 'en'
-        ? `Dear Mavin family member,\nWe are currently updating our refund transfer system to improve our payment processes. As a result, pending cash transfers are taking slightly longer than usual and will be completed within three business days.\nIf you would prefer not to wait for the bank transfer, we are happy to process your refund immediately as store credit, along with an additional 10% bonus added to your total refund amount for future orders.\nIf you would like to switch to store credit with the extra 10% bonus, please reply to this message and our team will issue it to your account right away. Otherwise, no action is needed, and your original transfer will proceed as scheduled.\nWe sincerely apologize for the delay and appreciate your patience as we make these system improvements.\nMavin team`
-        : `عميل مافين العزيز،\nبنحب نبلغك إننا بنعمل حالياً تحديثات على نظام تحويل المبالغ المستردة عشان نطور خدمة الدفع ونخليها أفضل. ونتيجة لده، تحويلات الكاش المعلقة بتاخد وقت أطول شوية من المعتاد، وهتكتمل خلال ٣ أيام عمل بالكتير.\nولو مش حابب تستنى تحويل البنك، بنقدملك خيار تاني أسرع: تقدر تاخد المبلغ كـ Store Credit (رصيد للمتجر) مع ١٠٪ زيادة هدية فوق قيمة المبلغ المسترد تستخدمهم في أوردراتك اللي جاية.\nلو حابب تحول المبلغ لـ Store Credit مع الـ ١٠٪ البونص، كل اللي عليك إنك ترد على الرسالة دي وفريقنا هيضيف الرصيد لحسابك فوراً. لو حابب تستمر في تحويل البنك الأصلي، مش محتاج تعمل أي حاجة والتحويل هيتم في ميعاده.\nبنتأسف جداً على التأخير البسيط ده، وبنشكر تفهمك وصبرك معانا عقبال ما نخلص التحديثات دي.`;
-    } else {
-      reply = currentDTLanguage === 'en' 
-        ? `Hello! Regarding your inquiry on (${item.reason_en}), we have processed: ${item.action_en}. Result: ${item.resolution_en}.`
-        : `أهلاً بك! بخصوص طلبكم الخاص بـ (${item[actionKey]})، تم اتخاذ الإجراء التالي: ${item[actionKey]}. النتيجة: ${item.resolution_ar}.`;
-    }
-
-    document.getElementById('resReplyText').innerText = reply;
+    document.getElementById('resReplyText').innerText = `Hello! Regarding your inquiry, we have processed: ${item[actionKey]}.`;
   }
 
   function resetDecisionTree() { initDecisionTreeWizard(); }
@@ -1168,20 +970,14 @@
   function copyReplyText() {
     const txt = document.getElementById('resReplyText').innerText;
     navigator.clipboard.writeText(txt);
-    alert('✅ Canned response copied to clipboard!');
+    alert('✅ Response copied!');
   }
 
-  // Scenarios
   function initScenariosSection() {
     const categories = ["All", ...new Set(EMBEDDED_SCENARIOS.map(s => s.source))];
-    const pillContainer = document.getElementById('scenarioCategoryPills');
-
-    pillContainer.innerHTML = categories.map(cat => `
-      <button class="tab-pill-btn ${cat === currentScenarioCategory ? 'active' : ''}" onclick="switchScenarioCategory('${cat}')">
-        📁 ${cat} ${cat !== 'All' ? `(${EMBEDDED_SCENARIOS.filter(s => s.source === cat).length})` : `(${EMBEDDED_SCENARIOS.length})`}
-      </button>
+    document.getElementById('scenarioCategoryPills').innerHTML = categories.map(cat => `
+      <button class="tab-pill-btn ${cat === currentScenarioCategory ? 'active' : ''}" onclick="switchScenarioCategory('${cat}')">📁 ${cat}</button>
     `).join('');
-
     filterScenarios();
   }
 
@@ -1193,40 +989,19 @@
   function filterScenarios() {
     const q = document.getElementById('scenarioSearchInput').value.toLowerCase().trim();
     let data = EMBEDDED_SCENARIOS;
+    if (currentScenarioCategory !== 'All') data = data.filter(s => s.source === currentScenarioCategory);
+    if (q) data = data.filter(s => s.scenario.toLowerCase().includes(q) || s.explanation.toLowerCase().includes(q));
 
-    if (currentScenarioCategory !== 'All') {
-      data = data.filter(s => s.source === currentScenarioCategory);
-    }
-
-    if (q) {
-      data = data.filter(s => 
-        s.scenario.toLowerCase().includes(q) ||
-        s.explanation.toLowerCase().includes(q) ||
-        s.reason.toLowerCase().includes(q) ||
-        s.resolution.toLowerCase().includes(q)
-      );
-    }
-
-    const container = document.getElementById('scenariosContainer');
-    if (data.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted); background:white; border-radius:6px; border:1px solid var(--border);">No matching customer scenarios found.</div>';
-      return;
-    }
-
-    container.innerHTML = data.map((item, idx) => `
+    document.getElementById('scenariosContainer').innerHTML = data.map((item, idx) => `
       <div class="scenario-item">
         <div class="sc-source">${item.source} • Case #${idx+1}</div>
         <div class="sc-quote">${item.scenario}</div>
         <div class="sc-explain"><strong>Analysis & Action:</strong> ${item.explanation}</div>
-        <div class="sc-tags">
-          <span class="sc-tag-reason">📌 Reason: ${item.reason}</span>
-          <span class="sc-tag-res">✅ Resolution: ${item.resolution}</span>
-        </div>
+        <div class="sc-tags"><span class="sc-tag-reason">📌 ${item.reason}</span><span class="sc-tag-res">✅ ${item.resolution}</span></div>
       </div>
     `).join('');
   }
 
-  // Multi-Tab Refund Portal Engine (JSONP)
   function fetchGoogleSheetJSON(sheetId, callbackName, sheetName = "") {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -1240,78 +1015,53 @@
       };
       const sheetParam = sheetName ? `&sheet=${encodeURIComponent(sheetName)}` : '';
       script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=responseHandler:${uniqueName}${sheetParam}`;
-      script.onerror = function() {
-        delete window[uniqueName];
-        document.body.removeChild(script);
-        resolve([]);
-      };
+      script.onerror = function() { delete window[uniqueName]; document.body.removeChild(script); resolve([]); };
       document.body.appendChild(script);
     });
   }
 
   async function fetchLiveRefundPortal() {
-    const statusText = document.getElementById('sheetRecordStatus');
-    const counter = document.getElementById('recordCounter');
-    statusText.innerText = '⏳ Fetching active tabs (Export2, Return & Exch, Export)...';
-
+    document.getElementById('sheetRecordStatus').innerText = '⏳ Fetching active tabs...';
     allTabRecords = {};
     let totalLoaded = 0;
-
     for (const tabName of REFUND_TABS) {
       try {
         const rows = await fetchGoogleSheetJSON(REFUND_SHEET_ID, 'handleTab_' + tabName.replace(/\W/g, ''), tabName);
         if (rows && rows.length > 0) {
           let headerIdx = 0;
           for (let i = 0; i < Math.min(5, rows.length); i++) {
-            if (rows[i].some(cell => String(cell).toLowerCase().includes('phone') || String(cell).toLowerCase().includes('name') || String(cell).toLowerCase().includes('order') || String(cell).toLowerCase().includes('reason'))) {
-              headerIdx = i;
-              break;
+            if (rows[i].some(cell => String(cell).toLowerCase().includes('phone') || String(cell).toLowerCase().includes('name') || String(cell).toLowerCase().includes('order'))) {
+              headerIdx = i; break;
             }
           }
-
           const rawHeaders = rows[headerIdx];
           const validColIndices = [];
           const headers = [];
-
           rawHeaders.forEach((h, colIdx) => {
             const trimmed = String(h || '').trim();
-            if (trimmed && !trimmed.toLowerCase().startsWith('column') && !trimmed.toLowerCase().startsWith('unnamed')) {
-              validColIndices.push(colIdx);
-              headers.push(trimmed);
-            }
+            if (trimmed && !trimmed.toLowerCase().startsWith('column')) { validColIndices.push(colIdx); headers.push(trimmed); }
           });
-
           const records = rows.slice(headerIdx + 1).map(r => {
             const obj = { _sourceTab: tabName };
-            headers.forEach((h, i) => {
-              const origCol = validColIndices[i];
-              obj[h] = r[origCol] !== undefined ? String(r[origCol]).trim() : '';
-            });
+            headers.forEach((h, i) => { obj[h] = r[validColIndices[i]] !== undefined ? String(r[validColIndices[i]]).trim() : ''; });
             return obj;
           }).filter(obj => Object.values(obj).filter(v => v !== tabName).some(v => v.length > 0));
-
           allTabRecords[tabName] = { headers, records };
           totalLoaded += records.length;
         }
-      } catch (err) {
-        console.warn(`Tab ${tabName} fetch warning:`, err);
-      }
+      } catch (err) { console.warn(err); }
     }
-
     renderTabPills();
-    statusText.innerText = `✅ Live Sync Active — ${totalLoaded} records loaded.`;
-    counter.innerText = `${totalLoaded} total records`;
+    document.getElementById('sheetRecordStatus').innerText = `✅ Live Sync Active — ${totalLoaded} records loaded.`;
+    document.getElementById('recordCounter').innerText = `${totalLoaded} total records`;
     filterPortalRecords();
   }
 
   function renderTabPills() {
     const container = document.getElementById('tabPillsContainer');
     const tabs = ["All Tabs", ...Object.keys(allTabRecords)];
-
     container.innerHTML = tabs.map(tab => `
-      <button class="tab-pill-btn ${tab === currentActiveTab ? 'active' : ''}" onclick="switchActiveTab('${tab}')">
-        📁 ${tab} ${allTabRecords[tab] ? `(${allTabRecords[tab].records.length})` : ''}
-      </button>
+      <button class="tab-pill-btn ${tab === currentActiveTab ? 'active' : ''}" onclick="switchActiveTab('${tab}')">📁 ${tab}</button>
     `).join('');
   }
 
@@ -1323,9 +1073,7 @@
 
   function filterPortalRecords() {
     const q = document.getElementById('refundSearchInput').value.toLowerCase().trim();
-    let displayRecords = [];
-    let headers = [];
-
+    let displayRecords = [], headers = [];
     if (currentActiveTab === "All Tabs") {
       Object.keys(allTabRecords).forEach(tab => {
         displayRecords.push(...allTabRecords[tab].records);
@@ -1336,182 +1084,69 @@
       displayRecords = allTabRecords[currentActiveTab].records;
       headers = allTabRecords[currentActiveTab].headers;
     }
-
-    if (q) {
-      displayRecords = displayRecords.filter(row => 
-        Object.values(row).some(val => String(val || '').toLowerCase().includes(q))
-      );
-    }
-
-    renderPortalTable(headers, displayRecords);
-  }
-
-  function formatStatusCell(value) {
-    if (!value) return '';
-    const v = String(value).toLowerCase();
-
-    if (v.includes('success') || v.includes('issued') || v.includes('completed') || v.includes('approved') || v.includes('delivered') || v.includes('ناجح') || v.includes('تم')) {
-      return `<span class="status-pill status-success">🟢 ${value}</span>`;
-    }
-    if (v.includes('pending') || v.includes('in progress') || v.includes('heading') || v.includes('قيد') || v.includes('انتظار')) {
-      return `<span class="status-pill status-warning">🟡 ${value}</span>`;
-    }
-    if (v.includes('cancel') || v.includes('reject') || v.includes('fail') || v.includes('ملغي') || v.includes('مرفوض')) {
-      return `<span class="status-pill status-danger">🔴 ${value}</span>`;
-    }
-    if (v.includes('refund') || v.includes('exchange') || v.includes('shipped') || v.includes('استبدال') || v.includes('استرجاع')) {
-      return `<span class="status-pill status-info">🔵 ${value}</span>`;
-    }
-    return `<span>${value}</span>`;
-  }
-
-  function renderPortalTable(headers, data) {
+    if (q) displayRecords = displayRecords.filter(row => Object.values(row).some(val => String(val || '').toLowerCase().includes(q)));
+    
     const thead = document.getElementById('refundsTableHead');
     const tbody = document.getElementById('refundsTableBody');
-
-    if (!data || data.length === 0) {
-      thead.innerHTML = '';
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:35px; color:var(--muted); font-size:14px;">No matching records found in selected tab.</td></tr>';
-      return;
+    if (!displayRecords.length) {
+      thead.innerHTML = ''; tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:30px; color:var(--muted);">No matching records found.</td></tr>'; return;
     }
-
-    const validHeaders = headers.filter(h => h && !h.toLowerCase().startsWith('column') && !h.toLowerCase().startsWith('unnamed'));
-
+    const validHeaders = headers.filter(h => h && !h.toLowerCase().startsWith('column'));
     thead.innerHTML = `<tr>${validHeaders.map(h => `<th>${h}</th>`).join('')}</tr>`;
-    tbody.innerHTML = data.slice(0, 150).map(row => `
+    tbody.innerHTML = displayRecords.slice(0, 150).map(row => `
       <tr>
-        ${validHeaders.map(h => {
-          if (h === 'Source Tab') return `<td><span style="background:var(--accent-light); color:var(--primary); padding:3px 6px; border-radius:4px; font-weight:bold; font-size:11px; border:1px solid var(--border);">${row._sourceTab}</span></td>`;
-          const cellVal = row[h] !== undefined ? row[h] : '';
-          
-          const isStatusCol = h.toLowerCase().includes('status') || h.toLowerCase().includes('state') || h.toLowerCase().includes('حالة') || h.toLowerCase().includes('action') || h.toLowerCase().includes('نتيجة');
-          if (isStatusCol) {
-            return `<td>${formatStatusCell(cellVal)}</td>`;
-          }
-          return `<td>${cellVal}</td>`;
-        }).join('')}
+        ${validHeaders.map(h => h === 'Source Tab' ? `<td><span class="status-pill status-info">${row._sourceTab}</span></td>` : `<td>${row[h] !== undefined ? row[h] : ''}</td>`).join('')}
       </tr>
     `).join('');
   }
 
-  // Case Reviews
-  function openReviewModal(index) {
-    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    const r = records[index];
-    if (!r) return;
-
-    activeReviewIndex = index;
-    document.getElementById('modalCaseDetails').innerHTML = `
-      <strong>Order #:</strong> ${r.order_number} | <strong>Ticket #:</strong> ${r.ticket_number}<br>
-      <strong>Customer:</strong> ${r.customer_name} | <strong>Reason:</strong> ${r.contact_reason}<br>
-      <strong>Agent Summary:</strong> ${r.case_summary}
-    `;
-
-    document.getElementById('modal_review_status').value = r.review_status || 'Approved';
-    document.getElementById('modal_review_comment').value = r.review_comment || '';
-
-    document.getElementById('reviewModal').style.display = 'flex';
-  }
-
-  function closeReviewModal() {
-    document.getElementById('reviewModal').style.display = 'none';
-    activeReviewIndex = null;
-  }
-
-  function saveCaseReview() {
-    if (activeReviewIndex === null) return;
-    const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-
-    records[activeReviewIndex].review_status = document.getElementById('modal_review_status').value;
-    records[activeReviewIndex].review_comment = document.getElementById('modal_review_comment').value;
-    records[activeReviewIndex].reviewed_by = currentUser;
-    records[activeReviewIndex].reviewed_at = new Date().toISOString().split('T')[0];
-
-    localStorage.setItem('mavin_escalations', JSON.stringify(records));
-    closeReviewModal();
-    loadLogs();
-    alert('✅ Case review decision successfully saved!');
-  }
-
-  // Dynamic QA Score Engine
   function calculateQAScore() {
     const isEndUserFatal = document.getElementById('qa_end_user_critical').value === 'yes';
     const bizCritScore = parseInt(document.getElementById('qa_business_critical').value) || 0;
-
     if (isEndUserFatal || bizCritScore === 0) {
       document.getElementById('qaLivePercentage').innerText = '0%';
-      document.getElementById('qaGradeText').innerText = 'Grade: Fatal Fail (0%) ❌ Critical Policy / User Misguidance';
-      document.getElementById('qaFatalText').innerText = '⚠️ Fatal Failure Triggered: Auto-zeroed';
+      document.getElementById('qaGradeText').innerText = 'Grade: Fatal Fail (0%) ❌';
+      document.getElementById('qaFatalText').innerText = '⚠️ Fatal Failure Triggered';
       return { score: 0, grade: 'Fatal Fail (0%)' };
     }
-
     document.getElementById('qaFatalText').innerText = '';
-
     const ticketFirst = parseInt(document.getElementById('qa_ticket_first').value) || 0;
     const understand = parseInt(document.getElementById('qa_understand').value) || 0;
-    const repetitiveVal = document.getElementById('qa_repetitive').value;
-
-    let systemScore = 0;
-    if (document.getElementById('chk_shopify').checked) systemScore += 4;
-    if (document.getElementById('chk_gorgias').checked) systemScore += 4;
-    if (document.getElementById('chk_slack').checked) systemScore += 4;
-    if (document.getElementById('chk_bosta').checked) systemScore += 4;
-    if (document.getElementById('chk_estbdal').checked) systemScore += 4;
-
+    const rep = document.getElementById('qa_repetitive').value;
+    let sys = 0;
+    ['shopify','gorgias','slack','bosta','estbdal'].forEach(s => { if(document.getElementById('chk_'+s).checked) sys += 4; });
     const correctRes = parseInt(document.getElementById('qa_correct_res').value) || 0;
     const oneTouch = parseInt(document.getElementById('qa_one_touch').value) || 0;
-    const escProcess = parseInt(document.getElementById('qa_esc_process').value) || 0;
-    const slaStated = parseInt(document.getElementById('qa_sla_stated').value) || 0;
-    const closureSla = parseInt(document.getElementById('qa_closure_sla').value) || 0;
+    const esc = parseInt(document.getElementById('qa_esc_process').value) || 0;
+    const sla = parseInt(document.getElementById('qa_sla_stated').value) || 0;
+    const closure = parseInt(document.getElementById('qa_closure_sla').value) || 0;
 
-    let earnedPoints = ticketFirst + understand + systemScore + correctRes + oneTouch + escProcess + slaStated + closureSla + bizCritScore;
-    let totalPossible = 90;
-
-    if (repetitiveVal !== 'NA') {
-      earnedPoints += parseInt(repetitiveVal);
-      totalPossible += 10;
-    }
-
-    const finalPercentage = Math.round((earnedPoints / totalPossible) * 100);
-    document.getElementById('qaLivePercentage').innerText = finalPercentage + '%';
-
+    let earned = ticketFirst + understand + sys + correctRes + oneTouch + esc + sla + closure + bizCritScore;
+    let total = 90;
+    if(rep !== 'NA') { earned += parseInt(rep); total += 10; }
+    const finalPct = Math.round((earned / total) * 100);
+    document.getElementById('qaLivePercentage').innerText = finalPct + '%';
     let grade = 'Excellent (⭐⭐⭐)';
-    if (finalPercentage < 70) grade = 'Needs Coaching / Action Plan (⚠️)';
-    else if (finalPercentage < 85) grade = 'Good (👍)';
-
-    document.getElementById('qaGradeText').innerText = `Grade: ${grade} (${finalPercentage}%)`;
-    return { score: finalPercentage, grade: grade };
+    if(finalPct < 70) grade = 'Needs Coaching (⚠️)'; else if(finalPct < 85) grade = 'Good (👍)';
+    document.getElementById('qaGradeText').innerText = `Grade: ${grade} (${finalPct}%)`;
+    return { score: finalPct, grade: grade };
   }
 
-  // --- ROBUST QA SUBMIT WITH DUPLICATE TICKET PER MONTH CHECK ---
   document.getElementById('qaForm').addEventListener('submit', (e) => {
     e.preventDefault();
-
     const ticketRef = document.getElementById('qa_ticket_ref').value.trim();
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    const currentMonthYear = currentDate.substring(0, 7); // YYYY-MM
+    const curDate = new Date().toISOString().split('T')[0];
+    const curMonthYear = curDate.substring(0, 7);
 
-    // Check existing records for duplicate ticket in the same month
     try {
-      const existingRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-      const isDuplicate = existingRecords.some(r => {
-        if (!r.date || !r.ticket_ref) return false;
-        const rMonthYear = r.date.substring(0, 7);
-        return r.ticket_ref.toLowerCase() === ticketRef.toLowerCase() && rMonthYear === currentMonthYear;
-      });
-
-      if (isDuplicate) {
-        alert(`❌ Duplicate Error: Ticket "${ticketRef}" has already been evaluated in this month (${currentMonthYear}). Submission rejected.`);
-        return;
-      }
-    } catch (err) {
-      console.warn("Duplicate check error:", err);
-    }
+      const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+      const isDup = records.some(r => r.date && r.date.substring(0, 7) === curMonthYear && r.ticket_ref && r.ticket_ref.toLowerCase() === ticketRef.toLowerCase());
+      if(isDup) { alert(`❌ Duplicate Error: Ticket "${ticketRef}" has already been evaluated this month (${curMonthYear}).`); return; }
+    } catch(err) { console.warn(err); }
 
     const scoreData = calculateQAScore();
-
-    const auditRecord = {
-      date: currentDate,
+    const rec = {
+      date: curDate,
       agent_name: document.getElementById('qa_agent_name').value.trim(),
       agent_email: document.getElementById('qa_agent_email').value.trim(),
       auditor_email: document.getElementById('qa_auditor_email').value.trim(),
@@ -1520,128 +1155,61 @@
       score: scoreData.score + '%',
       score_num: scoreData.score,
       grade: scoreData.grade,
-      endUserCritical: document.getElementById('qa_end_user_critical').value === 'yes' ? 'FAIL' : 'PASS',
-      bizCritical: document.getElementById('qa_business_critical').value === '3' ? '3/3' : '0/3',
-      ticketFirst: document.getElementById('qa_ticket_first').value + '/10',
-      understanding: document.getElementById('qa_understand').value + '/10',
-      repetitive: document.getElementById('qa_repetitive').value,
-      correctResolution: document.getElementById('qa_correct_res').value + '/15',
-      oneTouch: document.getElementById('qa_one_touch').value + '/10',
-      escProcess: document.getElementById('qa_esc_process').value + '/4',
-      slaStated: document.getElementById('qa_sla_stated').value + '/4',
-      closureSla: document.getElementById('qa_closure_sla').value + '/4',
-      systemsChecked: [
-        document.getElementById('chk_shopify').checked ? 'Shopify' : '',
-        document.getElementById('chk_gorgias').checked ? 'Gorgias' : '',
-        document.getElementById('chk_slack').checked ? 'Slack' : '',
-        document.getElementById('chk_bosta').checked ? 'Bosta' : '',
-        document.getElementById('chk_estbdal').checked ? 'Estbdal & Sheets' : ''
-      ].filter(Boolean).join(', '),
       feedback: document.getElementById('qa_feedback').value.trim()
     };
 
-    // 1. Save safely to localStorage
     try {
-      const qaRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-      qaRecords.unshift(auditRecord);
-      localStorage.setItem('mavin_qa_evaluations', JSON.stringify(qaRecords));
-    } catch (err) {
-      console.error("Storage error:", err);
-    }
+      const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+      records.unshift(rec);
+      localStorage.setItem('mavin_qa_evaluations', JSON.stringify(records));
+    } catch(err) { console.error(err); }
 
-    // 2. Alert success & switch to logs view
-    alert(`🎉 Quality Evaluation Logged Successfully!\nScore: ${auditRecord.score} (${auditRecord.grade})`);
+    alert(`🎉 QA Evaluation Logged Successfully! Score: ${rec.score}`);
     document.getElementById('qaForm').reset();
     calculateQAScore();
     showSection('qualityLogs');
     loadQALogs();
-
-    // 3. Optional Email client trigger
-    try {
-      const subject = encodeURIComponent(`[MAVIN QA Scorecard] Ticket ${auditRecord.ticket_ref} - Score: ${auditRecord.score}`);
-      const body = encodeURIComponent(
-        `Hello ${auditRecord.agent_name},\n\nHere is your official Quality Assurance (QA) Evaluation for Ticket/Chat: ${auditRecord.ticket_ref}\n\n` +
-        `--------------------------------------------------\n` +
-        `⭐ Overall Score: ${auditRecord.score} (${auditRecord.grade})\n` +
-        `👤 Auditor: ${auditRecord.auditor_email}\n` +
-        `📅 Date: ${auditRecord.date}\n` +
-        `🏷️ Attribution: ${auditRecord.attribution}\n` +
-        `--------------------------------------------------\n\n` +
-        `Detailed Scoring Breakdown:\n` +
-        `• End-User Critical: ${auditRecord.endUserCritical}\n` +
-        `• Business Critical: ${auditRecord.bizCritical}\n` +
-        `• Open Ticket & Flag First: ${auditRecord.ticketFirst}\n` +
-        `• Diagnostic Understanding: ${auditRecord.understanding}\n` +
-        `• 5-Platform Investigation: ${auditRecord.systemsChecked}\n` +
-        `• Correct Resolution Delivered: ${auditRecord.correctResolution}\n` +
-        `• One-Touch Resolution: ${auditRecord.oneTouch}\n` +
-        `• Clear SLA Stated: ${auditRecord.slaStated}\n` +
-        `• Resolved Ticket Closure SLA (2-3h): ${auditRecord.closureSla}\n\n` +
-        `Coaching & Feedback Notes:\n${auditRecord.feedback}\n\n` +
-        `Best regards,\nMAVIN Quality Assurance Team`
-      );
-      window.location.href = `mailto:${auditRecord.agent_email}?subject=${subject}&body=${body}`;
-    } catch (mailErr) {
-      console.warn("Mail client skipped:", mailErr);
-    }
   });
 
-  // Populate Agent Filter Dropdown & Filter Logs with Dashboard Calculations
   function populateAgentFilter(records) {
-    const filterAgent = document.getElementById('filterAgent');
+    const sel = document.getElementById('filterAgent');
     const agents = [...new Set(records.map(r => r.agent_name).filter(Boolean))];
-    const currentVal = filterAgent.value;
-
-    filterAgent.innerHTML = '<option value="all">All Agents</option>' + agents.map(a => `<option value="${a}">${a}</option>`).join('');
-    if (agents.includes(currentVal)) {
-      filterAgent.value = currentVal;
-    }
+    const cur = sel.value;
+    sel.innerHTML = '<option value="all">All Agents</option>' + agents.map(a => `<option value="${a}">${a}</option>`).join('');
+    if(agents.includes(cur)) sel.value = cur;
   }
 
-  function filterQALogs() {
-    loadQALogs();
-  }
+  function filterQALogs() { loadQALogs(); }
 
   function loadQALogs() {
     const tbody = document.querySelector('#qaLogsTable tbody');
     let records = [];
-    try {
-      records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-    } catch (e) {
-      records = [];
-    }
-
+    try { records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]'); } catch(e) { records = []; }
     populateAgentFilter(records);
 
-    const selectedAgent = document.getElementById('filterAgent').value;
-    const selectedMonth = document.getElementById('filterMonth').value;
-    const selectedYear = document.getElementById('filterYear').value;
+    const selAgent = document.getElementById('filterAgent').value;
+    const selMonth = document.getElementById('filterMonth').value;
+    const selYear = document.getElementById('filterYear').value;
 
     let filtered = records.filter(r => {
-      if (!r.date) return false;
-      const [year, month, day] = r.date.split('-');
-      
-      if (selectedYear !== 'all' && year !== selectedYear) return false;
-      if (selectedMonth !== 'all' && month !== selectedMonth) return false;
-      if (selectedAgent !== 'all' && r.agent_name !== selectedAgent) return false;
+      if(!r.date) return false;
+      const [y, m] = r.date.split('-');
+      if(selYear !== 'all' && y !== selYear) return false;
+      if(selMonth !== 'all' && m !== selMonth) return false;
+      if(selAgent !== 'all' && r.agent_name !== selAgent) return false;
       return true;
     });
 
-    // Calculate Dashboard Metrics correctly with parseFloat / numeric extraction
     const totalCount = filtered.length;
     let avgScore = 0;
-    if (totalCount > 0) {
-      const sum = filtered.reduce((acc, curr) => {
-        let val = parseFloat(String(curr.score_num || curr.score).replace('%', '')) || 0;
-        return acc + val;
-      }, 0);
+    if(totalCount > 0) {
+      const sum = filtered.reduce((acc, curr) => acc + (parseFloat(String(curr.score_num || curr.score).replace('%','')) || 0), 0);
       avgScore = Math.round(sum / totalCount);
     }
-
     let overallGrade = 'N/A';
-    if (totalCount > 0) {
-      if (avgScore >= 85) overallGrade = 'Excellent (⭐⭐⭐)';
-      else if (avgScore >= 70) overallGrade = 'Good (👍)';
+    if(totalCount > 0) {
+      if(avgScore >= 85) overallGrade = 'Excellent (⭐⭐⭐)';
+      else if(avgScore >= 70) overallGrade = 'Good (👍)';
       else overallGrade = 'Needs Coaching (⚠️)';
     }
 
@@ -1649,29 +1217,22 @@
     document.getElementById('dashOverallScore').innerText = avgScore + '%';
     document.getElementById('dashOverallGrade').innerText = overallGrade;
 
-    if (!filtered || filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations found matching the selected filter.</td></tr>';
+    if(!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No QA evaluations found matching filter.</td></tr>';
       return;
     }
 
     tbody.innerHTML = filtered.map(r => `
       <tr>
-        <td>${r.date || ''}</td>
-        <td><strong>${r.agent_name || 'N/A'}</strong></td>
-        <td>${r.agent_email || ''}</td>
-        <td>${r.ticket_ref || ''}</td>
-        <td><span style="font-size:11px; background:var(--accent-light); color:var(--primary); padding:2px 6px; border-radius:4px; border:1px solid var(--border);">${r.attribution || ''}</span></td>
-        <td><strong style="color:var(--primary); font-size:14px;">${r.score || ''}</strong></td>
-        <td>${r.grade || ''}</td>
-        <td>${r.auditor_email || ''}</td>
-        <td>${r.feedback || ''}</td>
+        <td>${r.date}</td><td><strong>${r.agent_name || 'N/A'}</strong></td><td>${r.agent_email}</td><td>${r.ticket_ref}</td>
+        <td><span class="status-pill status-info">${r.attribution}</span></td><td><strong>${r.score}</strong></td><td>${r.grade}</td><td>${r.auditor_email}</td><td>${r.feedback}</td>
       </tr>
     `).join('');
   }
 
   function exportQAToExcel() {
     const records = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
-    if (records.length === 0) { alert('No QA records to export.'); return; }
+    if(!records.length) { alert('No QA records to export.'); return; }
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "QA_Evaluations");
@@ -1680,38 +1241,17 @@
 
   function handleGlobalSearch() {
     const q = document.getElementById('mainSearch').value.toLowerCase().trim();
-    if (!q) { renderHomeCategories(masterKnowledgeBase); return; }
-    const filtered = masterKnowledgeBase.filter(i => 
-      (i.category_en && i.category_en.toLowerCase().includes(q)) ||
-      (i.category_ar && i.category_ar.toLowerCase().includes(q)) ||
-      (i.title_en && i.title_en.toLowerCase().includes(q)) ||
-      (i.title_ar && i.title_ar.toLowerCase().includes(q)) ||
-      (i.code && i.code.toLowerCase().includes(q)) ||
-      (i.description_en && i.description_en.toLowerCase().includes(q)) ||
-      (i.description_ar && i.description_ar.toLowerCase().includes(q))
-    );
-    
+    if(!q) { renderHomeCategories(masterKnowledgeBase); return; }
+    const filtered = masterKnowledgeBase.filter(i => (i.title_en && i.title_en.toLowerCase().includes(q)) || (i.description_en && i.description_en.toLowerCase().includes(q)));
     document.getElementById('currentCategoryTitle').innerText = `Search Results (${filtered.length})`;
     document.getElementById('currentCategorySubtitle').innerText = `Matching: "${q}"`;
-    
     const container = document.getElementById('sopsContainer');
-    if (filtered.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No documents found matching your search.</p>';
-    } else {
-      container.innerHTML = filtered.map(item => `
-        <div class="sop-card">
-          <div class="sop-header">
-            <div>
-              <span class="sop-code-badge">${item.code}</span>
-              <h3 class="sop-title">${currentHomeLang === 'en' ? item.title_en : item.title_ar}</h3>
-            </div>
-            <span class="sop-tag">🖥️ ${item.system}</span>
-          </div>
-          <div class="sop-desc-box">${currentHomeLang === 'en' ? item.description_en : item.description_ar}</div>
-        </div>
-      `).join('');
-    }
-    
+    container.innerHTML = filtered.map(item => `
+      <div class="sop-card">
+        <div class="sop-header"><div><span class="sop-code-badge">${item.code}</span><h3 class="sop-title">${item.title_en}</h3></div><span class="sop-tag">🖥️ ${item.system}</span></div>
+        <div class="sop-desc-box">${item.description_en}</div>
+      </div>
+    `).join('');
     hideAllSections();
     document.getElementById('detailSection').style.display = 'block';
   }
@@ -1728,39 +1268,17 @@
     document.getElementById('qualityLogsSection').style.display = 'none';
   }
 
-  function goToHome() {
-    hideAllSections();
-    document.getElementById('homeSection').style.display = 'block';
-    renderHomeCategories(masterKnowledgeBase);
-  }
+  function goToHome() { hideAllSections(); document.getElementById('homeSection').style.display = 'block'; renderHomeCategories(masterKnowledgeBase); }
 
   function showSection(name) {
     hideAllSections();
-    if (name === 'decisionTree') {
-      document.getElementById('decisionTreeSection').style.display = 'block';
-      initDecisionTreeWizard();
-    }
-    if (name === 'scenarios') {
-      document.getElementById('scenariosSection').style.display = 'block';
-      initScenariosSection();
-    }
-    if (name === 'refundPortal') {
-      document.getElementById('refundPortalSection').style.display = 'block';
-      if (Object.keys(allTabRecords).length === 0) fetchLiveRefundPortal();
-    }
-    if (name === 'escalation') document.getElementById('escalationSection').style.display = 'block';
-    if (name === 'logs') {
-      document.getElementById('logsSection').style.display = 'block';
-      loadLogs();
-    }
-    if (name === 'qualityForm') {
-      document.getElementById('qualityFormSection').style.display = 'block';
-      calculateQAScore();
-    }
-    if (name === 'qualityLogs') {
-      document.getElementById('qualityLogsSection').style.display = 'block';
-      loadQALogs();
-    }
+    if(name === 'decisionTree') { document.getElementById('decisionTreeSection').style.display = 'block'; initDecisionTreeWizard(); }
+    if(name === 'scenarios') { document.getElementById('scenariosSection').style.display = 'block'; initScenariosSection(); }
+    if(name === 'refundPortal') { document.getElementById('refundPortalSection').style.display = 'block'; if(!Object.keys(allTabRecords).length) fetchLiveRefundPortal(); }
+    if(name === 'escalation') document.getElementById('escalationSection').style.display = 'block';
+    if(name === 'logs') { document.getElementById('logsSection').style.display = 'block'; loadLogs(); }
+    if(name === 'qualityForm') { document.getElementById('qualityFormSection').style.display = 'block'; calculateQAScore(); }
+    if(name === 'qualityLogs') { document.getElementById('qualityLogsSection').style.display = 'block'; loadQALogs(); }
   }
 
   document.getElementById('escForm').addEventListener('submit', (e) => {
@@ -1774,17 +1292,12 @@
       received_order: document.getElementById('received_order').value === 'true',
       delivered_date: document.getElementById('delivered_date').value || null,
       case_summary: document.getElementById('case_summary').value,
-      review_status: 'Pending',
-      review_comment: '',
-      reviewed_by: '',
-      reviewed_at: ''
+      review_status: 'Pending', review_comment: '', reviewed_by: '', reviewed_at: ''
     };
-    
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
     records.unshift(data);
     localStorage.setItem('mavin_escalations', JSON.stringify(records));
-
-    alert('✅ Escalation successfully submitted and recorded!');
+    alert('✅ Escalation successfully submitted!');
     document.getElementById('escForm').reset();
     showSection('logs');
   });
@@ -1792,51 +1305,27 @@
   function loadLogs() {
     const tbody = document.querySelector('#logsTable tbody');
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-
-    if (records.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No escalation records logged yet.</td></tr>';
-      return;
-    }
-
-    const isReviewer = ESCALATION_REVIEWERS.includes(currentUser);
-
-    tbody.innerHTML = records.map((r, idx) => {
-      let statusClass = 'status-pending';
-      if (r.review_status === 'Approved') statusClass = 'status-approved';
-      if (r.review_status === 'Rejected') statusClass = 'status-rejected';
-
-      return `
-        <tr>
-          <td><strong>${r.order_number}</strong></td>
-          <td>${r.ticket_number}</td>
-          <td>${r.customer_name}</td>
-          <td>${r.contact_reason}</td>
-          <td>${r.ticket_date}</td>
-          <td>${r.case_summary}</td>
-          <td><span class="status-badge ${statusClass}">${r.review_status || 'Pending'}</span></td>
-          <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
-          <td>
-            ${isReviewer ? `
-              <button class="nav-btn primary" style="padding:4px 8px; font-size:11.5px;" onclick="openReviewModal(${idx})">✏️ Review / Validate</button>
-            ` : `
-              <span style="font-size:11.5px; color:var(--muted);">View Only</span>
-            `}
-          </td>
-        </tr>
-      `;
-    }).join('');
+    if(!records.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--muted);">No escalation records logged yet.</td></tr>'; return; }
+    const isRev = ESCALATION_REVIEWERS.includes(currentUser);
+    tbody.innerHTML = records.map((r, idx) => `
+      <tr>
+        <td><strong>${r.order_number}</strong></td><td>${r.ticket_number}</td><td>${r.customer_name}</td><td>${r.contact_reason}</td><td>${r.ticket_date}</td><td>${r.case_summary}</td>
+        <td><span class="status-badge ${r.review_status === 'Approved' ? 'status-approved' : r.review_status === 'Rejected' ? 'status-rejected' : 'status-pending'}">${r.review_status || 'Pending'}</span></td>
+        <td>${r.review_comment ? `<div>${r.review_comment}</div><div style="font-size:11px; color:var(--muted);">${r.reviewed_by} (${r.reviewed_at})</div>` : '<span style="color:var(--muted);">-</span>'}</td>
+        <td>${isRev ? `<button class="nav-btn primary" style="padding:4px 8px; font-size:11.5px;" onclick="openReviewModal(${idx})">✏️ Review</button>` : '<span style="color:var(--muted);">View Only</span>'}</td>
+      </tr>
+    `).join('');
   }
 
   function exportToExcel() {
     const records = JSON.parse(localStorage.getItem('mavin_escalations') || '[]');
-    if (records.length === 0) { alert('⚠️ No records to export.'); return; }
+    if(!records.length) { alert('No records to export.'); return; }
     const ws = XLSX.utils.json_to_sheet(records);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Escalations");
     XLSX.writeFile(wb, "MAVIN_Escalations.xlsx");
   }
 
-  // Startup Initializers
   goToHome();
   changeUserSession();
   fetchLiveRefundPortal();
