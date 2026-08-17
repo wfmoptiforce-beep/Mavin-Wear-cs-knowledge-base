@@ -130,11 +130,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .dt-btn-title{font-size:16px;font-weight:800;color:var(--midnight);margin-bottom:6px}
 .dt-btn-hint{font-size:13px;color:var(--muted);line-height:1.5}
 .dt-btn-act{font-size:12px;font-weight:700;color:var(--indigo);margin-top:10px}
-.res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
-.res-badge{display:inline-block;background:var(--success);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:12px}
-.res-block{background:var(--lgrey);border:1px solid var(--border);border-left:4px solid var(--indigo);padding:14px;border-radius:8px;margin:10px 0}
-.res-block strong{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
-.res-block div{font-size:14.5px;color:var(--midnight);line-height:1.5}
 
 /* ── SCENARIOS ── */
 .sc-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;transition:.15s}
@@ -582,23 +577,130 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--indigo);
 const REVIEWERS = ["nourtamer2005@gmail.com","nanielshazly4@gmail.com"];
 const QA_USERS  = ["Rehabmohamed881@gmail.com"];
 
-// شيت الريفوند للبورتال
 const REFUND_SHEET_ID = "1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk";
 const REFUND_TABS     = ["Export2","Return & Exch","Export","SEARCH"];
 
-// شيت الديسجن تري والسيناريوهات
 const SCENARIO_SHEET_ID = "1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo";
 
 let currentUser = "agent@mavinwear.com";
 let currentLang = "en";
-let dtCat       = "";
 let allTabs     = {};
 let activeTab   = "All Tabs";
 let scCat       = "All";
 let reviewIdx   = null;
 let SCENARIOS   = [];
 
-// هيكل شجرة القرارات (Decision Tree) المنظم والمبني على مدخلاتك الحقيقية
+// ── FULL SOP DATA (Restored Complete List) ──
+const SOPS = [
+  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
+   sys:"Shopify + Gorgias + Slack + Bosta",
+   t_en:"⚡ Golden Workflow — The 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
+   d_en:"The 4-step standard every agent must follow on every ticket. No exceptions.",
+   d_ar:"الـ 4 خطوات التي يجب على كل أجنت اتباعها في كل تذكرة بدون استثناءات.",
+   steps:[
+     {n:"Step 1",t:"Open Ticket & Flag First",d:"ALWAYS open the ticket and flag the issue BEFORE contacting the customer. Non-negotiable. Protects the 24h SLA.",c:"coral"},
+     {n:"Step 2",t:"5-Tool Self-Investigation",d:"Check all 5 platforms: Shopify (tags+status) → Gorgias (full history) → Slack (team notes) → Bosta (AWB+attempts) → Estbdal/Refund Sheets. NEVER blindly follow a previous agent.",c:"lemon"},
+     {n:"Step 3",t:"One-Touch Resolution",d:"Deliver the complete solution in the very first response. Correct SKU/refund/exchange executed simultaneously. No back-and-forth.",c:"mint"},
+     {n:"Step 4",t:"Close Within 2–3 Hours",d:"Close resolved tickets within 2–3h maximum. Queue pollution = QA deduction.",c:""}
+   ],
+   canned:"Your request has been handled according to our full operational standard — investigated across all systems, resolved in one touch, and documented completely."},
+
+  {code:"SOP-CORE-02",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
+   sys:"All Platforms",
+   t_en:"📊 Weekly KPI Scorecard — What We Measure & Why",t_ar:"📊 مؤشرات الأداء الأسبوعية",
+   d_en:"Numbers that tell us if the partnership is working. Tracked every week. A bad week is information. A pattern is a problem.",
+   d_ar:"الأرقام التي تخبرنا هل الشراكة تعمل. يُتتبع أسبوعياً.",
+   steps:[
+     {n:"Fulfillment KPIs",t:"Bosta Owns These",d:"Orders fulfilled same day: 95%+. On-time delivery by zone. First-attempt success: 90%+. Picking accuracy: 99.5%+. NDR rate — monitor trend.",c:""},
+     {n:"Exception KPIs",t:"Target Zero — Both Sides",d:"Awaiting Action open >24h: ZERO. OOS unreported/unresolved: ZERO. Open exceptions >48h: ZERO. Returns processed within 48h: 100%.",c:"coral"},
+     {n:"Data KPIs",t:"Mavin Wear Owns These",d:"Order data accuracy: 99%+. Refund bot 🔴 count: target 0. Ticket closure within 2–3h. One-Touch rate per agent.",c:"lemon"},
+     {n:"Weekly Sync",t:"Fixed 45-Min Structure",d:"(1) KPI review 10min (2) SLA breach review 10min (3) Open exceptions 10min (4) Upcoming campaigns 5min (5) One improvement each 5min (6) Action items with owners 5min.",c:"mint"}
+   ],
+   canned:"Our team reviews all operational KPIs weekly to ensure consistent service quality across all channels."},
+
+  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Shopify + Slack",
+   t_en:"📌 Ticket First Protocol — 24h SLA & Mandatory Order Number",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
+   d_en:"MANDATORY: Always open and flag the ticket BEFORE contacting the customer. Order Number in sheet is non-negotiable.",
+   d_ar:"إلزامي: افتح التذكرة واعمل Flag أولاً قبل التواصل مع العميل.",
+   steps:[
+     {n:"Step 1",t:"Open Ticket & Flag BEFORE Customer Contact",d:"Contacting customer BEFORE opening ticket = SLA breach + QA auto-deduction. This is non-negotiable.",c:"coral"},
+     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries Ever",d:"Every sheet entry must have the Order Number. A ticket without order number cannot be tracked or escalated properly.",c:""},
+     {n:"Step 3",t:"5-Tool Investigation Before Any Response",d:"Shopify (order status, tags, metafields) → Gorgias (history, previous agents) → Slack (team flags) → Bosta (AWB, attempts) → Estbdal/Refund Sheets. Never assume — always self-verify.",c:"lemon"},
+     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Resolved ticket sitting open = QA deduction + queue pollution. Close the moment the issue is fully resolved and communicated.",c:"mint"}
+   ],
+   canned:"Hello! We have flagged and logged your ticket. Our team is investigating your case and will provide a full resolution shortly."},
+
+  {code:"SOP-CS-02",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Shopify + Bosta",
+   t_en:"🎯 One-Touch Resolution — Complete Solution in First Response",t_ar:"🎯 حل الـ One-Touch من أول رد",
+   d_en:"A One-Touch ticket is resolved and closed from the very first response — no customer follow-up, no back-and-forth.",
+   d_ar:"تذكرة الـ One-Touch تُحل وتُغلق من أول رد كامل.",
+   steps:[
+     {n:"Step 1",t:"Read Full Ticket & Investigate All 5 Platforms",d:"Never respond while still investigating. Complete your full investigation first. Read every prior note.",c:""},
+     {n:"Step 2",t:"Compose One Complete Message With Everything",d:"First response must include: full answer + tracking/order details + correct SKU/refund/exchange + clear SLA + next steps. No 'let me check and get back to you'.",c:"mint"},
+     {n:"Step 3",t:"Execute Action & Send Simultaneously",d:"Don't just inform — execute. Process the exchange/refund/correction in the system at the same time as sending the message.",c:"lemon"},
+     {n:"Step 4",t:"Close Ticket Immediately After Resolution",d:"Close the moment the issue is resolved. If customer replies after, it opens a new interaction — that's fine.",c:"coral"}
+   ],
+   canned:"Your request has been fully reviewed and processed. Order details, tracking, and all applicable actions are completed. Reach out if you need anything else."},
+
+  {code:"SOP-CS-03",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
+   sys:"Gorgias + Slack #bosta-escalations",
+   t_en:"🚨 CS Escalation Protocol — When & How",t_ar:"🚨 بروتوكول التصعيد — متى وكيف",
+   d_en:"Strict sequence: Slack post FIRST, then tag. A tag without a Slack post is invalid. Never skip tiers.",
+   d_ar:"تسلسل صارم: Slack أولاً ثم التاج. تاج بدون Slack = تصعيد غير صحيح.",
+   steps:[
+     {n:"Trigger",t:"When to Escalate",d:"failed-2 tag. sla-breach tag. stuck-3d tag. Bosta gave no ref or ETA. Same order breaches twice. Bosta unresponsive 4+ hours.",c:"coral"},
+     {n:"Step 1",t:"Post in #bosta-escalations FIRST",d:"Format: #[order] | [issue] | [bosta ref] | [screenshot]. Do this BEFORE adding any tag.",c:"lemon"},
+     {n:"Step 2",t:"Add 'escalated' Tag AFTER the Post",d:"Only after Slack post exists → add escalated tag. Slack timestamp = immutable proof.",c:""},
+     {n:"Step 3",t:"escalated-followup — Manager Action",d:"If Bosta silent 12h → worker auto-adds escalated-followup → Manager re-pings. When order moves → worker removes both tags automatically.",c:"mint"},
+     {n:"Tiers",t:"Never Skip Tiers",d:"Tier 1: Ops ↔ Account Manager (2h SLA) → Tier 2: Tech ↔ Warehouse Lead (4h SLA) → Tier 3: Ahmad ↔ Account Director (same business day).",c:"coral"}
+   ],
+   canned:"Your case has been escalated to our senior operations team and Bosta. We are actively investigating and will update you within the next few hours."},
+
+  {code:"SOP-SHOPIFY-01",cat_en:"Shopify Ops & Order Tracking",cat_ar:"إدارة العمليات وتتبع الطلبات",icon:"🛍️",iconcls:"cat-icon-lav",
+   sys:"Shopify + Sync-Bosta Worker",
+   t_en:"📘 Signal Architecture — Tags, Columns & Metafields",t_ar:"📘 نظام الإشارات — التيجان والأعمدة والميتافيلدز",
+   d_en:"The Worker reads Bosta and writes 3 signal types: (1) Native status columns, (2) Governed tags, (3) Detail metafields. GOLDEN RULE: if a native column shows it, no tag. Tags exist ONLY for what Shopify can't show. Resolved = tag GONE.",
+   d_ar:"الـ Worker يكتب 3 أنواع إشارات. القاعدة الذهبية: لو عمود Shopify بيظهر الحالة — مفيش تاج. محلول = التاج اختفى.",
+   steps:[
+     {n:"Signal 1",t:"Native Status Columns — No Tag Needed",d:"Auto-shown by Shopify: Out for delivery · In transit · Delivered · Attempted delivery · Return in progress · Paid · Failure. Worker drives these from Bosta data automatically.",c:""},
+     {n:"Signal 2",t:"Governed Tags — Only What Shopify Can't Show",d:"Tags used: failed-2 (2nd failed attempt) · card-risk (prepaid complete failure) · pending-refund (item back, refund owed) · on-hold (bad address/phone) · oos (out of stock) · return-failed (item never came back) · exchange-returned (swap completed) · escalated · sla-breach · stuck-3d.",c:"lemon"},
+     {n:"Signal 3",t:"Metafields — The Detail Layer",d:"On order detail page: bosta_reason (the 'why' — blank on healthy orders = CORRECT, not a bug) · delivery_details (status · reason · attempts · since · city) · return_details (status · reason · AWB · date) · last_bosta_update (SLA clock).",c:"mint"},
+     {n:"Golden Rule",t:"Resolved = Tag Gone. Zero '-resolved' Tags.",d:"There are NO '-resolved' tags. Absence IS the resolved signal. Worker auto-clears its own tags. Humans manually clear only 3: pending-refund, exchange-returned, return-failed.",c:"coral"}
+   ],
+   canned:"We have verified your order status across all Shopify operational views and tracking parameters are updated."},
+
+  {code:"SOP-BOSTA-01",cat_en:"Bosta Partnership & Fulfillment",cat_ar:"شراكة بوسطة والوفاء بالطلبات",icon:"📦",iconcls:"cat-icon-mint",
+   sys:"Bosta API + Shopify",
+   t_en:"📦 Forward Journey & SLA Commitments",t_ar:"📦 رحلة الشحن الأمامية ومواعيد الـ SLA",
+   d_en:"Bosta is Mavin Wear's full-service 3PL — owns pick, pack, ship, last-mile. Mavin Wear owns sales, order creation, return decisions. ~15,000 orders/day.",
+   d_ar:"بوسطة شريك 3PL الكامل — تمتلك التجميع والتغليف والشحن. Mavin Wear تمتلك المبيعات والطلبات والمرتجعات.",
+   steps:[
+     {n:"Step 1",t:"Order Creation & API Push",d:"Customer order → clean data (address, phone, SKU) pushed via API to Bosta. Target: 95%+ orders shipped same business day. Order accuracy target: 99.5%+.",c:""},
+     {n:"Step 2",t:"Pick, Pack & Dispatch",d:"Bosta picks and packs. OOS orders MUST be reported to Mavin Wear within 24h of detection — every unreported OOS is an SLA breach.",c:"mint"},
+     {n:"Step 3",t:"Last-Mile Delivery SLAs",d:"Cairo/Giza: Next business day (max 2). Delta/Canal Cities: 2 days (max 3). Upper Egypt/Remote: 3 days (max 5). First-attempt success target: 90%+.",c:""},
+     {n:"Step 4",t:"Failed Delivery (NDR) Protocol",d:"Bosta raises NDR within 24h. Mavin Wear gives instruction within 12h. Re-attempt: next business day. Max 3 attempts per order.",c:"coral"},
+     {n:"Step 5",t:"Campaign & Surge Notice",d:"10–25% spike: 48h notice. 25–50% spike: 72h notice. >50%: 5 business days notice. No notice = Bosta SLA waived on surge volume.",c:"lemon"}
+   ],
+   canned:"Your shipment is actively managed through our Bosta fulfillment pipeline. We have verified delivery status and our team is coordinating with Bosta on your case."},
+
+  {code:"SOP-REFUND-01",cat_en:"Refund Bot & Paymob Operations",cat_ar:"بوت الاسترداد الآلي ومعاملات Paymob",icon:"🤖",iconcls:"cat-icon-lemon",
+   sys:"Paymob + Slack #cs-updates + Shopify",
+   t_en:"🤖 Refund Bot — How It Works & 7 Auto-Refund Triggers",t_ar:"🤖 بوت الاسترداد — كيف يعمل والـ 7 حالات التلقائية",
+   d_en:"Runs automatically every day Sun–Thu 2pm–2am Cairo time. Handles prepaid Paymob orders ONLY — COD never touched. Your job is a 2-minute daily Slack check. That's it.",
+   d_ar:"يعمل تلقائياً كل يوم الأحد–الخميس 2م–2ص. يعالج طلبات Paymob المدفوعة فقط — الكاش لا يُلمس أبداً.",
+   steps:[
+     {n:"How It Works",t:"Fully Automatic — No Human Trigger",d:"Runs daily Sun–Thu 2pm–2am. Posts report to Slack #cs-updates once per day. Retries failed refunds up to 3 times. Max 20 refunds per run. NO one on the team needs to start it.",c:"mint"},
+     {n:"Triggers 1–3",t:"Double Payment / Warehouse Cancel / Return",d:"Customer paid twice → detects within 40 min, refunds extra immediately. Warehouse cancelled order → full refund + restock. Package returned to warehouse → Bosta confirms → refund issued.",c:""},
+     {n:"Triggers 4–5",t:"Failed Delivery / Missing 9+ Days",d:"Delivery failed (couldn't reach customer) → Bosta marks failed → bot refunds. Package missing 9+ days (no tracking activity) → assumes lost → full refund.",c:"lemon"},
+     {n:"Triggers 6–7",t:"Full OOS / Partial OOS",d:"Entire order OOS for 2+ days → full refund. Part of order OOS → refunds OOS items only, ships rest, customer gets auto-email.",c:"mint"},
+     {n:"Manual Flags",t:"2 Situations Requiring Human Action",d:"Order >EGP 5,000 → tagged 'Refund: Needs Review' → DM Ahmed to approve, then refund manually in Paymob. Refund failed 3 times → 🔴 in Slack → check Paymob (SOP-REFUND-02) and escalate.",c:"coral"}
+   ],
+   canned:"We have verified your refund status in our automated payment system. Your refund has been processed and should reflect within the standard banking window."}
+];
+
+// ── DECISION TREE STRUCTURE (Chronological Hierarchy) ──
 const DECISION_TREE_STRUCTURE = [
   {
     id: "product_quality",
@@ -660,34 +762,6 @@ const DECISION_TREE_STRUCTURE = [
       { reason: "Account & Website Issues", action: "Update customer phone number or delivery address", res: "Edit Customer Data" }
     ]
   }
-];
-
-// ── SOP DATA ──
-const SOPS = [
-  {code:"SOP-CORE-01",cat_en:"Core Operational Principles",cat_ar:"مبادئ العمل الأساسية",icon:"⭐",iconcls:"cat-icon-indigo",
-   sys:"Shopify + Gorgias + Slack + Bosta",
-   t_en:"⚡ Golden Workflow — The 4-Step Agent Standard",t_ar:"⚡ الـ Golden Workflow — معيار الأجنت الأربع خطوات",
-   d_en:"The 4-step standard every agent must follow on every ticket. No exceptions.",
-   d_ar:"الـ 4 خطوات التي يجب على كل أجنت اتباعها في كل تذكرة بدون استثناءات.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag First",d:"ALWAYS open the ticket and flag the issue BEFORE contacting the customer. Non-negotiable. Protects the 24h SLA.",c:"coral"},
-     {n:"Step 2",t:"5-Tool Self-Investigation",d:"Check all 5 platforms: Shopify (tags+status) → Gorgias (full history) → Slack (team notes) → Bosta (AWB+attempts) → Estbdal/Refund Sheets. NEVER blindly follow a previous agent.",c:"lemon"},
-     {n:"Step 3",t:"One-Touch Resolution",d:"Deliver the complete solution in the very first response. Correct SKU/refund/exchange executed simultaneously. No back-and-forth.",c:"mint"},
-     {n:"Step 4",t:"Close Within 2–3 Hours",d:"Close resolved tickets within 2–3h maximum. Queue pollution = QA deduction.",c:""}
-   ],
-   canned:"Your request has been handled according to our full operational standard — investigated across all systems, resolved in one touch, and documented completely."},
-  {code:"SOP-CS-01",cat_en:"Customer Support & Ticket Ops",cat_ar:"بروتوكولات إدارة التذاكر",icon:"🎯",iconcls:"cat-icon-indigo",
-   sys:"Gorgias + Shopify + Slack",
-   t_en:"📌 Ticket First Protocol — 24h SLA & Mandatory Order Number",t_ar:"📌 بروتوكول فتح التذكرة أولاً",
-   d_en:"MANDATORY: Always open and flag the ticket BEFORE contacting the customer. Order Number in sheet is non-negotiable.",
-   d_ar:"إلزامي: افتح التذكرة واعمل Flag أولاً قبل التواصل مع العميل.",
-   steps:[
-     {n:"Step 1",t:"Open Ticket & Flag BEFORE Customer Contact",d:"Contacting customer BEFORE opening ticket = SLA breach + QA auto-deduction. This is non-negotiable.",c:"coral"},
-     {n:"Step 2",t:"Mandatory Order Number — No Blank Entries Ever",d:"Every sheet entry must have the Order Number. A ticket without order number cannot be tracked or escalated properly.",c:""},
-     {n:"Step 3",t:"5-Tool Investigation Before Any Response",d:"Shopify (order status, tags, metafields) → Gorgias (history, previous agents) → Slack (team flags) → Bosta (AWB, attempts) → Estbdal/Refund Sheets. Never assume — always self-verify.",c:"lemon"},
-     {n:"Step 4",t:"Close Resolved Tickets Within 2–3 Hours",d:"Resolved ticket sitting open = QA deduction + queue pollution. Close the moment the issue is fully resolved and communicated.",c:"mint"}
-   ],
-   canned:"Hello! We have flagged and logged your ticket. Our team is investigating your case and will provide a full resolution shortly."}
 ];
 
 // ── NAVIGATION & CORE INIT ──
@@ -822,7 +896,7 @@ function renderDT(nodeId = null) {
     if (prompt) prompt.innerText = `Actions & Contact Reasons under: ${selectedCat.title}`;
     
     let html = '';
-    selectedCat.actions.forEach((act, idx) => {
+    selectedCat.actions.forEach((act) => {
       html += `
         <div class="dt-btn" style="cursor:default">
           <div style="font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;margin-bottom:4px">Reason: ${act.reason}</div>
