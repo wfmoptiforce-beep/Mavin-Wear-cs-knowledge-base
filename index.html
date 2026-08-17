@@ -15,18 +15,19 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
-/* ── NAV BAR ── */
-.topnav{background:var(--midnight);padding:0 24px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);height:64px}
-.nav-brand{display:flex;align-items:center;gap:10px;padding:10px 16px 10px 0;border-right:1px solid rgba(255,255,255,.1);margin-right:12px;cursor:pointer;transition:.2s}
-.nav-brand:hover{opacity:.85}
-.nav-brand-icon{width:36px;height:36px;background:var(--indigo);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;box-shadow:0 4px 12px rgba(75,75,249,.4)}
-.nav-brand-text{color:#fff;font-weight:800;font-size:14px;line-height:1.2}
-.nav-brand-sub{color:rgba(255,255,255,.5);font-size:9.5px;font-weight:600;letter-spacing:1.2px}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1;overflow-x:auto;padding:4px 0}
+/* ── NAV BAR (Centered Logo & Clean Links) ── */
+.topnav{background:var(--midnight);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);height:68px}
+.nav-brand{display:flex;align-items:center;gap:12px;cursor:pointer;margin:0 auto;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:40px;height:40px;background:var(--indigo);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;box-shadow:0 4px 14px rgba(75,75,249,.4)}
+.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2;text-align:center}
+.nav-brand-sub{color:rgba(255,255,255,.5);font-size:10px;font-weight:600;letter-spacing:1.5px}
+
+.nav-links{display:flex;align-items:center;gap:4px;z-index:2}
 .nav-link{padding:8px 14px;border-radius:8px;color:rgba(255,255,255,.65);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px}
 .nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
 .nav-link.active{background:var(--indigo);color:#fff;box-shadow:0 4px 12px rgba(75,75,249,.3)}
-.nav-right{margin-left:auto;padding-left:16px}
+
+.nav-right{z-index:2}
 .user-sel{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
 .user-sel option{background:var(--midnight);color:#fff}
 
@@ -34,41 +35,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .page{display:none;padding:32px;max-width:1400px;margin:0 auto}
 .page.active{display:block}
 
-/* ── HOME HERO ── */
-.hero{background:linear-gradient(135deg,var(--indigo) 0%,#3730d4 60%,var(--midnight) 100%);border-radius:18px;padding:48px;margin-bottom:28px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(75,75,249,.2)}
-.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;background:rgba(255,255,255,.04);border-radius:50%}
-.hero-title{font-size:34px;font-weight:900;color:#fff;margin-bottom:10px;letter-spacing:-.5px}
-.hero-sub{color:rgba(255,255,255,.75);font-size:15.5px;margin-bottom:28px;max-width:550px;line-height:1.5}
+/* ── HOME HERO (Centered Logo & Header) ── */
+.hero{background:linear-gradient(135deg,var(--indigo) 0%,#3730d4 60%,var(--midnight) 100%);border-radius:18px;padding:50px 32px;margin-bottom:28px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(75,75,249,.2);text-align:center}
+.hero-logo-center{width:64px;height:64px;background:#fff;color:var(--indigo);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:28px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.hero-title{font-size:36px;font-weight:900;color:#fff;margin-bottom:10px;letter-spacing:-.5px}
+.hero-sub{color:rgba(255,255,255,.8);font-size:15.5px;margin:0 auto;max-width:600px;line-height:1.5}
 
 /* ── FOOTER ── */
 .footer{text-align:center;padding:28px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--border);margin-top:40px}
+
+@media(max-width:992px){
+  .nav-brand{position:static;transform:none;margin:0}
+  .topnav{justify-content:space-between;height:auto;padding:12px 16px;flex-wrap:wrap;gap:10px}
+}
 </style>
 </head>
 <body>
 
-<!-- TOP NAVIGATION BAR (Clicking Brand returns Home) -->
+<!-- TOP NAVIGATION BAR -->
 <nav class="topnav">
-  <div class="nav-brand" onclick="nav('home')" title="Go to Home">
-    <div class="nav-brand-icon">M</div>
-    <div>
-      <div class="nav-brand-text">MAVIN OPS HUB</div>
-      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA · CS</div>
-    </div>
-  </div>
-  
   <div class="nav-links" id="navLinksContainer">
     <button class="nav-link active" onclick="nav('home')">🏠 Home</button>
     <button class="nav-link" onclick="nav('sops')">📚 SOP Library</button>
     <button class="nav-link" onclick="nav('scenarios')">💬 Scenarios</button>
-    <button class="nav-link" onclick="nav('portal')">🔍 Return Portal</button>
-    <button class="nav-link" onclick="nav('qa')">⭐ QA Audit</button>
+  </div>
+
+  <!-- Centered Logo / Brand -->
+  <div class="nav-brand" onclick="nav('home')" title="Go to Home">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
   </div>
 
   <div class="nav-right">
     <select class="user-sel" id="userSel" onchange="changeUser()">
-      <option value="agent@mavinwear.com">Support Agent</option>
-      <option value="nourtamer2005@gmail.com">Nour Tamer (Reviewer)</option>
-      <option value="Rehabmohamed881@gmail.com">Rehab Mohamed (QA)</option>
+      <option value="zahraa@mavinwear.com">زهراء (Support)</option>
+      <option value="nourtamer2005@gmail.com">Nour Tamer</option>
+      <option value="Rehabmohamed881@gmail.com">Rehab Mohamed</option>
     </select>
   </div>
 </nav>
@@ -78,43 +83,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <!-- 1. HOME PAGE -->
 <div class="page active" id="page-home">
   <div class="hero">
+    <div class="hero-logo-center">M</div>
     <div class="hero-title">MAVIN × BOSTA Operations Hub</div>
-    <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Ready for your custom modules and structured data.</div>
-  </div>
-  <div style="background:var(--card); border:1px solid var(--border); border-radius:14px; padding:30px; text-align:center;">
-    <h3 style="color:var(--midnight); margin-bottom:10px;">👋 مرحباً بكِ يا أسمى في الهيكل الجديد للموقع</h3>
-    <p style="color:var(--muted); font-size:14px;">جاهز لاستقبال المعلومات والقسم الأول بحسب رغبتكِ لربطه بأعلى جودة واحترافية.</p>
+    <div class="hero-sub">The single source of truth for CS, Ops, Finance & QA. Built with Mavin Wear brand identity.</div>
   </div>
 </div>
 
-<!-- 2. SOP LIBRARY PAGE (Placeholder) -->
+<!-- 2. SOP LIBRARY PAGE -->
 <div class="page" id="page-sops">
   <h2 style="color:var(--midnight); margin-bottom:20px;">📚 SOP Library</h2>
-  <p style="color:var(--muted);">هنا سيتم وضع قسم الإجراءات والخطوات التفصيلية...</p>
+  <p style="color:var(--muted);">قريباً تفاصيل الإجراءات التشغيلية...</p>
 </div>
 
-<!-- 3. SCENARIOS PAGE (Placeholder) -->
+<!-- 3. SCENARIOS PAGE -->
 <div class="page" id="page-scenarios">
   <h2 style="color:var(--midnight); margin-bottom:20px;">💬 Customer Scenarios</h2>
-  <p style="color:var(--muted);">هنا سيتم ربط شيت السيناريوهات والـ Decision Tree...</p>
-</div>
-
-<!-- 4. RETURN PORTAL PAGE (Placeholder) -->
-<div class="page" id="page-portal">
-  <h2 style="color:var(--midnight); margin-bottom:20px;">🔍 Return & Refund Portal</h2>
-  <p style="color:var(--muted);">هنا سيتم ربط شيت المرتجعات والريبورتات...</p>
-</div>
-
-<!-- 5. QA AUDIT PAGE (Placeholder) -->
-<div class="page" id="page-qa">
-  <h2 style="color:var(--midnight); margin-bottom:20px;">⭐ Quality Assurance Audit</h2>
-  <p style="color:var(--muted);">هنا سيتم وضع نظام تقييم الكواليتي الدقيق...</p>
+  <p style="color:var(--muted);">قريباً سيناريوهات العملاء...</p>
 </div>
 
 <footer class="footer">MAVIN Wear Operations Hub — All Rights Reserved</footer>
 
 <script>
-// Navigation Router Function
 function nav(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -123,7 +112,7 @@ function nav(pageId) {
   if (target) target.classList.add('active');
   
   document.querySelectorAll('.nav-link').forEach(l => {
-    if (l.getAttribute('onclick') && l.getAttribute('onclickincludes') === pageId || l.getAttribute('onclick').includes("'" + pageId + "'")) {
+    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + pageId + "'")) {
       l.classList.add('active');
     }
   });
