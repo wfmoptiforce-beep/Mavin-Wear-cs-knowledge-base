@@ -3,179 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAVIN | Operations, Agent SOPs & QA Intelligence Hub</title>
+  <title>MAVIN | Operations, Shopify/Bosta SOPs & QA Intelligence Hub</title>
   
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
     :root {
-      --primary: #0f172a;
-      --primary-hover: #1e293b;
-      --accent: #2563eb;
-      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-      --accent-light: #eff6ff;
-      --bg: #f8fafc;
+      --primary: #09090b;
+      --primary-hover: #18181b;
+      --accent: #000000;
+      --accent-light: #f4f4f5;
+      --bg: #ffffff;
       --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --success: #10b981;
+      --border: #e4e4e7;
+      --border-dark: #27272a;
+      --success: #166534;
       --success-bg: #f0fdf4;
-      --warning: #f59e0b;
+      --warning: #854d0e;
       --warning-bg: #fefce8;
-      --danger: #ef4444;
+      --danger: #991b1b;
       --danger-bg: #fef2f2;
-      --purple: #8b5cf6;
-      --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-      --text: #1e293b;
-      --muted: #64748b;
+      --text: #09090b;
+      --muted: #71717a;
     }
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px; -webkit-font-smoothing: antialiased; }
     .container { max-width: 1250px; margin: 0 auto; }
     
-    .header { text-align: center; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 20px; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .header { text-align: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 18px; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .brand-logo-wrap { display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 6px; }
-    .brand-sub { font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+    .brand-sub { font-size: 12.5px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top: 2px; }
     
-    .top-bar { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; gap: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
-    .role-tag { background: var(--accent-light); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; border: 1px solid #bfdbfe; text-transform: uppercase; letter-spacing: 0.5px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+    .role-tag { background: var(--accent-light); color: var(--primary); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
     
     .top-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; font-weight: 700; color: var(--primary); cursor: pointer; transition: all 0.2s ease; font-size: 13.5px; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-    .nav-btn:hover { background: #f1f5f9; border-color: #cbd5e1; transform: translateY(-1px); }
+    .nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1px solid var(--border); border-radius: 6px; font-weight: 700; color: var(--primary); cursor: pointer; transition: all 0.15s ease; font-size: 13px; text-decoration: none; }
+    .nav-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
     .nav-btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
-    .nav-btn.primary:hover { background: #1e293b; }
-    .nav-btn.accent { background: var(--accent); color: white; border-color: var(--accent); }
-    .nav-btn.accent:hover { background: #1d4ed8; }
-    .nav-btn.qa-btn { background: var(--purple-gradient); color: white; border: none; }
+    .nav-btn.primary:hover { background: #27272a; border-color: #27272a; }
+    .nav-btn.accent { background: #18181b; color: white; border-color: #18181b; }
+    .nav-btn.accent:hover { background: #27272a; }
+    .nav-btn.qa-btn { background: #000000; color: white; border-color: #000000; }
 
-    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: white; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: border-color 0.2s; }
-    .search-box:focus { outline: none; border-color: var(--accent); }
+    .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 6px; font-size: 14.5px; background: white; margin-bottom: 20px; transition: border-color 0.2s; }
+    .search-box:focus { outline: none; border-color: var(--primary); }
 
     /* Interactive Agent Workflow Guide */
-    .workflow-banner { background: var(--accent-gradient); color: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 10px 25px -5px rgba(37,99,235,0.2); }
+    .workflow-banner { background: var(--primary); color: white; border-radius: 10px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .workflow-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
     .flow-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: stretch; }
-    .flow-step-card { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 16px; min-width: 220px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; backdrop-filter: blur(4px); }
-    .flow-step-num { font-size: 11px; font-weight: 800; color: #bfdbfe; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 1px; }
+    .flow-step-card { background: #18181b; border: 1px solid var(--border-dark); border-radius: 8px; padding: 16px; min-width: 220px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .flow-step-num { font-size: 11px; font-weight: 800; color: #a1a1aa; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 1px; }
     .flow-step-head { font-size: 14.5px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
-    .flow-step-desc { font-size: 12.5px; color: #e0e7ff; line-height: 1.4; }
-    .flow-arrow { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 20px; font-weight: bold; flex-shrink: 0; }
+    .flow-step-desc { font-size: 12.5px; color: #d4d4d8; line-height: 1.4; }
+    .flow-arrow { display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 20px; font-weight: bold; flex-shrink: 0; }
 
     /* Category Cards Grid */
-    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-bottom: 25px; }
-    .cat-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
-    .cat-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
-    .cat-icon { font-size: 28px; margin-bottom: 12px; }
-    .cat-name { font-size: 18px; font-weight: 800; color: var(--primary); margin: 0 0 6px 0; }
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 25px; }
+    .cat-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 22px; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; }
+    .cat-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .cat-icon { font-size: 26px; margin-bottom: 12px; }
+    .cat-name { font-size: 17px; font-weight: 800; color: var(--primary); margin: 0 0 6px 0; letter-spacing: -0.2px; }
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
-    .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
+    .cat-badge { font-size: 11.5px; font-weight: 700; color: var(--primary); background: var(--accent-light); padding: 5px 12px; border-radius: 4px; align-self: flex-start; border: 1px solid var(--border); }
 
     /* Clean SOP Presentation */
-    .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .sop-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 20px; text-align: left; }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
-    .sop-code-badge { display: inline-block; background: var(--accent); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
-    .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .sop-desc-box { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
+    .sop-title { font-size: 19px; font-weight: 800; color: var(--primary); margin: 0; }
+    .sop-code-badge { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .sop-tag { display: inline-block; font-size: 11.5px; font-weight: 700; background: var(--accent-light); color: var(--primary); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+    .sop-desc-box { background: var(--accent-light); border-left: 3px solid var(--primary); padding: 14px 16px; border-radius: 4px; font-size: 13.5px; color: #27272a; line-height: 1.6; margin: 15px 0; }
 
     .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
-    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
-    .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
-    .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
+    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; align-items: flex-start; }
+    .step-number { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+    .step-content { font-size: 13.5px; line-height: 1.6; color: #27272a; flex: 1; }
 
-    .canned-box { background: var(--success-bg); border: 1px solid #bbf7d0; border-left: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
-    .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
-    .copy-btn:hover { background: #059669; }
+    .canned-box { background: var(--accent-light); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 16px; border-radius: 6px; margin-top: 15px; position: relative; }
+    .copy-btn { background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; float: right; font-size: 11.5px; font-weight: 700; }
+    .copy-btn:hover { background: #27272a; }
 
     /* Interactive Decision Wizard */
-    .dt-wrapper { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 28px; margin-bottom: 25px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .dt-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border); padding: 28px; margin-bottom: 25px; text-align: left; }
     .dt-top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
-    .dt-breadcrumb { font-size: 13.5px; color: var(--muted); font-weight: 600; }
-    .dt-breadcrumb span { color: var(--accent); }
-    .lang-toggle { display: flex; background: #f1f5f9; border-radius: 8px; padding: 3px; border: 1px solid var(--border); }
-    .lang-btn { border: none; padding: 6px 12px; border-radius: 6px; font-size: 12.5px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
-    .lang-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .dt-breadcrumb { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .dt-breadcrumb span { color: var(--primary); }
+    .lang-toggle { display: flex; background: var(--accent-light); border-radius: 6px; padding: 2px; border: 1px solid var(--border); }
+    .lang-btn { border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; color: var(--muted); }
+    .lang-btn.active { background: var(--primary); color: white; }
 
-    .dt-prompt { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
-    .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .dt-prompt { font-size: 19px; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+    .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
     
-    .dt-card-btn { background: #ffffff; border: 2px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; text-align: left; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-    .dt-card-btn:hover { border-color: var(--accent); background: #f0f7ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
-    .dt-card-title { font-size: 16px; font-weight: 700; color: var(--primary); line-height: 1.4; }
-    .dt-card-hint { font-size: 13px; color: var(--muted); line-height: 1.4; }
-    .dt-card-action { font-size: 12px; font-weight: bold; color: var(--accent); align-self: flex-end; }
+    .dt-card-btn { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 18px; cursor: pointer; text-align: left; transition: all 0.15s ease; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+    .dt-card-btn:hover { border-color: var(--primary); background: var(--accent-light); transform: translateY(-2px); }
+    .dt-card-title { font-size: 15px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+    .dt-card-hint { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+    .dt-card-action { font-size: 11.5px; font-weight: 700; color: var(--primary); align-self: flex-end; }
 
-    .dt-resolution-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 15px; }
-    .res-badge { display: inline-block; background: var(--success); color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .dt-resolution-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-top: 15px; }
+    .res-badge { display: inline-block; background: var(--primary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
     .res-grid-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 15px 0; }
-    .res-info-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .res-info-card { background: var(--accent-light); border: 1px solid var(--border); border-radius: 4px; padding: 12px; }
     .res-info-label { font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase; }
-    .res-info-val { font-size: 15px; font-weight: bold; color: var(--primary); margin-top: 4px; }
+    .res-info-val { font-size: 14.5px; font-weight: 800; color: var(--primary); margin-top: 4px; }
 
-    .res-block { background: white; border: 1px solid var(--border); border-left: 5px solid var(--accent); padding: 16px; border-radius: 8px; margin: 12px 0; }
-    .res-block strong { color: var(--primary); font-size: 14px; }
-    .res-block div { margin-top: 6px; font-size: 15px; color: #334155; line-height: 1.5; }
+    .res-block { background: var(--accent-light); border: 1px solid var(--border); border-left: 3px solid var(--primary); padding: 14px; border-radius: 4px; margin: 12px 0; }
+    .res-block strong { color: var(--primary); font-size: 13.5px; }
+    .res-block div { margin-top: 6px; font-size: 14px; color: #27272a; line-height: 1.5; }
 
-    /* Clean 63 Scenarios Styling */
-    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 16px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: 0.2s; }
-    .scenario-item:hover { border-color: var(--accent); box-shadow: 0 6px 15px rgba(0,0,0,0.06); }
-    .sc-source { font-size: 11.5px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
-    .sc-quote { font-size: 15.5px; font-weight: 700; color: var(--primary); margin-bottom: 12px; direction: ltr; unicode-bidi: plaintext; background: var(--accent-light); padding: 12px 16px; border-radius: 8px; border: 1px solid #bfdbfe; }
-    .sc-explain { font-size: 14px; color: #334155; margin-bottom: 15px; line-height: 1.6; }
+    /* Scenarios Styling */
+    .scenario-item { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 14px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: 0.15s; }
+    .scenario-item:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .sc-source { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .sc-quote { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 10px; direction: ltr; unicode-bidi: plaintext; background: var(--accent-light); padding: 10px 14px; border-radius: 6px; border: 1px solid #bfdbfe; }
+    .sc-explain { font-size: 13.5px; color: #334155; margin-bottom: 14px; line-height: 1.6; }
     .sc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .sc-tag-reason { background: #e0e7ff; color: #3730a3; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px; }
-    .sc-tag-res { background: #dcfce7; color: #166534; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px; }
+    .sc-tag-reason { background: #e0e7ff; color: #3730a3; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+    .sc-tag-res { background: #dcfce7; color: #166534; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
 
     /* Refund Portal Banner & Table */
-    .portal-banner { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 12px; padding: 22px; margin-bottom: 20px; }
+    .portal-banner { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
     .portal-search-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-    .portal-search-input { flex: 1; min-width: 250px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: white; }
-    .tab-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-    .tab-pill-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #bfdbfe; background: white; color: var(--accent); font-size: 12.5px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .tab-pill-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .portal-search-input { flex: 1; min-width: 250px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: white; }
+    .tab-pills { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+    .tab-pill-btn { padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border); background: white; color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+    .tab-pill-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 12px 10px; text-align: left; vertical-align: middle; }
-    th { background: #f8fafc; font-weight: bold; color: var(--primary); white-space: nowrap; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12.5px; }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: middle; }
+    th { background: var(--accent-light); font-weight: 700; color: var(--primary); white-space: nowrap; }
 
-    /* Refined Status Badges */
-    .status-pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; text-align: center; }
-    .status-success { background: var(--success-bg); color: var(--success); border: 1px solid #86efac; }
-    .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid #fde68a; }
-    .status-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
-    .status-info { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .status-pill { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-align: center; }
+    .status-success { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+    .status-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
+    .status-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+    .status-info { background: var(--accent-light); color: var(--primary); border: 1px solid var(--border); }
 
     /* QA Dashboard & Form */
-    .qa-dashboard-box { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .qa-dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-    .qa-metric-card { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; text-align: center; }
-    .qa-metric-value { font-size: 24px; font-weight: 900; color: var(--accent); margin-top: 4px; }
+    .qa-dashboard-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); text-align: left; }
+    .qa-dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+    .qa-metric-card { background: var(--accent-light); border: 1px solid var(--border); border-radius: 6px; padding: 14px; text-align: center; }
+    .qa-metric-value { font-size: 22px; font-weight: 900; color: var(--primary); margin-top: 4px; }
 
-    .qa-header-card { background: var(--purple-gradient); color: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 10px 25px -5px rgba(139,92,246,0.3); }
-    .qa-score-circle { background: white; color: var(--purple); width: 90px; height: 90px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .qa-header-card { background: #000000; color: white; border-radius: 8px; padding: 22px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+    .qa-score-circle { background: white; color: var(--primary); width: 85px; height: 85px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; }
     .qa-score-circle span { font-size: 10px; font-weight: bold; color: var(--muted); }
 
-    .qa-section { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 16px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .qa-section-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
-    .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 10px; background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid var(--border); }
-    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
-    .fatal-banner { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 10px; padding: 18px; margin-bottom: 16px; text-align: left; }
+    .qa-section { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 16px; text-align: left; }
+    .qa-section-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; background: var(--accent-light); padding: 12px; border-radius: 4px; border: 1px solid var(--border); }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .fatal-banner { background: var(--danger-bg); border: 1px solid #fca5a5; border-radius: 6px; padding: 15px; margin-bottom: 16px; text-align: left; }
 
-    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 800; }
-    .status-approved { background: #dcfce7; color: #166534; }
-    .status-rejected { background: #fee2e2; color: #991b1b; }
-    .status-pending { background: #fef3c7; color: #854d0e; }
+    .status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .status-approved { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
+    .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .modal-content { background: white; border-radius: 12px; max-width: 600px; width: 100%; padding: 28px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: white; border-radius: 8px; max-width: 600px; width: 100%; padding: 25px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); text-align: left; }
 
-    /* Forms Inputs */
-    label { display: block; margin-top: 12px; font-weight: 700; font-size: 13.5px; text-align: left; color: var(--primary); }
-    input, select, textarea { width: 100%; padding: 11px 14px; margin-top: 5px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; text-align: left; background: white; color: var(--primary); }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-    .submit-btn { width: 100%; padding: 14px; background: var(--purple-gradient); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 20px; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
-    .submit-btn:hover { opacity: 0.9; }
+    label { display: block; margin-top: 12px; font-weight: 700; font-size: 13px; text-align: left; color: var(--primary); }
+    input, select, textarea { width: 100%; padding: 10px 12px; margin-top: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 13.5px; text-align: left; background: white; color: var(--primary); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    .submit-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 700; margin-top: 20px; cursor: pointer; transition: background 0.15s; }
+    .submit-btn:hover { background: #27272a; }
   </style>
 </head>
 <body>
@@ -197,14 +193,14 @@
         <path d="M224 42V6H234L250 29V6H260V42H250L234 19V42H224Z" fill="#09090B"/>
       </svg>
     </div>
-    <div class="brand-sub">Operations, Bosta Partnership & QA Intelligence Hub</div>
+    <div class="brand-sub">Operations, Refund Bot & QA Intelligence Hub</div>
   </div>
 
   <!-- User Session Header -->
   <div class="top-bar">
     <div class="user-badge">
       <span>👤 Active User:</span>
-      <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:6px 12px; font-weight:bold; margin:0;">
+      <select id="userSelector" onchange="changeUserSession()" style="width:auto; padding:4px 8px; font-weight:bold; margin:0;">
         <option value="agent@mavinwear.com">Support Agent (General CS)</option>
         <option value="nourtamer2005@gmail.com">Nour Tamer (Escalation Reviewer)</option>
         <option value="nanielshazly4@gmail.com">Nani El Shazly (Escalation Reviewer)</option>
@@ -268,7 +264,7 @@
   <!-- 1. HOME VIEW -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Fulfillment, One Touch, 10% Store Credit, Awaiting Action, NDR)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Refund Bot, Paymob, Bosta, One Touch, 10% Store Credit)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
@@ -349,7 +345,7 @@
     </div>
 
     <div class="portal-banner">
-      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Bosta fulfillment, Awaiting Action, 10% bonus, Compression Tee)..." onkeyup="filterScenarios()">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Refund Bot, Paymob, 10% bonus)..." onkeyup="filterScenarios()">
       <div class="tab-pills" id="scenarioCategoryPills"></div>
     </div>
 
@@ -426,7 +422,7 @@
         <input type="text" id="customer_name" required>
 
         <label>Contact Reason:</label>
-        <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Bosta Awaiting Action / COD Refund" required>
+        <input type="text" id="contact_reason" placeholder="e.g. Production Defect / Bosta Awaiting Action / Refund Bot Issue" required>
 
         <label>Ticket Date:</label>
         <input type="date" id="ticket_date" required>
@@ -486,7 +482,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
         <h2 style="margin:0; color:var(--primary); font-size:22px;">⭐ Quality Assurance (QA) Smart Audit Form</h2>
-        <span style="font-size:13px; color:var(--muted);">Dynamic scoring engine with Fatal flags, One-Touch delivery & Multi-Tool Investigation.</span>
+        <span style="font-size:13px; color:var(--muted);">Dynamic scoring engine with duplicate ticket check per month, Fatal flags & Multi-Tool Investigation.</span>
       </div>
       <button class="nav-btn primary" onclick="goToHome()">🏠 Back to Home</button>
     </div>
@@ -664,7 +660,7 @@
     </form>
   </div>
 
-  <!-- 9. QA EVALUATION LOGS VIEW WITH MONTHLY/YEARLY OVERALL DASHBOARD -->
+  <!-- 9. QA EVALUATION LOGS VIEW WITH DASHBOARD -->
   <div id="qualityLogsSection" style="display:none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:10px;">
       <div>
@@ -717,16 +713,16 @@
 
       <div class="qa-dashboard-grid">
         <div class="qa-metric-card">
-          <div style="font-size: 11.5px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Total Evaluations</div>
+          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Total Evaluations</div>
           <div class="qa-metric-value" id="dashTotalCount">0</div>
         </div>
         <div class="qa-metric-card">
-          <div style="font-size: 11.5px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Average Score</div>
+          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Average Score</div>
           <div class="qa-metric-value" id="dashOverallScore" style="color: var(--accent);">0%</div>
         </div>
         <div class="qa-metric-card">
-          <div style="font-size: 11.5px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Grade</div>
-          <div class="qa-metric-value" id="dashOverallGrade" style="font-size: 18px; color: var(--success);">N/A</div>
+          <div style="font-size: 11px; font-weight: bold; color: var(--muted); text-transform: uppercase;">Overall Grade</div>
+          <div class="qa-metric-value" id="dashOverallGrade" style="font-size: 16px; color: var(--success);">N/A</div>
         </div>
       </div>
     </div>
@@ -783,8 +779,33 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING BOSTA PARTNERSHIP HANDBOOK & PLAYBOOKS)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING REFUND BOT SOP)
   const EMBEDDED_MASTER_SOPS = [
+    {
+      code: "SOP-BOT-01",
+      category_en: "Refund Bot & Paymob Operations",
+      category_ar: "بوت الاسترداد الآلي ومعاملات Paymob",
+      system: "Paymob + Shopify + Slack (#cs-updates)",
+      title_en: "🤖 Mavin Wear Refund Bot & Daily 2-Minute Check SOP",
+      title_ar: "🤖 دليل تشغيل بوت الاسترداد الآلي وفحص Paymob اليومي",
+      description_en: "Automatic bot runs daily (Sun-Thu, 2pm-2am Cairo time) to refund qualifying prepaid Paymob orders. Handles 7 automatic situations (accidental double payments, warehouse cancellations, returned packages, missing 9+ days, OOS). Stops and flags for human review if order > EGP 5,000 or refund fails 3x.",
+      description_ar: "بوت يعمل يومياً أوتوماتيكياً لاسترداد طلبات Paymob المؤهلة. يعالج 7 حالات أوتوماتيكياً (دفع مرتين، إلغاء المخزن، مرتجعات، شحنات مفقودة، نفاد مخزون). يتوقف للتدخل البشري إذا تجاوز الطلب 5000 جنيه أو فشل الاسترداد 3 مرات.",
+      steps_en: [
+        "1. Daily Morning Check: Open Slack #cs-updates and find today's 'Refunds — YYYY-MM-DD' report.",
+        "2. Review the Split: Check ✅ clean (auto-refunded), 🔄 recovered (retried & succeeded), and 🔴 failed (failed 3 times).",
+        "3. Investigate Failures: If 🔴 failed > 0, type /breakdown in Slack to see failed orders, then look them up in Paymob dashboard (eg.dashboard.paymob.com).",
+        "4. Paymob Lookup: Filter by Order ID (= Shopify order #). Status Success = manual refund possible; Pending = wait 24-48h; Declined = cancel Shopify order.",
+        "5. Escalation: Escalate to Ahmed if an order fails 3 days in a row or requires 'Refund: Needs Review' approval (> 5,000 EGP)."
+      ],
+      steps_ar: [
+        "1. الفحص الصباحي اليومي: افتح Slack في قناة #cs-updates وابحث عن تقرير المرتجعات اليومي.",
+        "2. مراجعة التقسيم الثلاثي: ✅ تم بنجاح، 🔄 تم استرداده بعد إعادة المحاولة، 🔴 فشل ٣ مرات ويحتاج تدخلاً.",
+        "3. فحص الإخفاقات: عند وجود فشل (🔴 > 0)، اكتب /breakdown في Slack وابحث عن المعاملة في Paymob.",
+        "4. فحص Paymob: استخدم رقم طلب Shopify في خانة Order ID للتأكد من حالة الدفع.",
+        "5. التصعيد: قم بالتواصل مع أحمد في حال تعثر الطلب لثلاثة أيام متتالية أو وجود طلب يتجاوز 5000 جنيه."
+      ],
+      canned_reply: "We have checked the refund status in Paymob and processed your transaction successfully."
+    },
     {
       code: "SOP-BOSTA-01",
       category_en: "Bosta Partnership & Fulfillment",
@@ -793,7 +814,7 @@
       title_en: "📦 Bosta Fulfillment & Order Journey (3PL Partnership)",
       title_ar: "📦 رحلة الطلب وشراكة الإنجاز مع بوسطة (3PL Partnership)",
       description_en: "Bosta owns the full fulfillment operation (pick, pack, ship, last-mile). Mavin Wear owns sales and return decisions. Orders are received via API, queued for same-day processing (95%+ target), and tracked through delivery or NDR.",
-      description_ar: "تتولى بوسطة كامل عمليات الاستلام والتجهيز والشحن والتوصيل للعميل (3PL)، بينما تدير ميفين مبيعاتها وقرارات المرتجعات. يتم استقبال الطلبات عبر الـ API وإنجازها في نفس اليوم.",
+      description_ar: "تتولى بوسطة كامل عمليات الاستلام والتجهيز والشحن والتوصيل للعميل (3PL)، بينما تدير ميفين مبيعاتها وقرارات المرتجعات.",
       steps_en: [
         "1. Order Creation: Customer places order; clean data (address, phone, SKU) is pushed via API to Bosta.",
         "2. Pick & Pack: Bosta warehouse picks items, checks against order, and packs per agreed standards.",
@@ -801,31 +822,12 @@
         "4. Success / NDR: Delivered & COD collected, OR failed delivery resulting in NDR notification within 24h."
       ],
       steps_ar: [
-        "1. إنشاء الطلب: دفع بيانات صحيحة عبر الـ API (العنوان، الهاتف، الـ SKU).",
+        "1. إنشاء الطلب: دفع بيانات صحيحة عبر الـ API.",
         "2. التجهيز والتغليف: بوسطة تقوم بالانتقاي والتغليف وفق معايير الجودة.",
-        "3. التوصيل: بوسطة تتولى التوصيل وإرسال تحديثات التتبع للعميل.",
+        "3. التوصيل: بوسطة تتولى التوصيل وإرسال تحديثات التتبع.",
         "4. التسليم أو الـ NDR: تسليم ناجح وتحصيل الكاش، أو فشل تسجيل NDR خلال 24 ساعة."
       ],
-      canned_reply: "Your order has been securely processed and dispatched with Bosta delivery partner. You can track its live status anytime."
-    },
-    {
-      code: "SOP-BOSTA-02",
-      category_en: "Bosta Partnership & Fulfillment",
-      category_ar: "شراكة بوسطة والوفاء بالطلبات",
-      system: "Bosta Portal + Shopify Tags",
-      title_en: "⚠️ Bosta Exception Handling: Awaiting Action & OOS Orders",
-      title_ar: "⚠️ معالجة استثناءات بوسطة: طلبات Awaiting Action و OOS",
-      description_en: "Protocol for fixing stuck orders. 'Awaiting Action' (bad address/phone) must be flagged by Bosta within 2h and resolved by Mavin within 12h. OOS orders must be reported within 24h to avoid invisible dead stock.",
-      description_ar: "بروتوكول معالجة الطلبات المعلقة: طلبات Awaiting Action (عنوان/هاتف خاطئ) تُبلغ خلال ساعتين وتحل خلال 12 ساعة، وطلبات نفاد المخزون (OOS) تبلغ خلال 24 ساعة.",
-      steps_en: [
-        "Awaiting Action (Bad Address/Phone): Bosta flags within 2h ➔ Mavin contacts customer and sends fix within 12h ➔ Bosta re-dispatches within 24h.",
-        "OOS Orders: Warehouse flags out-of-stock items immediately ➔ Bosta sends OOS report within 24h ➔ Mavin decides (substitute, cancel, or hold) within 12h."
-      ],
-      steps_ar: [
-        "طلبات Awaiting Action: بوسطة تبلغ خلال ساعتين ➔ ميفين تتواصل وتصلح البيانات خلال 12 ساعة ➔ بوسطة تعيد الإرسال خلال 24 ساعة.",
-        "طلبات نفاد المخزون (OOS): إرسال تقرير OOS خلال 24 ساعة لقرارات الاستبدال أو الإلغاء."
-      ],
-      canned_reply: "We are coordinating directly with Bosta operations to update your delivery details and expedite dispatch."
+      canned_reply: "Your order has been securely processed and dispatched with Bosta delivery partner."
     },
     {
       code: "SOP-CORE-02",
@@ -835,18 +837,18 @@
       title_en: "📌 Ticket Opening First, 24H SLA & Mandatory Order Number",
       title_ar: "📌 بروتوكول فتح التذاكر وتتبع مهلة الـ 24 ساعة وإلزامية رقم الطلب",
       description_en: "Mandatory protocol: Always open the ticket and flag the issue BEFORE reaching out to the customer to maintain 24-hour SLA. All entries in the sheet must include the Order Number without exception.",
-      description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة، مع تسجيل رقم الطلب بدقة في الشيت وتحديثه على مدار اليوم.",
+      description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة، مع تسجيل رقم الطلب بدقة في الشيت.",
       steps_en: [
         "1. Open Ticket First: Open the ticket & flag the issue before contacting customer.",
         "2. Mandatory Order Number: Ensure the Order Number is filled in the sheet without leaving it blank.",
         "3. Real-time Sheet Updates: Check sheet in intervals, open tickets first, contact customers, and update sheet status."
       ],
       steps_ar: [
-        "1. فتح التذكرة أولاً وعمل Flag للمشكلة قبل مراسلة العميل لضمان الـ 24 ساعة.",
+        "1. فتح التذكرة أولاً وعمل Flag للمشكلة قبل مراسلة العميل.",
         "2. إلزامية ملء خانة رقم الطلب بالشيت وعدم ترك أي خانة فارغة.",
-        "3. متابعة الطلبات الموزعة وفتح التذاكر أولاً ثم التواصل والتحديث الدوري."
+        "3. متابعة الطلبات الموزعة وفتح التذاكر أولاً ثم التواصل."
       ],
-      canned_reply: "Hello! We have flagged and logged your ticket in our system. Your inquiry is being processed according to our official turnaround SLA."
+      canned_reply: "Hello! We have flagged and logged your ticket in our system according to our official turnaround SLA."
     },
     {
       code: "SOP-CORE-01",
@@ -861,7 +863,7 @@
         "1. Read ticket thoroughly before answering.",
         "2. Conduct complete investigation on Shopify, Gorgias & Slack.",
         "3. Send all required information and resolution in a single message.",
-        "4. Execute resolution immediately (do not wait for unnecessary customer replies).",
+        "4. Execute resolution immediately.",
         "5. Close ticket accurately from the first touch."
       ],
       steps_ar: [
@@ -1031,7 +1033,7 @@
     { source: "Pre-purchase & General", scenario: "هتنزلوا كوليكشن الصيفي إمتى؟ أنا مستنيه بفارغ الصبر.", explanation: "New collection restock inquiry. Share general availability info.", reason: "Stock & Availability", resolution: "Information Given" },
     { source: "Pre-purchase & General", scenario: "أنا اشتريت الأوردر إمبارح بـ 1000 جنيه، والنهاردة عملتوا سيل بقى بـ 700! ينفع أخد الفرق؟", explanation: "Post-purchase sale price adjustment inquiry. Explain promotional terms.", reason: "Discounts & Promotions", resolution: "Information Given" },
     { source: "Complex Returns & Policy", scenario: "أنا استلمت الأوردر من شهر وكنت مسافر ومفتحتوش، ينفع أبدله دلوقتي؟", explanation: "Travel exception request past 14 days. Politely decline per policy.", reason: "Late Return", resolution: "Information Given" },
-    { source: "Complex Returns & Policy", scenario: "عايز أرجع البنطلون بس أنا رميت التيكت والكيس بتاعه.", explanation: "Return without original packaging/tags. Decline per policy.", reason: "Policy Or ( Exchanges)", reason_ar: "Policy Or ( Exchanges)", resolution: "Information Given" },
+    { source: "Complex Returns & Policy", scenario: "عايز أرجع البنطلون بس أنا رميت التيكت والكيس بتاعه.", explanation: "Return without original packaging/tags. Decline per policy.", reason: "Policy Or ( Exchanges)", resolution: "Information Given" },
     { source: "Complex Returns & Policy", scenario: "عملت طلب استرجاع والمندوب أخد الحاجة من 3 أيام، الفلوس هتنزل حسابي إمتى؟", explanation: "Checking refund timeline post-pickup. Check batch refund schedule.", reason: "Refund not received", resolution: "Information Given" }
   ];
 
@@ -1071,7 +1073,7 @@
   function getCategoryIcon(cat) {
     const c = String(cat).toLowerCase();
     if (c.includes('ticket') || c.includes('تذاكر') || c.includes('protocol')) return '📌';
-    if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي')) return '💳';
+    if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي') || c.includes('bot')) return '💳';
     if (c.includes('core') || c.includes('one') || c.includes('golden') || c.includes('مبادئ')) return '⭐';
     if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة') || c.includes('bosta')) return '📦';
     if (c.includes('exchange') || c.includes('size') || c.includes('استبدال')) return '🔄';
@@ -1125,7 +1127,7 @@
         <div class="sop-card">
           <div class="sop-header">
             <div>
-              <div style="font-size:12px; font-weight:bold; color:var(--primary); margin-bottom:4px;">${item.code}</div>
+              <span class="sop-code-badge">${item.code}</span>
               <h3 class="sop-title">${title}</h3>
             </div>
             <span class="sop-tag">🖥️ ${item.system}</span>
@@ -1571,17 +1573,39 @@
     return { score: finalPercentage, grade: grade };
   }
 
-  // --- ROBUST QA SUBMIT FUNCTION WITH AGENT NAME & EMAIL ---
+  // --- ROBUST QA SUBMIT WITH DUPLICATE TICKET PER MONTH CHECK ---
   document.getElementById('qaForm').addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const ticketRef = document.getElementById('qa_ticket_ref').value.trim();
+    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentMonthYear = currentDate.substring(0, 7); // YYYY-MM
+
+    // Check existing records for duplicate ticket in the same month
+    try {
+      const existingRecords = JSON.parse(localStorage.getItem('mavin_qa_evaluations') || '[]');
+      const isDuplicate = existingRecords.some(r => {
+        if (!r.date || !r.ticket_ref) return false;
+        const rMonthYear = r.date.substring(0, 7);
+        return r.ticket_ref.toLowerCase() === ticketRef.toLowerCase() && rMonthYear === currentMonthYear;
+      });
+
+      if (isDuplicate) {
+        alert(`❌ Duplicate Error: Ticket "${ticketRef}" has already been evaluated in this month (${currentMonthYear}). Submission rejected.`);
+        return;
+      }
+    } catch (err) {
+      console.warn("Duplicate check error:", err);
+    }
+
     const scoreData = calculateQAScore();
 
     const auditRecord = {
-      date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+      date: currentDate,
       agent_name: document.getElementById('qa_agent_name').value.trim(),
       agent_email: document.getElementById('qa_agent_email').value.trim(),
       auditor_email: document.getElementById('qa_auditor_email').value.trim(),
-      ticket_ref: document.getElementById('qa_ticket_ref').value.trim(),
+      ticket_ref: ticketRef,
       attribution: document.getElementById('qa_attribution').value,
       score: scoreData.score + '%',
       score_num: scoreData.score,
@@ -1684,7 +1708,6 @@
     const selectedYear = document.getElementById('filterYear').value;
 
     let filtered = records.filter(r => {
-      // r.date is YYYY-MM-DD
       if (!r.date) return false;
       const [year, month, day] = r.date.split('-');
       
@@ -1763,7 +1786,16 @@
       container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:30px;">No documents found matching your search.</p>';
     } else {
       container.innerHTML = filtered.map(item => `
-        .sop-card { ... }
+        <div class="sop-card">
+          <div class="sop-header">
+            <div>
+              <span class="sop-code-badge">${item.code}</span>
+              <h3 class="sop-title">${currentHomeLang === 'en' ? item.title_en : item.title_ar}</h3>
+            </div>
+            <span class="sop-tag">🖥️ ${item.system}</span>
+          </div>
+          <div class="sop-desc-box">${currentHomeLang === 'en' ? item.description_en : item.description_ar}</div>
+        </div>
       `).join('');
     }
     
