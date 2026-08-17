@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,7 +6,7 @@
 <title>MAVIN OPS HUB - QA Audit</title>
 <style>
 :root {
-  --bg:#f3f3f7; --dark:#0a0a0a; --card:#ffffff; --card2:#f8f8f8;
+  --bg:#f3f3f7; --dark:#0a0a0a; --card:#ffffff;
   --border:#e5e5e5; --border2:#d0d0d0; --text:#111111; --muted:#888;
   --muted2:#bbb; --indigo:#4b4bf9;
   --green:#16a34a; --green-bg:#f0fdf4; --green-bd:#bbf7d0;
@@ -14,6 +14,7 @@
   --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
   --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
   --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
+  --orange:#ea580c; --orange-bg:#fff7ed; --orange-bd:#fed7aa;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
@@ -30,8 +31,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .nav-link.active{background:#fff;color:#0a0a0a}
 .nav-link svg{width:15px;height:15px;flex-shrink:0}
 .nav-right{z-index:2}
-.user-sel{background:transparent;border:1px solid #333;color:#666;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;outline:none}
-.user-sel option{background:#111;color:#fff}
+.user-badge{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
+.user-name{font-size:12px;font-weight:700;color:#fff}
+.user-role{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px}
 
 /* TABS */
 .tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
@@ -67,20 +70,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .meta-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
 .meta-input::placeholder{color:var(--muted2)}
 
-/* CRITERIA */
+/* CRITERIA ROWS */
 .criteria-grid{padding:4px 0}
-.criteria-row{display:flex;align-items:center;padding:12px 22px;border-bottom:1px solid #f5f5f5;gap:14px;transition:.1s}
+.criteria-row{display:flex;align-items:center;padding:13px 22px;border-bottom:1px solid #f5f5f5;gap:14px;transition:.1s}
 .criteria-row:last-child{border-bottom:none}
 .criteria-row:hover{background:#fafafa}
-.criteria-name{flex:1;font-size:13px;font-weight:600;color:#222}
-.criteria-max{font-size:11px;color:var(--muted);white-space:nowrap}
-.radio-group{display:flex;gap:5px}
-.radio-btn{width:36px;height:30px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
-.radio-btn:hover{border-color:#999;color:var(--text)}
-.radio-btn.sel-0{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-.radio-btn.sel-1{background:var(--yellow-bg);border-color:var(--yellow);color:var(--yellow)}
-.radio-btn.sel-2{background:var(--green-bg);border-color:var(--green);color:var(--green)}
-.radio-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
+.criteria-info{flex:1;display:flex;align-items:center;gap:10px}
+.criteria-name{font-size:13px;font-weight:600;color:#222}
+.criteria-pts-tag{font-size:10px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:2px 8px;white-space:nowrap}
+
+/* YES / NO / NA BUTTONS */
+.yn-group{display:flex;gap:6px}
+.yn-btn{padding:6px 16px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap}
+.yn-btn:hover{border-color:#999;color:var(--text)}
+.yn-btn.sel-yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.yn-btn.sel-no{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.yn-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
 
 /* CRITICAL */
 .critical-card{background:#fff;border:1.5px solid var(--red-bd);border-radius:16px;margin-bottom:16px;overflow:hidden}
@@ -91,25 +96,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .critical-row:last-child{border-bottom:none}
 .crit-name{font-size:13px;font-weight:700}
 .crit-desc{font-size:11.5px;color:var(--muted);margin-top:2px}
-.toggle-group{display:flex;gap:5px}
-.toggle-btn{padding:6px 13px;border-radius:7px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
-.toggle-btn:hover{border-color:#999;color:var(--text)}
-.toggle-btn.sel-yes{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-.toggle-btn.sel-no{background:var(--green-bg);border-color:var(--green);color:var(--green)}
-.toggle-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
 
-/* SCORE PANEL */
+/* LIVE SCORE PANEL */
 .score-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:28px}
-.score-circle{width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;transition:.3s}
-.score-num{font-size:28px;font-weight:900;line-height:1;transition:.3s}
-.score-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-top:2px}
+.score-circle{width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;transition:.3s;position:relative}
+.score-num{font-size:30px;font-weight:900;line-height:1;transition:.3s}
+.score-pct{font-size:12px;font-weight:700;color:var(--muted);margin-top:1px}
 .score-breakdown{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.score-item{background:#fafafa;border:1px solid var(--border);border-radius:9px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between}
+.score-item{background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.score-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .score-item-name{font-size:11px;color:var(--muted);font-weight:600}
 .score-item-val{font-size:13px;font-weight:800}
+.score-bar-bg{height:3px;background:#f0f0f0;border-radius:10px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:10px;transition:.3s;background:var(--green)}
+
+/* TARGET / PASS INDICATORS */
+.thresholds{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.threshold-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid}
+.chip-pass{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
+.chip-target{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)}
+.chip-fail{background:var(--red-bg);border-color:var(--red-bd);color:var(--red)}
+.chip-dot{width:7px;height:7px;border-radius:50%;background:currentColor}
 
 /* SUBMIT */
-.submit-row{display:flex;gap:10px;margin-bottom:40px}
+.submit-row{display:flex;gap:10px;margin-bottom:40px;margin-top:20px}
 .btn-submit{background:#111;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
 .btn-submit:hover{background:#333}
 .btn-submit:disabled{background:#555;cursor:not-allowed}
@@ -139,11 +149,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .qa-table td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
 .qa-table tr:last-child td{border-bottom:none}
 .qa-table tr:hover td{background:#fafafa}
+
+/* GRADE BADGES */
 .score-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap}
-.b-exc{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
-.b-good{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
-.b-meets{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}
+.b-target{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.b-pass{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.b-improve{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd)}
 .b-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+
 .empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-text{font-size:14px;font-weight:600}
@@ -160,14 +173,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}
 .modal{background:#fff;border-radius:20px;padding:36px;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.15)}
-.modal-score-big{font-size:64px;font-weight:900;line-height:1;margin-bottom:6px}
-.modal-grade{font-size:15px;font-weight:800;margin-bottom:16px;letter-spacing:1px;text-transform:uppercase}
+.modal-score-big{font-size:72px;font-weight:900;line-height:1;margin-bottom:4px}
+.modal-pct{font-size:18px;font-weight:700;color:var(--muted);margin-bottom:8px}
+.modal-grade{font-size:13px;font-weight:800;margin-bottom:16px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:100px;display:inline-block}
 .modal-agent{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6}
 .modal-ztp{background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:10px 14px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:16px;display:none}
-.modal-breakdown{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;display:flex;flex-direction:column;gap:7px}
-.modal-row{display:flex;justify-content:space-between;font-size:12.5px}
+.modal-breakdown{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;display:flex;flex-direction:column;gap:8px}
+.modal-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
 .modal-row-name{color:var(--muted)}
+.modal-row-right{display:flex;align-items:center;gap:8px}
 .modal-row-val{font-weight:700}
+.modal-row-bar{width:80px;height:4px;background:#e5e5e5;border-radius:10px;overflow:hidden}
+.modal-row-fill{height:100%;border-radius:10px;background:var(--green);transition:.3s}
 .modal-btns{display:flex;gap:8px;justify-content:center}
 .modal-btn-close{background:#111;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:800;cursor:pointer}
 .modal-btn-new{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer}
@@ -184,7 +201,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   .page{padding:16px}
   .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
   .nav-brand{position:static;transform:none}
-  .tab-bar{padding:0 16px;overflow-x:auto}
 }
 </style>
 </head>
@@ -217,11 +233,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     </div>
   </a>
   <div class="nav-right">
-    <select class="user-sel">
-      <option>زهراء — Support</option>
-      <option>Nour Tamer</option>
-      <option>Rehab Mohamed</option>
-    </select>
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Agent Support</div>
+        <div class="user-role">CS · Operations</div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -237,11 +255,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </button>
 </div>
 
-<!-- ══ TAB: AUDIT ══ -->
+<!-- ══ AUDIT TAB ══ -->
 <div class="page tab-content active" id="tab-audit">
   <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
   <div class="page-title">QA Audit Form</div>
-  <div class="page-sub">Score = 100 pts. Agent email + ticket required. Duplicate tickets in same month are blocked.</div>
+  <div class="page-sub">Yes = Full points · No = 0 pts · N/A = Excluded & redistributed · Pass ≥ 70% · Target ≥ 85%</div>
+
+  <!-- THRESHOLDS -->
+  <div class="thresholds">
+    <div class="threshold-chip chip-target"><span class="chip-dot"></span>Target ≥ 85%</div>
+    <div class="threshold-chip chip-pass"><span class="chip-dot"></span>Pass ≥ 70%</div>
+    <div class="threshold-chip chip-fail"><span class="chip-dot"></span>Fail &lt; 70%</div>
+  </div>
 
   <!-- META -->
   <div class="form-card">
@@ -308,20 +333,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div class="score-panel">
     <div class="score-circle" id="scoreCircle">
       <span class="score-num" id="liveScore">—</span>
-      <span class="score-lbl">/ 100</span>
+      <span class="score-pct" id="livePct">/ 100</span>
     </div>
     <div class="score-breakdown">
-      <div class="score-item"><span class="score-item-name">Issue Understanding</span><span class="score-item-val" id="s1">—</span></div>
-      <div class="score-item"><span class="score-item-name">Solution Quality</span><span class="score-item-val" id="s2">—</span></div>
-      <div class="score-item"><span class="score-item-name">Customer Experience</span><span class="score-item-val" id="s3">—</span></div>
-      <div class="score-item"><span class="score-item-name">Communication</span><span class="score-item-val" id="s4">—</span></div>
-      <div class="score-item"><span class="score-item-name">Process Compliance</span><span class="score-item-val" id="s5">—</span></div>
-      <div class="score-item"><span class="score-item-name">Critical Errors</span><span class="score-item-val" id="s6" style="color:var(--red)">None</span></div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Issue Understanding</span><span class="score-item-val" id="s1">—</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b1" style="width:0%"></div></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Solution Quality</span><span class="score-item-val" id="s2">—</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b2" style="width:0%"></div></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Customer Experience</span><span class="score-item-val" id="s3">—</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b3" style="width:0%"></div></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Communication</span><span class="score-item-val" id="s4">—</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b4" style="width:0%"></div></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Process Compliance</span><span class="score-item-val" id="s5">—</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b5" style="width:0%"></div></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-top"><span class="score-item-name">Critical Errors</span><span class="score-item-val" id="s6" style="color:var(--red)">None</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" id="b6" style="width:0%;background:var(--red)"></div></div>
+      </div>
     </div>
   </div>
 
-  <!-- SECTION CARDS -->
-  <div class="form-card">
+  <!-- SECTIONS built by JS -->
+  <div class="form-card" id="card-sec1">
     <div class="form-card-header">
       <div class="card-icon" style="background:var(--blue-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
       <span class="card-title">Issue Understanding</span>
@@ -330,7 +373,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="criteria-grid" id="sec1"></div>
   </div>
 
-  <div class="form-card">
+  <div class="form-card" id="card-sec2">
     <div class="form-card-header">
       <div class="card-icon" style="background:var(--green-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
       <span class="card-title">Solution Quality</span>
@@ -339,7 +382,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="criteria-grid" id="sec2"></div>
   </div>
 
-  <div class="form-card">
+  <div class="form-card" id="card-sec3">
     <div class="form-card-header">
       <div class="card-icon" style="background:var(--yellow-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
       <span class="card-title">Customer Experience</span>
@@ -348,7 +391,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="criteria-grid" id="sec3"></div>
   </div>
 
-  <div class="form-card">
+  <div class="form-card" id="card-sec4">
     <div class="form-card-header">
       <div class="card-icon" style="background:var(--purple-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
       <span class="card-title">Communication</span>
@@ -357,7 +400,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="criteria-grid" id="sec4"></div>
   </div>
 
-  <div class="form-card">
+  <div class="form-card" id="card-sec5">
     <div class="form-card-header">
       <div class="card-icon" style="background:#f8f8f8"><svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
       <span class="card-title">Process Compliance</span>
@@ -387,7 +430,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     </div>
   </div>
 
-  <div class="submit-row" style="margin-top:20px">
+  <div class="submit-row">
     <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
     <button class="btn-submit" id="submitBtn" onclick="submitAudit()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -396,7 +439,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- ══ TAB: HISTORY ══ -->
+<!-- ══ HISTORY TAB ══ -->
 <div class="page tab-content" id="tab-history">
   <div class="page-badge"><span class="page-badge-dot"></span>Analytics</div>
   <div class="page-title">QA History & Analytics</div>
@@ -424,14 +467,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="stat-sub">Out of 100</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Highest Score</div>
-      <div class="stat-value" id="statHigh" style="color:var(--green)">—</div>
-      <div class="stat-sub">Best ticket</div>
+      <div class="stat-label">Pass Rate</div>
+      <div class="stat-value" id="statPass" style="color:var(--green)">—</div>
+      <div class="stat-sub">Score ≥ 70%</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Pass Rate</div>
-      <div class="stat-value" id="statPass">—</div>
-      <div class="stat-sub">Score ≥ 70</div>
+      <div class="stat-label">Target Rate</div>
+      <div class="stat-value" id="statTarget" style="color:var(--blue)">—</div>
+      <div class="stat-sub">Score ≥ 85%</div>
     </div>
   </div>
 
@@ -462,9 +505,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div class="modal">
     <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px">QA Result</div>
     <div class="modal-score-big" id="modalScore">—</div>
+    <div class="modal-pct" id="modalPct">— / 100</div>
     <div class="modal-grade" id="modalGrade">—</div>
     <div class="modal-agent" id="modalAgent">—</div>
-    <div class="modal-ztp" id="modalZtp">⚠️ Zero-Tolerance Policy triggered — Score overridden to FAIL</div>
+    <div class="modal-ztp" id="modalZtp">⚠️ Zero-Tolerance Policy triggered — Score = FAIL</div>
     <div class="modal-breakdown" id="modalBreakdown"></div>
     <div class="modal-btns">
       <button class="modal-btn-new" onclick="resetForm();document.getElementById('modalOverlay').classList.remove('show')">New Audit</button>
@@ -476,13 +520,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────
+// ── CONFIG ─────────────────────────────────────────────────────────────
 const SB_URL = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 const TABLE  = 'qa_audits';
 
-const sbFetch = (path, opts = {}) => fetch(`${SB_URL}/rest/v1/${path}`, {
-  headers: {
+const sbFetch = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
+  headers:{
     'apikey': SB_KEY,
     'Authorization': `Bearer ${SB_KEY}`,
     'Content-Type': 'application/json',
@@ -493,149 +537,215 @@ const sbFetch = (path, opts = {}) => fetch(`${SB_URL}/rest/v1/${path}`, {
   body: opts.body
 });
 
-// ── DATA ──────────────────────────────────────────────────────────────
+// ── SECTIONS ────────────────────────────────────────────────────────────
+// Each criterion has a weight (pts). Yes = full pts, No = 0, N/A = excluded.
+// Section score = (earned / possible) * section_max → then total / 34 * 100
 const SECTIONS = [
-  { id:'sec1', ptsId:'pts1', scoreId:'s1', max:8, db:'score_issue_understanding', label:'Issue Understanding',
-    items:[{name:'Identified the customer issue',max:2},{name:'Asked clarification questions',max:2,na:true},{name:'Investigated properly',max:2,na:true},{name:'Did not assume the issue',max:2}]},
-  { id:'sec2', ptsId:'pts2', scoreId:'s2', max:8, db:'score_solution_quality', label:'Solution Quality',
-    items:[{name:'Provided correct solution',max:2},{name:'Explained the solution clearly',max:2},{name:'Provided accurate information',max:2},{name:'Confirmed resolution',max:2}]},
-  { id:'sec3', ptsId:'pts3', scoreId:'s3', max:8, db:'score_customer_experience', label:'Customer Experience',
-    items:[{name:'Acknowledged the issue',max:2},{name:'Used empathy statements',max:2},{name:'Showed willingness to help',max:2},{name:'Handled negative emotions',max:2}]},
-  { id:'sec4', ptsId:'pts4', scoreId:'s4', max:5, db:'score_communication', label:'Communication',
-    items:[{name:'Clear and professional language',max:1},{name:'Efficient communication',max:1},{name:'Greeting & Closure',max:2},{name:'Grammar and spelling',max:1,na:true}]},
-  { id:'sec5', ptsId:'pts5', scoreId:'s5', max:5, db:'score_process_compliance', label:'Process Compliance',
-    items:[{name:'Used correct macros / templates',max:2},{name:'Followed internal process',max:1},{name:'Correct documentation',max:1},{name:'Correct case status',max:1}]}
+  { id:'sec1', ptsId:'pts1', scoreId:'s1', barId:'b1', max:8, db:'score_issue_understanding', label:'Issue Understanding',
+    items:[
+      {name:'Identified the customer issue correctly', pts:2},
+      {name:'Asked relevant clarification questions', pts:2, hasNA:true},
+      {name:'Investigated the issue properly before responding', pts:2, hasNA:true},
+      {name:'Did not assume or jump to conclusions', pts:2}
+    ]},
+  { id:'sec2', ptsId:'pts2', scoreId:'s2', barId:'b2', max:8, db:'score_solution_quality', label:'Solution Quality',
+    items:[
+      {name:'Provided the correct and complete solution', pts:2},
+      {name:'Explained the solution clearly to the customer', pts:2},
+      {name:'Shared accurate information (policy, process, etc.)', pts:2},
+      {name:'Confirmed resolution before closing', pts:2}
+    ]},
+  { id:'sec3', ptsId:'pts3', scoreId:'s3', barId:'b3', max:8, db:'score_customer_experience', label:'Customer Experience',
+    items:[
+      {name:'Acknowledged the customer\'s concern or frustration', pts:2},
+      {name:'Used empathy statements appropriately', pts:2},
+      {name:'Showed genuine willingness to help', pts:2},
+      {name:'Handled negative emotions professionally', pts:2}
+    ]},
+  { id:'sec4', ptsId:'pts4', scoreId:'s4', barId:'b4', max:5, db:'score_communication', label:'Communication',
+    items:[
+      {name:'Used clear and professional language throughout', pts:1},
+      {name:'Communicated efficiently (no unnecessary back-and-forth)', pts:1},
+      {name:'Proper greeting and professional closure', pts:2},
+      {name:'No grammar or spelling errors', pts:1, hasNA:true}
+    ]},
+  { id:'sec5', ptsId:'pts5', scoreId:'s5', barId:'b5', max:5, db:'score_process_compliance', label:'Process Compliance',
+    items:[
+      {name:'Used correct macros or response templates', pts:2, hasNA:true},
+      {name:'Followed the correct internal process / SOP', pts:1},
+      {name:'Documented the interaction correctly', pts:1},
+      {name:'Set the correct case / ticket status', pts:1}
+    ]}
 ];
 
 const CRITS = [
-  {id:'bc', name:'Business Critical (BC)', desc:'Action causing direct financial loss or brand damage'},
-  {id:'ec', name:'End-User Critical (EC)', desc:'Incorrect info/action that directly harms the customer'},
-  {id:'cc', name:'Compliance Critical (CC)', desc:'Violation of policy, legal, or regulatory requirement'},
-  {id:'ztp',name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'}
+  {id:'bc',  name:'Business Critical (BC)',      desc:'Action causing direct financial loss or brand damage'},
+  {id:'ec',  name:'End-User Critical (EC)',       desc:'Incorrect info/action that directly harms the customer'},
+  {id:'cc',  name:'Compliance Critical (CC)',     desc:'Violation of policy, legal, or regulatory requirement'},
+  {id:'ztp', name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'}
 ];
 
-const state = {}, critState = {};
+// State: 'yes' | 'no' | 'na' | null
+const state = {};
+const critState = {};
 let histData = [];
 
-// ── BUILD ─────────────────────────────────────────────────────────────
+// ── BUILD FORM ──────────────────────────────────────────────────────────
 function buildForm() {
   SECTIONS.forEach(sec => {
     const el = document.getElementById(sec.id);
     sec.items.forEach((item, i) => {
       const key = `${sec.id}_${i}`;
       state[key] = null;
-      const naBtn = item.na ? `<button class="radio-btn" data-k="${key}" data-v="NA" onclick="pickNA('${key}',this)">NA</button>` : '';
-      el.innerHTML += `<div class="criteria-row">
-        <span class="criteria-name">${item.name}</span>
-        <span class="criteria-max">max ${item.max}</span>
-        <div class="radio-group">
-          ${[0,1,2].map(v=>`<button class="radio-btn" data-k="${key}" data-v="${v}" onclick="pick('${key}',${v},this)">${v}</button>`).join('')}
-          ${naBtn}
-        </div></div>`;
+      const naBtn = item.hasNA
+        ? `<button class="yn-btn" onclick="pickYN('${key}','na',this)">N/A</button>` : '';
+      el.innerHTML += `
+        <div class="criteria-row">
+          <div class="criteria-info">
+            <span class="criteria-name">${item.name}</span>
+            <span class="criteria-pts-tag">${item.pts} pt${item.pts>1?'s':''}</span>
+          </div>
+          <div class="yn-group">
+            <button class="yn-btn" onclick="pickYN('${key}','yes',this)">✓ Yes</button>
+            <button class="yn-btn" onclick="pickYN('${key}','no',this)">✗ No</button>
+            ${naBtn}
+          </div>
+        </div>`;
     });
   });
+
   CRITS.forEach(c => {
     critState[c.id] = null;
-    document.getElementById('sec-critical').innerHTML += `<div class="critical-row">
-      <div style="flex:1"><div class="crit-name">${c.name}</div><div class="crit-desc">${c.desc}</div></div>
-      <div class="toggle-group">
-        <button class="toggle-btn" onclick="pickCrit('${c.id}','yes',this)">Yes</button>
-        <button class="toggle-btn" onclick="pickCrit('${c.id}','no',this)">No</button>
-        <button class="toggle-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button>
-      </div></div>`;
+    document.getElementById('sec-critical').innerHTML += `
+      <div class="critical-row">
+        <div style="flex:1">
+          <div class="crit-name">${c.name}</div>
+          <div class="crit-desc">${c.desc}</div>
+        </div>
+        <div class="yn-group">
+          <button class="yn-btn" onclick="pickCrit('${c.id}','yes',this)">✓ Yes</button>
+          <button class="yn-btn" onclick="pickCrit('${c.id}','no',this)">✗ No</button>
+          <button class="yn-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button>
+        </div>
+      </div>`;
   });
+
   document.getElementById('auditDate').valueAsDate = new Date();
 }
 
-// ── PICK ──────────────────────────────────────────────────────────────
-function pick(key, val, btn) {
+// ── PICK ────────────────────────────────────────────────────────────────
+function pickYN(key, val, btn) {
   state[key] = val;
-  btn.closest('.radio-group').querySelectorAll('.radio-btn').forEach(b => {
-    b.className = 'radio-btn';
-    if (b.dataset.k === key && +b.dataset.v === val) b.classList.add(`sel-${val}`);
-  });
-  recalc();
-}
-function pickNA(key, btn) {
-  state[key] = 'NA';
-  btn.closest('.radio-group').querySelectorAll('.radio-btn').forEach(b => {
-    b.className = 'radio-btn';
-    if (b.dataset.v === 'NA') b.classList.add('sel-na');
-  });
+  btn.closest('.yn-group').querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
+  btn.classList.add(`sel-${val}`);
   recalc();
 }
 function pickCrit(id, val, btn) {
   critState[id] = val;
-  btn.closest('.toggle-group').querySelectorAll('.toggle-btn').forEach(b => b.className = 'toggle-btn');
+  btn.closest('.yn-group').querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
   btn.classList.add(`sel-${val}`);
   recalc();
 }
 
-// ── RECALC ────────────────────────────────────────────────────────────
+// ── SCORING LOGIC ────────────────────────────────────────────────────────
+// Yes = full pts, No = 0, N/A = excluded from possible
+// Section % = earned / possible (only answered items)
+// Section score (out of max) = section% * max
+// Final % = sum of section scores / 34 * 100
+function calcSection(sec) {
+  let earned = 0, possible = 0;
+  sec.items.forEach((item, i) => {
+    const v = state[`${sec.id}_${i}`];
+    if (v === null || v === 'na') return; // N/A & unanswered → excluded
+    possible += item.pts;
+    if (v === 'yes') earned += item.pts;
+  });
+  if (possible === 0) return null; // nothing answered yet
+  const pct = earned / possible;           // 0–1
+  const scaled = Math.round(pct * sec.max * 10) / 10; // score out of section max
+  return { earned, possible, pct, scaled };
+}
+
 function recalc() {
-  let totalEarned = 0;
-  const secScores = [];
-  SECTIONS.forEach(sec => {
-    let earned = 0, possible = 0;
-    sec.items.forEach((item, i) => {
-      const v = state[`${sec.id}_${i}`];
-      if (v === null || v === 'NA') return;
-      earned += (v / 2) * item.max;
-      possible += item.max;
-    });
-    const scaled = possible > 0 ? Math.round((earned / possible) * sec.max) : null;
-    secScores.push({ label: sec.label, score: scaled, max: sec.max, db: sec.db });
-    document.getElementById(sec.ptsId).textContent = scaled !== null ? `${scaled} / ${sec.max} pts` : `— / ${sec.max} pts`;
-    document.getElementById(sec.scoreId).textContent = scaled !== null ? `${scaled}/${sec.max}` : '—';
-    if (scaled !== null) totalEarned += scaled;
+  let totalScaled = 0;
+  let totalMax = 0;
+  const secResults = [];
+
+  SECTIONS.forEach((sec, si) => {
+    const r = calcSection(sec);
+    secResults.push(r);
+    const scoreEl = document.getElementById(sec.scoreId);
+    const ptsEl   = document.getElementById(sec.ptsId);
+    const barEl   = document.getElementById(sec.barId);
+
+    if (r) {
+      totalScaled += r.scaled;
+      totalMax    += sec.max;
+      scoreEl.textContent = `${r.scaled}/${sec.max}`;
+      ptsEl.textContent   = `${r.scaled} / ${sec.max} pts`;
+      const barPct = r.pct * 100;
+      barEl.style.width = barPct + '%';
+      barEl.style.background = barPct >= 85 ? 'var(--green)' : barPct >= 70 ? 'var(--yellow)' : 'var(--red)';
+    } else {
+      scoreEl.textContent = '—';
+      ptsEl.textContent   = `— / ${sec.max} pts`;
+      barEl.style.width   = '0%';
+    }
   });
 
+  // Critical
   const ztp = critState['ztp'] === 'yes';
   const critErrors = CRITS.filter(c => critState[c.id] === 'yes').map(c => c.name);
-  document.getElementById('s6').textContent = critErrors.length ? critErrors.join(', ') : 'None';
+  document.getElementById('s6').textContent = critErrors.length ? critErrors.map(n=>n.split('(')[1]?.replace(')','') || n).join(', ') : 'None';
 
-  if (!secScores.some(s => s.score !== null)) {
+  if (totalMax === 0) {
     document.getElementById('liveScore').textContent = '—';
+    document.getElementById('livePct').textContent = '/ 100';
+    document.getElementById('scoreCircle').style.borderColor = 'var(--border)';
     return null;
   }
 
-  let final = Math.round((totalEarned / 34) * 100);
-  if (ztp) final = 0;
+  // Final score out of 100
+  let finalPct = Math.round((totalScaled / 34) * 100);
+  if (ztp) finalPct = 0;
 
-  const scoreEl = document.getElementById('liveScore');
-  const circle  = document.getElementById('scoreCircle');
-  scoreEl.textContent = final;
-  const col = final >= 90 ? 'var(--green)' : final >= 70 ? 'var(--yellow)' : 'var(--red)';
+  const scoreEl  = document.getElementById('liveScore');
+  const circle   = document.getElementById('scoreCircle');
+  scoreEl.textContent = finalPct;
+  document.getElementById('livePct').textContent = '/ 100';
+
+  const col = finalPct >= 85 ? 'var(--green)' : finalPct >= 70 ? 'var(--yellow)' : 'var(--red)';
   scoreEl.style.color = col;
   circle.style.borderColor = col;
 
-  return { final, secScores, ztp, critErrors };
+  return { finalPct, secResults, ztp, critErrors };
 }
 
+// ── GRADE ────────────────────────────────────────────────────────────────
 function getGrade(score, ztp) {
-  if (ztp || score < 60) return { label: ztp ? 'FAIL — ZTP' : 'BELOW STANDARD', color: 'var(--red)', cls: 'b-fail' };
-  if (score >= 90) return { label: 'EXCELLENT', color: 'var(--green)', cls: 'b-exc' };
-  if (score >= 80) return { label: 'GOOD', color: 'var(--blue)', cls: 'b-good' };
-  if (score >= 70) return { label: 'MEETS STANDARDS', color: 'var(--yellow)', cls: 'b-meets' };
-  return { label: 'NEEDS IMPROVEMENT', color: 'var(--yellow)', cls: 'b-meets' };
+  if (ztp)        return { label:'FAIL — ZTP',          color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',    border:'var(--red-bd)' };
+  if (score >= 85) return { label:'TARGET MET ✓',        color:'#1d4ed8',       cls:'b-target',  bg:'#eff6ff',          border:'#bfdbfe' };
+  if (score >= 70) return { label:'PASS',                 color:'var(--green)',  cls:'b-pass',    bg:'var(--green-bg)', border:'var(--green-bd)' };
+  if (score >= 60) return { label:'NEEDS IMPROVEMENT',   color:'var(--orange)', cls:'b-improve', bg:'var(--orange-bg)',border:'var(--orange-bd)' };
+  return              { label:'BELOW STANDARD',          color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',   border:'var(--red-bd)' };
 }
 
-// ── SUBMIT ────────────────────────────────────────────────────────────
+// ── SUBMIT ───────────────────────────────────────────────────────────────
 async function submitAudit() {
   const email  = document.getElementById('agentEmail').value.trim();
   const ticket = document.getElementById('ticketNum').value.trim();
   const eval_  = document.getElementById('evalName').value.trim();
 
-  if (!email)  return toast('Agent email is required.', 'error');
-  if (!ticket) return toast('Ticket number is required.', 'error');
-  if (!eval_)  return toast('Evaluator name is required.', 'error');
+  if (!email)  return showToast('Agent email is required.','error');
+  if (!ticket) return showToast('Ticket number is required.','error');
+  if (!eval_)  return showToast('Evaluator name is required.','error');
 
   const result = recalc();
-  if (!result) return toast('Please score at least one section.', 'error');
+  if (!result) return showToast('Please score at least one section.','error');
 
   const dateVal    = document.getElementById('auditDate').value || new Date().toISOString().slice(0,10);
   const monthStart = dateVal.slice(0,7) + '-01';
-  const nextMonth  = new Date(monthStart); nextMonth.setMonth(nextMonth.getMonth() + 1);
+  const nextMonth  = new Date(monthStart); nextMonth.setMonth(nextMonth.getMonth()+1);
   const monthEnd   = nextMonth.toISOString().slice(0,10);
 
   setLoading(true);
@@ -643,63 +753,58 @@ async function submitAudit() {
     // Duplicate check
     const dupRes = await sbFetch(
       `${TABLE}?agent_email=eq.${encodeURIComponent(email)}&ticket_number=eq.${encodeURIComponent(ticket)}&audit_date=gte.${monthStart}&audit_date=lt.${monthEnd}&select=id`,
-      { extraHeaders: { 'Prefer': 'return=representation' } }
+      { extraHeaders:{'Prefer':'return=representation'} }
     );
     const dups = await dupRes.json();
     if (Array.isArray(dups) && dups.length > 0) {
-      toast(`Ticket ${ticket} already evaluated for this agent this month.`, 'warn');
+      showToast(`Ticket ${ticket} already evaluated for this agent this month.`,'warn');
       setLoading(false); return;
     }
 
-    const { final, secScores, ztp, critErrors } = result;
-    const grade = getGrade(final, ztp);
+    const { finalPct, secResults, ztp, critErrors } = result;
+    const grade = getGrade(finalPct, ztp);
 
     const payload = {
-      agent_email: email,
-      agent_name: document.getElementById('agentName').value.trim(),
+      agent_email:    email,
+      agent_name:     document.getElementById('agentName').value.trim(),
       evaluator_name: eval_,
-      ticket_number: ticket,
-      audit_date: dateVal,
-      channel: document.getElementById('channel').value,
+      ticket_number:  ticket,
+      audit_date:     dateVal,
+      channel:        document.getElementById('channel').value,
       contact_reason: document.getElementById('contactReason').value,
-      score_issue_understanding: secScores[0].score,
-      score_solution_quality: secScores[1].score,
-      score_customer_experience: secScores[2].score,
-      score_communication: secScores[3].score,
-      score_process_compliance: secScores[4].score,
-      final_score: final,
-      grade: grade.label,
-      critical_bc:  critState['bc']  === 'yes',
-      critical_ec:  critState['ec']  === 'yes',
-      critical_cc:  critState['cc']  === 'yes',
-      critical_ztp: critState['ztp'] === 'yes',
+      score_issue_understanding:  secResults[0]?.scaled ?? null,
+      score_solution_quality:     secResults[1]?.scaled ?? null,
+      score_customer_experience:  secResults[2]?.scaled ?? null,
+      score_communication:        secResults[3]?.scaled ?? null,
+      score_process_compliance:   secResults[4]?.scaled ?? null,
+      final_score:    finalPct,
+      grade:          grade.label,
+      critical_bc:    critState['bc']  === 'yes',
+      critical_ec:    critState['ec']  === 'yes',
+      critical_cc:    critState['cc']  === 'yes',
+      critical_ztp:   critState['ztp'] === 'yes',
       evaluator_notes: document.getElementById('evalNotes').value.trim()
     };
 
-    const res = await sbFetch(TABLE, { method: 'POST', body: JSON.stringify(payload) });
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(err);
-    }
+    const res = await sbFetch(TABLE, { method:'POST', body:JSON.stringify(payload) });
+    if (!res.ok) throw new Error(await res.text());
 
     setLoading(false);
-    showModal(final, grade, secScores, ztp, critErrors, email, ticket, dateVal, eval_);
-    toast('Audit saved successfully!', 'success');
+    showModal(finalPct, grade, secResults, ztp, critErrors, email, ticket, dateVal, eval_);
+    showToast('Audit saved successfully!','success');
 
-  } catch (e) {
+  } catch(e) {
     setLoading(false);
-    toast('Error: ' + e.message, 'error');
+    showToast('Error: ' + e.message,'error');
     console.error(e);
   }
 }
 
-// ── HISTORY ───────────────────────────────────────────────────────────
-async function loadHistory(all = false) {
+// ── HISTORY ───────────────────────────────────────────────────────────────
+async function loadHistory(all=false) {
   const search = document.getElementById('histSearch').value.trim();
   const month  = document.getElementById('histMonth').value;
-
   let q = `${TABLE}?select=*&order=audit_date.desc,id.desc`;
-
   if (!all) {
     if (search) {
       const enc = encodeURIComponent(search);
@@ -711,39 +816,37 @@ async function loadHistory(all = false) {
       q += `&audit_date=gte.${start}&audit_date=lt.${end}`;
     }
   }
-
   try {
-    const res = await sbFetch(q, { extraHeaders: { 'Prefer': 'return=representation' } });
-    histData = await res.json();
-    if (!Array.isArray(histData)) { toast('Load error', 'error'); return; }
+    const res = await sbFetch(q, {extraHeaders:{'Prefer':'return=representation'}});
+    histData  = await res.json();
+    if (!Array.isArray(histData)) { showToast('Load error','error'); return; }
     renderHistory(histData);
-  } catch (e) {
-    toast('Load failed: ' + e.message, 'error');
-  }
+  } catch(e) { showToast('Load failed: '+e.message,'error'); }
 }
 
 function renderHistory(data) {
   const tbody    = document.getElementById('histBody');
   const statsRow = document.getElementById('statsRow');
-
   if (!data.length) {
     tbody.innerHTML = `<tr><td colspan="12"><div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No audits found</div><div class="empty-sub">Try a different filter</div></div></td></tr>`;
-    statsRow.style.display = 'none'; return;
+    statsRow.style.display='none'; return;
   }
 
-  statsRow.style.display = 'grid';
-  const scores = data.map(r => r.final_score);
-  const avg  = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
-  const high = Math.max(...scores);
-  const pass = Math.round(scores.filter(s=>s>=70).length/scores.length*100);
-  document.getElementById('statTotal').textContent = data.length;
-  document.getElementById('statAvg').textContent   = avg;
-  document.getElementById('statHigh').textContent  = high;
-  document.getElementById('statPass').textContent  = pass + '%';
+  statsRow.style.display='grid';
+  const scores  = data.map(r=>r.final_score);
+  const avg     = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  const passRate = Math.round(scores.filter(s=>s>=70).length/scores.length*100);
+  const targetRate = Math.round(scores.filter(s=>s>=85).length/scores.length*100);
+
+  document.getElementById('statTotal').textContent  = data.length;
+  document.getElementById('statAvg').textContent    = avg + '%';
+  document.getElementById('statPass').textContent   = passRate + '%';
+  document.getElementById('statTarget').textContent = targetRate + '%';
 
   tbody.innerHTML = data.map(r => {
     const g = getGrade(r.final_score, r.critical_ztp);
-    const crits = [r.critical_bc&&'BC',r.critical_ec&&'EC',r.critical_cc&&'CC',r.critical_ztp&&'ZTP'].filter(Boolean).join(', ') || '—';
+    const crits = [r.critical_bc&&'BC',r.critical_ec&&'EC',r.critical_cc&&'CC',r.critical_ztp&&'ZTP'].filter(Boolean).join(', ')||'—';
+    const scoreCol = r.final_score >= 85 ? '#1d4ed8' : r.final_score >= 70 ? 'var(--green)' : 'var(--red)';
     return `<tr>
       <td style="white-space:nowrap">${r.audit_date||'—'}</td>
       <td><div style="font-weight:700;font-size:13px">${r.agent_name||'—'}</div><div style="font-size:11px;color:var(--muted)">${r.agent_email||''}</div></td>
@@ -754,91 +857,114 @@ function renderHistory(data) {
       <td style="text-align:center">${r.score_customer_experience??'—'}/8</td>
       <td style="text-align:center">${r.score_communication??'—'}/5</td>
       <td style="text-align:center">${r.score_process_compliance??'—'}/5</td>
-      <td style="text-align:center;font-size:16px;font-weight:900;color:${g.color}">${r.final_score}</td>
+      <td style="text-align:center;font-size:17px;font-weight:900;color:${scoreCol}">${r.final_score}%</td>
       <td><span class="score-badge ${g.cls}">${g.label}</span></td>
       <td style="color:${crits!=='—'?'var(--red)':'var(--muted)'};font-weight:${crits!=='—'?'700':'400'}">${crits}</td>
     </tr>`;
   }).join('');
 }
 
-// ── EXPORT ────────────────────────────────────────────────────────────
+// ── EXPORT ────────────────────────────────────────────────────────────────
 function exportCSV() {
-  if (!histData.length) return toast('No data. Search first.', 'warn');
+  if (!histData.length) return showToast('No data. Search first.','warn');
   const hdrs = ['Date','Agent Name','Agent Email','Ticket #','Channel','Contact Reason',
     'Issue Understanding','Solution Quality','Customer Experience','Communication','Process Compliance',
-    'Final Score','Grade','BC','EC','CC','ZTP','Notes'];
-  const rows = histData.map(r => [
+    'Final Score %','Grade','BC','EC','CC','ZTP','Notes'];
+  const rows = histData.map(r=>[
     r.audit_date,r.agent_name,r.agent_email,r.ticket_number,r.channel,r.contact_reason,
     r.score_issue_understanding,r.score_solution_quality,r.score_customer_experience,
-    r.score_communication,r.score_process_compliance,r.final_score,r.grade,
+    r.score_communication,r.score_process_compliance,r.final_score+'%',r.grade,
     r.critical_bc?'Yes':'No',r.critical_ec?'Yes':'No',r.critical_cc?'Yes':'No',r.critical_ztp?'Yes':'No',
     r.evaluator_notes
   ]);
-  const csv = [hdrs,...rows].map(r=>r.map(v=>`"${(v??'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = `MAVIN_QA_${new Date().toISOString().slice(0,10)}.csv`;
+  const csv=[hdrs,...rows].map(r=>r.map(v=>`"${(v??'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`MAVIN_QA_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
-  toast('Exported!', 'success');
+  showToast('Exported!','success');
 }
 
-// ── MODAL ─────────────────────────────────────────────────────────────
-function showModal(score, grade, secScores, ztp, critErrors, email, ticket, date, eval_) {
+// ── MODAL ─────────────────────────────────────────────────────────────────
+function showModal(score, grade, secResults, ztp, critErrors, email, ticket, date, eval_) {
   document.getElementById('modalScore').textContent = score;
   document.getElementById('modalScore').style.color = grade.color;
-  document.getElementById('modalGrade').textContent = grade.label;
-  document.getElementById('modalGrade').style.color = grade.color;
+  document.getElementById('modalPct').textContent   = '/ 100';
+  const gradeEl = document.getElementById('modalGrade');
+  gradeEl.textContent       = grade.label;
+  gradeEl.style.color       = grade.color;
+  gradeEl.style.background  = grade.bg;
+  gradeEl.style.border      = `1.5px solid ${grade.border}`;
   document.getElementById('modalAgent').innerHTML =
     `Agent: <strong>${email}</strong><br>Ticket: ${ticket} &nbsp;·&nbsp; Date: ${date} &nbsp;·&nbsp; Evaluator: ${eval_}`;
   document.getElementById('modalZtp').style.display = ztp ? 'block' : 'none';
-  document.getElementById('modalBreakdown').innerHTML =
-    secScores.map(s=>`<div class="modal-row"><span class="modal-row-name">${s.label}</span><span class="modal-row-val">${s.score??'—'}/${s.max}</span></div>`).join('')
-    + (critErrors.length ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)"><span class="modal-row-name" style="color:var(--red)">Critical</span><span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span></div>` : '');
+
+  const breakdown = SECTIONS.map((sec,i) => {
+    const r = secResults[i];
+    const pct = r ? Math.round(r.pct*100) : 0;
+    const col = pct>=85?'var(--green)':pct>=70?'var(--yellow)':'var(--red)';
+    return `<div class="modal-row">
+      <span class="modal-row-name">${sec.label}</span>
+      <div class="modal-row-right">
+        <div class="modal-row-bar"><div class="modal-row-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span class="modal-row-val">${r?r.scaled+'pts':'—'} / ${sec.max}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const critLine = critErrors.length
+    ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+        <span class="modal-row-name" style="color:var(--red)">Critical</span>
+        <span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span>
+       </div>` : '';
+
+  document.getElementById('modalBreakdown').innerHTML = breakdown + critLine;
   document.getElementById('modalOverlay').classList.add('show');
 }
 
-// ── RESET ─────────────────────────────────────────────────────────────
+// ── RESET ─────────────────────────────────────────────────────────────────
 function resetForm() {
   document.getElementById('modalOverlay').classList.remove('show');
-  Object.keys(state).forEach(k => state[k] = null);
-  Object.keys(critState).forEach(k => critState[k] = null);
-  document.querySelectorAll('.radio-btn').forEach(b => b.className = 'radio-btn');
-  document.querySelectorAll('.toggle-btn').forEach(b => b.className = 'toggle-btn');
-  const el = document.getElementById('liveScore');
-  el.textContent = '—'; el.style.color = 'var(--text)';
-  document.getElementById('scoreCircle').style.borderColor = 'var(--border)';
-  SECTIONS.forEach(s => {
-    document.getElementById(s.ptsId).textContent = `— / ${s.max} pts`;
-    document.getElementById(s.scoreId).textContent = '—';
+  Object.keys(state).forEach(k => state[k]=null);
+  Object.keys(critState).forEach(k => critState[k]=null);
+  document.querySelectorAll('.yn-btn').forEach(b => b.className='yn-btn');
+  const sc=document.getElementById('liveScore');
+  sc.textContent='—'; sc.style.color='var(--text)';
+  document.getElementById('scoreCircle').style.borderColor='var(--border)';
+  document.getElementById('livePct').textContent='/ 100';
+  SECTIONS.forEach(s=>{
+    document.getElementById(s.ptsId).textContent=`— / ${s.max} pts`;
+    document.getElementById(s.scoreId).textContent='—';
+    document.getElementById(s.barId).style.width='0%';
   });
-  document.getElementById('s6').textContent = 'None';
-  ['agentEmail','agentName','evalName','ticketNum','evalNotes'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('auditDate').valueAsDate = new Date();
-  document.getElementById('channel').value = '';
-  document.getElementById('contactReason').value = '';
+  document.getElementById('s6').textContent='None';
+  ['agentEmail','agentName','evalName','ticketNum','evalNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('auditDate').valueAsDate=new Date();
+  document.getElementById('channel').value='';
+  document.getElementById('contactReason').value='';
 }
 
-// ── TABS ──────────────────────────────────────────────────────────────
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+// ── TABS ──────────────────────────────────────────────────────────────────
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
 }
 
-// ── UTILS ─────────────────────────────────────────────────────────────
-function toast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.className = `toast show ${type}`;
-  t.innerHTML = `<span>${type==='success'?'✓':type==='error'?'✕':'⚠'}</span> ${msg}`;
-  setTimeout(() => t.classList.remove('show'), 4000);
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.className=`toast show ${type}`;
+  t.innerHTML=`<span>${type==='success'?'✓':type==='error'?'✕':'⚠'}</span> ${msg}`;
+  setTimeout(()=>t.classList.remove('show'),4000);
 }
-function setLoading(on) {
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = on;
-  btn.innerHTML = on
-    ? `<span class="spin"></span> Saving...`
-    : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Submit QA Audit`;
+function setLoading(on){
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=on;
+  btn.innerHTML=on
+    ?`<span class="spin"></span> Saving...`
+    :`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Submit QA Audit`;
 }
 
 buildForm();
