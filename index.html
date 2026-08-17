@@ -161,7 +161,7 @@
 
     .status-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
     .status-approved { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
-    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+    .status-rejected { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
     .status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid #fef08a; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
@@ -193,7 +193,7 @@
         <path d="M224 42V6H234L250 29V6H260V42H250L234 19V42H224Z" fill="#09090B"/>
       </svg>
     </div>
-    <div class="brand-sub">Operations, Refund Bot & QA Intelligence Hub</div>
+    <div class="brand-sub">Operations, Bosta Partnership, Refund Bot & QA Intelligence Hub</div>
   </div>
 
   <!-- User Session Header -->
@@ -264,7 +264,7 @@
   <!-- 1. HOME VIEW -->
   <div id="homeSection">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Refund Bot, Paymob, Bosta, One Touch, 10% Store Credit)..." onkeyup="handleGlobalSearch()">
+      <input type="text" id="mainSearch" class="search-box" style="margin-bottom:0; flex:1; min-width:280px;" placeholder="🔍 Search any SOP (e.g. Bosta Handbook, Refund Bot, Awaiting Action, One Touch)..." onkeyup="handleGlobalSearch()">
       <div class="lang-toggle">
         <button id="btnHomeEn" class="lang-btn active" onclick="setHomeLanguage('en')">English</button>
         <button id="btnHomeAr" class="lang-btn" onclick="setHomeLanguage('ar')">العربية</button>
@@ -345,7 +345,7 @@
     </div>
 
     <div class="portal-banner">
-      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Refund Bot, Paymob, 10% bonus)..." onkeyup="filterScenarios()">
+      <input type="text" id="scenarioSearchInput" class="portal-search-input" placeholder="🔍 Search customer quotes (e.g. One Touch, Bosta fulfillment, Awaiting Action, 10% bonus)..." onkeyup="filterScenarios()">
       <div class="tab-pills" id="scenarioCategoryPills"></div>
     </div>
 
@@ -779,8 +779,33 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING REFUND BOT & SHOPIFY/BOSTA CHECKLIST)
+  // 1. FULL EMBEDDED MASTER SOP DIRECTIVES (INCLUDING COMPLETE BOSTA HANDBOOK & SHOPIFY CHECKLIST)
   const EMBEDDED_MASTER_SOPS = [
+    {
+      code: "SOP-BOSTA-HANDBOOK",
+      category_en: "Bosta Partnership & Fulfillment",
+      category_ar: "شراكة بوسطة والوفاء بالطلبات",
+      system: "Bosta API + Shopify + Slack",
+      title_en: "🤝 Mavin Wear × Bosta Partnership Handbook & Full SOP",
+      title_ar: "🤝 كتيب شراكة بوسطة وإجراءات الإنجاز والشحن الكاملة",
+      description_en: "Comprehensive partnership manual covering the full order journey, fulfillment SLAs (95%+ same-day), last-mile delivery targets by zone, NDR handling, return quality checks, Awaiting Action and OOS exception workflows, communication charter, and weekly sync structure.",
+      description_ar: "دليل الشامل لشراكة بوسطة وميفين وير. يغطي رحلة الطلب، معايير الـ SLAs (95%+ في نفس اليوم)، أهداف التوصيل حسب المنطقة، معالجة الـ NDRs، فحص جودة المرتجعات، وحل مشاكل Awaiting Action و OOS.",
+      steps_en: [
+        "1. Order Journey: Customer places order ➔ pushed via API to Bosta (clean address/phone required) ➔ Bosta picks, packs, and dispatches same-day ➔ delivered or NDR logged within 24h.",
+        "2. Fulfillment & Capacity: 95%+ same-day fulfillment, 99.5%+ picking accuracy. OOS orders must be reported within 24h to avoid invisible dead stock.",
+        "3. Last-Mile & Awaiting Action: Bad address/phone flagged within 2h ➔ Mavin contacts customer and sends fix within 12h ➔ Bosta re-dispatches within 24h.",
+        "4. Returns & NDR: Failed delivery notified within 24h, Mavin instruction within 12h. Returns logged and QC'd within 48h.",
+        "5. Communication & Escalation: Use Slack #ops for daily alerts, email for formal claims. Escalation Tiers: Ops Manager (2h) ➔ Tech/Return Owner (4h) ➔ Founder Ahmad (Same day)."
+      ],
+      steps_ar: [
+        "1. رحلة الطلب: العميل يطلب ➔ البيانات ترسل عبر الـ API ➔ بوسطة تجهز وتشحن في نفس اليوم ➔ توصيل أو تسجيل NDR خلال 24 ساعة.",
+        "2. معايير الإنجاز: 95% فوري في نفس اليوم، دقة انتقاء 99.5%. طلبات OOS تبلغ خلال 24 ساعة.",
+        "3. التوصيل و Awaiting Action: العناوين الخاطئة تبلغ خلال ساعتين، وتُصلح خلال 12 ساعة وتعاد للتوصيل خلال 24 ساعة.",
+        "4. المرتجعات والـ NDR: إخطار الـ NDR خلال 24 ساعة، وتعليمات المرتجع خلال 12 ساعة.",
+        "5. الاتصال والتصعيد: استخدام Slack لعمليات اليوم، والتصعيد لمدير العمليات ثم المؤسس أحمد عند اللزوم."
+      ],
+      canned_reply: "We are coordinating directly with Bosta fulfillment and delivery teams to ensure your shipment arrives on schedule."
+    },
     {
       code: "SOP-SHOPIFY-BOSTA",
       category_en: "Shopify & Bosta Ops Checklist",
@@ -789,7 +814,7 @@
       title_en: "📋 Shopify & Bosta — CS / Ops Daily Checklist & Saved Tabs",
       title_ar: "📋 قائمة المهام اليومية لعمليات شوبيفاي وبوسطة وتبويبات المتابعة",
       description_en: "Operator's manual for order tracking inside Shopify. The sync-bosta worker reads Bosta and writes signals (Native status, governed tags, and metafields). Includes the 6 saved-view tabs (Action Required, Carrier Follow-Up, Escalations, Card at Risk, Refunds Owed, Returns Failed/Exchange).",
-      description_ar: "دليل التشغيل اليومي لتتبع الطلبات داخل شوبيفاي. يغطي التيجان (Tags)، الميتافيلدز، وتبويبات المتابعة الستة الأساسية (Action Required, Carrier Follow-Up, Refunds Owed, وغيرها).",
+      description_ar: "دليل التشغيل اليومي لتتبع الطلبات داخل شوبيفاي. يغطي التيجان (Tags)، الميتافيلدز، وتبويبات المتابعة الستة الأساسية.",
       steps_en: [
         "1. Start of Shift (2 min): Open Shopify Orders list, skim the 6 saved-view tabs, check #bosta-escalations on Slack, and have Bosta dashboard open.",
         "2. Fulfillment · Action Required (Ops): Fix on-hold address/phone, clear warehouse-hold, make OOS restock/cancel decisions, chase not-picked orders, and fix return-blocked data.",
@@ -799,10 +824,10 @@
       ],
       steps_ar: [
         "1. بداية الوردية (دقيقتان): افتح قائمة طلبات شوبيفاي، افحص التبويبات الستة، وراجع قناة #bosta-escalations.",
-        "2. تبويب Action Required: إصلاح العناوين والهواتف المعلقة (on-hold)، حل مشاكل المخزن (warehouse-hold)، وقرارات الـ OOS.",
-        "3. تبويب Carrier Follow-Up: متابعة الحالات المتأخرة (sla-breach, stuck-3d) وتصعيد المرتجعات الفاشلة (failed-2).",
+        "2. تبويب Action Required: إصلاح العناوين والهواتف المعلقة (on-hold)، حل مشاكل المخزن، وقرارات الـ OOS.",
+        "3. تبويب Carrier Follow-Up: متابعة الحالات المتأخرة وتصعيد المرتجعات الفاشلة (failed-2).",
         "4. تبويب Refunds Owed: مراجعة المنتجات المستلمة وإصدار المرتجعات المالية في شوبيفاي.",
-        "5. القواعد الذهبية: اختفاء التاج يعني حل المشكلة. توثيق كافة الإجراءات البشرية في ملاحظات الطلب (Order Notes)."
+        "5. القواعد الذهبية: اختفاء التاج يعني حل المشكلة. توثيق كافة الإجراءات في ملاحظات الطلب (Order Notes)."
       ],
       canned_reply: "We have reviewed your order status through our logistics sync and updated your tracking and delivery preferences."
     },
@@ -830,29 +855,6 @@
         "5. التصعيد: قم بالتواصل مع أحمد في حال تعثر الطلب لثلاثة أيام متتالية أو وجود طلب يتجاوز 5000 جنيه."
       ],
       canned_reply: "We have checked the refund status in Paymob and processed your transaction successfully."
-    },
-    {
-      code: "SOP-BOSTA-01",
-      category_en: "Bosta Partnership & Fulfillment",
-      category_ar: "شراكة بوسطة والوفاء بالطلبات",
-      system: "Bosta API + Shopify",
-      title_en: "📦 Bosta Fulfillment & Order Journey (3PL Partnership)",
-      title_ar: "📦 رحلة الطلب وشراكة الإنجاز مع بوسطة (3PL Partnership)",
-      description_en: "Bosta owns the full fulfillment operation (pick, pack, ship, last-mile). Mavin Wear owns sales and return decisions. Orders are received via API, queued for same-day processing (95%+ target), and tracked through delivery or NDR.",
-      description_ar: "تتولى بوسطة كامل عمليات الاستلام والتجهيز والشحن والتوصيل للعميل (3PL)، بينما تدير ميفين مبيعاتها وقرارات المرتجعات.",
-      steps_en: [
-        "1. Order Creation: Customer places order; clean data (address, phone, SKU) is pushed via API to Bosta.",
-        "2. Pick & Pack: Bosta warehouse picks items, checks against order, and packs per agreed standards.",
-        "3. Last-Mile Delivery: Bosta dispatches for delivery and sends tracking updates to customer.",
-        "4. Success / NDR: Delivered & COD collected, OR failed delivery resulting in NDR notification within 24h."
-      ],
-      steps_ar: [
-        "1. إنشاء الطلب: دفع بيانات صحيحة عبر الـ API.",
-        "2. التجهيز والتغليف: بوسطة تقوم بالانتقاي والتغليف وفق معايير الجودة.",
-        "3. التوصيل: بوسطة تتولى التوصيل وإرسال تحديثات التتبع.",
-        "4. التسليم أو الـ NDR: تسليم ناجح وتحصيل الكاش، أو فشل تسجيل NDR خلال 24 ساعة."
-      ],
-      canned_reply: "Your order has been securely processed and dispatched with Bosta delivery partner."
     },
     {
       code: "SOP-CORE-02",
@@ -1100,7 +1102,7 @@
     if (c.includes('ticket') || c.includes('تذاكر') || c.includes('protocol')) return '📌';
     if (c.includes('refund') || c.includes('pay') || c.includes('استرداد') || c.includes('مالي') || c.includes('bot')) return '💳';
     if (c.includes('core') || c.includes('one') || c.includes('golden') || c.includes('مبادئ')) return '⭐';
-    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة') || c.includes('bosta') || c.includes('shopify')) return '📦';
+    if (c.includes('defect') || c.includes('production') || c.includes('quality') || c.includes('جودة') || c.includes('bosta') || c.includes('shopify') || c.includes('partnership')) return '📦';
     if (c.includes('exchange') || c.includes('size') || c.includes('استبدال')) return '🔄';
     if (c.includes('ship') || c.includes('delivery') || c.includes('شحن')) return '🚚';
     return '📑';
