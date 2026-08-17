@@ -71,7 +71,7 @@
     .cat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
     .cat-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 5px 12px; border-radius: 20px; align-self: flex-start; }
 
-    /* Clean SOP Presentation */
+    /* Clean SOP Presentation & Flowchart styling */
     .sop-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .sop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
     .sop-title { font-size: 20px; font-weight: 800; color: var(--primary); margin: 0; }
@@ -79,10 +79,14 @@
     .sop-tag { display: inline-block; font-size: 12px; font-weight: 700; background: var(--accent-light); color: var(--accent); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
     .sop-desc-box { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 15px 18px; border-radius: 6px; font-size: 14px; color: #334155; line-height: 1.6; margin: 15px 0; }
 
-    .steps-timeline { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
-    .step-box { display: flex; gap: 14px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; align-items: flex-start; }
-    .step-number { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
-    .step-content { font-size: 14px; line-height: 1.6; color: #334155; flex: 1; }
+    /* Visual Flowchart Nodes */
+    .flowchart-container { margin: 20px 0; display: flex; flex-direction: column; gap: 0px; }
+    .flowchart-node { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; position: relative; border-left: 5px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.2s; }
+    .flowchart-node:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
+    .flowchart-arrow { text-align: center; color: var(--accent); font-size: 20px; font-weight: bold; margin: 6px 0; line-height: 1; }
+    .flow-node-num { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; margin-bottom: 6px; text-transform: uppercase; }
+    .flow-node-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
+    .flow-node-desc { font-size: 13.5px; color: #334155; line-height: 1.6; }
 
     .canned-box { background: var(--success-bg); border: 1px solid #bbf7d0; border-left: 5px solid var(--success); padding: 16px; border-radius: 8px; margin-top: 15px; position: relative; }
     .copy-btn { background: var(--success); color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; font-weight: bold; }
@@ -781,109 +785,58 @@
   let currentUser = "agent@mavinwear.com";
   let currentHomeLang = 'en';
 
-  // 1. FULL DETAILED EMBEDDED MASTER SOP DIRECTIVES (SPLIT & COMPREHENSIVE)
+  // 1. COMPREHENSIVE DETAILED MASTER SOP DIRECTIVES (SPLIT INTO DEDICATED SHOPIFY & BOSTA MODULES)
   const EMBEDDED_MASTER_SOPS = [
     {
       code: "SOP-SHOPIFY-PLAYBOOK",
-      category_en: "Shopify & Bosta Ops Playbook",
-      category_ar: "دليل تشغيل شوبيفاي وبوسطة (الـ Playbook الشامل)",
-      system: "Shopify Orders + Bosta Worker",
-      title_en: "📘 Bosta × Shopify — CS / Ops Operator Playbook (Full Guide)",
-      title_ar: "📘 دليل المشغل الشامل لتتبع الطلبات داخل شوبيفاي وبوسطة",
-      description_en: "The complete operator's manual for order tracking inside Shopify. Covers worker signals, native statuses, governed tags, metafields, the 6 saved-view operational tabs, and the golden rules of human vs robot ownership.",
-      description_ar: "الدليل التشغيلي الكامل لتتبع الطلبات داخل شوبيفاي. يغطي إشارات الروبوت، الحالات الأصلية، التيجان المتحكم بها، الميتافيلدز، والتبويبات الستة للعمليات.",
-      steps_en: [
-        "1. System Architecture: The sync-bosta worker reads Bosta (source of truth for delivery + COD) and writes 3 signals onto Shopify orders: Native status columns, governed Tags, and detail Metafields.",
-        "2. Golden Rule of Tags: If native Shopify column shows it, worker does not tag it. Tags exist only for exceptions. Resolved = tag is gone. Robot never touches manual tags (bosta_fxf_*, UpPromote).",
-        "3. Forward Order Journey: Picked/Packed ➔ ready-for-pickup; In transit ➔ In transit; Out for delivery ➔ Out for delivery; Delivered ➔ Delivered (COD marked Paid & archived); Failed ➔ failed-1 / failed-2; Delayed ➔ stuck-3d; Terminal failure ➔ card-risk.",
-        "4. Exception Signals: oos (warehouse stock reason), on-hold (address/phone delivery blocked), warehouse-hold (pre-shipping block), not-picked (courier uncollected 1+ day), card-risk (prepaid failure).",
-        "5. Return Lifecycle (Reverse Orders): Four tags: pending-refund (item back, refund owed), exchange-returned (swap back), return-failed (never came back), return-blocked (bad return data).",
-        "6. SLA & Escalations: Driven by Bosta SLA deadline. sla-risk (within 24h), sla-breach (deadline passed), stuck-3d (3+ days stalled), escalated (manual by CS with mandatory Slack #bosta-escalations proof), escalated-followup (12h silence)."
+      category_en: "Shopify Ops & Order Tracking",
+      category_ar: "إدارة العمليات وتتبع الطلبات في شوبيفاي",
+      system: "Shopify Orders + Sync-Bosta Worker",
+      title_en: "📘 Shopify Order Tracking, Tags & Metafields Architecture",
+      title_ar: "📘 نظام تتبع الطلبات عبر شوبيفاي (التيجان والميتافيلدز)",
+      description_en: "Detailed guide on how the CS and operations teams track orders natively inside Shopify. Covers worker signals, native columns, governed tags, the 4-point gate before clearing tags, and order note audit trails.",
+      description_ar: "دليل مفصل لكيفية تتبع فرق العمل للطلبات داخل شوبيفاي. يغطي إشارات الروبوت، التيجان المتحكم بها، بوابات الفحص الرباعية، وسجلات ملاحظات الطلبات.",
+      steps: [
+        { title: "1. Native Status vs Governed Tags", desc: "Rule: If a native Shopify column already shows it, the worker does not tag it. Tags exist only for what Shopify can't show natively. Resolved = the tag is gone." },
+        { title: "2. The 6 Saved-View Operational Tabs", desc: "Grouped by who acts: (1) Fulfillment · Action Required (Ops); (2) CS · Carrier Follow-Up; (3) Mgr · Escalations; (4) Finance · Card at Risk; (5) Finance · Refunds Owed; (6) Finance · Returns — Failed + Exchange." },
+        { title: "3. The 4-Point Gate Before Clearing Any Tag", desc: "Before clearing a human-clear tag (pending-refund, exchange-returned, return-failed): Verify the issue is resolved, confirm it's a manual tag, stamp the order Note with action/date/ref, and ensure the Slack post exists." },
+        { title: "4. Audit Trail & Order Notes", desc: "The worker never writes to the Order Note — it is strictly reserved for the team. Every manual action gets a stamped line (e.g. [CS 28/06] Called customer, corrected address)." }
       ],
-      steps_ar: [
-        "1. هندسة النظام: عامل المزامنة يقرأ بوسطة ويكتب 3 إشارات في شوبيفاي (أعمدة الحالة، التيجان المعتمدة، والميتافيلدز).",
-        "2. القاعدة الذهبية للتيجان: لا يُوضع تاج إذا كانت الحالة ظاهرة أصلاً في عمود شوبيفاي. اختفاء التاج يعني حل المشكلة.",
-        "3. رحلة الطلب الأمامية: جاهز للاستلام، في الطريق، خرج للتوصيل، تم التوصيل، محاولة فاشلة، متأخر، وفشل نهائي.",
-        "4. إشارات الاستثناء: oos (مخزن)، on-hold (عنوان/هاتف خطأ)، warehouse-hold، not-picked، card-risk (دفع مسبق فاشل).",
-        "5. دورة المرتجعات العكسية: pending-refund (مطلوب استرداد)، exchange-returned (استبدال)، return-failed (مرتجع لم يصل)، return-blocked.",
-        "6. التصعيد والـ SLAs: بناءً على مواعيد بوسطة الرسمية (sla-breach, stuck-3d, escalated) مع إلزاميّة النشر في سلاك كإثبات."
-      ],
-      canned_reply: "We have verified your order status across our Shopify and Bosta fulfillment systems and updated your tracking records."
+      canned_reply: "We have verified your order status across our Shopify operational views and updated all tracking parameters."
     },
     {
-      code: "SOP-DAILY-CHECKLIST",
-      category_en: "Shopify & Bosta Ops Checklist",
-      category_ar: "قائمة المهام اليومية والـ Checklists",
-      system: "Shopify Orders + Bosta Dashboard + Slack #bosta-escalations",
-      title_en: "📋 Bosta × Shopify — CS / Ops Daily Checklist & 4-Point Gate",
-      title_ar: "📋 قائمة المهام اليومية لفرق خدمة العملاء والعمليات وبوابات المراجعة",
-      description_en: "Step-by-step daily routine for shift start, working the 6 saved-view tabs (Action Required, Carrier Follow-Up, Escalations, Card at Risk, Refunds Owed, Returns Failed/Exchange), order note logging, and the strict 4-point gate before clearing any tag.",
-      description_ar: "الروتين اليومي لبدء الوردية، العمل على التبويبات الستة، توثيق ملاحظات الطلبات، وشروط بوابة الفحص الرباعية (4-point gate) قبل إزالة أي تاج.",
-      steps_en: [
-        "1. Start of Shift (2 min): Open Shopify Orders list (Delivery status + Tags are home base), skim the 6 saved-view tabs, check #bosta-escalations, have Bosta dashboard open.",
-        "2. Fulfillment · Action Required (Ops): Work on-hold, warehouse-hold, oos, not-picked, return-blocked. Log every action in order Note ([OPS date] action).",
-        "3. CS · Carrier Follow-Up (CS): Work failed-2, sla-breach, stuck-3d. Escalate failed-2 to Slack #bosta-escalations with order | issue | bosta-ref | screenshot.",
-        "4. Finance Queues: Card at Risk (review prepaid failures), Refunds Owed (process pending-refunds and remove tag by hand), Returns Failed + Exchange (settle exchanges & chases).",
-        "5. The 4-Point Gate Before Clearing ANY Tag: (1) Issue truly resolved; (2) Human-clear tag only (pending-refund, exchange-returned, return-failed); (3) Order Note stamped with date + ref; (4) Slack escalation post exists if escalated."
+      code: "SOP-BOSTA-JOURNEY",
+      category_en: "Bosta Partnership & Fulfillment",
+      category_ar: "شراكة بوسطة والوفاء بالطلبات",
+      system: "Bosta API + Shopify Dashboard",
+      title_en: "📦 Bosta Forward Journey & Exception Handling SOP",
+      title_ar: "📦 رحلة الشحن الأمامية مع بوسطة ومعالجة الاستثناءات",
+      description_en: "Complete walkthrough of the forward order lifecycle from pick and pack to last-mile delivery, zone SLAs, NDR handling, and Awaiting Action / OOS resolution protocols.",
+      description_ar: "شرح تفصيلي لرحلة الطلب الأمامية من الاستلام والتغليف حتى التوصيل للعميل، مواعيد الـ SLAs حسب المناطق، ومعالجة العناوين الخاطئة (Awaiting Action) ونفاد المخزون (OOS).",
+      steps: [
+        { title: "Step 1: Order Creation & API Push", desc: "Customer places order ➔ clean data (address, phone, SKU) pushed via API to Bosta. Bosta queues for same-day fulfillment (95%+ target)." },
+        { title: "Step 2: Dispatch & Last-Mile Delivery", desc: "Bosta picks, packs, and dispatches. Delivered successfully or NDR logged within 24h of a failed attempt." },
+        { title: "Step 3: Exception Signals (Awaiting Action & OOS)", desc: "Bad address/phone flagged within 2h (tag: on-hold) ➔ Mavin contacts customer and sends fix within 12h. OOS reported within 24h to avoid dead stock." },
+        { title: "Step 4: Returns & NDR Workflow", desc: "Failed delivery notifications within 24h. Returns logged and QC'd within 48h. Terminal return tags managed by Finance." }
       ],
-      steps_ar: [
-        "1. بداية الوردية (دقيقتان): فتح شوبيفاي، مراجعة التبويبات الستة، فحص قناة سلاك للتصعيدات، وفتح لوحة بوسطة.",
-        "2. تبويب Action Required: حل مشاكل العناوين، المخزن، ونفاد المخزون مع توثيق الملاحظات في النظام.",
-        "3. تبويب Carrier Follow-Up: متابعة الحالات المتأخرة وتصعيد المرتجعات الفاشلة (failed-2) بسلاك أولاً.",
-        "4. تبويبات المالية: مراجعة Card at Risk وإصدار استردادات Refunds Owed مع إزالة التيجان يدوياً.",
-        "5. بوابة المراجعة الرباعية (4-point gate): التأكد من حل المشكلة، أن التاج بشري، توثيق الملاحظة، ووجود منشور سلاك."
-      ],
-      canned_reply: "We have reviewed your request through our daily operational checklist and verified all logistical records."
+      canned_reply: "Your shipment is being actively managed through our Bosta fulfillment pipeline with verified delivery status."
     },
     {
       code: "SOP-REFUND-BOT",
       category_en: "Refund Bot & Paymob Operations",
       category_ar: "بوت الاسترداد الآلي ومعاملات Paymob",
-      system: "Paymob + Shopify + Slack (#cs-updates)",
-      title_en: "🤖 Mavin Wear Refund Bot & Paymob Daily Operations SOP",
-      title_ar: "🤖 دليل تشغيل بوت الاسترداد الآلي وفحص Paymob اليومي",
-      description_en: "Covers prepaid (Paymob) automatic refunds running Sun-Thu (2pm-2am). Explains the 7 automatic refund situations, daily 2-minute check in Slack #cs-updates, Slack commands (/refunds, /breakdown), Paymob lookup steps, manual refund rules, and escalation to Ahmed.",
-      description_ar: "يغطي الاسترداد الآلي لطلبات Paymob المدفوعة مقدماً، الحالات الـ 7 للاسترداد التلقائي، الفحص اليومي في Slack، أوامر البوت، وطريقة البحث والتعامل مع معاملات Paymob.",
-      steps_en: [
-        "1. What it is: Automatic bot runs Sun-Thu, 2pm-2am Cairo time. Touches prepaid Paymob orders only (COD never touched). Posts daily report in #cs-updates.",
-        "2. 7 Automatic Situations: (1) Accidental double payment within 40 min; (2) Warehouse cancellation; (3) Package returned to warehouse; (4) Delivery failed; (5) Missing 9+ days; (6) Entire order OOS 2+ days; (7) Part of order OOS.",
-        "3. Human Review Triggers: Order > EGP 5,000 (Tag: Refund: Needs Review ➔ DM Ahmed); Refund failed 3 times in a row (🔴 in Slack report).",
-        "4. Daily 2-Minute Check: Open Slack #cs-updates ➔ Find today's report ➔ Read split (✅ clean, 🔄 recovered, 🔴 failed). If 🔴 failed > 0, type /breakdown.",
-        "5. Paymob Lookup & Manual Refund: Go to eg.dashboard.paymob.com ➔ Filter Transactions by Order ID (Shopify order #). If Success and bot failed, click Refund, enter amount, confirm, AND create matching refund in Shopify."
+      system: "Paymob Dashboard + Slack (#cs-updates)",
+      title_en: "🤖 Mavin Wear Refund Bot & Paymob Automated Operations",
+      title_ar: "🤖 بوت الاسترداد الآلي لطلبات باي موب (Paymob Bot)",
+      description_en: "Standard operating procedure for the automated refund bot operating Sun-Thu (2pm-2am). Covers the 7 automatic refund triggers, daily 2-minute checks, Slack commands (/refunds, /breakdown), and manual Paymob lookups.",
+      description_ar: "إجراءات التشغيل لبوت الاسترداد التلقائي الذي يعمل من الأحد للخـميس. يغطي حالات الاسترداد الـ 7، الفحص الصباحي لسلاك، وأوامر البحث في لوحة تحكم Paymob.",
+      steps: [
+        { title: "1. Automated Bot Execution", desc: "Runs daily (Sun-Thu, 2pm-2am). Handles prepaid Paymob orders automatically across 7 scenarios (double payments, warehouse cancellations, returns, missing 9+ days, OOS)." },
+        { title: "2. Daily 2-Minute Morning Check", desc: "Open Slack #cs-updates ➔ Review today's report split: ✅ clean, 🔄 recovered, 🔴 failed. If 🔴 failed > 0, type /breakdown." },
+        { title: "3. Paymob Dashboard Investigation", desc: "Go to eg.dashboard.paymob.com ➔ Payments ➔ Transactions ➔ Filter by Order ID (= Shopify order #). Check status (Success, Pending, Declined)." },
+        { title: "4. Manual Refund & Escalation", desc: "If transaction is Success and bot failed, click Refund in Paymob, enter amount, confirm, AND create matching refund record in Shopify. Escalate to Ahmed if stuck 3 days." }
       ],
-      steps_ar: [
-        "1. فكرة العمل: بوت يعمل أوتوماتيكياً من الأحد للخميس لاسترداد طلبات Paymob المدفوعة مقدماً ويُنزل تقريراً يومياً في Slack.",
-        "2. الحالات الـ 7 التلقائية: الدفع المزدوج، إلغاء المخزن، المرتجعات، فشل التوصيل، الشحنات المفقودة، ونفاد المخزون الكلي أو الجزئي.",
-        "3. حالات المراجعة البشرية: الطلبات فوق 5000 جنيه أو الإخفاق لـ 3 مرات متتالية.",
-        "4. الفحص اليومي (دقيقتان): فتح تقرير سلاك ومراجعة التقسيم (✅, 🔄, 🔴) واستخدام أمر /breakdown عند وجود إخفاق.",
-        "5. البحث في Paymob والاسترداد اليدوي: استخدام Order ID في لوحة Paymob، تنفيذ الاسترداد، وإلزامية إنشاء سجل استرداد مطابق في شوبيفاي."
-      ],
-      canned_reply: "We have verified the transaction status in Paymob and processed your refund accordingly."
-    },
-    {
-      code: "SOP-BOSTA-HANDBOOK",
-      category_en: "Bosta Partnership & Fulfillment",
-      category_ar: "شراكة بوسطة والوفاء بالطلبات",
-      system: "Bosta API + Shopify + Slack",
-      title_en: "🤝 Mavin Wear × Bosta Partnership Handbook & Full SOP",
-      title_ar: "🤝 كتيب شراكة بوسطة وإجراءات الإنجاز والشحن الكاملة",
-      description_en: "Comprehensive partnership manual covering the full order journey, fulfillment SLAs (95%+ same-day), last-mile delivery targets by zone, NDR handling, return quality checks, Awaiting Action and OOS exception workflows, communication charter, and weekly sync structure.",
-      description_ar: "دليل الشامل لشراكة بوسطة وميفين وير. يغطي رحلة الطلب، معايير الـ SLAs، أهداف التوصيل حسب المنطقة، معالجة الـ NDRs، فحص جودة المرتجعات، وحل مشاكل Awaiting Action و OOS.",
-      steps_en: [
-        "1. Order Journey: Customer places order ➔ pushed via API to Bosta (clean address/phone required) ➔ Bosta picks, packs, and dispatches same-day ➔ delivered or NDR logged within 24h.",
-        "2. Fulfillment & Capacity: 95%+ same-day fulfillment, 99.5%+ picking accuracy. OOS orders must be reported within 24h to avoid invisible dead stock.",
-        "3. Last-Mile & Awaiting Action: Bad address/phone flagged within 2h ➔ Mavin contacts customer and sends fix within 12h ➔ Bosta re-dispatches within 24h.",
-        "4. Returns & NDR: Failed delivery notified within 24h, Mavin instruction within 12h. Returns logged and QC'd within 48h.",
-        "5. Communication & Escalation: Use Slack #ops for daily alerts, email for formal claims. Escalation Tiers: Ops Manager (2h) ➔ Tech/Return Owner (4h) ➔ Founder Ahmad (Same day)."
-      ],
-      steps_ar: [
-        "1. رحلة الطلب: العميل يطلب ➔ البيانات ترسل عبر الـ API ➔ بوسطة تجهز وتشحن في نفس اليوم ➔ توصيل أو تسجيل NDR خلال 24 ساعة.",
-        "2. معايير الإنجاز: 95% فوري في نفس اليوم، دقة انتقاء 99.5%. طلبات OOS تبلغ خلال 24 ساعة.",
-        "3. التوصيل و Awaiting Action: العناوين الخاطئة تبلغ خلال ساعتين، وتُصلح خلال 12 ساعة وتعاد للتوصيل خلال 24 ساعة.",
-        "4. المرتجعات والـ NDR: إخطار الـ NDR خلال 24 ساعة، وتعليمات المرتجع خلال 12 ساعة.",
-        "5. الاتصال والتصعيد: استخدام Slack لعمليات اليوم، والتصعيد لمدير العمليات ثم المؤسس أحمد عند اللزوم."
-      ],
-      canned_reply: "We are coordinating directly with Bosta fulfillment and delivery teams to ensure your shipment arrives on schedule."
+      canned_reply: "We have checked the transaction status in Paymob and processed your automated refund."
     },
     {
       code: "SOP-CORE-02",
@@ -893,16 +846,11 @@
       title_en: "📌 Ticket Opening First, 24H SLA & Mandatory Order Number",
       title_ar: "📌 بروتوكول فتح التذاكر وتتبع مهلة الـ 24 ساعة وإلزامية رقم الطلب",
       description_en: "Mandatory protocol: Always open the ticket and flag the issue BEFORE reaching out to the customer to maintain 24-hour SLA. All entries in the sheet must include the Order Number without exception.",
-      description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة، مع تسجيل رقم الطلب بدقة في الشيت.",
-      steps_en: [
-        "1. Open Ticket First: Open the ticket & flag the issue before contacting customer.",
-        "2. Mandatory Order Number: Ensure the Order Number is filled in the sheet without leaving it blank.",
-        "3. Real-time Sheet Updates: Check sheet in intervals, open tickets first, contact customers, and update sheet status."
-      ],
-      steps_ar: [
-        "1. فتح التذكرة أولاً وعمل Flag للمشكلة قبل مراسلة العميل لضمان الـ 24 ساعة.",
-        "2. إلزامية ملء خانة رقم الطلب بالشيت وعدم ترك أي خانة فارغة.",
-        "3. متابعة الطلبات الموزعة وفتح التذاكر أولاً ثم التواصل والتحديث الدوري."
+      description_ar: "توجيه تنظيمي إلزامي: فتح التذكرة وعمل Flag للمشكلة أولاً قبل مراسلة العميل لضمان الالتزام بمهلة الـ 24 ساعة.",
+      steps: [
+        { title: "1. Open Ticket First", desc: "Always open the ticket & flag the issue before contacting customer to protect the 24h SLA." },
+        { title: "2. Mandatory Order Number", desc: "Ensure the Order Number is filled in the sheet without leaving it blank." },
+        { title: "3. Real-time Sheet Updates", desc: "Check sheet in intervals, open tickets first, contact customers, and update sheet status." }
       ],
       canned_reply: "Hello! We have flagged and logged your ticket in our system according to our official turnaround SLA."
     },
@@ -914,112 +862,13 @@
       title_en: "🎯 One Touch Ticket Resolution SOP & Best Practices",
       title_ar: "🎯 بروتوكول حل التذاكر من أول رد (One Touch Ticket Resolution)",
       description_en: "A One Touch Ticket is resolved and closed from the very first response without requiring customer follow-up or extra back-and-forth messages.",
-      description_ar: "الـ One Touch Ticket هي التذكرة التي يحل فيها ممثل الخدمة المشكلة ويغلقها من أول رد كامل دون الحاجة للرجوع للعميل.",
-      steps_en: [
-        "1. Read ticket thoroughly before answering.",
-        "2. Conduct complete investigation on Shopify, Gorgias & Slack.",
-        "3. Send all required information and resolution in a single message.",
-        "4. Execute resolution immediately.",
-        "5. Close ticket accurately from the first touch."
-      ],
-      steps_ar: [
-        "1. القراءة المتأنية قبل الرد واستيعاب طلب العميل.",
-        "2. التحقيق الشامل عبر Shopify و Gorgias و Slack.",
-        "3. إرسال كافة التفاصيل والحل في رسالة واحدة متكاملة.",
-        "4. التنفيذ الفوري للإجراء دون انتظار رد إضافي.",
-        "5. الإغلاق الصحيح والكامل للتذكرة."
+      description_ar: "الـ One Touch Ticket هي التذكرة التي يحل فيها ممثل الخدمة المشكلة ويغلقها من أول رد كامل.",
+      steps: [
+        { title: "1. Thorough Investigation", desc: "Read ticket thoroughly and investigate across Shopify, Gorgias & Slack before answering." },
+        { title: "2. Single-Touch Execution", desc: "Send all required information and resolution in a single message and execute immediately." },
+        { title: "3. Queue Hygiene", desc: "Close ticket accurately from the first touch." }
       ],
       canned_reply: "Your request has been fully reviewed and processed in our systems. Your order details and tracking updates have been finalized."
-    },
-    {
-      code: "SOP-CORE-00",
-      category_en: "Core Operational Principles",
-      category_ar: "مبادئ العمل والتشغيل الأساسية",
-      system: "Shopify + Gorgias + Slack + Bosta + Estbdal",
-      title_en: "⭐ Golden Rule: Independent Self-Investigation & Last-Agent Ownership",
-      title_ar: "⭐ القاعدة الذهبية: التحقيق الذاتي المستقل ومسؤولية الأيجنت الأخير",
-      description_en: "Every agent must conduct their own complete, independent investigation across all 5 operational platforms (Shopify, Gorgias, Slack, Bosta, Estbdal/Refund Sheets). The LAST handling agent holds 100% full ownership of resolution.",
-      description_ar: "يجب على كل ممثل خدمة إجراء تحقيقه المستقل عبر الأنظمة الخمسة دون الاعتماد على رد سابق. ممثل الخدمة الأخير مسؤول بالكامل.",
-      steps_en: [
-        "1. Conduct Self-Investigation: Never blindly copy previous agent responses.",
-        "2. Check Slack & Gorgias for internal context and history.",
-        "3. Check Shopify for orders, discounts, and payment status.",
-        "4. Check Bosta for live AWB delivery status.",
-        "5. Check Estbdal & Refund Sheets for duplicate entries and SKUs.",
-        "6. Last Agent Ownership: Deliver the complete resolution."
-      ],
-      steps_ar: [
-        "1. التحقيق الذاتي وعدم الاعتماد الأعمى على الردود السابقة.",
-        "2. فحص Slack و Gorgias للسجلات السابقة.",
-        "3. فحص Shopify للطلبات والمدفوعات.",
-        "4. فحص Bosta للشحن والتتبع المباشر.",
-        "5. فحص Estbdal وشيتات الاسترداد لمنع التكرار.",
-        "6. ممثل الخدمة الأخير هو المسؤول الأول عن إغلاق الحالة."
-      ],
-      canned_reply: "I am personally investigating your order details across all our systems to ensure everything is resolved accurately."
-    },
-    {
-      code: "SOP-OPS-08",
-      category_en: "Customer Support & Ticket Operations",
-      category_ar: "إجراءات خدمة العملاء والـ SLAs",
-      system: "Ticket Tracker & Inbox",
-      title_en: "⏱️ Resolved Ticket Closure SLA (Close within 2–3 Hours)",
-      title_ar: "⏱️ مهلة إغلاق التذاكر المحلولة (خلال ساعتين إلى ٣ ساعات كحد أقصى)",
-      description_en: "Close any resolved ticket that has been completed for more than 2–3 hours. Keep following up on open tickets and avoid leaving resolved ones open.",
-      description_ar: "يجب إغلاق أي تذكرة تم حل مشكلتها ومر على حلها ساعتان إلى ٣ ساعات كحد أقصى لضمان نظافة صندوق الوارد.",
-      steps_en: [
-        "1. Follow Up Regularly on open assignments.",
-        "2. 2–3 Hour Closure Rule: Once resolved, close ticket within 2 to 3 hours.",
-        "3. Queue Hygiene: Ensure real-time, clean SLA metrics."
-      ],
-      steps_ar: [
-        "1. المتابعة المستمرة للتذاكر المفتوحة.",
-        "2. قاعدة الإغلاق: إغلاق التذكرة المحلولة خلال ساعتين إلى ٣ ساعات.",
-        "3. تفريغ التذاكر المنجزة لدقة التقارير."
-      ],
-      canned_reply: "Your issue has been resolved. If you need any further assistance, feel free to reach out anytime!"
-    },
-    {
-      code: "SOP-REF-05",
-      category_en: "Refunds & Financial Operations",
-      category_ar: "العمليات المالية والاسترداد",
-      system: "Hourly Sync Sheet",
-      title_en: "5. Refunds & Gift Cards – Batch Sync (+10% Store Credit Bonus)",
-      title_ar: "5. معالجة الاسترداد وبطاقات الهدايا الدورية (+10% بونص رصيد المتجر)",
-      description_en: "Offer 10% Store Credit bonus if customer prefers not to wait for bank transfer updates (SLA 3 business days).",
-      description_ar: "تقديم خيار رصيد المتجر الفوري مضافاً إليه 10% زيادة هدية للعميل في حال عدم رغبته في انتظار التحويل البنكي.",
-      steps_en: [
-        "1. Process refunds in hourly batches upon warehouse confirmation.",
-        "2. Offer immediate Store Credit + 10% bonus for faster turnaround.",
-        "3. Otherwise, transfer completes in 3 business days."
-      ],
-      steps_ar: [
-        "1. تنفيذ المرتجعات بالسجلات كل ساعة فور استلام المخزن.",
-        "2. تقديم رصيد فوري بالمتجر + 10% بونص زيادة هدية.",
-        "3. اكتمال التحويل البنكي خلال ٣ أيام عمل في حال الانتظار."
-      ],
-      canned_reply: "Dear Mavin family member, you can choose immediate Store Credit with +10% bonus or wait up to 3 business days for bank transfer."
-    },
-    {
-      code: "SOP-PROD-09",
-      category_en: "Defects & Production Quality",
-      category_ar: "جودة الإنتاج وعيوب التصنيع",
-      system: "CS Portal + Shopify + Bosta",
-      title_en: "8. Production Quality Protocol (Compression Tee Sewing/Sleeve Flaws)",
-      title_ar: "8. بروتوكول عيوب جودة الإنتاج والتصنيع (مثل خياطة وأكمام Compression Tee)",
-      description_en: "Directive on handling confirmed factory defects: Keep = 50% refund, Return = 100% full refund, Exchange = 100% Free exchange with NO shipping fees.",
-      description_ar: "توجيه إلزامي لعيوب الإنتاج المؤكدة: الاحتفاظ = 50% تعويض، الإرجاع = 100% استرداد كامل، الاستبدال = شحن مجاني 100%.",
-      steps_en: [
-        "Option 1 (Keep): Offer 50% refund compensation.",
-        "Option 2 (Return): 100% full refund once return arrives.",
-        "Option 3 (Exchange): 100% Free exchange with zero shipping fees."
-      ],
-      steps_ar: [
-        "الخيار 1 (الاحتفاظ): تقديم 50% تعويض من سعر القطعة.",
-        "الخيار 2 (الإرجاع): استرداد كامل 100% فور الاستلام.",
-        "الخيار 3 (الاستبدال): استبدال مجاني 100% بدون أي رسوم شحن."
-      ],
-      canned_reply: "Hello! We apologize for this production flaw. We are pleased to offer you: (1) 50% refund compensation to keep it, (2) 100% Free exchange with zero shipping fees, or (3) Full refund upon return."
     }
   ];
 
@@ -1163,6 +1012,7 @@
     }).join('');
   }
 
+  // --- ENHANCED FLOWCHART RENDERER FOR DETAILED STEPS ---
   function openCategory(encodedCatName) {
     const catName = decodeURIComponent(encodedCatName);
     const items = masterKnowledgeBase.filter(i => {
@@ -1177,7 +1027,7 @@
     container.innerHTML = items.map(item => {
       const title = currentHomeLang === 'en' ? (item.title_en || item.title) : (item.title_ar || item.title);
       const desc = currentHomeLang === 'en' ? (item.description_en || item.description) : (item.description_ar || item.description);
-      const steps = currentHomeLang === 'en' ? (item.steps_en || item.steps) : (item.steps_ar || item.steps);
+      const steps = item.steps || [];
 
       return `
         <div class="sop-card">
@@ -1189,22 +1039,26 @@
             <span class="sop-tag">🖥️ ${item.system}</span>
           </div>
           <div class="sop-desc-box">${desc}</div>
+          
           ${steps && steps.length > 0 ? `
-            <div style="font-size:13.5px; font-weight:bold; color:var(--primary); margin-top:15px;">📋 ${currentHomeLang === 'en' ? 'Operational Guidelines & Steps:' : 'الإجراءات وخطوات التنفيذ:'}</div>
-            <div class="steps-timeline">
-              ${steps.map((step, idx) => `
-                <div class="step-box">
-                  <div class="step-number">${idx + 1}</div>
-                  <div class="step-content">${step}</div>
+            <div style="font-size:15px; font-weight:800; color:var(--primary); margin: 20px 0 12px 0;">⚡ Visual Process Flowchart & Detailed Steps:</div>
+            <div class="flowchart-container">
+              ${steps.map((st, idx) => `
+                <div class="flowchart-node">
+                  <span class="flow-node-num">Step ${idx + 1}</span>
+                  <div class="flow-node-title">${st.title}</div>
+                  <div class="flow-node-desc">${st.desc}</div>
                 </div>
+                ${idx < steps.length - 1 ? '<div class="flowchart-arrow">↓</div>' : ''}
               `).join('')}
             </div>
           ` : ''}
+
           ${item.canned_reply ? `
             <div class="canned-box">
               <button class="copy-btn" onclick="copyReplyTextDirect('${item.canned_reply.replace(/'/g, "\\'")}')">📋 ${currentHomeLang === 'en' ? 'Copy Reply' : 'نسخ الرد'}</button>
-              <strong style="color:var(--primary);">💬 ${currentHomeLang === 'en' ? 'Approved Response:' : 'نص الرد المعتمد:'}</strong><br>
-              <span style="font-size:13px; color:#27272a; display:block; margin-top:4px;">${item.canned_reply}</span>
+              <strong style="color:var(--success);">💬 ${currentHomeLang === 'en' ? 'Approved Response:' : 'نص الرد المعتمد:'}</strong><br>
+              <span style="font-size:13.5px; color:#166534; display:block; margin-top:4px;">${item.canned_reply}</span>
             </div>
           ` : ''}
         </div>
