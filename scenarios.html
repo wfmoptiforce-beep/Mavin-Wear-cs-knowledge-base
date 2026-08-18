@@ -1,0 +1,577 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIN OPS HUB - Scenarios & Decision Tree</title>
+<style>
+:root {
+  --bg:#f3f3f7;--card:#fff;--border:#e5e5e5;--border2:#d0d0d0;
+  --text:#111;--muted:#888;--muted2:#bbb;
+  --indigo:#4b4bf9;--dark:#0a0a0a;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+  --red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;
+  --yellow:#d97706;--yellow-bg:#fffbeb;--yellow-bd:#fde68a;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
+  --mint:#059669;--mint-bg:#ecfdf5;--mint-bd:#a7f3d0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
+.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
+.nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{padding:8px 14px;border-radius:8px;color:#666;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none;display:flex;align-items:center;gap:7px}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{background:#fff;color:#0a0a0a}
+.nav-link svg{width:15px;height:15px;flex-shrink:0}
+.nav-right{z-index:2}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
+.user-name{font-size:12px;font-weight:700;color:#fff}
+.user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+
+.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+.tab-btn svg{width:15px;height:15px}
+.count-badge{background:#f3f3f7;border-radius:100px;padding:2px 8px;font-size:11px;margin-left:4px;font-weight:700}
+
+.page{padding:32px;max-width:1300px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
+.page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
+.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
+
+.filter-bar{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter-bar-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;margin-right:4px}
+.fp{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap}
+.fp:hover{border-color:#999;color:var(--text)}
+.fp.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+.category-group{margin-bottom:32px}
+.category-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.category-icon{font-size:22px}
+.category-name{font-size:16px;font-weight:900;color:var(--text)}
+.category-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:3px 10px}
+
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
+.sc-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:.15s;cursor:pointer}
+.sc-card:hover{border-color:var(--indigo);box-shadow:0 4px 20px rgba(75,75,249,.1);transform:translateY(-2px)}
+.sc-card-top{padding:16px 18px 12px;border-bottom:1px solid #f5f5f5}
+.sc-num{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.sc-scenario{font-size:14px;font-weight:700;color:var(--text);line-height:1.6;direction:rtl;text-align:right}
+.sc-card-body{padding:12px 18px 14px}
+.sc-analysis{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;direction:rtl;text-align:right}
+.sc-footer{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.sc-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid}
+.res-info{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.res-exchange{background:var(--mint-bg);color:var(--mint);border-color:var(--mint-bd)}
+.res-refund{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
+.res-complaint{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow-bd)}
+.res-cancelled{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
+.res-na{background:#f3f3f7;color:var(--muted);border-color:var(--border)}
+.res-credit{background:#fdf4ff;color:#9333ea;border-color:#e9d5ff}
+.res-discount{background:#fff7ed;color:#ea580c;border-color:#fed7aa}
+
+/* DECISION TREE */
+.dt-group{margin-bottom:36px}
+.dt-group-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 20px;background:#fff;border:1px solid var(--border);border-radius:14px}
+.dt-group-icon{font-size:28px}
+.dt-group-name{font-size:17px;font-weight:900;color:var(--text)}
+.dt-group-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:3px 10px;margin-left:auto}
+
+.dt-rows{display:flex;flex-direction:column;gap:8px}
+.dt-row{background:#fff;border:1px solid var(--border);border-radius:12px;display:flex;overflow:hidden;transition:.15s}
+.dt-row:hover{border-color:#ccc;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.dt-accent{width:5px;flex-shrink:0}
+.dt-row-inner{flex:1;padding:14px 18px;display:grid;grid-template-columns:2fr 2fr 1fr 1fr;gap:16px;align-items:start}
+.dt-col-label{font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.dt-scenario-text{font-size:13px;font-weight:700;direction:rtl;text-align:right;line-height:1.5;color:var(--text)}
+.dt-sub-text{font-size:12.5px;color:var(--muted);direction:rtl;text-align:right;line-height:1.6}
+.dt-badge-wrap{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;z-index:1}
+.modal-title{font-size:15px;font-weight:800;direction:rtl;text-align:right;line-height:1.6;flex:1;color:var(--text)}
+.modal-close{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:.15s}
+.modal-close:hover{background:#f3f3f7}
+.modal-body{padding:24px}
+.modal-section{margin-bottom:22px}
+.modal-section-title{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.modal-section-content{font-size:13.5px;line-height:1.7;color:var(--text);direction:rtl;text-align:right;background:#fafafa;border-radius:10px;padding:12px 14px;border:1px solid var(--border)}
+.modal-badges{display:flex;gap:6px;flex-wrap:wrap}
+.reply-tabs{display:flex;gap:6px;margin-bottom:12px}
+.reply-tab{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
+.reply-tab.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.reply-box{background:#f8f9ff;border:1.5px solid var(--blue-bd);border-radius:12px;padding:16px 18px}
+.reply-box-label{font-size:10px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.reply-box-text{font-size:13.5px;line-height:1.8;color:var(--text);direction:rtl;text-align:right;white-space:pre-line}
+.copy-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;margin-top:10px;transition:.15s}
+.copy-btn:hover{border-color:var(--indigo);color:var(--indigo)}
+
+.loading-state{padding:80px 20px;text-align:center;color:var(--muted)}
+.spin{display:inline-block;width:24px;height:24px;border:3px solid rgba(75,75,249,.15);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite;margin-bottom:16px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.toast.show{display:flex}
+.toast.success{background:var(--green);color:#fff}
+
+@media(max-width:900px){
+  .sc-grid{grid-template-columns:1fr}
+  .dt-row-inner{grid-template-columns:1fr}
+  .page{padding:16px}
+  .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
+  .nav-brand{position:static;transform:none}
+}
+@media(max-width:560px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
+    </a>
+    <a href="scenarios.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="refunds.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h8"/></svg>Refunds
+    </a>
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
+    </a>
+  </div>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Agent Support</div>
+        <div class="user-role">CS · Operations</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('scenarios',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Scenarios <span class="count-badge" id="scBadge">—</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('dtree',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v4M7 14H5a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1zM19 14h-2a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1zM7.5 14l4.5-4 4.5 4"/></svg>
+    Decision Tree <span class="count-badge" id="dtBadge">—</span>
+  </button>
+</div>
+
+<!-- SCENARIOS -->
+<div class="page tab-content active" id="tab-scenarios">
+  <div class="page-badge"><span class="page-badge-dot"></span>CS Scenarios</div>
+  <div class="page-title">Customer Scenarios</div>
+  <div class="page-sub">كل السيناريوهات مجمعة حسب التصنيف — اضغط على أي كارد للرد المقترح</div>
+  <div class="filter-bar">
+    <span class="filter-bar-label">Filter:</span>
+    <div id="scFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+  </div>
+  <div id="scLoading" class="loading-state"><div class="spin"></div><br>Loading scenarios...</div>
+  <div id="scContent"></div>
+</div>
+
+<!-- DECISION TREE -->
+<div class="page tab-content" id="tab-dtree">
+  <div class="page-badge"><span class="page-badge-dot"></span>Decision Tree</div>
+  <div class="page-title">Decision Tree Map</div>
+  <div class="page-sub">دليل اتخاذ القرار — مجمع حسب الـ Category</div>
+  <div class="filter-bar">
+    <span class="filter-bar-label">Filter:</span>
+    <div id="dtFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+  </div>
+  <div id="dtLoading" class="loading-state"><div class="spin"></div><br>Loading decision tree...</div>
+  <div id="dtContent"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SHEET_ID = '1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo';
+let scData = [], dtData = [];
+let scFilter = 'all', dtFilter = 'all';
+
+async function fetchTab(tab) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}&headers=1`;
+  const res  = await fetch(url);
+  const text = await res.text();
+  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+  if (!m) return [];
+  const json = JSON.parse(m[1]);
+  return (json.table?.rows||[]).map(r=>(r.c||[]).map(c=>(!c||c.v===null)?'':(c.f||String(c.v))));
+}
+
+async function init() {
+  await Promise.all([loadScenarios(), loadDT()]);
+}
+
+// ══ SCENARIOS ══════════════════════════════════════════════════════════
+// Cols: A=كلام العميل, B=التحليل, C=Contact Reason, D=Resolution
+async function loadScenarios() {
+  try {
+    const rows = await fetchTab('Scenarios');
+    scData = rows.slice(1)
+      .filter(r => r[0] && r[0].trim())
+      .map((r,i) => ({
+        id: i+1,
+        scenario:      r[0]||'',
+        analysis:      r[1]||'',
+        contactReason: r[2]||'',
+        resolution:    r[3]||''
+      }));
+    document.getElementById('scLoading').style.display='none';
+    document.getElementById('scBadge').textContent = scData.length;
+    buildScFilters();
+    renderScenarios();
+  } catch(e) {
+    document.getElementById('scLoading').innerHTML='❌ Failed to load scenarios. Check sheet permissions.';
+    console.error(e);
+  }
+}
+
+function buildScFilters() {
+  const reasons = [...new Set(scData.map(s=>s.contactReason).filter(Boolean))].sort();
+  document.getElementById('scFilters').innerHTML =
+    `<button class="fp active" onclick="setScFilter('all',this)">✨ All (${scData.length})</button>` +
+    reasons.map(r=>{
+      const cnt = scData.filter(s=>s.contactReason===r).length;
+      return `<button class="fp" onclick="setScFilter(${JSON.stringify(r)},this)">${cIcon(r)} ${r} <span style="opacity:.6">(${cnt})</span></button>`;
+    }).join('');
+}
+
+function setScFilter(val,btn){
+  scFilter=val;
+  document.querySelectorAll('#scFilters .fp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScenarios();
+}
+
+function renderScenarios(){
+  const data = scFilter==='all' ? scData : scData.filter(s=>s.contactReason===scFilter);
+  const el = document.getElementById('scContent');
+  if(!data.length){el.innerHTML='<div class="loading-state">لا توجد نتائج</div>';return;}
+
+  if(scFilter==='all'){
+    const groups={};
+    data.forEach(s=>{
+      const k=s.contactReason||'Other';
+      if(!groups[k])groups[k]=[];
+      groups[k].push(s);
+    });
+    el.innerHTML = Object.entries(groups).map(([reason,items])=>`
+      <div class="category-group">
+        <div class="category-header">
+          <span class="category-icon">${cIcon(reason)}</span>
+          <span class="category-name">${reason}</span>
+          <span class="category-count">${items.length} scenarios</span>
+        </div>
+        <div class="sc-grid">${items.map(scCard).join('')}</div>
+      </div>`).join('');
+  } else {
+    el.innerHTML=`<div class="sc-grid">${data.map(scCard).join('')}</div>`;
+  }
+}
+
+function scCard(s){
+  return `
+  <div class="sc-card" onclick="openModal(${s.id-1})">
+    <div class="sc-card-top">
+      <div class="sc-num">${cIcon(s.contactReason)} #${s.id}</div>
+      <div class="sc-scenario">${s.scenario}</div>
+    </div>
+    <div class="sc-card-body">
+      <div class="sc-analysis">${s.analysis}</div>
+      <div class="sc-footer">
+        <span class="sc-badge res-na">${s.contactReason||'—'}</span>
+        <span class="sc-badge ${rClass(s.resolution)}">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══ DECISION TREE ══════════════════════════════════════════════════════
+// Cols: A=Category, B=Sub-Action, C=Reason, D=Resolution
+async function loadDT(){
+  try {
+    const rows = await fetchTab('Decision Tree');
+    dtData = rows.slice(1)
+      .filter(r => r[0] && r[0].trim())
+      .map((r,i) => ({
+        id: i+1,
+        category:   r[0]||'',
+        subAction:  r[1]||'',
+        reason:     r[2]||'',
+        resolution: r[3]||''
+      }));
+    document.getElementById('dtLoading').style.display='none';
+    document.getElementById('dtBadge').textContent = dtData.length;
+    buildDTFilters();
+    renderDT();
+  } catch(e) {
+    document.getElementById('dtLoading').innerHTML='❌ Failed to load decision tree. Check sheet permissions.';
+    console.error(e);
+  }
+}
+
+function buildDTFilters(){
+  const cats = [...new Set(dtData.map(d=>d.category).filter(Boolean))].sort();
+  document.getElementById('dtFilters').innerHTML =
+    `<button class="fp active" onclick="setDTFilter('all',this)">✨ All (${dtData.length})</button>` +
+    cats.map(c=>{
+      const cnt = dtData.filter(d=>d.category===c).length;
+      return `<button class="fp" onclick="setDTFilter(${JSON.stringify(c)},this)">${cIcon(c)} ${c} <span style="opacity:.6">(${cnt})</span></button>`;
+    }).join('');
+}
+
+function setDTFilter(val,btn){
+  dtFilter=val;
+  document.querySelectorAll('#dtFilters .fp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDT();
+}
+
+const accentMap = {
+  'Product Inquiry':'#4b4bf9','Stock':'#059669','Discount':'#d97706',
+  'Return':'#dc2626','Policy':'#7c3aed','Refund':'#9333ea',
+  'Courier':'#ea580c','Order':'#0891b2','Exchange':'#059669',
+  'Damaged':'#dc2626','Wrong':'#dc2626','Account':'#6366f1',
+  'Complaint':'#ef4444','Payment':'#2563eb','Escalation':'#ef4444'
+};
+function getAccent(cat){
+  for(const [k,v] of Object.entries(accentMap)){
+    if((cat||'').toLowerCase().includes(k.toLowerCase()))return v;
+  }
+  return '#4b4bf9';
+}
+
+function renderDT(){
+  const data = dtFilter==='all' ? dtData : dtData.filter(d=>d.category===dtFilter);
+  const el = document.getElementById('dtContent');
+  if(!data.length){el.innerHTML='<div class="loading-state">لا توجد نتائج</div>';return;}
+
+  const groups={};
+  data.forEach(d=>{
+    const k=d.category||'Other';
+    if(!groups[k])groups[k]=[];
+    groups[k].push(d);
+  });
+
+  el.innerHTML = Object.entries(groups).map(([cat,items])=>{
+    const accent = getAccent(cat);
+    return `
+    <div class="dt-group">
+      <div class="dt-group-header" style="border-left:4px solid ${accent}">
+        <span class="dt-group-icon">${cIcon(cat)}</span>
+        <span class="dt-group-name">${cat}</span>
+        <span class="dt-group-count">${items.length} cases</span>
+      </div>
+      <div class="dt-rows">${items.map(d=>dtRow(d,accent)).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function dtRow(d,accent){
+  return `
+  <div class="dt-row">
+    <div class="dt-accent" style="background:${accent}"></div>
+    <div class="dt-row-inner">
+      <div>
+        <div class="dt-col-label">📂 Category</div>
+        <div class="dt-scenario-text">${d.category}</div>
+      </div>
+      <div>
+        <div class="dt-col-label">⚡ Sub-Action</div>
+        <div class="dt-sub-text">${d.subAction||'—'}</div>
+      </div>
+      <div>
+        <div class="dt-col-label">📋 Reason</div>
+        <span class="sc-badge res-na" style="font-size:10.5px">${cIcon(d.reason)} ${d.reason||'—'}</span>
+      </div>
+      <div>
+        <div class="dt-col-label">✅ Resolution</div>
+        <span class="sc-badge ${rClass(d.resolution)}" style="font-size:10.5px">${rIcon(d.resolution)} ${d.resolution||'—'}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══ MODAL ══════════════════════════════════════════════════════════════
+function openModal(idx){
+  const s=scData[idx];if(!s)return;
+  document.getElementById('modalTitle').textContent=s.scenario;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-section">
+      <div class="modal-section-title">📋 التحليل والإجراء</div>
+      <div class="modal-section-content">${s.analysis}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">🏷️ التصنيف</div>
+      <div class="modal-badges">
+        <span class="sc-badge res-na">${cIcon(s.contactReason)} ${s.contactReason||'—'}</span>
+        <span class="sc-badge ${rClass(s.resolution)}">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">💬 الرد المقترح</div>
+      <div class="reply-tabs">
+        <button class="reply-tab active" onclick="switchReply(this,'chat',${idx})">💬 Chat</button>
+        <button class="reply-tab" onclick="switchReply(this,'email',${idx})">📧 Email</button>
+        <button class="reply-tab" onclick="switchReply(this,'ar',${idx})">🇪🇬 عربي</button>
+      </div>
+      <div class="reply-box">
+        <div class="reply-box-label" id="replyLabel">💬 Chat Reply</div>
+        <div class="reply-box-text" id="replyContent">${generateReply(s,'chat')}</div>
+      </div>
+      <button class="copy-btn" onclick="copyReply()">📋 Copy Reply</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function switchReply(btn,type,idx){
+  document.querySelectorAll('.reply-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const s=scData[idx];
+  const labels={chat:'💬 Chat Reply',email:'📧 Email Reply',ar:'🇪🇬 رد بالعربي'};
+  document.getElementById('replyLabel').textContent=labels[type];
+  document.getElementById('replyContent').textContent=generateReply(s,type);
+}
+
+function generateReply(s,type){
+  const res=(s.resolution||'').toLowerCase();
+  if(type==='ar'){
+    if(res.includes('exchange'))return`أهلاً بيك! 😊\nبخصوص طلبك، هنعمل طلب استبدال فوراً.\nممكن تبعتلنا صور المنتج عشان نكمل الإجراء؟\nشكراً لتواصلك معانا 🙏`;
+    if(res.includes('refund')&&!res.includes('not'))return`أهلاً بيك! 😊\nتم استلام طلب الاسترجاع.\nهنحتاج بيانات حساب البنك أو المحفظة عشان نكمل العملية.\nالفلوس هتوصلك في أقرب وقت 🙏`;
+    if(res.includes('complaint'))return`أهلاً بيك! 😊\nبنعتذر جداً عن المشكلة دي.\nتم تسجيل الشكوى وهيتم التحقيق فيها فوراً.\nشكراً لصبرك 🙏`;
+    if(res.includes('cancel'))return`أهلاً بيك! 😊\nتم إلغاء الطلب بنجاح.\nلو عندك أي استفسار تاني احنا هنا 🙏`;
+    if(res.includes('discount'))return`أهلاً بيك! 😊\nبنعتذر عن المشكلة دي!\nكتعويض هنبعتلك كود خصم على أوردرك الجاي.\nشكراً لصبرك 🙏`;
+    if(res.includes('credit'))return`أهلاً بيك! 😊\nتم إضافة المبلغ كرصيد في حسابك على الموقع.\nتقدر تستخدمه في أي وقت 🙏`;
+    return`أهلاً بيك! 😊\n${s.analysis}\nلو محتاج أي مساعدة تانية، احنا هنا 🙏`;
+  }
+  if(type==='chat'){
+    if(res.includes('exchange'))return`Hi there! 😊\nThank you for reaching out!\n\nI'll initiate an exchange request for you right away. Could you please share photos of the item so we can proceed?\n\nWe appreciate your patience! 🙏`;
+    if(res.includes('refund')&&!res.includes('not'))return`Hi there! 😊\nThank you for contacting us!\n\nI've noted your refund request. Could you please share your bank account or wallet details so we can process it?\n\nYou'll receive your refund as soon as possible. 🙏`;
+    if(res.includes('complaint'))return`Hi there! 😊\nI'm truly sorry about your experience.\n\nYour complaint has been officially logged and will be investigated immediately. Thank you for bringing this to our attention. 🙏`;
+    if(res.includes('cancel'))return`Hi there! 😊\nYour order has been successfully cancelled.\n\nIf you have any other questions, we're always here to help! 🙏`;
+    if(res.includes('discount'))return`Hi there! 😊\nI'm sorry about that! As a goodwill gesture, we'd like to offer you a discount on your next order.\n\nPlease check your inbox shortly. 🙏`;
+    if(res.includes('credit'))return`Hi there! 😊\nWe've added the amount as store credit to your account.\n\nYou can use it anytime on your next purchase! 🙏`;
+    return`Hi there! 😊\nThank you for reaching out!\n\n${s.analysis}\n\nPlease don't hesitate to contact us if you need anything else! 🙏`;
+  }
+  return`Subject: Re: Your Inquiry — Mavin Wear\n\nDear Valued Customer,\n\nThank you for reaching out to Mavin Wear Customer Support.\n\n${s.analysis}\n\nWe appreciate your patience and understanding. Should you have any further questions, please do not hesitate to contact us.\n\nWarm regards,\nMavin Wear Customer Support Team\nsupport@mavinwear.com`;
+}
+
+function copyReply(){
+  navigator.clipboard.writeText(document.getElementById('replyContent').textContent)
+    .then(()=>showToast('✅ Copied!'));
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+
+// ══ HELPERS ════════════════════════════════════════════════════════════
+function cIcon(v){
+  v=(v||'').toLowerCase();
+  if(v.includes('product inquiry')||v.includes('pre-purchase'))return'🛍️';
+  if(v.includes('stock')||v.includes('availability'))return'📦';
+  if(v.includes('discount code'))return'🎟️';
+  if(v.includes('discount')||v.includes('promotion'))return'🏷️';
+  if(v.includes('late return'))return'⏰';
+  if(v.includes('late order'))return'🕐';
+  if(v.includes('policy'))return'📋';
+  if(v.includes('refund not received')||v.includes('payment issue'))return'💳';
+  if(v.includes('refund'))return'💰';
+  if(v.includes('courier'))return'🚚';
+  if(v.includes('order status')||v.includes('tracking'))return'📍';
+  if(v.includes('wrong item'))return'❌';
+  if(v.includes('wrong size'))return'📏';
+  if(v.includes('damaged')||v.includes('defective'))return'⚠️';
+  if(v.includes('sizing'))return'📐';
+  if(v.includes('exchange'))return'🔄';
+  if(v.includes('account')||v.includes('website'))return'💻';
+  if(v.includes('complaint')||v.includes('escalation'))return'🚨';
+  if(v.includes('payment'))return'💳';
+  if(v.includes('advertisement')||v.includes('job'))return'📢';
+  if(v.includes('review'))return'⭐';
+  if(v==='na'||v==='—')return'—';
+  return'💬';
+}
+function rIcon(r){
+  const v=(r||'').toLowerCase();
+  if(v.includes('exchange'))return'🔄';
+  if(v.includes('refund')&&!v.includes('not'))return'💰';
+  if(v.includes('complaint'))return'📝';
+  if(v.includes('information'))return'ℹ️';
+  if(v.includes('cancel'))return'❌';
+  if(v.includes('credit'))return'🎁';
+  if(v.includes('discount'))return'🏷️';
+  if(v.includes('tracking'))return'📍';
+  if(v.includes('edit'))return'✏️';
+  if(v==='na'||v==='—')return'—';
+  return'✅';
+}
+function rClass(r){
+  const v=(r||'').toLowerCase();
+  if(v.includes('exchange'))return'res-exchange';
+  if(v.includes('refund')&&!v.includes('not'))return'res-refund';
+  if(v.includes('complaint'))return'res-complaint';
+  if(v.includes('cancel'))return'res-cancelled';
+  if(v.includes('credit'))return'res-credit';
+  if(v.includes('discount'))return'res-discount';
+  if(v==='na'||v==='—')return'res-na';
+  return'res-info';
+}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.className='toast show success';t.textContent=msg;
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+init();
+</script>
+</body>
+</html>
+    
