@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -37,11 +37,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
 .tab-btn svg{width:15px;height:15px}
+.tab-btn.fulfilment-tab{color:#d97706}
+.tab-btn.fulfilment-tab.active{color:#d97706;border-bottom-color:#d97706}
 .page{padding:32px;max-width:1100px;margin:0 auto}
 .tab-content{display:none}
 .tab-content.active{display:block}
 .page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
 .page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
+.page-badge-dot-yellow{width:6px;height:6px;background:#d97706;border-radius:50%}
 .page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
 .page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px}
 .search-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
@@ -95,9 +98,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .note-box{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.5;border:1px solid}
 .note-general{background:#fafafa;color:var(--muted);border-color:var(--border)}
 .note-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.divider{display:flex;align-items:center;gap:12px;padding:10px 20px;background:#fafafa;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.divider-line{flex:1;height:1px;background:var(--border)}
-.divider-text{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+
+/* FULFILMENT */
+.ful-filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.ful-filter-btn{padding:8px 16px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
+.ful-filter-btn:hover{border-color:#999;color:var(--text)}
+.ful-filter-btn.active{background:#111;color:#fff;border-color:#111}
+.ful-refresh{margin-left:auto;background:#fff;border:1.5px solid var(--border2);border-radius:10px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--muted);transition:.15s}
+.ful-refresh:hover{border-color:#999;color:var(--text)}
+
+.ful-card{background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:.15s}
+.ful-card:hover{border-color:#ccc;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.ful-card-top{padding:18px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ful-card-left{flex:1}
+.ful-card-order{font-size:15px;font-weight:900}
+.ful-card-customer{font-size:13px;font-weight:600;margin-top:2px}
+.ful-card-phone{font-size:11.5px;color:var(--muted);margin-top:1px}
+.ful-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.ful-card-date{font-size:11px;color:var(--muted)}
+.ful-card-body{padding:0 20px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ful-card-item{display:flex;flex-direction:column;gap:3px}
+.ful-card-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.ful-card-val{font-size:12.5px;font-weight:600}
+.ful-card-actions{padding:14px 20px;border-top:1px solid var(--border);background:#fafafa;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ful-status-select{border:1.5px solid var(--border2);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;color:var(--text);background:#fff;outline:none;cursor:pointer;transition:.15s}
+.ful-status-select:focus{border-color:var(--indigo)}
+.ful-note-input{flex:1;border:1.5px solid var(--border2);border-radius:9px;padding:8px 12px;font-size:13px;color:var(--text);background:#fff;outline:none;transition:.15s;min-width:180px}
+.ful-note-input:focus{border-color:var(--indigo)}
+.ful-note-input::placeholder{color:var(--muted2)}
+.btn-save-status{background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s;white-space:nowrap}
+.btn-save-status:hover{background:#3a3ae0}
+.btn-save-status:disabled{background:#aaa;cursor:not-allowed}
+
 .dup-alert{background:var(--yellow-bg);border:1.5px solid var(--yellow-bd);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none;gap:12px}
 .dup-alert.show{display:flex;align-items:flex-start}
 .dup-icon{font-size:20px;flex-shrink:0}
@@ -137,7 +169,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .spinw{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media(max-width:900px){
-  .search-grid,.result-grid{grid-template-columns:repeat(2,1fr)}
+  .search-grid,.result-grid,.ful-card-body{grid-template-columns:repeat(2,1fr)}
   .form-grid{grid-template-columns:repeat(2,1fr)}
   .page{padding:16px}
   .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
@@ -146,7 +178,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 }
 @media(max-width:560px){
   .nav-links{display:none}
-  .search-grid,.result-grid,.form-grid{grid-template-columns:1fr}
+  .search-grid,.result-grid,.ful-card-body,.form-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -197,6 +229,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
     Submit New Request
   </button>
+  <button class="tab-btn fulfilment-tab" onclick="switchTab('fulfilment',this);loadFulfilment()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    Fulfilment
+  </button>
 </div>
 
 <!-- SEARCH TAB -->
@@ -204,30 +240,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div class="page-badge"><span class="page-badge-dot"></span>Refund Portal</div>
   <div class="page-title">Search Refund Requests</div>
   <div class="page-sub">Searches Supabase + Export2 (Returns/Exchange) + Export (Refunds) simultaneously.</div>
-
   <div class="search-card">
     <div class="search-grid">
-      <div class="search-field">
-        <label class="search-label">Customer Name</label>
-        <input class="search-input" id="sName" type="text" placeholder="e.g. Mohamed Ahmed" onkeydown="if(event.key==='Enter')doSearch()">
-      </div>
-      <div class="search-field">
-        <label class="search-label">Order Number</label>
-        <input class="search-input" id="sOrder" type="text" placeholder="e.g. 154929" onkeydown="if(event.key==='Enter')doSearch()">
-      </div>
-      <div class="search-field">
-        <label class="search-label">Phone Number</label>
-        <input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238" onkeydown="if(event.key==='Enter')doSearch()">
-      </div>
-      <div class="search-field">
-        <label class="search-label">Bosta Ticket / Txn ID</label>
-        <input class="search-input" id="sTicket" type="text" placeholder="e.g. MVN-118798" onkeydown="if(event.key==='Enter')doSearch()">
-      </div>
+      <div class="search-field"><label class="search-label">Customer Name</label><input class="search-input" id="sName" type="text" placeholder="e.g. Mohamed Ahmed" onkeydown="if(event.key==='Enter')doSearch()"></div>
+      <div class="search-field"><label class="search-label">Order Number</label><input class="search-input" id="sOrder" type="text" placeholder="e.g. 154929" onkeydown="if(event.key==='Enter')doSearch()"></div>
+      <div class="search-field"><label class="search-label">Phone Number</label><input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238" onkeydown="if(event.key==='Enter')doSearch()"></div>
+      <div class="search-field"><label class="search-label">Bosta Ticket / Txn ID</label><input class="search-input" id="sTicket" type="text" placeholder="e.g. MVN-118798" onkeydown="if(event.key==='Enter')doSearch()"></div>
     </div>
     <div class="search-actions">
       <button class="btn-search" id="searchBtn" onclick="doSearch()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Search
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search
       </button>
       <button class="btn-clear" onclick="clearSearch()">Clear</button>
       <div class="src-pills">
@@ -237,23 +259,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
     </div>
   </div>
-
   <div class="results-wrap">
     <div class="results-header">
       <span class="results-title">Results</span>
-      <div class="results-meta">
-        <span class="results-count" id="resultsCount">—</span>
-      </div>
+      <div class="results-meta"><span class="results-count" id="resultsCount">—</span></div>
     </div>
-    <div class="loading-bar" id="loadingBar">
-      <span class="spin"></span> Searching all sources...
-    </div>
+    <div class="loading-bar" id="loadingBar"><span class="spin"></span> Searching all sources...</div>
     <div id="resultsList">
-      <div class="empty-state">
-        <div class="empty-icon">🔍</div>
-        <div class="empty-text">Enter search criteria above</div>
-        <div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div>
-      </div>
+      <div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div></div>
     </div>
   </div>
 </div>
@@ -263,20 +276,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div class="page-badge"><span class="page-badge-dot"></span>New Request</div>
   <div class="page-title">Submit Refund / Exchange Request</div>
   <div class="page-sub">Saved to Supabase. Duplicate orders within 5 days will be blocked.</div>
-
   <div class="dup-alert" id="dupAlert">
     <div class="dup-icon">⚠️</div>
-    <div>
-      <div class="dup-title">Duplicate Case Detected</div>
-      <div class="dup-text" id="dupText"></div>
-    </div>
+    <div><div class="dup-title">Duplicate Case Detected</div><div class="dup-text" id="dupText"></div></div>
   </div>
-
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#f0f0ff">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
+      <div class="card-icon" style="background:#f0f0ff"><svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       <span class="card-title">Agent Information</span>
     </div>
     <div class="form-grid">
@@ -285,12 +291,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="form-field"><label class="form-label">Submission Date</label><input class="form-input" id="fDate" type="datetime-local"></div>
     </div>
   </div>
-
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#f0fdf4">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-      </div>
+      <div class="card-icon" style="background:#f0fdf4"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
       <span class="card-title">Customer Information</span>
     </div>
     <div class="form-grid">
@@ -299,49 +302,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="form-field"><label class="form-label">Order Number <span>*</span></label><input class="form-input" id="fOrderNum" type="text" placeholder="e.g. 154929" oninput="schedDupCheck()"></div>
     </div>
   </div>
-
   <div class="form-card">
     <div class="form-card-header">
-      <div class="card-icon" style="background:#eff6ff">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      </div>
+      <div class="card-icon" style="background:#eff6ff"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
       <span class="card-title">Request Details</span>
     </div>
     <div class="form-grid">
-      <div class="form-field">
-        <label class="form-label">Request Type <span>*</span></label>
-        <select class="form-input" id="fReqType">
-          <option value="">Select type</option>
-          <option>Return Request</option>
-          <option>Exchange - 1st exchange</option>
-          <option>Exchange - 2nd exchange</option>
-          <option>Refund Request</option>
-        </select>
+      <div class="form-field"><label class="form-label">Request Type <span>*</span></label>
+        <select class="form-input" id="fReqType"><option value="">Select type</option><option>Return Request</option><option>Exchange - 1st exchange</option><option>Exchange - 2nd exchange</option><option>Refund Request</option></select>
       </div>
-      <div class="form-field">
-        <label class="form-label">Reason for Request <span>*</span></label>
-        <select class="form-input" id="fReason">
-          <option value="">Select reason</option>
-          <option>Size issue (Fitting Issue)</option>
-          <option>Customer Changed mind</option>
-          <option>Customer Return</option>
-          <option>Defective / Damaged item</option>
-          <option>Wrong item received</option>
-          <option>2nd Exchange request</option>
-          <option>Other</option>
-        </select>
+      <div class="form-field"><label class="form-label">Reason for Request <span>*</span></label>
+        <select class="form-input" id="fReason"><option value="">Select reason</option><option>Size issue (Fitting Issue)</option><option>Customer Changed mind</option><option>Customer Return</option><option>Defective / Damaged item</option><option>Wrong item received</option><option>2nd Exchange request</option><option>Other</option></select>
       </div>
       <div class="form-field"><label class="form-label">Number of Returned Items</label><input class="form-input" id="fNumItems" type="number" min="1" placeholder="e.g. 2"></div>
       <div class="form-field form-span3"><label class="form-label">Product Name & SKU</label><input class="form-input" id="fProductSKU" type="text" placeholder="e.g. Lounge Stripe Sweatpants / M"></div>
       <div class="form-field"><label class="form-label">Original Item Name & SKU</label><input class="form-input" id="fOrigSKU" type="text" placeholder="Original item & SKU"></div>
       <div class="form-field"><label class="form-label">Requested Item Name & SKU</label><input class="form-input" id="fReqSKU" type="text" placeholder="Requested item & SKU"></div>
-      <div class="form-field">
-        <label class="form-label">Shipping Fees</label>
-        <select class="form-input" id="fShipping">
-          <option value="">Select</option>
-          <option>Shipping Fees Apply</option>
-          <option>No Shipping Fees</option>
-        </select>
+      <div class="form-field"><label class="form-label">Shipping Fees</label>
+        <select class="form-input" id="fShipping"><option value="">Select</option><option>Shipping Fees Apply</option><option>No Shipping Fees</option></select>
       </div>
       <div class="form-field"><label class="form-label">Refund Amount (EGP)</label><input class="form-input" id="fRefund" type="text" placeholder="e.g. 450.00"></div>
       <div class="form-field"><label class="form-label">Bosta Ticket ID</label><input class="form-input" id="fBostaTicket" type="text" placeholder="e.g. 7506992329"></div>
@@ -349,13 +327,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     </div>
     <div style="padding:0 22px 16px;font-size:11.5px;color:var(--muted)">* Required fields</div>
   </div>
-
   <div class="submit-row">
     <button class="btn-reset-form" onclick="resetForm()">↺ Reset</button>
     <button class="btn-submit" id="submitBtn" onclick="submitRefund()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      Submit Request
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Submit Request
     </button>
+  </div>
+</div>
+
+<!-- FULFILMENT TAB -->
+<div class="page tab-content" id="tab-fulfilment">
+  <div class="page-badge"><span class="page-badge-dot-yellow"></span>Fulfilment Team</div>
+  <div class="page-title">Fulfilment Dashboard</div>
+  <div class="page-sub">Review and update status for all submitted requests.</div>
+
+  <div class="ful-filters">
+    <button class="ful-filter-btn active" onclick="filterFul('all',this)">All</button>
+    <button class="ful-filter-btn" onclick="filterFul('Pending',this)">🟡 Pending</button>
+    <button class="ful-filter-btn" onclick="filterFul('Processing',this)">🔵 Processing</button>
+    <button class="ful-filter-btn" onclick="filterFul('Approved',this)">🟢 Approved</button>
+    <button class="ful-filter-btn" onclick="filterFul('Rejected',this)">🔴 Rejected</button>
+    <button class="ful-refresh" onclick="loadFulfilment()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Refresh
+    </button>
+  </div>
+
+  <div class="loading-bar" id="fulLoadingBar"><span class="spin"></span> Loading requests...</div>
+  <div id="fulList">
+    <div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Click the Fulfilment tab to load requests</div></div>
   </div>
 </div>
 
@@ -368,46 +367,16 @@ const SB_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsI
 const SB_TABLE = 'refund_requests';
 const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
 
-// ── Export2 columns (0-based) ──────────────────────────────────────────
-// A=ff B=Email C=AgentName D=CustName E=CustPhone F=OrderNum
-// G=ReqType H=Reason I=NumItems J=ProductSKU K=OrigSKU L=ReqSKU
-// M=ShippingFees N=Refund O=BostaTicket P=Photos Q=Notes
-// R=ExchangeStatus S=FulfilNote
-const EX2 = {
-  ts:0, email:1, agent:2, name:3, phone:4, order:5,
-  type:6, reason:7, items:8, sku:9, origSku:10, reqSku:11,
-  ship:12, refund:13, bosta:14, photos:15, notes:16,
-  status:17, fnote:18
-};
+const EX2 = {ts:0,email:1,agent:2,name:3,phone:4,order:5,type:6,reason:7,items:8,sku:9,origSku:10,reqSku:11,ship:12,refund:13,bosta:14,photos:15,notes:16,status:17,fnote:18};
+const EX  = {ts:0,email:1,tc:2,agent:3,order:4,name:5,phone:6,reason:7,amount:8,refundType:9,method:10,bank:11,bankAcc:12,holder:13,wallet:14,walletPh:15,walletHolder:16,notes:17,custEmail:18,giftEmail:19,skus:20,txnId:21,verify:22,verifiedAmt:23,status:24,subDate:25,fnote:26,agentAmt:27,reqDate:28};
 
-// ── Export columns (0-based) ───────────────────────────────────────────
-// A=Timestamp B=Email C=T&C(skip) D=AgentName E=OrderNum
-// F=CustName G=CustPhone H=Reason I=Amount J=RefundType
-// K=Method L=BankName M=BankAccount N=AccountHolder
-// O=WalletProvider P=WalletPhone Q=WalletHolder R=Notes
-// S=CustEmail T=GiftEmail U=AffectedSKUs V=TransactionID
-// W=Verification X=VerifiedAmount Y=RefundStatus Z=SubmissionDate
-// AA=FulfilNote AB=AgentAmount AC=RequestDate AD=HELPER
-const EX = {
-  ts:0, email:1, tc:2, agent:3, order:4, name:5, phone:6,
-  reason:7, amount:8, refundType:9, method:10, bank:11,
-  bankAcc:12, holder:13, wallet:14, walletPh:15, walletHolder:16,
-  notes:17, custEmail:18, giftEmail:19, skus:20, txnId:21,
-  verify:22, verifiedAmt:23, status:24, subDate:25,
-  fnote:26, agentAmt:27, reqDate:28
-};
-
-// ── SUPABASE HELPER ────────────────────────────────────────────────────
+// ── SUPABASE ───────────────────────────────────────────────────────────
 const sb = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
-  headers:{
-    'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`,
-    'Content-Type':'application/json',
-    'Prefer': opts.prefer||'return=representation'
-  },
-  method: opts.method||'GET', body: opts.body
+  headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':opts.prefer||'return=representation'},
+  method:opts.method||'GET', body:opts.body
 });
 
-// ── FETCH SHEET TAB ────────────────────────────────────────────────────
+// ── FETCH SHEET ────────────────────────────────────────────────────────
 async function fetchTab(tabName) {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}&headers=1`;
   const res  = await fetch(url);
@@ -415,405 +384,315 @@ async function fetchTab(tabName) {
   const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
   if (!match) return [];
   const json = JSON.parse(match[1]);
-  const rows = json.table?.rows || [];
-  return rows.map(r =>
-    (r.c||[]).map(cell => {
-      if (!cell || cell.v === null || cell.v === undefined) return '';
-      // Use formatted value first (better for dates & numbers)
-      return cell.f ? cell.f : String(cell.v);
-    })
-  );
+  return (json.table?.rows||[]).map(r=>(r.c||[]).map(cell=>(!cell||cell.v===null)?'':(cell.f||String(cell.v))));
 }
 
-// ── NORMALIZE ROWS ─────────────────────────────────────────────────────
-function normalizeEx2Row(row) {
-  const status = (row[EX2.status]||'').trim();
-  return {
-    _source:        'Export2',
-    created_at:     row[EX2.ts]      ||'',
-    agent_name:     row[EX2.agent]   ||'',
-    customer_name:  row[EX2.name]    ||'',
-    customer_phone: row[EX2.phone]   ||'',
-    order_number:   row[EX2.order]   ||'',
-    request_type:   row[EX2.type]    ||'',
-    reason:         row[EX2.reason]  ||'',
-    num_items:      row[EX2.items]   ||'',
-    product_sku:    row[EX2.sku]     ||'',
-    original_sku:   row[EX2.origSku] ||'',
-    requested_sku:  row[EX2.reqSku]  ||'',
-    shipping_fees:  row[EX2.ship]    ||'',
-    refund_amount:  row[EX2.refund]  ||'',
-    bosta_ticket_id:row[EX2.bosta]   ||'',
-    notes:          row[EX2.notes]   ||'',
-    exchange_status: status || 'Pending',
-    fulfilment_note:row[EX2.fnote]   ||'',
-    refund_method:  '',
-    bank_name:      ''
-  };
+// ── NORMALIZE ──────────────────────────────────────────────────────────
+function normalizeEx2Row(row){
+  return {_source:'Export2',created_at:row[EX2.ts]||'',agent_name:row[EX2.agent]||'',customer_name:row[EX2.name]||'',customer_phone:row[EX2.phone]||'',order_number:row[EX2.order]||'',request_type:row[EX2.type]||'',reason:row[EX2.reason]||'',num_items:row[EX2.items]||'',product_sku:row[EX2.sku]||'',original_sku:row[EX2.origSku]||'',requested_sku:row[EX2.reqSku]||'',shipping_fees:row[EX2.ship]||'',refund_amount:row[EX2.refund]||'',bosta_ticket_id:row[EX2.bosta]||'',notes:row[EX2.notes]||'',exchange_status:(row[EX2.status]||'Pending').trim(),fulfilment_note:row[EX2.fnote]||'',refund_method:'',bank_name:''};
+}
+function normalizeExRow(row){
+  const dateRaw=row[EX.subDate]||row[EX.reqDate]||row[EX.ts]||'';
+  const status=(row[EX.status]||row[EX.verify]||'Submitted').trim();
+  return {_source:'Export',created_at:dateRaw,agent_name:row[EX.agent]||'',customer_name:row[EX.name]||'',customer_phone:row[EX.phone]||'',order_number:row[EX.order]||'',request_type:'Refund Request',reason:row[EX.reason]||'',num_items:'',product_sku:row[EX.skus]||'',original_sku:'',requested_sku:'',shipping_fees:'',refund_amount:row[EX.amount]||row[EX.verifiedAmt]||'',bosta_ticket_id:row[EX.txnId]||'',notes:row[EX.notes]||'',exchange_status:status,fulfilment_note:row[EX.fnote]||'',refund_method:row[EX.method]||'',bank_name:row[EX.bank]||''};
 }
 
-function normalizeExRow(row) {
-  // Priority for date: SubmissionDate (Z=25) → RequestDate (AC=28) → Timestamp (A=0)
-  const dateRaw = row[EX.subDate] || row[EX.reqDate] || row[EX.ts] || '';
-  // Priority for status: RefundStatus (Y=24) → Verification (W=22)
-  const status  = (row[EX.status] || row[EX.verify] || '').trim();
-  return {
-    _source:        'Export',
-    created_at:     dateRaw,
-    agent_name:     row[EX.agent]       ||'',
-    customer_name:  row[EX.name]        ||'',
-    customer_phone: row[EX.phone]       ||'',
-    order_number:   row[EX.order]       ||'',
-    request_type:   'Refund Request',
-    reason:         row[EX.reason]      ||'',
-    num_items:      '',
-    product_sku:    row[EX.skus]        ||'',
-    original_sku:   '',
-    requested_sku:  '',
-    shipping_fees:  '',
-    refund_amount:  row[EX.amount]      || row[EX.verifiedAmt] ||'',
-    bosta_ticket_id:row[EX.txnId]       ||'',
-    notes:          row[EX.notes]       ||'',
-    exchange_status: status || 'Submitted',
-    fulfilment_note:row[EX.fnote]       ||'',
-    refund_method:  row[EX.method]      ||'',
-    bank_name:      row[EX.bank]        ||''
-  };
-}
-
-// ── MATCH HELPER ──────────────────────────────────────────────────────
-function matches(row, name, order, phone, ticket) {
-  const n = (row.customer_name  ||'').toLowerCase();
-  const o = (row.order_number   ||'').toLowerCase();
-  const p = (row.customer_phone ||'').toLowerCase();
-  const t = (row.bosta_ticket_id||'').toLowerCase();
-  if (name   && !n.includes(name.toLowerCase()))   return false;
-  if (order  && !o.includes(order.toLowerCase()))  return false;
-  if (phone  && !p.includes(phone.toLowerCase()))  return false;
-  if (ticket && !t.includes(ticket.toLowerCase())) return false;
+function matches(row,name,order,phone,ticket){
+  const n=(row.customer_name||'').toLowerCase();
+  const o=(row.order_number||'').toLowerCase();
+  const p=(row.customer_phone||'').toLowerCase();
+  const t=(row.bosta_ticket_id||'').toLowerCase();
+  if(name&&!n.includes(name.toLowerCase()))return false;
+  if(order&&!o.includes(order.toLowerCase()))return false;
+  if(phone&&!p.includes(phone.toLowerCase()))return false;
+  if(ticket&&!t.includes(ticket.toLowerCase()))return false;
   return true;
 }
 
 // ── SEARCH ────────────────────────────────────────────────────────────
-async function doSearch() {
-  const name   = document.getElementById('sName').value.trim();
-  const order  = document.getElementById('sOrder').value.trim();
-  const phone  = document.getElementById('sPhone').value.trim();
-  const ticket = document.getElementById('sTicket').value.trim();
-
-  if (!name && !order && !phone && !ticket) {
-    showToast('Enter at least one search field.','warn'); return;
-  }
-
-  const btn = document.getElementById('searchBtn');
-  btn.innerHTML = '<span class="spinw"></span> Searching...';
-  btn.disabled  = true;
+async function doSearch(){
+  const name=document.getElementById('sName').value.trim();
+  const order=document.getElementById('sOrder').value.trim();
+  const phone=document.getElementById('sPhone').value.trim();
+  const ticket=document.getElementById('sTicket').value.trim();
+  if(!name&&!order&&!phone&&!ticket){showToast('Enter at least one search field.','warn');return;}
+  const btn=document.getElementById('searchBtn');
+  btn.innerHTML='<span class="spinw"></span> Searching...';btn.disabled=true;
   document.getElementById('loadingBar').classList.add('show');
-  document.getElementById('resultsList').innerHTML = '';
-  document.getElementById('resultsCount').textContent = '—';
-
-  try {
-    const [sbRes, ex2Res, exRes] = await Promise.allSettled([
-      searchSupabase(name, order, phone, ticket),
-      searchEx2(name, order, phone, ticket),
-      searchEx(name, order, phone, ticket)
-    ]);
-
-    const sbData  = sbRes.status  === 'fulfilled' ? sbRes.value  : [];
-    const ex2Data = ex2Res.status === 'fulfilled' ? ex2Res.value : [];
-    const exData  = exRes.status  === 'fulfilled' ? exRes.value  : [];
-
-    const all = [...sbData, ...ex2Data, ...exData];
-
-    // Sort newest first
-    all.sort((a,b) => {
-      const da = parseAnyDate(a.created_at);
-      const db = parseAnyDate(b.created_at);
-      return db - da;
-    });
-
-    renderResults(all, sbData.length, ex2Data.length, exData.length);
-  } catch(e) {
-    showToast('Search error: '+e.message,'error');
-    console.error(e);
-  }
-
+  document.getElementById('resultsList').innerHTML='';
+  document.getElementById('resultsCount').textContent='—';
+  try{
+    const[sbRes,ex2Res,exRes]=await Promise.allSettled([searchSupabase(name,order,phone,ticket),searchEx2(name,order,phone,ticket),searchEx(name,order,phone,ticket)]);
+    const sbData=sbRes.status==='fulfilled'?sbRes.value:[];
+    const ex2Data=ex2Res.status==='fulfilled'?ex2Res.value:[];
+    const exData=exRes.status==='fulfilled'?exRes.value:[];
+    const all=[...sbData,...ex2Data,...exData];
+    all.sort((a,b)=>parseAnyDate(b.created_at)-parseAnyDate(a.created_at));
+    renderResults(all,sbData.length,ex2Data.length,exData.length);
+  }catch(e){showToast('Search error: '+e.message,'error');}
   document.getElementById('loadingBar').classList.remove('show');
-  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search';
-  btn.disabled = false;
+  btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search';
+  btn.disabled=false;
 }
 
-async function searchSupabase(name, order, phone, ticket) {
-  let q = `${SB_TABLE}?select=*&order=created_at.desc&limit=200`;
-  if (order)  q += `&order_number=ilike.*${encodeURIComponent(order)}*`;
-  if (phone)  q += `&customer_phone=ilike.*${encodeURIComponent(phone)}*`;
-  if (name)   q += `&customer_name=ilike.*${encodeURIComponent(name)}*`;
-  if (ticket) q += `&bosta_ticket_id=ilike.*${encodeURIComponent(ticket)}*`;
-  const res  = await sb(q);
-  const data = await res.json();
-  return (Array.isArray(data) ? data : []).map(r => ({...r, _source:'Supabase'}));
+async function searchSupabase(name,order,phone,ticket){
+  let q=`${SB_TABLE}?select=*&order=created_at.desc&limit=200`;
+  if(order)q+=`&order_number=ilike.*${encodeURIComponent(order)}*`;
+  if(phone)q+=`&customer_phone=ilike.*${encodeURIComponent(phone)}*`;
+  if(name)q+=`&customer_name=ilike.*${encodeURIComponent(name)}*`;
+  if(ticket)q+=`&bosta_ticket_id=ilike.*${encodeURIComponent(ticket)}*`;
+  const res=await sb(q);const data=await res.json();
+  return(Array.isArray(data)?data:[]).map(r=>({...r,_source:'Supabase'}));
+}
+async function searchEx2(name,order,phone,ticket){
+  const rows=await fetchTab('Export2');
+  return rows.slice(1).filter(r=>r.length>5&&(r[EX2.order]||'').trim()).map(normalizeEx2Row).filter(r=>matches(r,name,order,phone,ticket));
+}
+async function searchEx(name,order,phone,ticket){
+  const rows=await fetchTab('Export');
+  return rows.slice(1).filter(r=>r.length>5&&(r[EX.order]||'').trim()).map(normalizeExRow).filter(r=>matches(r,name,order,phone,ticket));
 }
 
-async function searchEx2(name, order, phone, ticket) {
-  const rows = await fetchTab('Export2');
-  return rows
-    .slice(1)
-    .filter(row => row.length > 5 && (row[EX2.order]||'').trim())
-    .map(normalizeEx2Row)
-    .filter(r => matches(r, name, order, phone, ticket));
+function renderResults(data,sbCount,ex2Count,exCount){
+  const list=document.getElementById('resultsList');
+  const count=document.getElementById('resultsCount');
+  if(!data.length){
+    count.textContent='0 results';
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">SB:${sbCount} · EX2:${ex2Count} · EX:${exCount}</div></div>`;
+    return;
+  }
+  count.textContent=`${data.length} result${data.length>1?'s':''} · SB:${sbCount} EX2:${ex2Count} EX:${exCount}`;
+  list.innerHTML=data.map(renderCard).join('');
 }
 
-async function searchEx(name, order, phone, ticket) {
-  const rows = await fetchTab('Export');
-  return rows
-    .slice(1)
-    .filter(row => row.length > 5 && (row[EX.order]||'').trim())
-    .map(normalizeExRow)
-    .filter(r => matches(r, name, order, phone, ticket));
+function renderCard(r){
+  const sc=statusClass(r.exchange_status);
+  const dt=formatDate(r.created_at);
+  const srcTag=r._source==='Supabase'?`<span class="src-tag tag-sb">Supabase</span>`:r._source==='Export2'?`<span class="src-tag tag-ex2">Export2</span>`:`<span class="src-tag tag-ex">Export</span>`;
+  const extraRow=r._source==='Export'
+    ?`<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${r.refund_method||'—'}</span></div><div class="result-item"><span class="result-item-label">Bank</span><span class="result-item-val">${r.bank_name||'—'}</span></div>`
+    :`<div class="result-item"><span class="result-item-label">Items Returned</span><span class="result-item-val">${r.num_items||'—'}</span></div><div class="result-item"><span class="result-item-label">Shipping Fees</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>`;
+  return`<div class="result-card"><div class="result-top"><div class="result-left"><div class="result-order">Order #${r.order_number||'—'}</div><div class="result-customer">${r.customer_name||'—'}</div><div class="result-phone">${r.customer_phone||'—'}</div></div><div class="result-right"><span class="status-badge ${sc}">${r.exchange_status||'—'}</span><div style="display:flex;gap:5px;align-items:center">${srcTag}<span class="result-date">${dt}</span></div></div></div><div class="result-grid"><div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${r.request_type||'—'}</span></div><div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${r.reason||'—'}</span></div><div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${r.agent_name||'—'}</span></div><div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div><div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${r.product_sku||'—'}</span></div><div class="result-item"><span class="result-item-label">Bosta / Txn ID</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>${extraRow}</div>${r.notes?`<div class="note-box note-general"><strong>Note:</strong> ${r.notes}</div>`:''}${r.fulfilment_note?`<div class="note-box note-blue"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div>`:''}</div>`;
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────
-function renderResults(data, sbCount, ex2Count, exCount) {
-  const list  = document.getElementById('resultsList');
-  const count = document.getElementById('resultsCount');
+// ── FULFILMENT ────────────────────────────────────────────────────────
+let fulData = [];
+let fulFilter = 'all';
 
-  if (!data.length) {
-    count.textContent = '0 results';
-    list.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">📭</div>
-        <div class="empty-text">No results found</div>
-        <div class="empty-sub">Searched — Supabase: ${sbCount} · Export2: ${ex2Count} · Export: ${exCount}</div>
-      </div>`;
+async function loadFulfilment(){
+  document.getElementById('fulLoadingBar').classList.add('show');
+  document.getElementById('fulList').innerHTML='';
+  try{
+    const res  = await sb(`${SB_TABLE}?select=*&order=created_at.desc`);
+    const data = await res.json();
+    fulData = Array.isArray(data) ? data : [];
+    renderFulfilment();
+  }catch(e){
+    showToast('Failed to load: '+e.message,'error');
+  }
+  document.getElementById('fulLoadingBar').classList.remove('show');
+}
+
+function filterFul(filter, btn){
+  fulFilter = filter;
+  document.querySelectorAll('.ful-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFulfilment();
+}
+
+function renderFulfilment(){
+  const list = document.getElementById('fulList');
+  let data = fulFilter === 'all' ? fulData : fulData.filter(r=>(r.exchange_status||'Pending').toLowerCase().includes(fulFilter.toLowerCase()));
+
+  if(!data.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No requests found</div><div class="empty-sub">${fulFilter==='all'?'No submissions yet':'No '+fulFilter+' requests'}</div></div>`;
     return;
   }
 
-  count.textContent = `${data.length} result${data.length>1?'s':''} · SB:${sbCount} EX2:${ex2Count} EX:${exCount}`;
-  list.innerHTML = data.map(renderCard).join('');
-}
-
-function renderCard(r) {
-  const sc  = statusClass(r.exchange_status);
-  const dt  = formatDate(r.created_at);
-
-  const srcTag = r._source === 'Supabase'
-    ? `<span class="src-tag tag-sb">Supabase</span>`
-    : r._source === 'Export2'
-    ? `<span class="src-tag tag-ex2">Export2</span>`
-    : `<span class="src-tag tag-ex">Export</span>`;
-
-  // Extra fields differ per source
-  const extraRow = r._source === 'Export'
-    ? `<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${r.refund_method||'—'}</span></div>
-       <div class="result-item"><span class="result-item-label">Bank</span><span class="result-item-val">${r.bank_name||'—'}</span></div>`
-    : `<div class="result-item"><span class="result-item-label">Items Returned</span><span class="result-item-val">${r.num_items||'—'}</span></div>
-       <div class="result-item"><span class="result-item-label">Shipping Fees</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>`;
-
-  return `
-  <div class="result-card">
-    <div class="result-top">
-      <div class="result-left">
-        <div class="result-order">Order #${r.order_number||'—'}</div>
-        <div class="result-customer">${r.customer_name||'—'}</div>
-        <div class="result-phone">${r.customer_phone||'—'}</div>
-      </div>
-      <div class="result-right">
-        <span class="status-badge ${sc}">${r.exchange_status||'—'}</span>
-        <div style="display:flex;gap:5px;align-items:center">
-          ${srcTag}
-          <span class="result-date">${dt}</span>
+  list.innerHTML = data.map(r => {
+    const sc  = statusClass(r.exchange_status);
+    const dt  = formatDate(r.created_at);
+    return `
+    <div class="ful-card" id="fc-${r.id}">
+      <div class="ful-card-top">
+        <div class="ful-card-left">
+          <div class="ful-card-order">Order #${r.order_number||'—'}</div>
+          <div class="ful-card-customer">${r.customer_name||'—'}</div>
+          <div class="ful-card-phone">${r.customer_phone||'—'}</div>
+        </div>
+        <div class="ful-card-right">
+          <span class="status-badge ${sc}">${r.exchange_status||'Pending'}</span>
+          <span class="ful-card-date">${dt}</span>
         </div>
       </div>
-    </div>
-    <div class="result-grid">
-      <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${r.request_type||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${r.reason||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${r.agent_name||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount ? 'EGP '+r.refund_amount : '—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${r.product_sku||'—'}</span></div>
-      <div class="result-item"><span class="result-item-label">Bosta / Txn ID</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>
-      ${extraRow}
-    </div>
-    ${r.notes ? `<div class="note-box note-general"><strong>Note:</strong> ${r.notes}</div>` : ''}
-    ${r.fulfilment_note ? `<div class="note-box note-blue"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div>` : ''}
-  </div>`;
+      <div class="ful-card-body">
+        <div class="ful-card-item"><span class="ful-card-label">Request Type</span><span class="ful-card-val">${r.request_type||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Reason</span><span class="ful-card-val">${r.reason||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Agent</span><span class="ful-card-val">${r.agent_name||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Refund Amount</span><span class="ful-card-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Product / SKU</span><span class="ful-card-val">${r.product_sku||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Bosta Ticket</span><span class="ful-card-val">${r.bosta_ticket_id||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Items</span><span class="ful-card-val">${r.num_items||'—'}</span></div>
+        <div class="ful-card-item"><span class="ful-card-label">Shipping</span><span class="ful-card-val">${r.shipping_fees||'—'}</span></div>
+      </div>
+      ${r.notes?`<div style="padding:0 20px 12px"><div class="note-box note-general"><strong>Note:</strong> ${r.notes}</div></div>`:''}
+      ${r.fulfilment_note?`<div style="padding:0 20px 12px"><div class="note-box note-blue"><strong>Fulfilment Note:</strong> ${r.fulfilment_note}</div></div>`:''}
+      <div class="ful-card-actions">
+        <select class="ful-status-select" id="sel-${r.id}">
+          <option ${(r.exchange_status||'')==='Pending'?'selected':''}>Pending</option>
+          <option ${(r.exchange_status||'')==='Processing'?'selected':''}>Processing</option>
+          <option ${(r.exchange_status||'')==='Approved'?'selected':''}>Approved</option>
+          <option ${(r.exchange_status||'')==='Rejected'?'selected':''}>Rejected</option>
+          <option ${(r.exchange_status||'')==='Completed'?'selected':''}>Completed</option>
+        </select>
+        <input class="ful-note-input" id="note-${r.id}" type="text" placeholder="Add fulfilment note..." value="${r.fulfilment_note||''}">
+        <button class="btn-save-status" id="save-${r.id}" onclick="saveStatus('${r.id}')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function saveStatus(id){
+  const status = document.getElementById('sel-'+id).value;
+  const note   = document.getElementById('note-'+id).value.trim();
+  const btn    = document.getElementById('save-'+id);
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinw"></span>';
+  try{
+    const res = await sb(`${SB_TABLE}?id=eq.${id}`,{
+      method:'PATCH',
+      body: JSON.stringify({exchange_status:status, fulfilment_note:note}),
+      prefer:'return=minimal'
+    });
+    if(!res.ok) throw new Error(await res.text());
+    // Update local data
+    const idx = fulData.findIndex(r=>String(r.id)===String(id));
+    if(idx>-1){fulData[idx].exchange_status=status;fulData[idx].fulfilment_note=note;}
+    showToast('✅ Status updated!','success');
+    // Re-render card badge
+    const card = document.getElementById('fc-'+id);
+    if(card){
+      const badge = card.querySelector('.status-badge');
+      if(badge){badge.className='status-badge '+statusClass(status);badge.textContent=status;}
+      if(note){
+        const existing = card.querySelector('.note-blue');
+        if(existing) existing.innerHTML=`<strong>Fulfilment Note:</strong> ${note}`;
+      }
+    }
+  }catch(e){
+    showToast('Update failed: '+e.message,'error');
+  }
+  btn.disabled=false;
+  btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Save';
 }
 
 // ── DATE HELPERS ──────────────────────────────────────────────────────
-function parseAnyDate(str) {
-  if (!str) return new Date(0);
-  const s = str.toString().trim();
-  // Try ISO
-  let d = new Date(s);
-  if (!isNaN(d)) return d;
-  // Try DD/MM/YYYY or DD/MM/YYYY HH:MM
-  const parts = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (parts) d = new Date(`${parts[3]}-${parts[2].padStart(2,'0')}-${parts[1].padStart(2,'0')}`);
-  return isNaN(d) ? new Date(0) : d;
+function parseAnyDate(str){
+  if(!str)return new Date(0);
+  const s=str.toString().trim();
+  let d=new Date(s);
+  if(!isNaN(d))return d;
+  const p=s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(p)d=new Date(`${p[3]}-${p[2].padStart(2,'0')}-${p[1].padStart(2,'0')}`);
+  return isNaN(d)?new Date(0):d;
 }
-
-function formatDate(str) {
-  if (!str || str.toString().trim() === '') return '—';
-  const d = parseAnyDate(str.toString().trim());
-  if (!d || d.getTime() === 0) return str.toString().slice(0,20);
-  return d.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'})
-    + ' ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+function formatDate(str){
+  if(!str||str.toString().trim()==='')return'—';
+  const d=parseAnyDate(str.toString().trim());
+  if(!d||d.getTime()===0)return str.toString().slice(0,20);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
 }
-
-function statusClass(s) {
-  const v = (s||'').toLowerCase();
-  if (v.includes('approved')||v.includes('done')||v.includes('completed')||v.includes('transferred')) return 's-approved';
-  if (v.includes('rejected')||v.includes('declined')||v.includes('failed')) return 's-rejected';
-  if (v.includes('processing')||v.includes('progress')||v.includes('submitted')) return 's-processing';
-  if (v.includes('pending')) return 's-pending';
+function statusClass(s){
+  const v=(s||'').toLowerCase();
+  if(v.includes('approved')||v.includes('done')||v.includes('completed')||v.includes('transferred'))return 's-approved';
+  if(v.includes('rejected')||v.includes('declined')||v.includes('failed'))return 's-rejected';
+  if(v.includes('processing')||v.includes('progress')||v.includes('submitted'))return 's-processing';
+  if(v.includes('pending'))return 's-pending';
   return 's-default';
 }
 
-function clearSearch() {
-  ['sName','sOrder','sPhone','sTicket'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('resultsList').innerHTML = `
-    <div class="empty-state">
-      <div class="empty-icon">🔍</div>
-      <div class="empty-text">Enter search criteria above</div>
-      <div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div>
-    </div>`;
-  document.getElementById('resultsCount').textContent = '—';
+function clearSearch(){
+  ['sName','sOrder','sPhone','sTicket'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Enter search criteria above</div><div class="empty-sub">Searches Supabase, Export2 & Export simultaneously</div></div>`;
+  document.getElementById('resultsCount').textContent='—';
 }
 
-// ── DUPLICATE CHECK ────────────────────────────────────────────────────
+// ── DUP CHECK ─────────────────────────────────────────────────────────
 let dupTimer;
-function schedDupCheck() { clearTimeout(dupTimer); dupTimer = setTimeout(dupCheck, 700); }
-
-async function dupCheck() {
-  const order = document.getElementById('fOrderNum').value.trim();
-  if (!order) { hideDup(); return; }
-
-  const fiveDaysAgo = new Date(Date.now()-5*24*60*60*1000).toISOString();
-
-  // Check Supabase
-  try {
-    const res  = await sb(`${SB_TABLE}?order_number=eq.${encodeURIComponent(order)}&created_at=gte.${fiveDaysAgo}&select=id,created_at,exchange_status`);
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      const d = data[0];
-      showDup(`Case exists (submitted ${formatDate(d.created_at)}). Status: ${d.exchange_status||'Pending'}. Please follow up instead of creating a new case.`);
-      return;
-    }
-  } catch(e) {}
-
-  // Check Export2
-  try {
-    const cutoff = Date.now()-5*24*60*60*1000;
-    const rows   = await fetchTab('Export2');
-    const found  = rows.slice(1).find(row => {
-      if ((row[EX2.order]||'').trim() !== order) return false;
-      const d = parseAnyDate(row[EX2.ts]);
-      return d.getTime() >= cutoff;
+function schedDupCheck(){clearTimeout(dupTimer);dupTimer=setTimeout(dupCheck,700);}
+async function dupCheck(){
+  const order=document.getElementById('fOrderNum').value.trim();
+  if(!order){hideDup();return;}
+  try{
+    const fiveDaysAgo=new Date(Date.now()-5*24*60*60*1000).toISOString();
+    const res=await sb(`${SB_TABLE}?order_number=eq.${encodeURIComponent(order)}&created_at=gte.${fiveDaysAgo}&select=id,created_at,exchange_status`);
+    const data=await res.json();
+    if(Array.isArray(data)&&data.length>0){showDup(`Case exists (submitted ${formatDate(data[0].created_at)}). Status: ${data[0].exchange_status||'Pending'}. Please follow up instead.`);return;}
+  }catch(e){}
+  try{
+    const cutoff=Date.now()-5*24*60*60*1000;
+    const rows=await fetchTab('Export2');
+    const found=rows.slice(1).find(row=>{
+      if((row[EX2.order]||'').trim()!==document.getElementById('fOrderNum').value.trim())return false;
+      return parseAnyDate(row[EX2.ts]).getTime()>=cutoff;
     });
-    if (found) {
-      showDup(`Case exists in Export2 (${formatDate(found[EX2.ts])}). Status: ${found[EX2.status]||'—'}. Please follow up instead.`);
-      return;
-    }
-  } catch(e) {}
-
+    if(found){showDup(`Case exists in Export2 (${formatDate(found[EX2.ts])}). Status: ${found[EX2.status]||'—'}. Please follow up instead.`);return;}
+  }catch(e){}
   hideDup();
 }
-
-function showDup(msg) {
-  document.getElementById('dupText').textContent = msg;
-  document.getElementById('dupAlert').classList.add('show');
-  document.getElementById('submitBtn').disabled = true;
-}
-function hideDup() {
-  document.getElementById('dupAlert').classList.remove('show');
-  document.getElementById('submitBtn').disabled = false;
-}
+function showDup(msg){document.getElementById('dupText').textContent=msg;document.getElementById('dupAlert').classList.add('show');document.getElementById('submitBtn').disabled=true;}
+function hideDup(){document.getElementById('dupAlert').classList.remove('show');document.getElementById('submitBtn').disabled=false;}
 
 // ── SUBMIT ────────────────────────────────────────────────────────────
-async function submitRefund() {
-  const email   = document.getElementById('fAgentEmail').value.trim();
-  const agentN  = document.getElementById('fAgentName').value.trim();
-  const custN   = document.getElementById('fCustName').value.trim();
-  const custPh  = document.getElementById('fCustPhone').value.trim();
-  const orderN  = document.getElementById('fOrderNum').value.trim();
-  const reqType = document.getElementById('fReqType').value;
-  const reason  = document.getElementById('fReason').value;
-
-  if (!email)   return showToast('Agent email required.','error');
-  if (!agentN)  return showToast('Agent name required.','error');
-  if (!custN)   return showToast('Customer name required.','error');
-  if (!custPh)  return showToast('Customer phone required.','error');
-  if (!orderN)  return showToast('Order number required.','error');
-  if (!reqType) return showToast('Request type required.','error');
-  if (!reason)  return showToast('Reason required.','error');
-
+async function submitRefund(){
+  const email=document.getElementById('fAgentEmail').value.trim();
+  const agentN=document.getElementById('fAgentName').value.trim();
+  const custN=document.getElementById('fCustName').value.trim();
+  const custPh=document.getElementById('fCustPhone').value.trim();
+  const orderN=document.getElementById('fOrderNum').value.trim();
+  const reqType=document.getElementById('fReqType').value;
+  const reason=document.getElementById('fReason').value;
+  if(!email)return showToast('Agent email required.','error');
+  if(!agentN)return showToast('Agent name required.','error');
+  if(!custN)return showToast('Customer name required.','error');
+  if(!custPh)return showToast('Customer phone required.','error');
+  if(!orderN)return showToast('Order number required.','error');
+  if(!reqType)return showToast('Request type required.','error');
+  if(!reason)return showToast('Reason required.','error');
   setLoading(true);
-  try {
-    const payload = {
-      agent_email:     email,
-      agent_name:      agentN,
-      customer_name:   custN,
-      customer_phone:  custPh,
-      order_number:    orderN,
-      request_type:    reqType,
-      reason,
-      num_items:       parseInt(document.getElementById('fNumItems').value)||null,
-      product_sku:     document.getElementById('fProductSKU').value.trim(),
-      original_sku:    document.getElementById('fOrigSKU').value.trim(),
-      requested_sku:   document.getElementById('fReqSKU').value.trim(),
-      shipping_fees:   document.getElementById('fShipping').value,
-      refund_amount:   document.getElementById('fRefund').value.trim(),
-      bosta_ticket_id: document.getElementById('fBostaTicket').value.trim(),
-      notes:           document.getElementById('fNotes').value.trim(),
-      exchange_status: 'Pending'
-    };
-    const res = await sb(SB_TABLE, {method:'POST', body:JSON.stringify(payload), prefer:'return=minimal'});
-    if (!res.ok) throw new Error(await res.text());
-    setLoading(false);
-    showToast('✅ Request submitted successfully!','success');
-    resetForm();
-  } catch(e) {
-    setLoading(false);
-    showToast('Submit failed: '+e.message,'error');
-  }
+  try{
+    const payload={agent_email:email,agent_name:agentN,customer_name:custN,customer_phone:custPh,order_number:orderN,request_type:reqType,reason,num_items:parseInt(document.getElementById('fNumItems').value)||null,product_sku:document.getElementById('fProductSKU').value.trim(),original_sku:document.getElementById('fOrigSKU').value.trim(),requested_sku:document.getElementById('fReqSKU').value.trim(),shipping_fees:document.getElementById('fShipping').value,refund_amount:document.getElementById('fRefund').value.trim(),bosta_ticket_id:document.getElementById('fBostaTicket').value.trim(),notes:document.getElementById('fNotes').value.trim(),exchange_status:'Pending'};
+    const res=await sb(SB_TABLE,{method:'POST',body:JSON.stringify(payload),prefer:'return=minimal'});
+    if(!res.ok)throw new Error(await res.text());
+    setLoading(false);showToast('✅ Request submitted!','success');resetForm();
+  }catch(e){setLoading(false);showToast('Submit failed: '+e.message,'error');}
+}
+function setLoading(on){
+  const btn=document.getElementById('submitBtn');btn.disabled=on;
+  btn.innerHTML=on?'<span class="spinw"></span> Submitting...':'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request';
+}
+function resetForm(){
+  ['fAgentEmail','fAgentName','fCustName','fCustPhone','fOrderNum','fNumItems','fProductSKU','fOrigSKU','fReqSKU','fRefund','fBostaTicket','fNotes'].forEach(id=>document.getElementById(id).value='');
+  ['fReqType','fReason','fShipping'].forEach(id=>document.getElementById(id).value='');
+  hideDup();setNow();
 }
 
-function setLoading(on) {
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = on;
-  btn.innerHTML = on
-    ? '<span class="spinw"></span> Submitting...'
-    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Request';
-}
-
-function resetForm() {
-  ['fAgentEmail','fAgentName','fCustName','fCustPhone','fOrderNum',
-   'fNumItems','fProductSKU','fOrigSKU','fReqSKU','fRefund','fBostaTicket','fNotes'
-  ].forEach(id => document.getElementById(id).value='');
-  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value='');
-  hideDup(); setNow();
-}
-
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-'+name).classList.add('active');
 }
-
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.className = `toast show ${type}`;
-  t.textContent = msg;
-  setTimeout(() => t.classList.remove('show'), 5000);
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');t.className=`toast show ${type}`;t.textContent=msg;
+  setTimeout(()=>t.classList.remove('show'),5000);
 }
-
-function setNow() {
-  const now   = new Date();
-  const cairo = new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
-  const p = n => n.toString().padStart(2,'0');
-  document.getElementById('fDate').value =
-    `${cairo.getFullYear()}-${p(cairo.getMonth()+1)}-${p(cairo.getDate())}T${p(cairo.getHours())}:${p(cairo.getMinutes())}`;
+function setNow(){
+  const now=new Date();const cairo=new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
+  const p=n=>n.toString().padStart(2,'0');
+  document.getElementById('fDate').value=`${cairo.getFullYear()}-${p(cairo.getMonth()+1)}-${p(cairo.getDate())}T${p(cairo.getHours())}:${p(cairo.getMinutes())}`;
 }
 setNow();
 </script>
