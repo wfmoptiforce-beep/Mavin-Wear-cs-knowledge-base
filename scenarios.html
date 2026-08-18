@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,7 +18,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-/* NAV */
 .topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
 .nav-brand{display:flex;align-items:center;gap:12px;position:absolute;left:50%;transform:translateX(-50%)}
 .nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
@@ -35,7 +34,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .user-name{font-size:12px;font-weight:700;color:#fff}
 .user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
 
-/* TABS */
 .tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
 .tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
 .tab-btn:hover{color:var(--text)}
@@ -43,7 +41,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .tab-btn svg{width:15px;height:15px}
 .count-badge{background:#f3f3f7;border-radius:100px;padding:2px 8px;font-size:11px;margin-left:4px;font-weight:700}
 
-/* PAGE */
 .page{padding:32px;max-width:1300px;margin:0 auto}
 .tab-content{display:none}.tab-content.active{display:block}
 .page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
@@ -51,33 +48,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
 .page-sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
 
-/* FILTER */
 .filter-bar{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .filter-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
 .fp{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap}
 .fp:hover{border-color:#999;color:var(--text)}
 .fp.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
 
-/* CATEGORY */
 .cat-group{margin-bottom:32px}
 .cat-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
 .cat-icon{font-size:22px}
 .cat-name{font-size:16px;font-weight:900}
 .cat-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:3px 10px}
 
-/* CARDS */
 .sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.sc-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s}
+.sc-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s;user-select:none}
 .sc-card:hover{border-color:var(--indigo);box-shadow:0 4px 20px rgba(75,75,249,.1);transform:translateY(-2px)}
-.sc-card-top{padding:16px 18px 12px;border-bottom:1px solid #f5f5f5}
+.sc-card:active{transform:translateY(0);opacity:.9}
+.sc-card-top{padding:16px 18px 12px;border-bottom:1px solid #f5f5f5;pointer-events:none}
 .sc-num{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .sc-scenario{font-size:14px;font-weight:700;line-height:1.6;direction:rtl;text-align:right}
-.sc-card-body{padding:12px 18px 14px}
+.sc-card-body{padding:12px 18px 14px;pointer-events:none}
 .sc-analysis{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;direction:rtl;text-align:right}
 .sc-footer{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid;pointer-events:none}
 .b-cr{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
 .b-exchange{background:var(--mint-bg);color:var(--mint);border-color:var(--mint-bd)}
 .b-refund{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
@@ -87,30 +81,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .b-discount{background:#fff7ed;color:#ea580c;border-color:#fed7aa}
 .b-na{background:#f3f3f7;color:var(--muted);border-color:var(--border)}
 
-/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .overlay.show{display:flex}
 .modal{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2)}
 .modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;z-index:1}
-.modal-title{font-size:15px;font-weight:800;direction:rtl;text-align:right;line-height:1.6;flex:1}
-.modal-close{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;font-size:16px;color:var(--muted);transition:.15s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-scenario{font-size:15px;font-weight:800;direction:rtl;text-align:right;line-height:1.6;flex:1;color:var(--text)}
+.modal-close{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;font-size:18px;color:var(--muted);transition:.15s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .modal-close:hover{background:#f3f3f7;color:var(--text)}
 .modal-body{padding:24px;display:flex;flex-direction:column;gap:16px}
 
-/* AGENT GUIDE BOX */
-.agent-box{background:linear-gradient(135deg,#f0f4ff,#e8edff);border:1.5px solid #c7d2fe;border-radius:14px;padding:18px 20px}
-.agent-box-title{font-size:10px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.agent-box{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:18px 20px}
+.agent-title{font-size:10px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .agent-col{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid #e0e7ff}
-.agent-col-label{font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-.agent-col-value{font-size:13.5px;font-weight:800;color:var(--text)}
+.agent-col-label{font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
 
-/* ANALYSIS BOX */
 .analysis-box{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-.box-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.box-text{font-size:13.5px;line-height:1.75;direction:rtl;text-align:right;color:var(--text)}
+.box-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.box-text{font-size:13.5px;line-height:1.8;direction:rtl;text-align:right;color:var(--text)}
 
-/* DECISION TREE */
 .dt-group{margin-bottom:32px}
 .dt-group-hdr{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
 .dt-group-icon{font-size:24px}
@@ -125,12 +114,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .dt-text{font-size:13px;font-weight:700;direction:rtl;text-align:right;line-height:1.5}
 .dt-sub{font-size:12.5px;color:var(--muted);direction:rtl;text-align:right;line-height:1.6}
 
-/* LOADING */
 .loading{padding:80px 20px;text-align:center;color:var(--muted);font-size:14px}
 .spin{display:inline-block;width:24px;height:24px;border:3px solid rgba(75,75,249,.15);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite;margin-bottom:16px}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .toast.show{display:flex}
 .toast.success{background:#16a34a;color:#fff}
@@ -195,11 +182,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </button>
 </div>
 
-<!-- SCENARIOS -->
 <div class="page tab-content active" id="tab-scenarios">
   <div class="page-badge"><span class="page-badge-dot"></span>CS Scenarios</div>
   <div class="page-title">Customer Scenarios</div>
-  <div class="page-sub">كل السيناريوهات مجمعة حسب التصنيف — اضغط على أي كارد لتشوف التفاصيل</div>
+  <div class="page-sub">كل السيناريوهات مجمعة حسب التصنيف — اضغط على أي كارد لعرض التفاصيل</div>
   <div class="filter-bar">
     <span class="filter-label">Filter by:</span>
     <div id="scFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
@@ -208,7 +194,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div id="scContent"></div>
 </div>
 
-<!-- DECISION TREE -->
 <div class="page tab-content" id="tab-dtree">
   <div class="page-badge"><span class="page-badge-dot"></span>Decision Tree</div>
   <div class="page-title">Decision Tree Map</div>
@@ -221,11 +206,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div id="dtContent"></div>
 </div>
 
-<!-- MODAL -->
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-hdr">
-      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-scenario" id="modalScenario"></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
@@ -236,19 +220,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
 <script>
 const SHEET_ID = '1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo';
-let scData = [], dtData = [];
-let scFilter = 'all', dtFilter = 'all';
+let scData = [];
+let dtData = [];
 
 /* ── FETCH ── */
-async function fetchTab(tab) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}&headers=1`;
-  const res  = await fetch(url);
+async function fetchTab(tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}&headers=1`;
+  const res = await fetch(url);
   const text = await res.text();
-  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
-  if (!m) throw new Error('No data');
-  const json = JSON.parse(m[1]);
-  return (json.table?.rows||[]).map(r =>
-    (r.c||[]).map(c => (!c||c.v===null) ? '' : (c.f||String(c.v)))
+  const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+  if (!match) throw new Error('Parse error');
+  const json = JSON.parse(match[1]);
+  return (json.table?.rows || []).map(row =>
+    (row.c || []).map(cell => (!cell || cell.v === null) ? '' : (cell.f || String(cell.v)))
   );
 }
 
@@ -257,169 +241,243 @@ async function init() {
 }
 
 /* ══ SCENARIOS ══ */
-// Cols: A=كلام العميل, B=التحليل والإجراء, C=Contact Reason, D=Resolution
 async function loadScenarios() {
   try {
     const rows = await fetchTab('Scenarios');
     scData = rows.slice(1)
-      .filter(r => r[0]&&r[0].trim())
-      .map((r,i) => ({
-        id: i+1,
-        scenario:      r[0]||'',
-        analysis:      r[1]||'',
-        contactReason: r[2]||'',
-        resolution:    r[3]||''
+      .filter(r => r[0] && r[0].trim())
+      .map((r, i) => ({
+        idx: i,
+        scenario:      r[0] || '',
+        analysis:      r[1] || '',
+        contactReason: r[2] || '',
+        resolution:    r[3] || ''
       }));
-    document.getElementById('scLoading').style.display='none';
-    document.getElementById('scBadge').textContent=scData.length;
+    document.getElementById('scLoading').style.display = 'none';
+    document.getElementById('scBadge').textContent = scData.length;
     buildScFilters();
-    renderScenarios();
+    renderScenarios('all');
   } catch(e) {
-    document.getElementById('scLoading').innerHTML='❌ Failed to load. Make sure the Google Sheet is set to <b>Anyone with the link → Viewer</b>.';
+    document.getElementById('scLoading').innerHTML = '❌ Failed to load. Make sure the Sheet is set to <b>Anyone with the link → Viewer</b>.';
   }
 }
 
 function buildScFilters() {
-  const reasons=[...new Set(scData.map(s=>s.contactReason).filter(Boolean))].sort();
-  document.getElementById('scFilters').innerHTML=
-    `<button class="fp active" onclick="setScFilter('all',this)">✨ All (${scData.length})</button>`+
-    reasons.map(r=>{
-      const cnt=scData.filter(s=>s.contactReason===r).length;
-      return `<button class="fp" onclick="setScFilter(${JSON.stringify(r)},this)">${cIcon(r)} ${r} (${cnt})</button>`;
-    }).join('');
+  const reasons = [...new Set(scData.map(s => s.contactReason).filter(Boolean))].sort();
+  const wrap = document.getElementById('scFilters');
+  wrap.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'fp active';
+  allBtn.textContent = `✨ All (${scData.length})`;
+  allBtn.addEventListener('click', function() {
+    wrap.querySelectorAll('.fp').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderScenarios('all');
+  });
+  wrap.appendChild(allBtn);
+
+  reasons.forEach(r => {
+    const cnt = scData.filter(s => s.contactReason === r).length;
+    const btn = document.createElement('button');
+    btn.className = 'fp';
+    btn.textContent = `${cIcon(r)} ${r} (${cnt})`;
+    btn.addEventListener('click', function() {
+      wrap.querySelectorAll('.fp').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      renderScenarios(r);
+    });
+    wrap.appendChild(btn);
+  });
 }
 
-function setScFilter(val,btn){
-  scFilter=val;
-  document.querySelectorAll('#scFilters .fp').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderScenarios();
-}
+function renderScenarios(filter) {
+  const data = filter === 'all' ? scData : scData.filter(s => s.contactReason === filter);
+  const el = document.getElementById('scContent');
+  if (!data.length) { el.innerHTML = '<div class="loading">لا توجد نتائج</div>'; return; }
 
-function renderScenarios(){
-  const data=scFilter==='all'?scData:scData.filter(s=>s.contactReason===scFilter);
-  const el=document.getElementById('scContent');
-  if(!data.length){el.innerHTML='<div class="loading">لا توجد نتائج</div>';return;}
-  if(scFilter==='all'){
-    const groups={};
-    data.forEach(s=>{const k=s.contactReason||'Other';if(!groups[k])groups[k]=[];groups[k].push(s);});
-    el.innerHTML=Object.entries(groups).map(([r,items])=>`
-      <div class="cat-group">
+  if (filter === 'all') {
+    const groups = {};
+    data.forEach(s => {
+      const k = s.contactReason || 'Other';
+      if (!groups[k]) groups[k] = [];
+      groups[k].push(s);
+    });
+    el.innerHTML = '';
+    Object.entries(groups).forEach(([reason, items]) => {
+      const group = document.createElement('div');
+      group.className = 'cat-group';
+      group.innerHTML = `
         <div class="cat-header">
-          <span class="cat-icon">${cIcon(r)}</span>
-          <span class="cat-name">${r}</span>
+          <span class="cat-icon">${cIcon(reason)}</span>
+          <span class="cat-name">${reason}</span>
           <span class="cat-count">${items.length} scenarios</span>
         </div>
-        <div class="sc-grid">${items.map(scCard).join('')}</div>
-      </div>`).join('');
+        <div class="sc-grid" id="grid-${CSS.escape(reason)}"></div>`;
+      el.appendChild(group);
+      const grid = group.querySelector('.sc-grid');
+      items.forEach(s => grid.appendChild(makeCard(s)));
+    });
   } else {
-    el.innerHTML=`<div class="sc-grid">${data.map(scCard).join('')}</div>`;
+    el.innerHTML = '<div class="sc-grid" id="grid-filtered"></div>';
+    const grid = el.querySelector('.sc-grid');
+    data.forEach(s => grid.appendChild(makeCard(s)));
   }
 }
 
-function scCard(s){
-  return `
-  <div class="sc-card" onclick="openModal(${s.id-1})">
+function makeCard(s) {
+  const card = document.createElement('div');
+  card.className = 'sc-card';
+  card.innerHTML = `
     <div class="sc-card-top">
-      <div class="sc-num">${cIcon(s.contactReason)} Scenario #${s.id}</div>
+      <div class="sc-num">${cIcon(s.contactReason)} Scenario #${s.idx + 1}</div>
       <div class="sc-scenario">${s.scenario}</div>
     </div>
     <div class="sc-card-body">
       <div class="sc-analysis">${s.analysis}</div>
       <div class="sc-footer">
-        <span class="badge b-cr">${s.contactReason||'—'}</span>
-        <span class="badge ${rClass(s.resolution)}">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
+        <span class="badge b-na">${s.contactReason || '—'}</span>
+        <span class="badge ${rClass(s.resolution)}">${rIcon(s.resolution)} ${s.resolution || '—'}</span>
       </div>
-    </div>
-  </div>`;
+    </div>`;
+  card.addEventListener('click', () => openModal(s.idx));
+  return card;
 }
 
-/* ══ MODAL — بيعرض بس اللي في الشيت ══ */
-function openModal(idx){
-  const s=scData[idx];if(!s)return;
-  document.getElementById('modalTitle').textContent=s.scenario;
-  document.getElementById('modalBody').innerHTML=`
-
-    <!-- AGENT GUIDE -->
+/* ══ MODAL ══ */
+function openModal(idx) {
+  const s = scData[idx];
+  if (!s) return;
+  document.getElementById('modalScenario').textContent = s.scenario;
+  document.getElementById('modalBody').innerHTML = `
     <div class="agent-box">
-      <div class="agent-box-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Agent Guide — اللي المفروض تعمله على السيستم
-      </div>
+      <div class="agent-title">⭐ Agent Guide — اللي هتحطه على السيستم</div>
       <div class="agent-grid">
         <div class="agent-col">
           <div class="agent-col-label">📋 Contact Reason</div>
-          <div style="margin-top:6px">
-            <span class="badge b-cr" style="font-size:12.5px;padding:6px 14px">${cIcon(s.contactReason)} ${s.contactReason||'—'}</span>
-          </div>
+          <span class="badge b-cr" style="font-size:12.5px;padding:6px 14px;margin-top:4px;display:inline-flex">${cIcon(s.contactReason)} ${s.contactReason || '—'}</span>
         </div>
         <div class="agent-col">
           <div class="agent-col-label">✅ Resolution على السيستم</div>
-          <div style="margin-top:6px">
-            <span class="badge ${rClass(s.resolution)}" style="font-size:12.5px;padding:6px 14px">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
-          </div>
+          <span class="badge ${rClass(s.resolution)}" style="font-size:12.5px;padding:6px 14px;margin-top:4px;display:inline-flex">${rIcon(s.resolution)} ${s.resolution || '—'}</span>
         </div>
       </div>
     </div>
-
-    <!-- ANALYSIS -->
     <div class="analysis-box">
-      <div class="box-label">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        التحليل والإجراء
-      </div>
-      <div class="box-text">${s.analysis||'—'}</div>
-    </div>
-
-  `;
+      <div class="box-label">📝 التحليل والإجراء</div>
+      <div class="box-text">${s.analysis || '—'}</div>
+    </div>`;
   document.getElementById('overlay').classList.add('show');
 }
 
-function closeModal(){
+function closeModal() {
   document.getElementById('overlay').classList.remove('show');
 }
 
 /* ══ DECISION TREE ══ */
-// Cols: A=Category, B=Sub-Action, C=Reason, D=Resolution
-async function loadDT(){
+async function loadDT() {
   try {
-    const rows=await fetchTab('Decision Tree');
-    dtData=rows.slice(1)
-      .filter(r=>r[0]&&r[0].trim())
-      .map((r,i)=>({
-        id:i+1,
-        category:  r[0]||'',
-        subAction: r[1]||'',
-        reason:    r[2]||'',
-        resolution:r[3]||''
+    const rows = await fetchTab('Decision Tree');
+    dtData = rows.slice(1)
+      .filter(r => r[0] && r[0].trim())
+      .map((r, i) => ({
+        idx: i,
+        category:   r[0] || '',
+        subAction:  r[1] || '',
+        reason:     r[2] || '',
+        resolution: r[3] || ''
       }));
-    document.getElementById('dtLoading').style.display='none';
-    document.getElementById('dtBadge').textContent=dtData.length;
+    document.getElementById('dtLoading').style.display = 'none';
+    document.getElementById('dtBadge').textContent = dtData.length;
     buildDTFilters();
-    renderDT();
-  } catch(e){
-    document.getElementById('dtLoading').innerHTML='❌ Failed to load Decision Tree.';
+    renderDT('all');
+  } catch(e) {
+    document.getElementById('dtLoading').innerHTML = '❌ Failed to load Decision Tree.';
   }
 }
 
-function buildDTFilters(){
-  const cats=[...new Set(dtData.map(d=>d.category).filter(Boolean))].sort();
-  document.getElementById('dtFilters').innerHTML=
-    `<button class="fp active" onclick="setDTFilter('all',this)">✨ All (${dtData.length})</button>`+
-    cats.map(c=>{
-      const cnt=dtData.filter(d=>d.category===c).length;
-      return `<button class="fp" onclick="setDTFilter(${JSON.stringify(c)},this)">${cIcon(c)} ${c} (${cnt})</button>`;
-    }).join('');
+function buildDTFilters() {
+  const cats = [...new Set(dtData.map(d => d.category).filter(Boolean))].sort();
+  const wrap = document.getElementById('dtFilters');
+  wrap.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'fp active';
+  allBtn.textContent = `✨ All (${dtData.length})`;
+  allBtn.addEventListener('click', function() {
+    wrap.querySelectorAll('.fp').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderDT('all');
+  });
+  wrap.appendChild(allBtn);
+
+  cats.forEach(c => {
+    const cnt = dtData.filter(d => d.category === c).length;
+    const btn = document.createElement('button');
+    btn.className = 'fp';
+    btn.textContent = `${cIcon(c)} ${c} (${cnt})`;
+    btn.addEventListener('click', function() {
+      wrap.querySelectorAll('.fp').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      renderDT(c);
+    });
+    wrap.appendChild(btn);
+  });
 }
 
-function setDTFilter(val,btn){
-  dtFilter=val;
-  document.querySelectorAll('#dtFilters .fp').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderDT();
+function renderDT(filter) {
+  const data = filter === 'all' ? dtData : dtData.filter(d => d.category === filter);
+  const el = document.getElementById('dtContent');
+  if (!data.length) { el.innerHTML = '<div class="loading">لا توجد نتائج</div>'; return; }
+
+  const groups = {};
+  data.forEach(d => {
+    const k = d.category || 'Other';
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(d);
+  });
+
+  el.innerHTML = '';
+  Object.entries(groups).forEach(([cat, items]) => {
+    const accent = getAccent(cat);
+    const group = document.createElement('div');
+    group.className = 'dt-group';
+    group.innerHTML = `
+      <div class="dt-group-hdr" style="border-left:4px solid ${accent}">
+        <span class="dt-group-icon">${cIcon(cat)}</span>
+        <span class="dt-group-name">${cat}</span>
+        <span class="dt-group-count">${items.length} cases</span>
+      </div>
+      <div class="dt-rows">
+        ${items.map(d => `
+        <div class="dt-row">
+          <div class="dt-accent" style="background:${accent}"></div>
+          <div class="dt-inner">
+            <div>
+              <div class="dt-col-label">📂 Category</div>
+              <div class="dt-text">${d.category}</div>
+            </div>
+            <div>
+              <div class="dt-col-label">⚡ Sub-Action</div>
+              <div class="dt-sub">${d.subAction || '—'}</div>
+            </div>
+            <div>
+              <div class="dt-col-label">📋 Reason</div>
+              <span class="badge b-na" style="font-size:10.5px">${cIcon(d.reason)} ${d.reason || '—'}</span>
+            </div>
+            <div>
+              <div class="dt-col-label">✅ Resolution</div>
+              <span class="badge ${rClass(d.resolution)}" style="font-size:10.5px">${rIcon(d.resolution)} ${d.resolution || '—'}</span>
+            </div>
+          </div>
+        </div>`).join('')}
+      </div>`;
+    el.appendChild(group);
+  });
 }
 
-const accentMap=[
+/* ── HELPERS ── */
+const accentMap = [
   ['product','#4b4bf9'],['stock','#059669'],['discount','#d97706'],
   ['return','#dc2626'],['policy','#7c3aed'],['refund','#9333ea'],
   ['courier','#ea580c'],['order','#0891b2'],['exchange','#059669'],
@@ -427,118 +485,69 @@ const accentMap=[
   ['complaint','#ef4444'],['payment','#2563eb'],['escalation','#ef4444'],
   ['sizing','#f59e0b'],['review','#f59e0b'],['advertisement','#6b7280']
 ];
-function getAccent(cat){
-  const v=(cat||'').toLowerCase();
-  for(const[k,c] of accentMap){if(v.includes(k))return c;}
+function getAccent(cat) {
+  const v = (cat || '').toLowerCase();
+  for (const [k, c] of accentMap) { if (v.includes(k)) return c; }
   return '#4b4bf9';
 }
 
-function renderDT(){
-  const data=dtFilter==='all'?dtData:dtData.filter(d=>d.category===dtFilter);
-  const el=document.getElementById('dtContent');
-  if(!data.length){el.innerHTML='<div class="loading">لا توجد نتائج</div>';return;}
-  const groups={};
-  data.forEach(d=>{const k=d.category||'Other';if(!groups[k])groups[k]=[];groups[k].push(d);});
-  el.innerHTML=Object.entries(groups).map(([cat,items])=>{
-    const accent=getAccent(cat);
-    return `
-    <div class="dt-group">
-      <div class="dt-group-hdr" style="border-left:4px solid ${accent}">
-        <span class="dt-group-icon">${cIcon(cat)}</span>
-        <span class="dt-group-name">${cat}</span>
-        <span class="dt-group-count">${items.length} cases</span>
-      </div>
-      <div class="dt-rows">${items.map(d=>dtRow(d,accent)).join('')}</div>
-    </div>`;
-  }).join('');
+function cIcon(v) {
+  v = (v || '').toLowerCase();
+  if (v.includes('product inquiry') || v.includes('pre-purchase')) return '🛍️';
+  if (v.includes('stock') || v.includes('availability')) return '📦';
+  if (v.includes('discount code')) return '🎟️';
+  if (v.includes('discount') || v.includes('promotion')) return '🏷️';
+  if (v.includes('late return')) return '⏰';
+  if (v.includes('late order')) return '🕐';
+  if (v.includes('policy')) return '📋';
+  if (v.includes('refund not received')) return '💳';
+  if (v.includes('refund')) return '💰';
+  if (v.includes('courier')) return '🚚';
+  if (v.includes('order status') || v.includes('tracking')) return '📍';
+  if (v.includes('wrong item')) return '❌';
+  if (v.includes('wrong size')) return '📏';
+  if (v.includes('damaged') || v.includes('defective')) return '⚠️';
+  if (v.includes('sizing')) return '📐';
+  if (v.includes('exchange')) return '🔄';
+  if (v.includes('account') || v.includes('website')) return '💻';
+  if (v.includes('complaint') || v.includes('escalation')) return '🚨';
+  if (v.includes('payment')) return '💳';
+  if (v.includes('advertisement') || v.includes('job')) return '📢';
+  if (v.includes('review')) return '⭐';
+  if (v.includes('client')) return '⭐';
+  return '💬';
 }
 
-function dtRow(d,accent){
-  return `
-  <div class="dt-row">
-    <div class="dt-accent" style="background:${accent}"></div>
-    <div class="dt-inner">
-      <div>
-        <div class="dt-col-label">📂 Category</div>
-        <div class="dt-text">${d.category}</div>
-      </div>
-      <div>
-        <div class="dt-col-label">⚡ Sub-Action</div>
-        <div class="dt-sub">${d.subAction||'—'}</div>
-      </div>
-      <div>
-        <div class="dt-col-label">📋 Reason</div>
-        <span class="badge b-na" style="font-size:10.5px">${cIcon(d.reason)} ${d.reason||'—'}</span>
-      </div>
-      <div>
-        <div class="dt-col-label">✅ Resolution</div>
-        <span class="badge ${rClass(d.resolution)}" style="font-size:10.5px">${rIcon(d.resolution)} ${d.resolution||'—'}</span>
-      </div>
-    </div>
-  </div>`;
+function rIcon(r) {
+  const v = (r || '').toLowerCase();
+  if (v.includes('exchange')) return '🔄';
+  if (v.includes('refund') && !v.includes('not')) return '💰';
+  if (v.includes('complaint') || v.includes('acknowledged')) return '📝';
+  if (v.includes('information') || v.includes('given')) return 'ℹ️';
+  if (v.includes('cancel')) return '❌';
+  if (v.includes('credit')) return '🎁';
+  if (v.includes('discount')) return '🏷️';
+  if (v.includes('tracking')) return '📍';
+  if (v.includes('edit')) return '✏️';
+  return '✅';
 }
 
-/* ── HELPERS ── */
-function cIcon(v){
-  v=(v||'').toLowerCase();
-  if(v.includes('product inquiry')||v.includes('pre-purchase'))return'🛍️';
-  if(v.includes('stock')||v.includes('availability'))return'📦';
-  if(v.includes('discount code'))return'🎟️';
-  if(v.includes('discount')||v.includes('promotion'))return'🏷️';
-  if(v.includes('late return'))return'⏰';
-  if(v.includes('late order'))return'🕐';
-  if(v.includes('policy'))return'📋';
-  if(v.includes('refund not received'))return'💳';
-  if(v.includes('refund'))return'💰';
-  if(v.includes('courier'))return'🚚';
-  if(v.includes('order status')||v.includes('tracking'))return'📍';
-  if(v.includes('wrong item'))return'❌';
-  if(v.includes('wrong size'))return'📏';
-  if(v.includes('damaged')||v.includes('defective'))return'⚠️';
-  if(v.includes('sizing'))return'📐';
-  if(v.includes('exchange'))return'🔄';
-  if(v.includes('account')||v.includes('website'))return'💻';
-  if(v.includes('complaint')||v.includes('escalation'))return'🚨';
-  if(v.includes('payment'))return'💳';
-  if(v.includes('advertisement')||v.includes('job'))return'📢';
-  if(v.includes('review'))return'⭐';
-  return'💬';
-}
-function rIcon(r){
-  const v=(r||'').toLowerCase();
-  if(v.includes('exchange'))return'🔄';
-  if(v.includes('refund')&&!v.includes('not'))return'💰';
-  if(v.includes('complaint')||v.includes('acknowledged'))return'📝';
-  if(v.includes('information')||v.includes('given'))return'ℹ️';
-  if(v.includes('cancel'))return'❌';
-  if(v.includes('credit'))return'🎁';
-  if(v.includes('discount'))return'🏷️';
-  if(v.includes('tracking'))return'📍';
-  if(v.includes('edit'))return'✏️';
-  return'✅';
-}
-function rClass(r){
-  const v=(r||'').toLowerCase();
-  if(v.includes('exchange'))return'b-exchange';
-  if(v.includes('refund')&&!v.includes('not'))return'b-refund';
-  if(v.includes('complaint')||v.includes('acknowledged'))return'b-complaint';
-  if(v.includes('cancel'))return'b-cancel';
-  if(v.includes('credit'))return'b-credit';
-  if(v.includes('discount'))return'b-discount';
-  return'b-cr';
+function rClass(r) {
+  const v = (r || '').toLowerCase();
+  if (v.includes('exchange')) return 'b-exchange';
+  if (v.includes('refund') && !v.includes('not')) return 'b-refund';
+  if (v.includes('complaint') || v.includes('acknowledged')) return 'b-complaint';
+  if (v.includes('cancel')) return 'b-cancel';
+  if (v.includes('credit')) return 'b-credit';
+  if (v.includes('discount')) return 'b-discount';
+  return 'b-cr';
 }
 
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-}
-
-function showToast(msg,type){
-  const t=document.getElementById('toast');
-  t.className=`toast show ${type}`;t.textContent=msg;
-  setTimeout(()=>t.classList.remove('show'),2500);
+  document.getElementById('tab-' + name).classList.add('active');
 }
 
 init();
