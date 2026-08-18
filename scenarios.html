@@ -1,163 +1,170 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAVIN OPS HUB - Scenarios</title>
+<title>MAVIN OPS HUB - Scenarios & Decision Tree</title>
 <style>
-:root{
-  --bg:#f3f3f7;--white:#fff;--border:#e5e5e5;--border2:#d0d0d0;
+:root {
+  --bg:#f3f3f7;--border:#e5e5e5;--border2:#d0d0d0;
   --text:#111;--muted:#888;--muted2:#bbb;
-  --indigo:#4b4bf9;--midnight:#09092d;
+  --indigo:#4b4bf9;
   --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
-  --green:#059669;--green-bg:#ecfdf5;--green-bd:#a7f3d0;
+  --mint:#059669;--mint-bg:#ecfdf5;--mint-bd:#a7f3d0;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
   --yellow:#d97706;--yellow-bg:#fffbeb;--yellow-bd:#fde68a;
   --red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;
-  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
-  --orange:#ea580c;--orange-bg:#fff7ed;--orange-bd:#fed7aa;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* NAV */
-.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:68px;border-bottom:1px solid #222}
+.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
 .nav-brand{display:flex;align-items:center;gap:12px;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-brand-icon{width:40px;height:40px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#0a0a0a}
-.nav-brand-text{color:#fff;font-weight:800;font-size:14px;line-height:1.2}
-.nav-brand-sub{color:#555;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
+.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
+.nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
 .nav-links{display:flex;align-items:center;gap:2px;z-index:2}
-.nav-link{padding:7px 13px;border-radius:8px;color:#666;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px;text-decoration:none}
+.nav-link{padding:8px 14px;border-radius:8px;color:#666;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:7px;text-decoration:none}
 .nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
 .nav-link.active{background:#fff;color:#0a0a0a}
+.nav-link svg{width:15px;height:15px;flex-shrink:0}
 .nav-right{z-index:2}
-.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:5px 12px 5px 6px}
-.user-av{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0a0a0a}
-.user-name{font-size:11px;font-weight:700;color:#fff}
-.user-role{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
+.user-name{font-size:12px;font-weight:700;color:#fff}
+.user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
 
 /* TABS */
-.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0}
-.tab-btn{padding:15px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
-.cbadge{background:#f3f3f7;border-radius:100px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:2px}
+.tab-btn svg{width:15px;height:15px}
+.count-badge{background:#f3f3f7;border-radius:100px;padding:2px 8px;font-size:11px;margin-left:4px;font-weight:700}
 
 /* PAGE */
-.page{padding:28px 32px;max-width:1300px;margin:0 auto}
-.tab-pane{display:none}.tab-pane.active{display:block}
-.pg-label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:4px 14px;font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;background:#fff}
-.pg-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
-.pg-title{font-size:24px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
-.pg-sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+.page{padding:32px;max-width:1300px;margin:0 auto}
+.tab-content{display:none}.tab-content.active{display:block}
+.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
+.page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
+.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:24px}
 
 /* FILTER */
-.filter-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:22px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.filter-label{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
-.fp{padding:6px 14px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap}
+.filter-bar{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
+.fp{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap}
 .fp:hover{border-color:#999;color:var(--text)}
-.fp.on{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.fp.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
 
-/* GROUPS */
-.grp{margin-bottom:30px}
-.grp-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--border)}
-.grp-icon{font-size:20px}
-.grp-name{font-size:15px;font-weight:900}
-.grp-cnt{font-size:11px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:2px 10px}
+/* CATEGORY */
+.cat-group{margin-bottom:32px}
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+.cat-icon{font-size:22px}
+.cat-name{font-size:16px;font-weight:900}
+.cat-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:3px 10px}
 
 /* CARDS */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.card{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.18s}
-.card:hover{border-color:var(--indigo);box-shadow:0 6px 24px rgba(75,75,249,.12);transform:translateY(-2px)}
-.card-top{padding:14px 16px 11px;border-bottom:1px solid #f3f3f7}
-.card-num{font-size:9.5px;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-.card-scenario{font-size:13.5px;font-weight:700;line-height:1.6;direction:rtl;text-align:right}
-.card-body{padding:11px 16px 13px}
-.card-analysis{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:10px;direction:rtl;text-align:right}
-.card-footer{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.sc-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s}
+.sc-card:hover{border-color:var(--indigo);box-shadow:0 4px 20px rgba(75,75,249,.1);transform:translateY(-2px)}
+.sc-card-top{padding:16px 18px 12px;border-bottom:1px solid #f5f5f5}
+.sc-num{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.sc-scenario{font-size:14px;font-weight:700;line-height:1.6;direction:rtl;text-align:right}
+.sc-card-body{padding:12px 18px 14px}
+.sc-analysis{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;direction:rtl;text-align:right}
+.sc-footer{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 
 /* BADGES */
-.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:100px;font-size:10.5px;font-weight:700;border:1px solid;white-space:nowrap}
-.b-grey{background:#f3f3f7;color:var(--muted);border-color:var(--border)}
-.b-blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
-.b-green{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}
-.b-yellow{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow-bd)}
-.b-red{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
-.b-purple{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
-.b-orange{background:var(--orange-bg);color:var(--orange);border-color:var(--orange-bd)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid}
+.b-cr{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd)}
+.b-exchange{background:var(--mint-bg);color:var(--mint);border-color:var(--mint-bd)}
+.b-refund{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}
+.b-complaint{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow-bd)}
+.b-cancel{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}
+.b-credit{background:#fdf4ff;color:#9333ea;border-color:#e9d5ff}
+.b-discount{background:#fff7ed;color:#ea580c;border-color:#fed7aa}
+.b-na{background:#f3f3f7;color:var(--muted);border-color:var(--border)}
 
 /* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .overlay.show{display:flex}
-.modal{background:#fff;border-radius:20px;max-width:700px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.25);display:flex;flex-direction:column}
-.modal-hd{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;z-index:1}
-.modal-scenario{font-size:15px;font-weight:800;direction:rtl;text-align:right;line-height:1.6;flex:1;color:var(--text)}
-.modal-x{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted);flex-shrink:0;transition:.15s}
-.modal-x:hover{background:#f3f3f7;color:var(--text)}
-.modal-bd{padding:22px;display:flex;flex-direction:column;gap:20px}
+.modal{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.2)}
+.modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:sticky;top:0;background:#fff;border-radius:20px 20px 0 0;z-index:1}
+.modal-title{font-size:15px;font-weight:800;direction:rtl;text-align:right;line-height:1.6;flex:1}
+.modal-close{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;cursor:pointer;font-size:16px;color:var(--muted);transition:.15s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-close:hover{background:#f3f3f7;color:var(--text)}
+.modal-body{padding:24px;display:flex;flex-direction:column;gap:16px}
 
 /* AGENT GUIDE BOX */
 .agent-box{background:linear-gradient(135deg,#f0f4ff,#e8edff);border:1.5px solid #c7d2fe;border-radius:14px;padding:18px 20px}
 .agent-box-title{font-size:10px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.agent-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.agent-item{background:#fff;border-radius:10px;padding:12px 14px;border:1px solid #dde4ff}
-.agent-item-label{font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
-.agent-item-val{font-size:13px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px}
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.agent-col{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid #e0e7ff}
+.agent-col-label{font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.agent-col-value{font-size:13.5px;font-weight:800;color:var(--text)}
 
-/* ANALYSIS */
-.section-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;margin-bottom:8px}
-.analysis-box{background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:13px 15px;font-size:13.5px;line-height:1.75;color:var(--text);direction:rtl;text-align:right}
+/* ANALYSIS BOX */
+.analysis-box{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.box-label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.box-text{font-size:13.5px;line-height:1.75;direction:rtl;text-align:right;color:var(--text)}
 
-/* REPLY */
-.reply-tabs{display:flex;gap:6px;margin-bottom:12px}
-.rt{padding:7px 18px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
-.rt:hover{border-color:#999;color:var(--text)}
-.rt.on{background:var(--indigo);color:#fff;border-color:var(--indigo)}
-.reply-box{border-radius:12px;padding:16px 18px;border:1.5px solid}
-.reply-box.chat{background:#f0f9ff;border-color:#bae6fd}
-.reply-box.email{background:#fafaf9;border-color:#d4d4d4}
-.reply-box.arabic{background:#fdf4ff;border-color:#e9d5ff}
-.reply-lbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;margin-bottom:10px}
-.chat .reply-lbl{color:#0284c7}
-.email .reply-lbl{color:#525252}
-.arabic .reply-lbl{color:#9333ea}
-.reply-txt{font-size:13.5px;line-height:1.85;color:var(--text);white-space:pre-line;direction:rtl;text-align:right}
-.email .reply-txt{direction:ltr;text-align:left;font-size:13px;font-family:'Courier New',monospace}
-.copy-btn{margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
-.copy-btn:hover{border-color:var(--indigo);color:var(--indigo)}
+/* DECISION TREE */
+.dt-group{margin-bottom:32px}
+.dt-group-hdr{display:flex;align-items:center;gap:12px;padding:14px 20px;background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+.dt-group-icon{font-size:24px}
+.dt-group-name{font-size:15px;font-weight:900}
+.dt-group-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f3f7;border-radius:100px;padding:3px 10px;margin-left:auto}
+.dt-rows{display:flex;flex-direction:column;gap:8px}
+.dt-row{background:#fff;border:1px solid var(--border);border-radius:12px;display:flex;overflow:hidden;transition:.15s}
+.dt-row:hover{border-color:#ccc;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.dt-accent{width:5px;flex-shrink:0}
+.dt-inner{flex:1;padding:14px 18px;display:grid;grid-template-columns:2fr 2fr 1.2fr 1.2fr;gap:16px;align-items:start}
+.dt-col-label{font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.dt-text{font-size:13px;font-weight:700;direction:rtl;text-align:right;line-height:1.5}
+.dt-sub{font-size:12.5px;color:var(--muted);direction:rtl;text-align:right;line-height:1.6}
 
-/* DT */
-.dt-row{background:#fff;border:1px solid var(--border);border-radius:12px;display:flex;overflow:hidden;margin-bottom:8px;transition:.15s}
-.dt-row:hover{border-color:#ccc;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.dt-bar{width:5px;flex-shrink:0}
-.dt-inner{flex:1;padding:13px 16px;display:grid;grid-template-columns:2fr 2fr 1.2fr 1.2fr;gap:14px;align-items:start}
-.dt-lbl{font-size:9px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
-.dt-val{font-size:12.5px;font-weight:700;direction:rtl;text-align:right;line-height:1.5}
-.dt-sub{font-size:12px;color:var(--muted);direction:rtl;text-align:right;line-height:1.6}
+/* LOADING */
+.loading{padding:80px 20px;text-align:center;color:var(--muted);font-size:14px}
+.spin{display:inline-block;width:24px;height:24px;border:3px solid rgba(75,75,249,.15);border-top-color:var(--indigo);border-radius:50%;animation:sp .7s linear infinite;margin-bottom:16px}
+@keyframes sp{to{transform:rotate(360deg)}}
 
-.toast{position:fixed;bottom:22px;right:22px;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .toast.show{display:flex}
-.toast.ok{background:#16a34a;color:#fff}
+.toast.success{background:#16a34a;color:#fff}
 
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr}
-  .dt-inner{grid-template-columns:1fr;gap:8px}
-  .agent-row{grid-template-columns:1fr}
+@media(max-width:900px){
+  .sc-grid{grid-template-columns:1fr}
+  .dt-inner{grid-template-columns:1fr;gap:10px}
+  .agent-grid{grid-template-columns:1fr}
   .page{padding:16px}
-  .topnav{height:auto;padding:10px 16px;flex-wrap:wrap;gap:8px}
+  .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
   .nav-brand{position:static;transform:none}
 }
-@media(max-width:560px){.nav-links{display:none}}
+@media(max-width:600px){.nav-links{display:none}}
 </style>
 </head>
 <body>
 
 <nav class="topnav">
   <div class="nav-links">
-    <a href="index.html" class="nav-link">🏠 Home</a>
-    <a href="sops.html" class="nav-link">📚 SOP Library</a>
-    <a href="scenarios.html" class="nav-link active">💬 Scenarios</a>
-    <a href="refunds.html" class="nav-link">💰 Refunds</a>
-    <a href="qa.html" class="nav-link">⭐ QA Audit</a>
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
+    </a>
+    <a href="scenarios.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="refunds.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h8"/></svg>Refunds
+    </a>
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
+    </a>
   </div>
   <div class="nav-brand">
     <div class="nav-brand-icon">M</div>
@@ -168,7 +175,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="nav-right">
     <div class="user-badge">
-      <div class="user-av">A</div>
+      <div class="user-avatar">A</div>
       <div>
         <div class="user-name">Agent Support</div>
         <div class="user-role">CS · Operations</div>
@@ -178,383 +185,310 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </nav>
 
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('sc',this)">
-    💬 Scenarios <span class="cbadge" id="scB">—</span>
+  <button class="tab-btn active" onclick="switchTab('scenarios',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Scenarios <span class="count-badge" id="scBadge">—</span>
   </button>
-  <button class="tab-btn" onclick="switchTab('dt',this)">
-    🌿 Decision Tree <span class="cbadge" id="dtB">—</span>
+  <button class="tab-btn" onclick="switchTab('dtree',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M12 6v4M7 14H5a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1zM19 14h-2a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1zM7.5 14l4.5-4 4.5 4"/></svg>
+    Decision Tree <span class="count-badge" id="dtBadge">—</span>
   </button>
 </div>
 
-<div class="page">
-
-  <!-- SCENARIOS -->
-  <div class="tab-pane active" id="tab-sc">
-    <div class="pg-label"><span class="pg-dot"></span>CS SCENARIOS</div>
-    <div class="pg-title">Customer Scenarios</div>
-    <div class="pg-sub">اضغط على أي سيناريو لتشوف التحليل + Contact Reason + Resolution + الرد الجاهز للعميل</div>
-    <div class="filter-wrap">
-      <span class="filter-label">Filter by:</span>
-      <div id="scFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-    </div>
-    <div id="scContent"></div>
+<!-- SCENARIOS -->
+<div class="page tab-content active" id="tab-scenarios">
+  <div class="page-badge"><span class="page-badge-dot"></span>CS Scenarios</div>
+  <div class="page-title">Customer Scenarios</div>
+  <div class="page-sub">كل السيناريوهات مجمعة حسب التصنيف — اضغط على أي كارد لتشوف التفاصيل</div>
+  <div class="filter-bar">
+    <span class="filter-label">Filter by:</span>
+    <div id="scFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
   </div>
+  <div id="scLoading" class="loading"><div class="spin"></div><br>Loading scenarios...</div>
+  <div id="scContent"></div>
+</div>
 
-  <!-- DECISION TREE -->
-  <div class="tab-pane" id="tab-dt">
-    <div class="pg-label"><span class="pg-dot"></span>DECISION TREE</div>
-    <div class="pg-title">Decision Tree Map</div>
-    <div class="pg-sub">دليل اتخاذ القرار — Category → Sub-Action → Reason → Resolution</div>
-    <div class="filter-wrap">
-      <span class="filter-label">Filter by:</span>
-      <div id="dtFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-    </div>
-    <div id="dtContent"></div>
+<!-- DECISION TREE -->
+<div class="page tab-content" id="tab-dtree">
+  <div class="page-badge"><span class="page-badge-dot"></span>Decision Tree</div>
+  <div class="page-title">Decision Tree Map</div>
+  <div class="page-sub">دليل اتخاذ القرار — مجمع حسب الـ Category</div>
+  <div class="filter-bar">
+    <span class="filter-label">Filter by:</span>
+    <div id="dtFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
   </div>
-
+  <div id="dtLoading" class="loading"><div class="spin"></div><br>Loading decision tree...</div>
+  <div id="dtContent"></div>
 </div>
 
 <!-- MODAL -->
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-hd">
-      <div class="modal-scenario" id="mTitle"></div>
-      <button class="modal-x" onclick="closeModal()">✕</button>
+    <div class="modal-hdr">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-bd" id="mBody"></div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════
-// DATA — direct from your sheet
-// ════════════════════════════════════════════════
-const SC = [
-  {scenario:`"أنا طولي 180 ووزني 90، تفتكري ألبس مقاس إيه في الهودي ده؟"`,analysis:`استفسار عن المنتج. يتم توجيهه لجدول المقاسات أو إعطائه نصيحة.`,cr:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {scenario:`"اللون ده في الحقيقة فاتح زي الصورة ولا كحلي غامق؟"`,analysis:`سؤال عن تفاصيل المنتج ليتخذ قرار الشراء.`,cr:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {scenario:`"هتنزلوا كوليكشن الصيفي إمتى؟ أنا مستنيه بفارغ الصبر."`,analysis:`استفسار عن توفر منتجات جديدة (مخزون).`,cr:`Stock & Availability`,res:`Information Given`},
-  {scenario:`"أنا اشتريت الأوردر إمبارح بـ 1000 جنيه، والنهاردة عملتوا سيل بقى بـ 700! ينفع أخد الفرق؟"`,analysis:`استفسار عن سياسة العروض والتخفيضات. يتم الاعتذار وتوضيح أن العروض لها وقت محدد.`,cr:`Discounts & Promotions`,res:`Information Given`},
-  {scenario:`"أنا استلمت الأوردر من شهر وكنت مسافر ومفتحتوش، ينفع أبدله دلوقتي؟"`,analysis:`العميل بيطلب استثناء لسياسة الـ 14 يوم. يتم رفض الطلب حسب القوانين.`,cr:`Late Return`,res:`Information Given`},
-  {scenario:`"عايز أرجع البنطلون بس أنا رميت التيكت والكيس بتاعه."`,analysis:`العميل بيطلب إرجاع منتج فقد حالته الأصلية. يتم الرفض وتوضيح السياسة.`,cr:`Policy Or ( Exchanges)`,res:`Information Given`},
-  {scenario:`"عملت طلب استرجاع والمندوب أخد الحاجة من 3 أيام، الفلوس هتنزل حسابي إمتى؟"`,analysis:`الأوردر رجع بالفعل والعميل يسأل عن الخطوة المالية.`,cr:`Refund not received`,res:`Information Given`},
-  {scenario:`"لو سمحتي هو ينفع أفتح الشحنة وأقيس قدام المندوب؟"`,analysis:`استفسار طبيعي عن السياسة قبل الاستلام. يتم توضيح الرفض بلباقة.`,cr:`Policy`,res:`Information Given`},
-  {scenario:`"إزاي يعني مفيش معاينة قبل الاستلام والدفع؟ ده حقي كعميل!"`,analysis:`اعتراض على سياسة الشركة. المندوب هنا غير مخطئ. يتم تأكيد سياسة الشركة.`,cr:`Policy`,res:`Information Given`},
-  {scenario:`"أنا اتخانقت مع المندوب ورفضت أستلم الأوردر عشان قالي مش هينفع أفتح الكيس."`,analysis:`المندوب نفذ تعليمات الشركة، العميل افتعل المشكلة ورفض الاستلام. يتم تأكيد السياسة وإلغاء الطلب إذا لزم الأمر.`,cr:`Policy`,res:`Information Given / Order Cancelled`},
-  {scenario:`"المندوب كلمني بأسلوب قليل الذوق جداً وشتمني لما قولتله استنى دقيقتين."`,analysis:`خطأ صريح من المندوب وسوء سلوك. يتم رفع شكوى لإدارة الشحن.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"المندوب بيقولي انزليلي على أول الشارع عشان مش هدخل الحارة، وأنا دافع توصيل للبيت!"`,analysis:`المندوب يرفض التوصيل للباب. هذه مشكلة في الشحن. يتم رفع شكوى.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"جتلي رسالة إن الأوردر (تم التسليم) وأنا أصلاً كنت نايم ومستلمتش حاجة!"`,analysis:`المندوب تلاعب بالنظام أو سلم الأوردر لشخص خطأ. يتم فتح تحقيق في الشحن.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"الأوردر مكتوب في التتبع (تمت المحاولة) والمندوب أصلاً مكلمنيش!"`,analysis:`كذب من المندوب لتقفيل التارجت بتاعه.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"أنا كتبت عنواني غلط في الأوردر وهو خرج للشحن، الحقوا عدلوه."`,analysis:`الأوردر خرج بالفعل، التعديل هنا يعتبر متابعة وتواصل مع الشحن لتعديل المسار.`,cr:`Order Status & Tracking`,res:`Tracking Update Provided`},
-  {scenario:`"المندوب بيقولي مفيش فكة ومش هسلمك الأوردر غير لما تتصرف."`,analysis:`سوء تصرف من المندوب، دي مشكلة في شركة الشحن نفسها.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"الأوردر جالي ناقص قطعة، المندوب سرقها!"`,analysis:`الشكوى هنا تبدو كسرقة/شحن، ولكن السبب الجذري هو استلام منتج ناقص/مختلف.`,cr:`Wrong Item (Damaged)`,res:`Exchange Initiated (Complaint)`},
-  {scenario:`"اللون بهت على بعضه في أول غسلة وبوظلي باقي الهدوم!"`,analysis:`شكوى جودة قوية (عيب صناعة).`,cr:`Damaged or Defective Item`,res:`Exchange / Refund`},
-  {scenario:`"السوستة بتاعة الجاكيت باظت بعد ما لبسته يومين بس."`,analysis:`تلف سريع يدل على سوء الخامات.`,cr:`Damaged or Defective Item`,res:`Exchange Initiated`},
-  {scenario:`"عايز أبدل الهودي ده بمنتج تاني خالص أرخص منه وأخد الفرق."`,analysis:`طلب استبدال بمنتج مختلف وتسوية مالية.`,cr:`Exchanges`,res:`Exchange Initiated (Info Given)`},
-  {scenario:`"أنا قطعت التيكت ورميت الكيس بس ملبستوش، ينفع أرجعه؟"`,analysis:`العميل بيسأل عن سياسة الاسترجاع في حالة فقدان الملحقات.`,cr:`Policy ( Exchanges)`,res:`Information Given`},
-  {scenario:`"أنا دفعت فودافون كاش، بس الخط ضاع وعايز الفلوس على إنستا باي."`,analysis:`مشكلة في طريقة استرداد الأموال وتتطلب تدخل الحسابات.`,cr:`Refunds`,res:`Information Given (Refund)`},
-  {scenario:`"الفيزا بتاعتي اللي دفعت بيها انتهت، الفلوس هترجع إزاي؟"`,analysis:`استفسار مالي بحت عن سياسة الاسترجاع البنكي.`,cr:`Refund not received ( Payment Issues)`,res:`Information Given`},
-  {scenario:`"كل ما أضيف حاجة في السلة (Cart) تتمسح لوحدها!"`,analysis:`مشكلة تقنية في الموقع (Bug).`,cr:`Account & Website Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"عايز أمسح حسابي من عندكم خالص وامسحوا كل بياناتي."`,analysis:`طلب متعلق ببيانات الحساب والخصوصية.`,cr:`Account & Website Issues`,res:`Edit Customer Data`},
-  {scenario:`"ليه بتدفعوني مصاريف شحن تاني في الاستبدال؟ ده ظلم!"`,analysis:`العميل يعترض على سياسة تسعير الشحن للمرتجعات.`,cr:`Policy`,res:`Information Given`},
-  {scenario:`"ليكم فرع على أرض الواقع أقدر أروح أقيس فيه؟"`,analysis:`استفسار عن الفروع وأماكن التواجد.`,cr:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {scenario:`"ينفع أطلب الأوردر وأدفع جزء كاش وجزء فيزا للمندوب؟"`,analysis:`استفسار عن طرق الدفع المتاحة لشركة الشحن.`,cr:`Payment Issues ( Policy)`,res:`Information Given`},
-  {scenario:`"أنا لقيت صفحة تانية سارقة صوركم وبتبيع نفس الموديلات."`,analysis:`إبلاغ عن صفحة مزيفة.`,cr:`Complaint & Escalation (NA)`,res:`Information Given`},
-  {scenario:`"انتو أسوأ خدمة عملاء ومفيش حد بيفهم، أنا عايز أكلم مدير حالاً!"`,analysis:`تصعيد صريح وهجوم على مستوى الخدمة. يتم امتصاص الغضب ورفع طلب للإدارة.`,cr:`Complaint & Escalation`,res:`Complaint Acknowledged`},
-  {scenario:`"أنا عايز أقدم شكوى في الموظفة اللي قفلت الشات في وشي من شوية."`,analysis:`شكوى في سلوك موظف خدمة عملاء. يتم الاعتذار ورفع الشكوى للتحقيق.`,cr:`Complaint & Escalation`,res:`Complaint Acknowledged`},
-  {scenario:`"أنا عملت شكوى من يومين ومحدش عبرني، ممكن تشوف شكوتي وصلت لفين؟"`,analysis:`متابعة لشكوى خدمة عملاء سابقة. يتم مراجعة النظام وطمأنته.`,cr:`Complaint & Escalation`,res:`Information Given`},
-  {scenario:`"أنا بقدم شكوى رسمية.. المنتج جالي تالف والطباعة بايظة!"`,analysis:`العميل قال شكوى لكن السبب الفعلي هو جودة المنتج. يتم حل المشكلة بالاستبدال أو الخصم.`,cr:`Damaged or Defective Item`,res:`Exchange Initiated / Discount`},
-  {scenario:`"عايز أعمل شكوى.. الأوردر بقاله 10 أيام مجاش!"`,analysis:`العميل قال شكوى لكن السبب هو تأخير الشحن.`,cr:`Late Order inquiry`,res:`Complaint Acknowledged`},
-  {scenario:`"أنا هفضحكم على جروبات الفيس بوك وهعملكم شير في كل مكان!"`,analysis:`تهديد صريح وتصعيد. يتم احتواء العميل فوراً ومعرفة مشكلته الأساسية.`,cr:`Complaint & Escalation`,res:`Complaint Acknowledged`},
-  {scenario:`"الأوردر لسه طالبه إمبارح هيوصل إمتى؟"`,analysis:`استفسار طبيعي عن الشحن في وقته. إرسال رابط التتبع.`,cr:`Order Status & Tracking`,res:`Tracking Update Provided`},
-  {scenario:`"عايز ألغي الأوردر" (قبل الشحن)`,analysis:`العميل تراجع عن الشراء. إلغاء الطلب من النظام.`,cr:`Order Status & Tracking`,res:`Order Cancelled`},
-  {scenario:`"الأوردر اتأخر جداً عن الميعاد الرسمي"`,analysis:`تأخير يتجاوز الـ SLA. استعجال الشحن والاعتذار للعميل.`,cr:`Late Order inquiry`,res:`Complaint Acknowledged`},
-  {scenario:`"مندوب الشحن أسلوبه سيء / كدب وقال تم التسليم"`,analysis:`شكوى في شركة الشحن أو المندوب. رفع شكوى للإدارة.`,cr:`Courier Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"المقاس مظبوط المكتوب على التيكت بس التلبيس ضيق"`,analysis:`مشكلة في باترون أو ديزاين المنتج. عمل طلب استبدال.`,cr:`Sizing & Fit Not accurate`,res:`Exchange Initiated`},
-  {scenario:`"طلبت تيشرت جالي بنطلون"`,analysis:`استلام منتج مختلف تماماً بسبب خطأ التحضير. عمل طلب استبدال.`,cr:`Wrong Item`,res:`Exchange Initiated`},
-  {scenario:`"طلبت مقاس L التيكت المكتوب عليه M"`,analysis:`خطأ مباشر من المخزن في المقاس المبعوت. عمل طلب استبدال.`,cr:`Wrong Size`,res:`Exchange Initiated`},
-  {scenario:`"المنتج سليم بس عايز أغير اللون أو المقاس لعدم إعجابي به"`,analysis:`طلب استبدال بناءً على رغبة شخصية. عمل طلب استبدال.`,cr:`Exchanges`,res:`Exchange Initiated`},
-  {scenario:`"عايز أرجع أو أبدل الأوردر اللي استلمته من شهر"`,analysis:`تجاوز مهلة السماح المحددة (مثلاً 14 يوم). رفض الطلب وشرح السياسة.`,cr:`Late Return`,res:`Information Given`},
-  {scenario:`"عايز أرجع الأوردر وأخد فلوسي"`,analysis:`طلب استرجاع. أخذ بيانات البنك أو المحفظة لرفع الطلب.`,cr:`Refunds`,res:`Refund`},
-  {scenario:`"عايز أرجع الأوردر وضيفوا المبلغ في حسابي على الموقع"`,analysis:`العميل وافق على استرجاع المبلغ كرصيد يشتري بيه لاحقاً.`,cr:`Refunds`,res:`Offer Store Credit`},
-  {scenario:`"عملت مرتجع من أسبوع والفلوس لسه مسمعتش في البنك"`,analysis:`استفسار عن تأخر وصول أموال الاسترجاع. شرح وقت إجراءات البنك.`,cr:`Refund not received`,res:`Information Given`},
-  {scenario:`"الطباعة شققت بعد الغسيل / المنتج فيه قطع أو بقعة"`,analysis:`عيب صناعة صريح. يتم عمل طلب لتبديله بقطعة سليمة.`,cr:`Damaged or Defective Item`,res:`Exchange Initiated`},
-  {scenario:`"الطباعة شققت" (وتم تقديم كود خصم للتعويض)`,analysis:`عيب صناعة، وتم إنهاء المشكلة بتعويض العميل بالخصم.`,cr:`Damaged or Defective Item`,res:`Discount`},
-  {scenario:`"الخامة إيه؟ / هل بيكش بعد الغسيل؟"`,analysis:`أسئلة عامة عن مواصفات المنتجات قبل الشراء.`,cr:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {scenario:`"دفعت بالفيزا الفلوس اتخصمت والموقع إداني Error"`,analysis:`مشكلة في بوابة الدفع. رفع سكرين شوت لقسم الحسابات.`,cr:`Payment Issues`,res:`Complaint Acknowledged`},
-  {scenario:`"الكارت بيترفض وقت الدفع"`,analysis:`مشكلة في دفع العميل. توضيح طرق الدفع المتاحة.`,cr:`Payment Issues`,res:`Information Given`},
-  {scenario:`"في عروض إيه دلوقتي؟ / في بلاك فرايداي؟"`,analysis:`استفسار عن التخفيضات والبروموشنز المتاحة.`,cr:`Discounts & Promotions`,res:`Information Given`},
-  {scenario:`"مش عارف أعمل تسجيل دخول / الباسورد مش شغال"`,analysis:`مشكلة في حساب العميل. المساعدة في استعادة الحساب.`,cr:`Account & Website Issues`,res:`Information Given`},
-  {scenario:`"لو سمحتي عايز أعدل رقم التليفون اللي في الأوردر"`,analysis:`طلب تعديل بيانات شخصية. الدخول للنظام وتعديل الرقم.`,cr:`Account & Website Issues`,res:`Edit Customer Data`},
-  {scenario:`"انتوا أسوأ خدمة عملاء ومفيش حد بيرد عليا عايز مدير"`,analysis:`العميل غاضب جداً. احتواء، اعتذار، وتصعيد المشكلة.`,cr:`Complaint & Escalation`,res:`Complaint Acknowledged`},
-  {scenario:`"مقاس XL من اللون ده هينزل إمتى تاني؟"`,analysis:`سؤال عن توافر المخزون لموديل معين. إبلاغه بمتابعة الموقع.`,cr:`Stock & Availability`,res:`Information Given`},
-  {scenario:`"الكود اللي معايا مش راضي يشتغل وقت الدفع"`,analysis:`مشكلة تقنية في الكود وتم حله، أو إعطائه كود جديد.`,cr:`Discount Code Issue`,res:`Discount`},
-  {scenario:`"الكود مش شغال مع الشحن المجاني"`,analysis:`لا توجد مشكلة تقنية، مجرد شرح لسياسة دمج الخصومات.`,cr:`Discount Code Issue`,res:`Information Given`},
-  {scenario:`"ينفع أفتح الشحنة وأقيس؟ / سياسة الاستبدال إيه؟"`,analysis:`استفسار عام عن سياسات وقوانين الشركة.`,cr:`Policy`,res:`Information Given`},
-  {scenario:`"أنا إنفلونسر وعايز أعمل إعلان / ببعت الـ CV للشغل"`,analysis:`رسالة إعلانية أو بحث عن وظيفة. توجيه للإيميل المختص.`,cr:`Advertisement & Job hunting`,res:`Information Given`},
-  {scenario:`"الأوردر تحفة شكراً ليكم جداً / البراند ده سيء"`,analysis:`ريفيو إيجابي أو سلبي من العميل لا يحتاج لخطوات حل فعلية.`,cr:`Client Review`,res:`Information Given`},
-  {scenario:`رسالة فاضية / سبام إعلانات / إيموجي ملوش معنى`,analysis:`لا يوجد محتوى قابل للتعامل، ولا يتطلب أي حل.`,cr:`NA`,res:`NA`}
-].map((s,i)=>({...s,id:i+1}));
+const SHEET_ID = '1yqsjGPZD3ADHbX3x4w10HBL_k3swU6vz2wC4PNULQRo';
+let scData = [], dtData = [];
+let scFilter = 'all', dtFilter = 'all';
 
-const DT = [
-  {cat:`Product Inquiry`,sub:`وجّه العميل لجدول المقاسات أو أعطه نصيحة مباشرة`,reason:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {cat:`Product Inquiry`,sub:`أجب عن سؤال اللون أو التفاصيل من الـ product page`,reason:`Product Inquiry (Pre-purchase)`,res:`Information Given`},
-  {cat:`Product Inquiry`,sub:`أخبره بموعد النزول إن كان متاح أو اقترح عليه يشترك في الـ notify`,reason:`Stock & Availability`,res:`Information Given`},
-  {cat:`Pricing & Promotions`,sub:`اعتذر وأوضح أن العروض لها وقت محدد ولا يمكن تطبيقها بأثر رجعي`,reason:`Discounts & Promotions`,res:`Information Given`},
-  {cat:`Pricing & Promotions`,sub:`اشرح سياسة دمج الخصومات`,reason:`Discount Code Issue`,res:`Information Given`},
-  {cat:`Pricing & Promotions`,sub:`جرب الكود من جانبك أو أعطه كود بديل`,reason:`Discount Code Issue`,res:`Discount`},
-  {cat:`Returns & Exchanges`,sub:`رفض الطلب وشرح سياسة الـ 14 يوم`,reason:`Late Return`,res:`Information Given`},
-  {cat:`Returns & Exchanges`,sub:`رفض الإرجاع بسبب فقدان التيكت أو الكيس`,reason:`Policy Or ( Exchanges)`,res:`Information Given`},
-  {cat:`Returns & Exchanges`,sub:`عمل طلب استبدال للمنتج`,reason:`Exchanges`,res:`Exchange Initiated`},
-  {cat:`Returns & Exchanges`,sub:`أخذ بيانات البنك أو المحفظة لرفع طلب الاسترجاع`,reason:`Refunds`,res:`Refund`},
-  {cat:`Returns & Exchanges`,sub:`إضافة المبلغ كرصيد في حساب العميل`,reason:`Refunds`,res:`Offer Store Credit`},
-  {cat:`Refunds`,sub:`شرح مدة وصول أموال الاسترجاع للبنك`,reason:`Refund not received`,res:`Information Given`},
-  {cat:`Refunds`,sub:`تحويل المشكلة لقسم الحسابات لمعالجة الاسترداد`,reason:`Refunds`,res:`Information Given (Refund)`},
-  {cat:`Courier Issues`,sub:`رفع شكوى رسمية لإدارة الشحن`,reason:`Courier Issues`,res:`Complaint Acknowledged`},
-  {cat:`Courier Issues`,sub:`فتح تحقيق في حالة التلاعب بالتتبع`,reason:`Courier Issues`,res:`Complaint Acknowledged`},
-  {cat:`Order Tracking`,sub:`إرسال رابط التتبع للعميل`,reason:`Order Status & Tracking`,res:`Tracking Update Provided`},
-  {cat:`Order Tracking`,sub:`إلغاء الطلب من النظام`,reason:`Order Status & Tracking`,res:`Order Cancelled`},
-  {cat:`Defective & Wrong Items`,sub:`عمل طلب استبدال للمنتج التالف أو الخاطئ`,reason:`Damaged or Defective Item`,res:`Exchange Initiated`},
-  {cat:`Defective & Wrong Items`,sub:`تعويض العميل بكود خصم`,reason:`Damaged or Defective Item`,res:`Discount`},
-  {cat:`Complaints & Escalation`,sub:`امتصاص الغضب، الاعتذار، رفع الموضوع للمشرف`,reason:`Complaint & Escalation`,res:`Complaint Acknowledged`},
-  {cat:`Policy`,sub:`شرح سياسة الشركة بوضوح ولباقة`,reason:`Policy`,res:`Information Given`},
-  {cat:`Account & Technical`,sub:`مساعدة العميل في استعادة الحساب`,reason:`Account & Website Issues`,res:`Information Given`},
-  {cat:`Account & Technical`,sub:`تعديل بيانات العميل في النظام`,reason:`Account & Website Issues`,res:`Edit Customer Data`},
-  {cat:`Payment`,sub:`رفع سكرين شوت لقسم الحسابات`,reason:`Payment Issues`,res:`Complaint Acknowledged`},
-  {cat:`Payment`,sub:`توضيح طرق الدفع المتاحة`,reason:`Payment Issues`,res:`Information Given`},
-  {cat:`Other`,sub:`توجيه الرسالة للإيميل المختص`,reason:`Advertisement & Job hunting`,res:`Information Given`},
-  {cat:`Other`,sub:`الرد على الريفيو إيجابياً أو سلبياً`,reason:`Client Review`,res:`Information Given`},
-].map((d,i)=>({...d,id:i+1}));
-
-// ════════════════════════════════════════════════
-let scFilter='all', dtFilter='all';
-
-function init(){
-  document.getElementById('scB').textContent = SC.length;
-  document.getElementById('dtB').textContent = DT.length;
-  buildScFilters(); renderSC();
-  buildDTFilters(); renderDT();
+/* ── FETCH ── */
+async function fetchTab(tab) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tab)}&headers=1`;
+  const res  = await fetch(url);
+  const text = await res.text();
+  const m = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+  if (!m) throw new Error('No data');
+  const json = JSON.parse(m[1]);
+  return (json.table?.rows||[]).map(r =>
+    (r.c||[]).map(c => (!c||c.v===null) ? '' : (c.f||String(c.v)))
+  );
 }
 
-/* ── SCENARIOS ── */
-function buildScFilters(){
-  const reasons=[...new Set(SC.map(s=>s.cr))].sort();
-  document.getElementById('scFilters').innerHTML=
-    `<button class="fp on" onclick="setSCF('all',this)">✨ All (${SC.length})</button>`+
-    reasons.map(r=>`<button class="fp" onclick="setSCF(${JSON.stringify(r)},this)">${ci(r)} ${r} (${SC.filter(s=>s.cr===r).length})</button>`).join('');
+async function init() {
+  await Promise.all([loadScenarios(), loadDT()]);
 }
-function setSCF(v,btn){
-  scFilter=v;
-  document.querySelectorAll('#scFilters .fp').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderSC();
-}
-function renderSC(){
-  const data=scFilter==='all'?SC:SC.filter(s=>s.cr===scFilter);
-  const el=document.getElementById('scContent');
-  if(!data.length){el.innerHTML='<p style="color:var(--muted);padding:40px;text-align:center">لا توجد نتائج</p>';return;}
-  if(scFilter==='all'){
-    const grps={};
-    data.forEach(s=>{if(!grps[s.cr])grps[s.cr]=[];grps[s.cr].push(s);});
-    el.innerHTML=Object.entries(grps).map(([cr,items])=>`
-      <div class="grp">
-        <div class="grp-hd"><span class="grp-icon">${ci(cr)}</span><span class="grp-name">${cr}</span><span class="grp-cnt">${items.length}</span></div>
-        <div class="grid">${items.map(scCard).join('')}</div>
-      </div>`).join('');
-  } else {
-    el.innerHTML=`<div class="grid">${data.map(scCard).join('')}</div>`;
+
+/* ══ SCENARIOS ══ */
+// Cols: A=كلام العميل, B=التحليل والإجراء, C=Contact Reason, D=Resolution
+async function loadScenarios() {
+  try {
+    const rows = await fetchTab('Scenarios');
+    scData = rows.slice(1)
+      .filter(r => r[0]&&r[0].trim())
+      .map((r,i) => ({
+        id: i+1,
+        scenario:      r[0]||'',
+        analysis:      r[1]||'',
+        contactReason: r[2]||'',
+        resolution:    r[3]||''
+      }));
+    document.getElementById('scLoading').style.display='none';
+    document.getElementById('scBadge').textContent=scData.length;
+    buildScFilters();
+    renderScenarios();
+  } catch(e) {
+    document.getElementById('scLoading').innerHTML='❌ Failed to load. Make sure the Google Sheet is set to <b>Anyone with the link → Viewer</b>.';
   }
 }
+
+function buildScFilters() {
+  const reasons=[...new Set(scData.map(s=>s.contactReason).filter(Boolean))].sort();
+  document.getElementById('scFilters').innerHTML=
+    `<button class="fp active" onclick="setScFilter('all',this)">✨ All (${scData.length})</button>`+
+    reasons.map(r=>{
+      const cnt=scData.filter(s=>s.contactReason===r).length;
+      return `<button class="fp" onclick="setScFilter(${JSON.stringify(r)},this)">${cIcon(r)} ${r} (${cnt})</button>`;
+    }).join('');
+}
+
+function setScFilter(val,btn){
+  scFilter=val;
+  document.querySelectorAll('#scFilters .fp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScenarios();
+}
+
+function renderScenarios(){
+  const data=scFilter==='all'?scData:scData.filter(s=>s.contactReason===scFilter);
+  const el=document.getElementById('scContent');
+  if(!data.length){el.innerHTML='<div class="loading">لا توجد نتائج</div>';return;}
+  if(scFilter==='all'){
+    const groups={};
+    data.forEach(s=>{const k=s.contactReason||'Other';if(!groups[k])groups[k]=[];groups[k].push(s);});
+    el.innerHTML=Object.entries(groups).map(([r,items])=>`
+      <div class="cat-group">
+        <div class="cat-header">
+          <span class="cat-icon">${cIcon(r)}</span>
+          <span class="cat-name">${r}</span>
+          <span class="cat-count">${items.length} scenarios</span>
+        </div>
+        <div class="sc-grid">${items.map(scCard).join('')}</div>
+      </div>`).join('');
+  } else {
+    el.innerHTML=`<div class="sc-grid">${data.map(scCard).join('')}</div>`;
+  }
+}
+
 function scCard(s){
-  return`<div class="card" onclick="openModal(${s.id-1})">
-    <div class="card-top">
-      <div class="card-num">${ci(s.cr)} Scenario #${s.id}</div>
-      <div class="card-scenario">${s.scenario}</div>
+  return `
+  <div class="sc-card" onclick="openModal(${s.id-1})">
+    <div class="sc-card-top">
+      <div class="sc-num">${cIcon(s.contactReason)} Scenario #${s.id}</div>
+      <div class="sc-scenario">${s.scenario}</div>
     </div>
-    <div class="card-body">
-      <div class="card-analysis">${s.analysis}</div>
-      <div class="card-footer">
-        <span class="badge b-grey">${s.cr}</span>
-        <span class="badge ${rc(s.res)}">${ri(s.res)} ${s.res}</span>
+    <div class="sc-card-body">
+      <div class="sc-analysis">${s.analysis}</div>
+      <div class="sc-footer">
+        <span class="badge b-cr">${s.contactReason||'—'}</span>
+        <span class="badge ${rClass(s.resolution)}">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
       </div>
     </div>
   </div>`;
 }
 
-/* ── DECISION TREE ── */
-function buildDTFilters(){
-  const cats=[...new Set(DT.map(d=>d.cat))].sort();
-  document.getElementById('dtFilters').innerHTML=
-    `<button class="fp on" onclick="setDTF('all',this)">✨ All (${DT.length})</button>`+
-    cats.map(c=>`<button class="fp" onclick="setDTF(${JSON.stringify(c)},this)">${ci(c)} ${c} (${DT.filter(d=>d.cat===c).length})</button>`).join('');
+/* ══ MODAL — بيعرض بس اللي في الشيت ══ */
+function openModal(idx){
+  const s=scData[idx];if(!s)return;
+  document.getElementById('modalTitle').textContent=s.scenario;
+  document.getElementById('modalBody').innerHTML=`
+
+    <!-- AGENT GUIDE -->
+    <div class="agent-box">
+      <div class="agent-box-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Agent Guide — اللي المفروض تعمله على السيستم
+      </div>
+      <div class="agent-grid">
+        <div class="agent-col">
+          <div class="agent-col-label">📋 Contact Reason</div>
+          <div style="margin-top:6px">
+            <span class="badge b-cr" style="font-size:12.5px;padding:6px 14px">${cIcon(s.contactReason)} ${s.contactReason||'—'}</span>
+          </div>
+        </div>
+        <div class="agent-col">
+          <div class="agent-col-label">✅ Resolution على السيستم</div>
+          <div style="margin-top:6px">
+            <span class="badge ${rClass(s.resolution)}" style="font-size:12.5px;padding:6px 14px">${rIcon(s.resolution)} ${s.resolution||'—'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYSIS -->
+    <div class="analysis-box">
+      <div class="box-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        التحليل والإجراء
+      </div>
+      <div class="box-text">${s.analysis||'—'}</div>
+    </div>
+
+  `;
+  document.getElementById('overlay').classList.add('show');
 }
-function setDTF(v,btn){
-  dtFilter=v;
-  document.querySelectorAll('#dtFilters .fp').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
+
+function closeModal(){
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* ══ DECISION TREE ══ */
+// Cols: A=Category, B=Sub-Action, C=Reason, D=Resolution
+async function loadDT(){
+  try {
+    const rows=await fetchTab('Decision Tree');
+    dtData=rows.slice(1)
+      .filter(r=>r[0]&&r[0].trim())
+      .map((r,i)=>({
+        id:i+1,
+        category:  r[0]||'',
+        subAction: r[1]||'',
+        reason:    r[2]||'',
+        resolution:r[3]||''
+      }));
+    document.getElementById('dtLoading').style.display='none';
+    document.getElementById('dtBadge').textContent=dtData.length;
+    buildDTFilters();
+    renderDT();
+  } catch(e){
+    document.getElementById('dtLoading').innerHTML='❌ Failed to load Decision Tree.';
+  }
+}
+
+function buildDTFilters(){
+  const cats=[...new Set(dtData.map(d=>d.category).filter(Boolean))].sort();
+  document.getElementById('dtFilters').innerHTML=
+    `<button class="fp active" onclick="setDTFilter('all',this)">✨ All (${dtData.length})</button>`+
+    cats.map(c=>{
+      const cnt=dtData.filter(d=>d.category===c).length;
+      return `<button class="fp" onclick="setDTFilter(${JSON.stringify(c)},this)">${cIcon(c)} ${c} (${cnt})</button>`;
+    }).join('');
+}
+
+function setDTFilter(val,btn){
+  dtFilter=val;
+  document.querySelectorAll('#dtFilters .fp').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
   renderDT();
 }
 
-const ACC={
-  'Product Inquiry':'#4b4bf9','Pricing & Promotions':'#d97706',
-  'Returns & Exchanges':'#059669','Refunds':'#9333ea',
-  'Courier Issues':'#ea580c','Order Tracking':'#0891b2',
-  'Defective & Wrong Items':'#dc2626','Complaints & Escalation':'#ef4444',
-  'Policy':'#7c3aed','Account & Technical':'#6366f1',
-  'Payment':'#2563eb','Other':'#6b7280'
-};
+const accentMap=[
+  ['product','#4b4bf9'],['stock','#059669'],['discount','#d97706'],
+  ['return','#dc2626'],['policy','#7c3aed'],['refund','#9333ea'],
+  ['courier','#ea580c'],['order','#0891b2'],['exchange','#059669'],
+  ['damaged','#dc2626'],['wrong','#dc2626'],['account','#6366f1'],
+  ['complaint','#ef4444'],['payment','#2563eb'],['escalation','#ef4444'],
+  ['sizing','#f59e0b'],['review','#f59e0b'],['advertisement','#6b7280']
+];
+function getAccent(cat){
+  const v=(cat||'').toLowerCase();
+  for(const[k,c] of accentMap){if(v.includes(k))return c;}
+  return '#4b4bf9';
+}
 
 function renderDT(){
-  const data=dtFilter==='all'?DT:DT.filter(d=>d.cat===dtFilter);
+  const data=dtFilter==='all'?dtData:dtData.filter(d=>d.category===dtFilter);
   const el=document.getElementById('dtContent');
-  if(!data.length){el.innerHTML='<p style="color:var(--muted);padding:40px;text-align:center">لا توجد نتائج</p>';return;}
-  const grps={};
-  data.forEach(d=>{if(!grps[d.cat])grps[d.cat]=[];grps[d.cat].push(d);});
-  el.innerHTML=Object.entries(grps).map(([cat,items])=>{
-    const ac=ACC[cat]||'#4b4bf9';
-    return`<div style="margin-bottom:28px">
-      <div class="grp-hd" style="border-left:4px solid ${ac};padding-left:12px">
-        <span class="grp-icon">${ci(cat)}</span>
-        <span class="grp-name">${cat}</span>
-        <span class="grp-cnt">${items.length} cases</span>
+  if(!data.length){el.innerHTML='<div class="loading">لا توجد نتائج</div>';return;}
+  const groups={};
+  data.forEach(d=>{const k=d.category||'Other';if(!groups[k])groups[k]=[];groups[k].push(d);});
+  el.innerHTML=Object.entries(groups).map(([cat,items])=>{
+    const accent=getAccent(cat);
+    return `
+    <div class="dt-group">
+      <div class="dt-group-hdr" style="border-left:4px solid ${accent}">
+        <span class="dt-group-icon">${cIcon(cat)}</span>
+        <span class="dt-group-name">${cat}</span>
+        <span class="dt-group-count">${items.length} cases</span>
       </div>
-      ${items.map(d=>`
-      <div class="dt-row">
-        <div class="dt-bar" style="background:${ac}"></div>
-        <div class="dt-inner">
-          <div><div class="dt-lbl">⚡ الإجراء المطلوب</div><div class="dt-val">${d.sub}</div></div>
-          <div><div class="dt-lbl">📋 Contact Reason</div><div class="dt-sub">${ci(d.reason)} ${d.reason}</div></div>
-          <div><div class="dt-lbl">✅ Resolution</div><span class="badge ${rc(d.res)}">${ri(d.res)} ${d.res}</span></div>
-        </div>
-      </div>`).join('')}
+      <div class="dt-rows">${items.map(d=>dtRow(d,accent)).join('')}</div>
     </div>`;
   }).join('');
 }
 
-/* ── MODAL ── */
-function openModal(idx){
-  const s=SC[idx];if(!s)return;
-  document.getElementById('mTitle').textContent=s.scenario;
-  document.getElementById('mBody').innerHTML=`
-    <div class="agent-box">
-      <div class="agent-box-title">🎯 Agent Guide — اللي المفروض تعمله على السيستم</div>
-      <div class="agent-row">
-        <div class="agent-item">
-          <div class="agent-item-label">📋 Contact Reason</div>
-          <div class="agent-item-val">${ci(s.cr)} ${s.cr}</div>
-        </div>
-        <div class="agent-item">
-          <div class="agent-item-label">✅ Resolution على السيستم</div>
-          <div class="agent-item-val"><span class="badge ${rc(s.res)}">${ri(s.res)} ${s.res}</span></div>
-        </div>
+function dtRow(d,accent){
+  return `
+  <div class="dt-row">
+    <div class="dt-accent" style="background:${accent}"></div>
+    <div class="dt-inner">
+      <div>
+        <div class="dt-col-label">📂 Category</div>
+        <div class="dt-text">${d.category}</div>
+      </div>
+      <div>
+        <div class="dt-col-label">⚡ Sub-Action</div>
+        <div class="dt-sub">${d.subAction||'—'}</div>
+      </div>
+      <div>
+        <div class="dt-col-label">📋 Reason</div>
+        <span class="badge b-na" style="font-size:10.5px">${cIcon(d.reason)} ${d.reason||'—'}</span>
+      </div>
+      <div>
+        <div class="dt-col-label">✅ Resolution</div>
+        <span class="badge ${rClass(d.resolution)}" style="font-size:10.5px">${rIcon(d.resolution)} ${d.resolution||'—'}</span>
       </div>
     </div>
-    <div>
-      <div class="section-label">📋 التحليل والإجراء</div>
-      <div class="analysis-box">${s.analysis}</div>
-    </div>
-    <div>
-      <div class="section-label">💬 الرد على العميل</div>
-      <div class="reply-tabs">
-        <button class="rt on" onclick="swReply(this,'chat',${idx})">💬 Chat</button>
-        <button class="rt" onclick="swReply(this,'email',${idx})">📧 Email</button>
-        <button class="rt" onclick="swReply(this,'ar',${idx})">🇪🇬 عربي</button>
-      </div>
-      <div id="rBox" class="reply-box chat">
-        <div class="reply-lbl" id="rLbl">💬 CHAT REPLY</div>
-        <div class="reply-txt" id="rTxt">${genReply(s,'chat')}</div>
-      </div>
-      <button class="copy-btn" onclick="copyR()">📋 Copy Reply</button>
-    </div>`;
-  document.getElementById('overlay').classList.add('show');
+  </div>`;
 }
 
-function swReply(btn,type,idx){
-  document.querySelectorAll('.rt').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  const s=SC[idx];
-  const box=document.getElementById('rBox');
-  const lbls={chat:'💬 CHAT REPLY',email:'📧 EMAIL REPLY',ar:'🇪🇬 رد بالعربي'};
-  const cls={chat:'chat',email:'email',ar:'arabic'};
-  box.className=`reply-box ${cls[type]}`;
-  document.getElementById('rLbl').textContent=lbls[type];
-  document.getElementById('rTxt').textContent=genReply(s,type);
-}
-
-function genReply(s,type){
-  const res=(s.res||'').toLowerCase();
-  const cr=(s.cr||'').toLowerCase();
-
-  if(type==='ar'){
-    if(res.includes('exchange'))
-      return`أهلاً بيك! 😊\n\nبخصوص طلبك، هنعمل طلب استبدال فوراً.\nممكن تبعتلنا صور المنتج عشان نكمل الإجراء؟\n\nشكراً لتواصلك معانا 🙏`;
-    if(res.includes('refund')&&!res.includes('not')&&!res.includes('credit'))
-      return`أهلاً بيك! 😊\n\nتم استلام طلب الاسترجاع.\nمحتاجين بيانات حساب البنك أو المحفظة عشان نكمل العملية.\n\nالفلوس هتوصلك في أقرب وقت 🙏`;
-    if(res.includes('store credit'))
-      return`أهلاً بيك! 😊\n\nتم إضافة المبلغ كرصيد في حسابك على الموقع.\nتقدر تستخدمه في أي وقت على أي أوردر جاي 🙏`;
-    if(res.includes('complaint'))
-      return`أهلاً بيك! 😊\n\nبنعتذر جداً عن المشكلة دي.\nتم تسجيل الشكوى وهيتم التحقيق فيها فوراً.\n\nشكراً لصبرك وتفهمك 🙏`;
-    if(res.includes('cancel'))
-      return`أهلاً بيك! 😊\n\nتم إلغاء الطلب بنجاح.\nلو عندك أي استفسار تاني احنا هنا 🙏`;
-    if(res.includes('discount'))
-      return`أهلاً بيك! 😊\n\nبنعتذر عن المشكلة دي!\nكتعويض هنبعتلك كود خصم على أوردرك الجاي.\n\nشكراً لصبرك 🙏`;
-    if(res.includes('tracking'))
-      return`أهلاً بيك! 😊\n\nتقدر تتابع أوردرك من خلال رابط التتبع اللي هنبعتهولك دلوقتي.\n\nلو عندك أي سؤال تاني احنا هنا 🙏`;
-    if(res.includes('edit'))
-      return`أهلاً بيك! 😊\n\nتم تعديل بياناتك بنجاح.\nلو عندك أي طلب تاني احنا هنا 🙏`;
-    return`أهلاً بيك! 😊\n\nشكراً لتواصلك معانا.\n${s.analysis}\n\nلو محتاج أي مساعدة تانية، احنا هنا دايماً 🙏`;
-  }
-
-  if(type==='chat'){
-    if(res.includes('exchange'))
-      return`Hi there! 😊\n\nThank you for reaching out!\n\nI'll initiate an exchange request right away. Could you please share photos of the item so we can proceed?\n\nWe appreciate your patience! 🙏`;
-    if(res.includes('refund')&&!res.includes('not')&&!res.includes('credit'))
-      return`Hi there! 😊\n\nThank you for contacting us!\n\nI've noted your refund request. Could you please share your bank account or e-wallet details so we can process it?\n\nYou'll receive your refund as soon as possible. 🙏`;
-    if(res.includes('store credit'))
-      return`Hi there! 😊\n\nWe've added the amount as store credit to your account.\nYou can use it anytime on your next purchase! 🙏`;
-    if(res.includes('complaint'))
-      return`Hi there! 😊\n\nI'm truly sorry about your experience — this is not the standard we hold ourselves to.\n\nYour complaint has been officially logged and will be investigated immediately. Thank you for bringing this to our attention. 🙏`;
-    if(res.includes('cancel'))
-      return`Hi there! 😊\n\nYour order has been successfully cancelled.\n\nIf you have any other questions, we're always here to help! 🙏`;
-    if(res.includes('discount'))
-      return`Hi there! 😊\n\nI'm sorry about that! As a goodwill gesture, we'd like to offer you a discount code on your next order.\n\nPlease check your inbox shortly. 🙏`;
-    if(res.includes('tracking'))
-      return`Hi there! 😊\n\nThank you for reaching out! I'm sharing your tracking link right away so you can follow your order.\n\nFeel free to contact us if you need anything else. 🙏`;
-    if(res.includes('edit'))
-      return`Hi there! 😊\n\nYour information has been updated successfully.\n\nIs there anything else I can help you with? 🙏`;
-    if(res.includes('information'))
-      return`Hi there! 😊\n\nThank you for your message! Happy to clarify.\n\nPlease don't hesitate to reach out if you have any other questions! 🙏`;
-    return`Hi there! 😊\n\nThank you for reaching out!\n\nPlease don't hesitate to contact us if you need anything else. 🙏`;
-  }
-
-  // EMAIL
-  return`Subject: Re: Your Inquiry — Mavin Wear\n\nDear Valued Customer,\n\nThank you for contacting Mavin Wear Customer Support.\n\nWe have received your message and our team is looking into this promptly.\n\nWe appreciate your patience and understanding. Should you have any further questions, please do not hesitate to reach out.\n\nWarm regards,\nMavin Wear Customer Support Team\nsupport@mavinwear.com`;
-}
-
-function copyR(){
-  navigator.clipboard.writeText(document.getElementById('rTxt').textContent)
-    .then(()=>toast('✅ Copied!'));
-}
-function closeModal(){document.getElementById('overlay').classList.remove('show');}
-
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-}
-
-function ci(v){
+/* ── HELPERS ── */
+function cIcon(v){
   v=(v||'').toLowerCase();
   if(v.includes('product inquiry')||v.includes('pre-purchase'))return'🛍️';
   if(v.includes('stock')||v.includes('availability'))return'📦';
   if(v.includes('discount code'))return'🎟️';
-  if(v.includes('discount')||v.includes('promotion')||v.includes('pricing'))return'🏷️';
+  if(v.includes('discount')||v.includes('promotion'))return'🏷️';
   if(v.includes('late return'))return'⏰';
   if(v.includes('late order'))return'🕐';
   if(v.includes('policy'))return'📋';
-  if(v.includes('refund not received')||v.includes('payment issue'))return'💳';
+  if(v.includes('refund not received'))return'💳';
   if(v.includes('refund'))return'💰';
   if(v.includes('courier'))return'🚚';
   if(v.includes('order status')||v.includes('tracking'))return'📍';
@@ -562,43 +496,48 @@ function ci(v){
   if(v.includes('wrong size'))return'📏';
   if(v.includes('damaged')||v.includes('defective'))return'⚠️';
   if(v.includes('sizing'))return'📐';
-  if(v.includes('exchange')||v.includes('returns'))return'🔄';
-  if(v.includes('account')||v.includes('website')||v.includes('technical'))return'💻';
+  if(v.includes('exchange'))return'🔄';
+  if(v.includes('account')||v.includes('website'))return'💻';
   if(v.includes('complaint')||v.includes('escalation'))return'🚨';
   if(v.includes('payment'))return'💳';
-  if(v.includes('advertisement')||v.includes('job')||v.includes('other'))return'📢';
+  if(v.includes('advertisement')||v.includes('job'))return'📢';
   if(v.includes('review'))return'⭐';
-  if(v==='na'||v==='—')return'—';
   return'💬';
 }
-function ri(r){
+function rIcon(r){
   const v=(r||'').toLowerCase();
   if(v.includes('exchange'))return'🔄';
-  if(v.includes('store credit'))return'🎁';
   if(v.includes('refund')&&!v.includes('not'))return'💰';
-  if(v.includes('complaint'))return'📝';
-  if(v.includes('information'))return'ℹ️';
+  if(v.includes('complaint')||v.includes('acknowledged'))return'📝';
+  if(v.includes('information')||v.includes('given'))return'ℹ️';
   if(v.includes('cancel'))return'❌';
+  if(v.includes('credit'))return'🎁';
   if(v.includes('discount'))return'🏷️';
   if(v.includes('tracking'))return'📍';
   if(v.includes('edit'))return'✏️';
-  if(v==='na'||v==='—')return'—';
   return'✅';
 }
-function rc(r){
+function rClass(r){
   const v=(r||'').toLowerCase();
-  if(v.includes('exchange'))return'b-green';
-  if(v.includes('store credit'))return'b-purple';
-  if(v.includes('refund')&&!v.includes('not'))return'b-purple';
-  if(v.includes('complaint'))return'b-yellow';
-  if(v.includes('cancel'))return'b-red';
-  if(v.includes('discount'))return'b-orange';
-  if(v==='na'||v==='—')return'b-grey';
-  return'b-blue';
+  if(v.includes('exchange'))return'b-exchange';
+  if(v.includes('refund')&&!v.includes('not'))return'b-refund';
+  if(v.includes('complaint')||v.includes('acknowledged'))return'b-complaint';
+  if(v.includes('cancel'))return'b-cancel';
+  if(v.includes('credit'))return'b-credit';
+  if(v.includes('discount'))return'b-discount';
+  return'b-cr';
 }
-function toast(msg){
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function showToast(msg,type){
   const t=document.getElementById('toast');
-  t.className='toast ok show';t.textContent=msg;
+  t.className=`toast show ${type}`;t.textContent=msg;
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
