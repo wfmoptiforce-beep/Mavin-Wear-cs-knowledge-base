@@ -1,1 +1,493 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIN OPS HUB — CS Cheat Sheet</title>
+<style>
+:root{
+  --bg:#ffffff;--surface:#f8f8f8;--surface2:#f3f3f7;--surface3:#eeeeee;
+  --indigo:#4b4bf9;--indigo2:#3535d4;
+  --text:#09092d;--muted:#666;--muted2:#999;
+  --border:#e5e5e5;--border2:#d0d0d0;
+  --red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;
+  --orange:#d97706;--orange-bg:#fffbeb;--orange-bd:#fde68a;
+  --yellow:#854d0e;--yellow-bg:#fefce8;--yellow-bd:#fef08a;
+  --green:#059669;--green-bg:#ecfdf5;--green-bd:#a7f3d0;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
+.topnav{background:#09092d;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:64px;border-bottom:1px solid #1a1a4a}
+.nav-brand{display:flex;align-items:center;gap:10px;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:36px;height:36px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#09092d}
+.nav-brand-text{color:#fff;font-weight:800;font-size:14px}
+.nav-brand-sub{color:#6666aa;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{padding:7px 12px;border-radius:7px;color:#8888bb;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px;text-decoration:none}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{background:#fff;color:#09092d}
+.nav-link svg{width:14px;height:14px;flex-shrink:0}
+.nav-right{z-index:2}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid #2a2a6a;border-radius:100px;padding:5px 12px 5px 6px}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#09092d}
+.user-name{font-size:11px;font-weight:700;color:#fff}
+
+.hero{background:#09092d;border-bottom:1px solid #1a1a4a;padding:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(75,75,249,.2);border:1px solid rgba(75,75,249,.4);border-radius:100px;padding:4px 12px;font-size:10px;font-weight:800;color:#a0a0ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.hero-title{font-size:28px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px;color:#fff}
+.hero-title span{color:#7b7bfa}
+.hero-sub{color:#8888bb;font-size:13px}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap}
+.hero-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 20px;text-align:center;min-width:90px}
+.hero-stat-num{font-size:22px;font-weight:900;color:#7b7bfa}
+.hero-stat-label{font-size:10px;color:#6666aa;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+.page{padding:28px 32px;max-width:1300px;margin:0 auto}
+.section{margin-bottom:36px}
+.section-title{font-size:12px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.journey{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:12px}
+.jstep{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;text-align:center;min-width:130px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.jstep-icon{font-size:24px;margin-bottom:4px}
+.jstep-label{font-size:12px;font-weight:700;color:var(--text)}
+.jstep-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.jarrow{color:var(--muted2);font-size:20px;padding:0 8px}
+.journey-note{background:var(--blue-bg);border:1px solid var(--blue-bd);border-left:3px solid var(--indigo);border-radius:8px;padding:12px 16px;font-size:12.5px;color:#1e40af}
+
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ftab{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:700;border:1.5px solid var(--border2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s}
+.ftab:hover{border-color:#999;color:var(--text)}
+.ftab.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+.tag-table{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.05)}
+.tag-thead{display:grid;grid-template-columns:170px 1fr 1fr 110px;padding:10px 16px;background:var(--surface2);border-bottom:1.5px solid var(--border)}
+.tag-thead-cell{font-size:10px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
+.tag-row{display:grid;grid-template-columns:170px 1fr 1fr 110px;align-items:center;border-bottom:1px solid var(--border);transition:.15s}
+.tag-row:last-child{border-bottom:none}
+.tag-row:hover{background:var(--surface2)}
+.tag-row.hidden{display:none}
+.tag-cell{padding:12px 16px}
+.tag-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:800;font-family:monospace;border:1px solid;white-space:nowrap}
+.tag-text{font-size:12.5px;line-height:1.5;color:var(--text)}
+.tag-action{font-size:12px;color:var(--muted);line-height:1.5}
+.clears-badge{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;white-space:nowrap}
+.clears-auto{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.clears-manual{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+
+.u-red{background:var(--red-bg);border-color:var(--red-bd);color:var(--red)}
+.u-orange{background:var(--orange-bg);border-color:var(--orange-bd);color:var(--orange)}
+.u-yellow{background:var(--yellow-bg);border-color:var(--yellow-bd);color:var(--yellow)}
+.u-purple{background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple)}
+.u-blue{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)}
+.u-green{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
+
+.views-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.view-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:18px;transition:.15s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.view-card:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 4px 16px rgba(75,75,249,.1)}
+.view-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.view-icon{font-size:22px}
+.view-owner{font-size:10px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
+.view-name{font-size:14px;font-weight:800;color:var(--text)}
+.view-filter{font-size:11px;font-family:monospace;color:var(--indigo);background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:6px;padding:8px 10px;line-height:1.6;word-break:break-all;margin-top:8px}
+.view-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.vtag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;border:1px solid;font-family:monospace}
+
+.routine-list{display:flex;flex-direction:column;gap:8px}
+.routine-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.routine-num{width:30px;height:30px;background:var(--indigo);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:#fff}
+.routine-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px}
+.routine-sub{font-size:12px;color:var(--muted);line-height:1.6}
+
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.rule-card{border-radius:12px;padding:16px;border:1.5px solid}
+.rule-do{background:var(--green-bg);border-color:var(--green-bd)}
+.rule-dont{background:var(--red-bg);border-color:var(--red-bd)}
+.rule-icon{font-size:20px;margin-bottom:8px}
+.rule-title{font-size:12px;font-weight:800;margin-bottom:6px}
+.rule-do .rule-title{color:var(--green)}
+.rule-dont .rule-title{color:var(--red)}
+.rule-text{font-size:12px;color:var(--muted);line-height:1.7}
+
+.note-label{font-size:10px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.note-example{background:var(--surface2);border:1.5px solid var(--border);border-left:3px solid var(--green);border-radius:8px;padding:14px 16px;font-family:monospace;font-size:12.5px;line-height:2;color:#065f46}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.meta-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.meta-key{font-family:monospace;font-size:12px;color:var(--indigo);margin-bottom:6px;font-weight:700}
+.meta-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+.footer{text-align:center;padding:24px;color:var(--muted2);font-size:11px;border-top:1px solid var(--border);margin-top:40px}
+.footer span{color:var(--indigo);font-weight:700}
+
+@media(max-width:900px){
+  .tag-thead{display:none}
+  .tag-row{grid-template-columns:1fr;border-bottom:2px solid var(--border)}
+  .tag-cell{border-bottom:1px solid var(--border)}
+  .tag-cell:last-child{border-bottom:none}
+  .page{padding:16px}
+  .hero{padding:20px 16px}
+  .topnav{padding:0 16px}
+  .nav-brand{position:static;transform:none}
+  .journey{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:600px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOPs
+    </a>
+    <a href="scenarios.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="portal.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h8"/></svg>Refunds
+    </a>
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA
+    </a>
+    <a href="escalation.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Escalation
+    </a>
+  </div>
+  <div class="nav-brand">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-name">Agent Support</div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge">📦 Bosta × Shopify</div>
+    <div class="hero-title">Everyday CS <span>Cheat Sheet</span></div>
+    <div class="hero-sub">Open your tab, clear it, log what you did. Tag gone = problem solved.</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Saved Views</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">13</div><div class="hero-stat-label">Tags</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">Metafields</div></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="section">
+    <div class="section-title">1️⃣ Normal Order Journey — No Action Needed</div>
+    <div class="journey" style="margin-bottom:12px">
+      <div class="jstep"><div class="jstep-icon">📦</div><div class="jstep-label">Ready for Pickup</div><div class="jstep-sub">Packed, awaiting courier</div></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jstep-icon">🚚</div><div class="jstep-label">In Transit</div><div class="jstep-sub">Moving through network</div></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jstep-icon">🛵</div><div class="jstep-label">Out for Delivery</div><div class="jstep-sub">With courier today</div></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jstep-icon">✅</div><div class="jstep-label">Delivered</div><div class="jstep-sub">Done</div></div>
+      <div class="jarrow">→</div>
+      <div class="jstep" style="border-color:var(--green-bd);background:var(--green-bg)"><div class="jstep-icon">💵</div><div class="jstep-label">Paid + Archived</div><div class="jstep-sub">COD collected / Visa</div></div>
+    </div>
+    <div class="journey-note">⚡ The robot moves orders automatically. <strong>No action needed on any of these stages.</strong> A tag only appears when something needs a human.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2️⃣ Tags — What They Mean & What To Do</div>
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="filterTags('all',this)">✨ All Tags</button>
+      <button class="ftab" onclick="filterTags('red',this)">🔴 Stuck on Us</button>
+      <button class="ftab" onclick="filterTags('orange',this)">🟠 Warehouse</button>
+      <button class="ftab" onclick="filterTags('yellow',this)">🟡 Carrier</button>
+      <button class="ftab" onclick="filterTags('purple',this)">🟣 Finance</button>
+    </div>
+    <div class="tag-table">
+      <div class="tag-thead">
+        <div class="tag-thead-cell">Tag</div>
+        <div class="tag-thead-cell">What it means</div>
+        <div class="tag-thead-cell">👉 What YOU do</div>
+        <div class="tag-thead-cell">Clears</div>
+      </div>
+      <div class="tag-row" data-group="red">
+        <div class="tag-cell"><span class="tag-badge u-red">📞 on-hold</span></div>
+        <div class="tag-cell"><div class="tag-text">Wrong/unclear address or phone — delivery blocked</div></div>
+        <div class="tag-cell"><div class="tag-action">Call customer, fix address/phone, tell Bosta to retry</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="red">
+        <div class="tag-cell"><span class="tag-badge u-red">📞 return-blocked</span></div>
+        <div class="tag-cell"><div class="tag-text">Return pickup blocked on bad data</div></div>
+        <div class="tag-cell"><div class="tag-action">Fix the data so Bosta can collect</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="orange">
+        <div class="tag-cell"><span class="tag-badge u-orange">📦 oos</span></div>
+        <div class="tag-cell"><div class="tag-text">Out of stock at warehouse</div></div>
+        <div class="tag-cell"><div class="tag-action">Ops: restock or cancel decision</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="orange">
+        <div class="tag-cell"><span class="tag-badge u-orange">📦 warehouse-hold</span></div>
+        <div class="tag-cell"><div class="tag-text">Stuck at warehouse before shipping</div></div>
+        <div class="tag-cell"><div class="tag-action">Ops: clear the warehouse block</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="orange">
+        <div class="tag-cell"><span class="tag-badge u-orange">📦 not-picked</span></div>
+        <div class="tag-cell"><div class="tag-text">Courier never collected (1+ day)</div></div>
+        <div class="tag-cell"><div class="tag-action">Ops: chase Bosta pickup</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="yellow">
+        <div class="tag-cell"><span class="tag-badge u-yellow">🚚 failed-1</span></div>
+        <div class="tag-cell"><div class="tag-text">1st failed delivery attempt</div></div>
+        <div class="tag-cell"><div class="tag-action">Monitor — email auto-sent to customer</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="yellow">
+        <div class="tag-cell"><span class="tag-badge u-yellow">🚚 failed-2</span></div>
+        <div class="tag-cell"><div class="tag-text">2nd failed delivery attempt</div></div>
+        <div class="tag-cell"><div class="tag-action">⚠️ ESCALATE — post #bosta-escalations then add tag</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="yellow">
+        <div class="tag-cell"><span class="tag-badge u-yellow">🕐 stuck-3d</span></div>
+        <div class="tag-cell"><div class="tag-text">No movement for 3+ days</div></div>
+        <div class="tag-cell"><div class="tag-action">Chase Bosta — confirm not lost</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="yellow">
+        <div class="tag-cell"><span class="tag-badge u-yellow">⏰ sla-breach</span></div>
+        <div class="tag-cell"><div class="tag-text">Past Bosta's promised delivery deadline</div></div>
+        <div class="tag-cell"><div class="tag-action">Chase Bosta, get a ref number</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="yellow">
+        <div class="tag-cell"><span class="tag-badge u-blue">🧑‍💼 escalated</span></div>
+        <div class="tag-cell"><div class="tag-text">CS raised it to Bosta</div></div>
+        <div class="tag-cell"><div class="tag-action">Manager follows up — must have Slack post</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="purple">
+        <div class="tag-cell"><span class="tag-badge u-purple">💳 card-risk</span></div>
+        <div class="tag-cell"><div class="tag-text">Prepaid order that failed delivery completely</div></div>
+        <div class="tag-cell"><div class="tag-action">Finance: re-ship, refund, or hold</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-auto">🤖 Auto</span></div>
+      </div>
+      <div class="tag-row" data-group="purple">
+        <div class="tag-cell"><span class="tag-badge u-purple">💰 pending-refund</span></div>
+        <div class="tag-cell"><div class="tag-text">Item back at warehouse — refund owed</div></div>
+        <div class="tag-cell"><div class="tag-action">Finance: issue refund, then remove tag</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-manual">👤 Manual</span></div>
+      </div>
+      <div class="tag-row" data-group="purple">
+        <div class="tag-cell"><span class="tag-badge u-purple">🔄 exchange-returned</span></div>
+        <div class="tag-cell"><div class="tag-text">Size-swap item back — NOT a refund</div></div>
+        <div class="tag-cell"><div class="tag-action">Confirm balance, close exchange, remove tag</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-manual">👤 Manual</span></div>
+      </div>
+      <div class="tag-row" data-group="purple">
+        <div class="tag-cell"><span class="tag-badge u-purple">❌ return-failed</span></div>
+        <div class="tag-cell"><div class="tag-text">Return never came back — customer has item AND money</div></div>
+        <div class="tag-cell"><div class="tag-action">Finance: chase customer, remove tag when resolved</div></div>
+        <div class="tag-cell"><span class="clears-badge clears-manual">👤 Manual</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3️⃣ Your Tabs in Shopify</div>
+    <div class="views-grid">
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">🏭</span><div><div class="view-owner">Owner: Ops</div><div class="view-name">Fulfillment · Action Required</div></div></div>
+        <div class="view-filter">tag:on-hold OR tag:warehouse-hold OR tag:oos OR tag:not-picked OR tag:return-blocked</div>
+        <div class="view-tags">
+          <span class="vtag u-red">on-hold</span>
+          <span class="vtag u-orange">warehouse-hold</span>
+          <span class="vtag u-orange">oos</span>
+          <span class="vtag u-orange">not-picked</span>
+          <span class="vtag u-red">return-blocked</span>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">🛵</span><div><div class="view-owner">Owner: CS</div><div class="view-name">CS · Carrier Follow-Up</div></div></div>
+        <div class="view-filter">tag:sla-breach OR tag:stuck-3d OR tag:failed-2</div>
+        <div class="view-tags">
+          <span class="vtag u-yellow">sla-breach</span>
+          <span class="vtag u-yellow">stuck-3d</span>
+          <span class="vtag u-yellow">failed-2</span>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">🧑‍💼</span><div><div class="view-owner">Owner: Manager</div><div class="view-name">Mgr · Escalations</div></div></div>
+        <div class="view-filter">tag:escalated OR tag:escalated-followup</div>
+        <div class="view-tags">
+          <span class="vtag u-blue">escalated</span>
+          <span class="vtag u-blue">escalated-followup</span>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">💳</span><div><div class="view-owner">Owner: Finance</div><div class="view-name">Finance · Card at Risk</div></div></div>
+        <div class="view-filter">tag:card-risk</div>
+        <div class="view-tags"><span class="vtag u-purple">card-risk</span></div>
+      </div>
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">💰</span><div><div class="view-owner">Owner: Finance</div><div class="view-name">Finance · Refunds Owed</div></div></div>
+        <div class="view-filter">tag:pending-refund -financial_status:refunded</div>
+        <div class="view-tags"><span class="vtag u-purple">pending-refund</span></div>
+      </div>
+      <div class="view-card">
+        <div class="view-top"><span class="view-icon">↩️</span><div><div class="view-owner">Owner: Finance</div><div class="view-name">Finance · Returns Failed + Exchange</div></div></div>
+        <div class="view-filter">tag:return-failed OR tag:exchange-returned</div>
+        <div class="view-tags">
+          <span class="vtag u-purple">return-failed</span>
+          <span class="vtag u-purple">exchange-returned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4️⃣ Daily Routine</div>
+    <div class="routine-list">
+      <div class="routine-item">
+        <div class="routine-num">1</div>
+        <div>
+          <div class="routine-title">🔴 Fulfillment · Action Required — Fix First</div>
+          <div class="routine-sub">Fix addresses/phones & warehouse blocks. Stuck on <strong>us</strong> — highest leverage.</div>
+        </div>
+      </div>
+      <div class="routine-item">
+        <div class="routine-num">2</div>
+        <div>
+          <div class="routine-title">🛵 CS · Carrier Follow-Up</div>
+          <div class="routine-sub">Escalate anything at <strong>failed-2</strong>. Chase SLA breaches. Get a Bosta ref number.</div>
+        </div>
+      </div>
+      <div class="routine-item">
+        <div class="routine-num">3</div>
+        <div>
+          <div class="routine-title">💳 Card at Risk</div>
+          <div class="routine-sub">Review failed prepaid orders. Decide: re-ship, refund, or hold. Log in Note.</div>
+        </div>
+      </div>
+      <div class="routine-item">
+        <div class="routine-num">4</div>
+        <div>
+          <div class="routine-title">💰 Refunds Owed → Returns</div>
+          <div class="routine-sub">Issue refunds, chase failed returns, close exchanges — then remove the tag manually.</div>
+        </div>
+      </div>
+      <div class="routine-item">
+        <div class="routine-num">5</div>
+        <div>
+          <div class="routine-title">📝 Log in Order Notes</div>
+          <div class="routine-sub">Every action = one stamped line in the Note.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5️⃣ Order Note Examples</div>
+    <div class="note-label">Copy the format exactly:</div>
+    <div class="note-example">
+      [CS 28/06] Called customer, corrected address in Bosta, asked for re-attempt.<br>
+      [CS 28/06] Escalated to Bosta (ref 7506992329) — posted in #bosta-escalations.<br>
+      [FIN 28/06] Refund issued EGP 426.50 — removing pending-refund.<br>
+      [OPS 28/06] Cleared warehouse block — order re-queued for dispatch.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6️⃣ Golden Rules</div>
+    <div class="rules-grid">
+      <div class="rule-card rule-do">
+        <div class="rule-icon">✅</div>
+        <div class="rule-title">Tag gone = solved</div>
+        <div class="rule-text">No "-done" tags. Finish the work and the tag disappears.</div>
+      </div>
+      <div class="rule-card rule-do">
+        <div class="rule-icon">✅</div>
+        <div class="rule-title">Always write a Note</div>
+        <div class="rule-text">Every manual action gets one stamped line. Tag = state. Note = what you did.</div>
+      </div>
+      <div class="rule-card rule-do">
+        <div class="rule-icon">✅</div>
+        <div class="rule-title">Slack post before escalated tag</div>
+        <div class="rule-text">Post in #bosta-escalations first, THEN add the tag.</div>
+      </div>
+      <div class="rule-card rule-dont">
+        <div class="rule-icon">⛔</div>
+        <div class="rule-title">Don't touch robot tags</div>
+        <div class="rule-text">Never remove auto-managed tags. Only remove finance/return tags after action done.</div>
+      </div>
+      <div class="rule-card rule-dont">
+        <div class="rule-icon">⛔</div>
+        <div class="rule-title">No Slack post = invalid escalation</div>
+        <div class="rule-text">The Slack timestamp is the proof. No post = tag is invalid.</div>
+      </div>
+      <div class="rule-card rule-dont">
+        <div class="rule-icon">⛔</div>
+        <div class="rule-title">Don't refund before confirming return</div>
+        <div class="rule-text">Check return_details = RETURNED before issuing any refund.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7️⃣ Metafields — Where the Detail Lives</div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="meta-key">custom.last_bosta_update</div>
+        <div class="meta-desc">Last Bosta movement timestamp — the SLA clock</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-key">custom.bosta_reason</div>
+        <div class="meta-desc">The short reason / the why. Blank on healthy orders = correct.</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-key">custom.delivery_details</div>
+        <div class="meta-desc">Full forward line: status · reason · attempts · since · city</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-key">custom.return_details</div>
+        <div class="meta-desc">Full return line: status · reason · AWB · date</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Powered by <span>EverGPT</span> · MAVIN OPS HUB</div>
+
+<script>
+function filterTags(group, btn) {
+  document.querySelectorAll('.ftab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.tag-row').forEach(function(row) {
+    if (group === 'all' || row.dataset.group === group) {
+      row.classList.remove('hidden');
+    } else {
+      row.classList.add('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>
+    
