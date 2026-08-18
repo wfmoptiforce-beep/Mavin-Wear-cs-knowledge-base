@@ -1,1 +1,232 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVIN OPS HUB — SOP Library</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f8f8f8;color:#09092d;min-height:100vh}
 
+.topnav{background:#09092d;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:64px;border-bottom:1px solid #1a1a4a}
+.nav-brand{display:flex;align-items:center;gap:10px;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-brand-icon{width:36px;height:36px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#09092d}
+.nav-brand-text{color:#fff;font-weight:800;font-size:14px}
+.nav-brand-sub{color:#6666aa;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
+.nav-link{padding:7px 12px;border-radius:7px;color:#8888bb;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;display:flex;align-items:center;gap:6px;text-decoration:none}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{background:#fff;color:#09092d}
+.nav-link svg{width:14px;height:14px;flex-shrink:0}
+.nav-right{z-index:2}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid #2a2a6a;border-radius:100px;padding:5px 12px 5px 6px}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#09092d}
+.user-name{font-size:11px;font-weight:700;color:#fff}
+
+.hero{background:#09092d;border-bottom:1px solid #1a1a4a;padding:40px 32px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(75,75,249,.2);border:1px solid rgba(75,75,249,.4);border-radius:100px;padding:4px 14px;font-size:10px;font-weight:800;color:#a0a0ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.hero-title{font-size:32px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px;color:#fff}
+.hero-title span{color:#7b7bfa}
+.hero-sub{color:#8888bb;font-size:14px;max-width:500px;margin:0 auto}
+
+.page{padding:32px;max-width:1100px;margin:0 auto}
+.section-title{font-size:11px;font-weight:800;color:#999;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:#e5e5e5}
+
+.sop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:40px}
+.sop-card{background:#fff;border:1.5px solid #e5e5e5;border-radius:16px;padding:24px;text-decoration:none;color:inherit;transition:.2s;display:block;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.sop-card:hover{border-color:#4b4bf9;transform:translateY(-3px);box-shadow:0 8px 24px rgba(75,75,249,.1)}
+.sop-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.sop-icon{font-size:32px}
+.sop-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px;border:1px solid}
+.badge-cs{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
+.badge-ops{background:#f0fdf4;color:#16a34a;border-color:#bbf7d0}
+.badge-fin{background:#fdf4ff;color:#9333ea;border-color:#e9d5ff}
+.badge-all{background:#f8f8f8;color:#555;border-color:#ddd}
+.sop-title{font-size:16px;font-weight:800;color:#09092d;margin-bottom:6px}
+.sop-desc{font-size:12.5px;color:#666;line-height:1.6;margin-bottom:14px}
+.sop-tags{display:flex;gap:6px;flex-wrap:wrap}
+.sop-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:#f3f3f7;color:#555;border:1px solid #e5e5e5}
+.sop-arrow{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0}
+.sop-arrow-text{font-size:11px;font-weight:700;color:#4b4bf9}
+.sop-arrow-icon{width:20px;height:20px;background:#4b4bf9;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+
+.footer{text-align:center;padding:24px;color:#bbb;font-size:11px;border-top:1px solid #e5e5e5;margin-top:20px}
+
+@media(max-width:768px){
+  .page{padding:16px}
+  .hero{padding:24px 16px}
+  .topnav{padding:0 16px}
+  .nav-brand{position:static;transform:none}
+  .sop-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
+    </a>
+    <a href="sops.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOPs
+    </a>
+    <a href="scenarios.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
+    </a>
+    <a href="portal.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h8"/></svg>Refunds
+    </a>
+    <a href="qa.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA
+    </a>
+    <a href="escalation.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Escalation
+    </a>
+  </div>
+  <div class="nav-brand">
+    <div class="nav-brand-icon">M</div>
+    <div>
+      <div class="nav-brand-text">MAVIN OPS HUB</div>
+      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div class="user-name">Agent Support</div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">📚 SOP Library</div>
+  <div class="hero-title">Standard Operating <span>Procedures</span></div>
+  <div class="hero-sub">كل الـ SOPs في مكان واحد — اختاري الـ SOP اللي محتاجاه</div>
+</div>
+
+<div class="page">
+
+  <div class="section-title">📋 All SOPs</div>
+  <div class="sop-grid">
+
+    <a href="sop-cheatsheet.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">⚡</div>
+        <span class="sop-badge badge-all">CS + OPS</span>
+      </div>
+      <div class="sop-title">Everyday CS Cheat Sheet</div>
+      <div class="sop-desc">الـ one-pager اليومي — Tags، Saved Views، Daily Routine، وNote Examples. افتحيه كل يوم.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Tags</span>
+        <span class="sop-tag">Shopify Views</span>
+        <span class="sop-tag">Daily Routine</span>
+        <span class="sop-tag">Notes</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open Cheat Sheet →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+    <a href="sop-workflow.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">🔄</div>
+        <span class="sop-badge badge-ops">OPS</span>
+      </div>
+      <div class="sop-title">CS / Ops Workflow</div>
+      <div class="sop-desc">الـ full workflow — Shopify tags، Bosta statuses، وإزاي الـ automation شغالة خطوة خطوة.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Workflow</span>
+        <span class="sop-tag">Automation</span>
+        <span class="sop-tag">Bosta</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open Workflow →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+    <a href="sop-mavin-bosta.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">📦</div>
+        <span class="sop-badge badge-ops">OPS</span>
+      </div>
+      <div class="sop-title">Mavin × Bosta SOP</div>
+      <div class="sop-desc">الـ SOP الرسمي الكامل — كل حالة ممكنة مع Bosta وإزاي تتعاملي معاها من أول لآخر.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Bosta</span>
+        <span class="sop-tag">Delivery</span>
+        <span class="sop-tag">Returns</span>
+        <span class="sop-tag">Escalation</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open SOP →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+    <a href="escalation.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">🚨</div>
+        <span class="sop-badge badge-cs">CS</span>
+      </div>
+      <div class="sop-title">CS Product Escalation</div>
+      <div class="sop-desc">فورم الـ escalation الرسمي — لما محتاجة ترفعي مشكلة للـ product team أو المانجر.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Escalation</span>
+        <span class="sop-tag">Form</span>
+        <span class="sop-tag">CS</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open Form →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+    <a href="scenarios.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">💬</div>
+        <span class="sop-badge badge-cs">CS</span>
+      </div>
+      <div class="sop-title">Customer Scenarios</div>
+      <div class="sop-desc">62 سيناريو CS مع ردود جاهزة — مقسمة بـ categories وفيها Decision Tree.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Scenarios</span>
+        <span class="sop-tag">Scripts</span>
+        <span class="sop-tag">Decision Tree</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open Scenarios →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+    <a href="portal.html" class="sop-card">
+      <div class="sop-card-top">
+        <div class="sop-icon">💰</div>
+        <span class="sop-badge badge-fin">Finance</span>
+      </div>
+      <div class="sop-title">Refund Search Portal</div>
+      <div class="sop-desc">ابحثي عن أي refund بالاسم أو الأوردر — بيجيب البيانات من الـ sheet مباشرة.</div>
+      <div class="sop-tags">
+        <span class="sop-tag">Refunds</span>
+        <span class="sop-tag">Search</span>
+        <span class="sop-tag">Finance</span>
+      </div>
+      <div class="sop-arrow">
+        <span class="sop-arrow-text">Open Portal →</span>
+        <span class="sop-arrow-icon">→</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="footer">MAVIN OPS HUB · SOP Library</div>
+
+</body>
+</html>
+    
