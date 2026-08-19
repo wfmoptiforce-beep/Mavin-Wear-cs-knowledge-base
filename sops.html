@@ -1,269 +1,110 @@
-   <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mavin Wear — SOP Library</title>
+  <title>Mavin Wear — CS Daily Cheat Sheet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --indigo:#4b4bf9;
-      --midnight:#09092d;
-      --white:#ffffff;
-      --light:#f3f3f7;
-      --border:#e5e7eb;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --success:#10b981;
-      --warning:#f59e0b;
-      --danger:#ef4444;
+      --indigo:#4b4bf9;--midnight:#09092d;--white:#ffffff;
+      --light:#f3f3f7;--border:#e5e7eb;--text:#1f2937;
+      --muted:#6b7280;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
     a{text-decoration:none;color:inherit;}
-
-    /* SIDEBAR */
-    .sidebar{
-      width:260px;background:var(--midnight);color:#fff;
-      padding:28px 18px;position:fixed;height:100vh;
-      overflow-y:auto;z-index:100;
-    }
+    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;}
     .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
-    .brand-logo{
-      width:44px;height:44px;border-radius:12px;
-      background:var(--indigo);color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:20px;
-    }
+    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;}
     .brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
     .brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
-
-    .sidebar-label{
-      font-size:10px;font-weight:700;letter-spacing:1.5px;
-      text-transform:uppercase;color:#8f90c7;
-      margin:24px 0 10px 6px;
-    }
-    .nav-item{
-      display:flex;align-items:center;gap:12px;
-      padding:11px 14px;border-radius:12px;
-      color:#c7c9f0;font-size:13.5px;font-weight:600;
-      margin-bottom:4px;transition:.15s;cursor:pointer;
-    }
+    .sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:#c7c9f0;font-size:13.5px;font-weight:600;margin-bottom:4px;transition:.15s;}
     .nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
     .nav-item.active{background:var(--indigo);color:#fff;}
     .nav-icon{font-size:16px;width:20px;text-align:center;}
-
-    /* MAIN */
     .main{margin-left:260px;min-height:100vh;padding:32px;}
-
-    /* TOPBAR */
-    .topbar{
-      display:flex;justify-content:space-between;
-      align-items:center;margin-bottom:30px;gap:16px;
-    }
-    .search-wrap{
-      flex:1;max-width:480px;
-      background:#fff;border:1.5px solid var(--border);
-      border-radius:14px;display:flex;
-      align-items:center;padding:13px 18px;gap:10px;
-    }
-    .search-wrap input{
-      border:none;outline:none;width:100%;
-      font-size:14px;font-family:'Inter',sans-serif;background:none;
-    }
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px;}
+    .search-wrap{flex:1;max-width:480px;background:#fff;border:1.5px solid var(--border);border-radius:14px;display:flex;align-items:center;padding:13px 18px;gap:10px;}
+    .search-wrap input{border:none;outline:none;width:100%;font-size:14px;font-family:'Inter',sans-serif;background:none;}
     .topbar-right{display:flex;align-items:center;gap:12px;}
-    .lang-btn{
-      background:#fff;border:1.5px solid var(--border);
-      border-radius:10px;padding:10px 16px;
-      font-size:13px;font-weight:700;cursor:pointer;
-      transition:.15s;
-    }
+    .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;}
     .lang-btn:hover{border-color:var(--indigo);color:var(--indigo);}
-    .profile-pill{
-      background:#fff;border:1.5px solid var(--border);
-      border-radius:14px;padding:8px 14px;
-      display:flex;align-items:center;gap:10px;
-    }
-    .avatar{
-      width:34px;height:34px;border-radius:50%;
-      background:var(--midnight);color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:13px;
-    }
+    .profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
+    .avatar{width:34px;height:34px;border-radius:50%;background:var(--midnight);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
     .profile-name{font-size:13px;font-weight:700;}
     .profile-role{font-size:11px;color:var(--muted);}
-
-    /* HERO */
-    .hero{
-      background:linear-gradient(130deg,#09092d 0%,#16165a 100%);
-      border-radius:24px;padding:40px;
-      margin-bottom:28px;position:relative;overflow:hidden;
-    }
-    .hero::before{
-      content:'';position:absolute;right:-60px;top:-60px;
-      width:260px;height:260px;
-      background:rgba(75,75,249,.15);border-radius:50%;
-    }
-    .hero::after{
-      content:'';position:absolute;right:80px;bottom:-80px;
-      width:180px;height:180px;
-      background:rgba(191,161,255,.08);border-radius:50%;
-    }
-    .hero-tag{
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
-      padding:7px 16px;border-radius:100px;
-      font-size:11px;font-weight:700;color:#bfa1ff;
-      letter-spacing:.5px;margin-bottom:20px;
-    }
-    .hero h1{
-      font-size:36px;font-weight:900;color:#fff;
-      line-height:1.15;margin-bottom:14px;
-    }
-    .hero h1 span{color:#bfa1ff;}
+    .hero{background:linear-gradient(130deg,#09092d 0%,#16165a 100%);border-radius:24px;padding:40px;margin-bottom:28px;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;background:rgba(75,75,249,.15);border-radius:50%;}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:100px;font-size:11px;font-weight:700;color:#8bf0bb;letter-spacing:.5px;margin-bottom:20px;}
+    .hero h1{font-size:34px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;}
+    .hero h1 span{color:#8bf0bb;}
     .hero p{color:#a5b4fc;font-size:15px;line-height:1.7;max-width:600px;}
-
-    /* KPIS */
-    .kpis{
-      display:grid;grid-template-columns:repeat(4,1fr);
-      gap:18px;margin-bottom:30px;
-    }
-    .kpi{
-      background:#fff;border-radius:18px;
-      border:1.5px solid var(--border);padding:22px 24px;
-    }
-    .kpi-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;}
-    .kpi-value{font-size:34px;font-weight:900;color:var(--midnight);}
-    .kpi-sub{font-size:11px;color:var(--success);font-weight:700;margin-top:6px;}
-
-    /* SECTION HEADER */
-    .sec-head{
-      display:flex;justify-content:space-between;
-      align-items:flex-end;margin-bottom:20px;
-    }
-    .sec-title{font-size:20px;font-weight:800;color:var(--midnight);}
-    .sec-sub{font-size:13px;color:var(--muted);margin-top:4px;}
-    .view-all{
-      font-size:13px;font-weight:700;color:var(--indigo);
-      cursor:pointer;
-    }
-
-    /* CARDS GRID */
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-      gap:20px;margin-bottom:32px;
-    }
-    .card{
-      background:#fff;border-radius:22px;
-      border:1.5px solid var(--border);
-      padding:26px;transition:.2s;
-      display:flex;flex-direction:column;
-    }
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:var(--indigo);
-      box-shadow:0 12px 32px rgba(75,75,249,.1);
-    }
-    .card-top{
-      display:flex;justify-content:space-between;
-      align-items:flex-start;margin-bottom:18px;
-    }
-    .card-icon{
-      width:52px;height:52px;border-radius:16px;
-      background:#eef2ff;display:flex;
-      align-items:center;justify-content:center;font-size:22px;
-    }
-    .badge{
-      padding:6px 12px;border-radius:100px;
-      font-size:11px;font-weight:700;
-    }
-    .badge-active{background:#ecfdf5;color:#047857;}
-    .badge-review{background:#fff7ed;color:#b45309;}
-    .badge-new{background:#eef2ff;color:#4338ca;}
-
-    .card-title{font-size:17px;font-weight:800;color:var(--midnight);margin-bottom:8px;}
-    .card-desc{font-size:13.5px;color:var(--muted);line-height:1.7;flex:1;margin-bottom:18px;}
-
-    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
-    .tag{
-      padding:5px 10px;border-radius:100px;
-      background:#f4f4f5;font-size:11px;
-      font-weight:700;color:#52525b;
-    }
-
-    .card-footer{
-      display:flex;justify-content:space-between;
-      align-items:center;padding-top:16px;
-      border-top:1px solid #f1f1f1;margin-top:auto;
-    }
-    .card-link{font-size:13px;font-weight:700;color:var(--indigo);}
-    .card-arrow{
-      width:32px;height:32px;border-radius:50%;
-      background:var(--indigo);color:#fff;
-      display:flex;align-items:center;
-      justify-content:center;font-size:14px;
-      transition:.15s;
-    }
-    .card:hover .card-arrow{background:var(--midnight);}
-
-    /* QUICK ACTIONS */
-    .quick{
-      background:#fff;border-radius:22px;
-      border:1.5px solid var(--border);
-      padding:28px;margin-bottom:32px;
-    }
-    .quick-grid{
-      display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-      gap:14px;margin-top:20px;
-    }
-    .quick-item{
-      background:#f9fafb;border-radius:16px;
-      border:1.5px solid var(--border);
-      padding:18px;display:flex;
-      justify-content:space-between;align-items:center;gap:12px;
-    }
-    .quick-title{font-size:14px;font-weight:700;margin-bottom:4px;}
-    .quick-desc{font-size:12px;color:var(--muted);}
-    .quick-btn{
-      background:var(--indigo);color:#fff;
-      border:none;border-radius:10px;
-      padding:10px 16px;font-size:12px;
-      font-weight:700;cursor:pointer;
-      white-space:nowrap;font-family:'Inter',sans-serif;
-      transition:.15s;
-    }
-    .quick-btn:hover{background:var(--midnight);}
-
-    /* FOOTER */
-    .footer{
-      text-align:center;padding:24px 0 8px;
-      color:#9ca3af;font-size:12px;
-    }
+    .tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+    .tab{padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;background:#fff;border:1.5px solid var(--border);color:var(--muted);transition:.15s;}
+    .tab:hover{border-color:var(--indigo);color:var(--indigo);}
+    .tab.active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+    .section{display:none;}
+    .section.active{display:block;}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+    .grid-1{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px;}
+    .card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:26px;}
+    .card-title{font-size:16px;font-weight:800;color:var(--midnight);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+    .tag-row{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid #f1f5f9;}
+    .tag-row:last-child{border-bottom:none;}
+    .tag-pill{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap;min-width:120px;text-align:center;}
+    .tag-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+    .tag-en{font-size:11px;color:#a0a0c0;margin-top:3px;}
+    .t-purple{background:#f3e8ff;color:#7c3aed;}
+    .t-blue{background:#dbeafe;color:#1d4ed8;}
+    .t-green{background:#dcfce7;color:#15803d;}
+    .t-red{background:#fee2e2;color:#b91c1c;}
+    .t-yellow{background:#fef9c3;color:#a16207;}
+    .t-orange{background:#ffedd5;color:#c2410c;}
+    .t-indigo{background:#eef2ff;color:#4338ca;}
+    .steps{display:flex;flex-direction:column;gap:0;}
+    .step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #f1f5f9;position:relative;}
+    .step:last-child{border-bottom:none;}
+    .step-num{width:32px;height:32px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+    .step-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+    .step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+    .step-ar{font-size:12px;color:#8f90c7;margin-top:4px;font-style:italic;}
+    .flow{display:flex;flex-direction:column;gap:0;align-items:flex-start;}
+    .flow-node{background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:14px;padding:14px 20px;font-size:13px;font-weight:700;color:var(--midnight);width:100%;}
+    .flow-node.decision{background:#fff7ed;border-color:#fed7aa;color:#c2410c;}
+    .flow-node.action{background:#ecfdf5;border-color:#a7f3d0;color:#047857;}
+    .flow-node.escalate{background:#fee2e2;border-color:#fca5a5;color:#b91c1c;}
+    .flow-arrow{font-size:20px;color:var(--muted);padding:4px 0 4px 20px;}
+    .flow-branch{display:flex;gap:16px;width:100%;}
+    .flow-branch-item{flex:1;display:flex;flex-direction:column;gap:0;}
+    .flow-label{font-size:11px;font-weight:700;color:var(--muted);padding:4px 0 4px 20px;}
+    .note-card{background:#f9fafb;border-radius:14px;border:1.5px solid var(--border);padding:18px;margin-bottom:14px;}
+    .note-label{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+    .note-text{font-size:13px;line-height:1.8;color:var(--text);font-family:monospace;background:#fff;border-radius:10px;padding:14px;border:1px solid var(--border);}
+    .note-ar{font-size:13px;line-height:1.8;color:#52525b;margin-top:10px;direction:rtl;text-align:right;}
+    .copy-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px;font-family:'Inter',sans-serif;transition:.15s;}
+    .copy-btn:hover{background:var(--midnight);}
+    .alert{border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6;}
+    .alert-warn{background:#fff7ed;border:1.5px solid #fed7aa;color:#92400e;}
+    .alert-info{background:#eff6ff;border:1.5px solid #bfdbfe;color:#1e40af;}
+    .alert-success{background:#ecfdf5;border:1.5px solid #a7f3d0;color:#065f46;}
+    .alert-icon{font-size:18px;flex-shrink:0;}
+    .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:16px;}
     .footer span{color:var(--indigo);font-weight:700;}
-
-    /* RESPONSIVE */
-    @media(max-width:1100px){
-      .kpis{grid-template-columns:repeat(2,1fr);}
-    }
     @media(max-width:900px){
       .sidebar{display:none;}
       .main{margin-left:0;}
+      .grid-2{grid-template-columns:1fr;}
       .topbar{flex-wrap:wrap;}
       .search-wrap{max-width:100%;}
-      .kpis{grid-template-columns:1fr 1fr;}
     }
-    @media(max-width:600px){
-      .kpis{grid-template-columns:1fr;}
-      .hero h1{font-size:26px;}
-      .main{padding:18px;}
-    }
+    @media(max-width:600px){.main{padding:18px;}.hero h1{font-size:24px;}}
   </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-logo">M</div>
@@ -272,47 +113,24 @@
       <div class="brand-sub">Operations Hub</div>
     </div>
   </div>
-
   <div class="sidebar-label">Workspace</div>
-  <a href="sops.html" class="nav-item active">
-    <span class="nav-icon">📚</span> SOP Library
-  </a>
-  <a href="scenarios.html" class="nav-item">
-    <span class="nav-icon">🌳</span> Scenarios
-  </a>
-  <a href="portal.html" class="nav-item">
-    <span class="nav-icon">💰</span> Refunds
-  </a>
-  <a href="escalation.html" class="nav-item">
-    <span class="nav-icon">🚨</span> Escalations
-  </a>
-  <a href="qa.html" class="nav-item">
-    <span class="nav-icon">⭐</span> QA Audit
-  </a>
-
+  <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
+  <a href="portal.html" class="nav-item"><span class="nav-icon">💰</span> Refunds</a>
+  <a href="escalation.html" class="nav-item"><span class="nav-icon">🚨</span> Escalations</a>
+  <a href="qa.html" class="nav-item"><span class="nav-icon">⭐</span> QA Audit</a>
   <div class="sidebar-label">Quick Access</div>
-  <a href="scenarios.html#delivery" class="nav-item">
-    <span class="nav-icon">📦</span> Delivery Issues
-  </a>
-  <a href="scenarios.html#returns" class="nav-item">
-    <span class="nav-icon">🔄</span> Return Process
-  </a>
-  <a href="scenarios.html#cancel" class="nav-item">
-    <span class="nav-icon">❌</span> Cancel Order
-  </a>
-  <a href="sop-cheatsheet.html" class="nav-item">
-    <span class="nav-icon">📞</span> CS Cheat Sheet
-  </a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
+  <a href="sop-cheatsheet.html" class="nav-item active"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
-
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="search-wrap">
       <span>🔍</span>
-      <input type="text" placeholder="Search SOPs, scenarios, policies..." />
+      <input type="text" placeholder="Search tags, steps, templates..." />
     </div>
     <div class="topbar-right">
       <button class="lang-btn">EN / AR</button>
@@ -326,221 +144,280 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">⚡ Operations Knowledge Hub</div>
-    <h1>Operational Knowledge <span>Workspace</span></h1>
-    <p>Centralized SOPs, scenarios, policies, escalation paths, and operational workflows for CS, Operations, QA, and Finance teams.</p>
+    <div class="hero-tag">⚡ CS Daily Reference</div>
+    <h1>CS Daily <span>Cheat Sheet</span></h1>
+    <p>Your everyday operational guide — Shopify tags, daily routine, response templates, saved views, and escalation rules.</p>
   </section>
 
-  <!-- KPIS -->
-  <section class="kpis">
-    <div class="kpi">
-      <div class="kpi-label">Total SOPs</div>
-      <div class="kpi-value">48</div>
-      <div class="kpi-sub">↑ 4 this month</div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('tags',this)">🏷️ Shopify Tags</div>
+    <div class="tab" onclick="switchTab('routine',this)">📅 Daily Routine</div>
+    <div class="tab" onclick="switchTab('flow',this)">🌳 Decision Flow</div>
+    <div class="tab" onclick="switchTab('templates',this)">💬 Response Templates</div>
+    <div class="tab" onclick="switchTab('views',this)">👁️ Saved Views</div>
+  </div>
+
+  <!-- TAGS -->
+  <div id="tab-tags" class="section active">
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <div>Tags are applied in Shopify on every order. Use the correct tag to trigger automation and keep the team aligned. One tag per status.</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-label">Active Scenarios</div>
-      <div class="kpi-value">62</div>
-      <div class="kpi-sub">↑ 8 this month</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🔵 Order Status Tags</div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-blue">cs-pending</div></div>
+          <div><div class="tag-desc">Order waiting for CS action or customer reply</div><div class="tag-en">الأوردر بيستنى رد أو إجراء من CS</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-green">cs-resolved</div></div>
+          <div><div class="tag-desc">Issue fully resolved — no further action needed</div><div class="tag-en">المشكلة اتحلت — مفيش إجراء تاني</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-yellow">cs-follow-up</div></div>
+          <div><div class="tag-desc">Requires a follow-up within 24 hours</div><div class="tag-en">محتاج متابعة خلال 24 ساعة</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-red">cs-escalated</div></div>
+          <div><div class="tag-desc">Escalated to TL or Operations — do not touch until response</div><div class="tag-en">اتصعّد للـ TL — ماتلمهوش</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟠 Delivery Tags</div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-orange">delivery-delayed</div></div>
+          <div><div class="tag-desc">Order delayed beyond expected delivery window</div><div class="tag-en">الأوردر متأخر عن موعد التوصيل</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-red">delivery-failed</div></div>
+          <div><div class="tag-desc">Delivery attempt failed — coordinate with Bosta</div><div class="tag-en">التوصيل فشل — تنسقي مع Bosta</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-purple">delivery-returned</div></div>
+          <div><div class="tag-desc">Package returned to warehouse — trigger return flow</div><div class="tag-en">الطرد رجع للمخزن — افتحي Return Flow</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-indigo">delivery-rescheduled</div></div>
+          <div><div class="tag-desc">Customer requested rescheduled delivery date</div><div class="tag-en">العميل طلب موعد توصيل جديد</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟢 Refund & Return Tags</div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-yellow">refund-requested</div></div>
+          <div><div class="tag-desc">Customer submitted refund request — awaiting approval</div><div class="tag-en">العميل طلب استرداد — بيستنى موافقة</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-green">refund-approved</div></div>
+          <div><div class="tag-desc">Refund approved — processing initiated</div><div class="tag-en">الاسترداد اتوافق عليه — بيتعالج</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-red">refund-rejected</div></div>
+          <div><div class="tag-desc">Refund rejected — communicate reason to customer</div><div class="tag-en">الطلب اترفض — وضحي السبب للعميل</div></div>
+        </div>
+        <div class="tag-row">
+          <div><div class="tag-pill t-purple">exchange-requested</div></div>
+          <div><div class="tag-desc">Customer requested a product exchange</div><div class="tag-en">العميل طلب استبدال منتج</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Tag Rules</div>
+        <div class="alert alert-warn" style="margin-bottom:12px;">
+          <span class="alert-icon">⚠️</span>
+          <div><strong>Never stack conflicting tags.</strong> Don't use cs-resolved and cs-pending on the same order.</div>
+        </div>
+        <div class="alert alert-info" style="margin-bottom:12px;">
+          <span class="alert-icon">🔄</span>
+          <div><strong>Always update the tag</strong> when order status changes. Outdated tags break automation.</div>
+        </div>
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <div><strong>cs-resolved</strong> is the final tag. Only apply when the case is 100% closed.</div>
+        </div>
+      </div>
     </div>
-    <div class="kpi">
-      <div class="kpi-label">Daily Searches</div>
-      <div class="kpi-value">146</div>
-      <div class="kpi-sub">↑ 12% vs last week</div>
+  </div>
+
+  <!-- ROUTINE -->
+  <div id="tab-routine" class="section">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🌅 Start of Shift</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div><div class="step-title">Open Shopify — CS View</div><div class="step-desc">Filter: cs-pending + cs-follow-up. Priority orders for the day.</div><div class="step-ar">افتحي Shopify وفلتري: cs-pending + cs-follow-up</div></div></div>
+          <div class="step"><div class="step-num">2</div><div><div class="step-title">Check Escalated Orders</div><div class="step-desc">Review cs-escalated orders. Check if TL responded and update.</div><div class="step-ar">راجعي الـ cs-escalated — فيه رد من TL؟</div></div></div>
+          <div class="step"><div class="step-num">3</div><div><div class="step-title">Check Bosta Dashboard</div><div class="step-desc">Review failed and delayed deliveries. Flag accordingly.</div><div class="step-ar">راجعي Bosta وابعتيلها Flag للمتأخرة والفاشلة</div></div></div>
+          <div class="step"><div class="step-num">4</div><div><div class="step-title">Open Customer Messages</div><div class="step-desc">Reply to all pending messages within first 30 minutes.</div><div class="step-ar">ردي على كل الرسايل الـ pending في أول 30 دقيقة</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🌇 End of Shift</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div><div class="step-title">Update All Open Orders</div><div class="step-desc">Every order you touched needs correct tag and note.</div><div class="step-ar">كل أوردر لمستيه — تاق صح + نوت</div></div></div>
+          <div class="step"><div class="step-num">2</div><div><div class="step-title">Resolve or Follow Up</div><div class="step-desc">Close what you can. Tag tomorrow's work as cs-follow-up.</div><div class="step-ar">اغلقي اللي ممكن — الباقي cs-follow-up</div></div></div>
+          <div class="step"><div class="step-num">3</div><div><div class="step-title">Escalation Summary</div><div class="step-desc">Send TL a short summary of today's escalations with order numbers.</div><div class="step-ar">ابعتي سمري للـ TL بالـ escalations النهارده</div></div></div>
+          <div class="step"><div class="step-num">4</div><div><div class="step-title">Log Refund Requests</div><div class="step-desc">All refund requests must be logged in Refund Portal.</div><div class="step-ar">كل طلبات الاسترداد — في Refund Portal</div></div></div>
+        </div>
+      </div>
     </div>
-    <div class="kpi">
-      <div class="kpi-label">Escalations Today</div>
-      <div class="kpi-value">12</div>
-      <div class="kpi-sub">↓ 3 vs yesterday</div>
+  </div>
+
+  <!-- FLOW -->
+  <div id="tab-flow" class="section">
+    <div class="alert alert-info">
+      <span class="alert-icon">🌳</span>
+      <div>Follow each step in order during live customer conversations. Do not skip to resolution before completing diagnosis.</div>
     </div>
-  </section>
-
-  <!-- SOP LIBRARY -->
-  <section>
-    <div class="sec-head">
-      <div>
-        <div class="sec-title">SOP Library</div>
-        <div class="sec-sub">Standard operating procedures, workflows, and operational references</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📦 Delivery Issue Flow</div>
+        <div class="flow">
+          <div class="flow-node">Customer reports: Order not received / delayed</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node decision">Check Bosta — What is the current status?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <div class="flow-label">In Transit</div>
+              <div class="flow-node action">Share ETA — Tag: delivery-delayed — Follow up 24h</div>
+            </div>
+            <div class="flow-branch-item">
+              <div class="flow-label">Failed</div>
+              <div class="flow-node escalate">Reschedule — Tag: delivery-failed — Notify Bosta</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node decision">Was the issue resolved?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <div class="flow-label">Yes</div>
+              <div class="flow-node action">Tag: cs-resolved — Add closing note</div>
+            </div>
+            <div class="flow-branch-item">
+              <div class="flow-label">No</div>
+              <div class="flow-node escalate">Tag: cs-escalated — Notify TL</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <span class="view-all">View all →</span>
+      <div class="card">
+        <div class="card-title">💰 Refund Request Flow</div>
+        <div class="flow">
+          <div class="flow-node">Customer requests a refund</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node decision">Is order eligible per policy?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <div class="flow-label">Yes</div>
+              <div class="flow-node action">Log in Portal — Tag: refund-requested — Notify finance</div>
+            </div>
+            <div class="flow-branch-item">
+              <div class="flow-label">No</div>
+              <div class="flow-node escalate">Explain policy — Tag: refund-rejected — Offer alternative</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node decision">Has refund been processed?</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <div class="flow-label">Yes</div>
+              <div class="flow-node action">Tag: refund-approved — Confirm with customer — cs-resolved</div>
+            </div>
+            <div class="flow-branch-item">
+              <div class="flow-label">Pending</div>
+              <div class="flow-node escalate">Tag: cs-follow-up — Check again in 24h</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="cards">
-
-      <a href="sop-cheatsheet.html" class="card">
-        <div class="card-top">
-          <div class="card-icon">⚡</div>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <div class="card-title">CS Daily Cheat Sheet</div>
-        <div class="card-desc">Quick operational guide for Shopify tags, daily routines, notes, refunds, and saved views used by CS teams every day.</div>
-        <div class="tags">
-          <span class="tag">CS</span>
-          <span class="tag">Shopify</span>
-          <span class="tag">Daily Ops</span>
-          <span class="tag">Tags</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open SOP →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="scenarios.html#delivery" class="card">
-        <div class="card-top">
-          <div class="card-icon">📦</div>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <div class="card-title">Delivery Decision Flow</div>
-        <div class="card-desc">Interactive customer issue flow covering delayed delivery, missing items, damaged packages, and escalation paths step by step.</div>
-        <div class="tags">
-          <span class="tag">Scenarios</span>
-          <span class="tag">Delivery</span>
-          <span class="tag">Escalation</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open Flow →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="portal.html" class="card">
-        <div class="card-top">
-          <div class="card-icon">💰</div>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <div class="card-title">Refund Operations</div>
-        <div class="card-desc">Refund policies, processing timelines, customer communication templates, and finance escalation handling.</div>
-        <div class="tags">
-          <span class="tag">Finance</span>
-          <span class="tag">Refunds</span>
-          <span class="tag">Policies</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open SOP →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="scenarios.html#returns" class="card">
-        <div class="card-top">
-          <div class="card-icon">🔄</div>
-          <span class="badge badge-review">Review</span>
-        </div>
-        <div class="card-title">Returns & Exchanges</div>
-        <div class="card-desc">Step-by-step return and exchange handling process including customer communication, Bosta coordination, and refund triggers.</div>
-        <div class="tags">
-          <span class="tag">Returns</span>
-          <span class="tag">Bosta</span>
-          <span class="tag">Exchange</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open Flow →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="escalation.html" class="card">
-        <div class="card-top">
-          <div class="card-icon">🚨</div>
-          <span class="badge badge-active">Active</span>
-        </div>
-        <div class="card-title">Escalation Protocol</div>
-        <div class="card-desc">When and how to escalate customer issues to team leads, operations, or product. Includes escalation form and decision criteria.</div>
-        <div class="tags">
-          <span class="tag">Escalation</span>
-          <span class="tag">TL</span>
-          <span class="tag">Operations</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open Protocol →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="qa.html" class="card">
-        <div class="card-top">
-          <div class="card-icon">⭐</div>
-          <span class="badge badge-new">New</span>
-        </div>
-        <div class="card-title">QA Audit Guidelines</div>
-        <div class="card-desc">Quality assurance criteria, scoring rubrics, evaluation categories, and feedback protocols for CS team performance.</div>
-        <div class="tags">
-          <span class="tag">QA</span>
-          <span class="tag">Quality</span>
-          <span class="tag">Audit</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-link">Open Guidelines →</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </a>
-
+  <!-- TEMPLATES -->
+  <div id="tab-templates" class="section">
+    <div class="alert alert-success">
+      <span class="alert-icon">💬</span>
+      <div>Always personalize with customer name and order number before sending.</div>
     </div>
-  </section>
-
-  <!-- QUICK ACTIONS -->
-  <section class="quick">
-    <div class="sec-title">Quick Actions</div>
-    <div class="quick-grid">
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">🚨 Escalation Form</div>
-          <div class="quick-desc">Submit a customer or operational escalation</div>
-        </div>
-        <a href="escalation.html"><button class="quick-btn">Open</button></a>
+    <div class="grid-1">
+      <div class="note-card">
+        <div class="note-label">📦 Delayed Delivery</div>
+        <div class="note-text">Hi [Customer Name], thank you for reaching out. We have checked your order #[Order Number] and it is currently in transit. Expected delivery within [X] business days. We apologize for the delay.</div>
+        <div class="note-ar">أهلاً [اسم العميل]، شكراً على تواصلك. راجعنا طلبك رقم #[رقم الأوردر] وهو في الطريق. التسليم المتوقع خلال [X] أيام عمل. نعتذر عن التأخير.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copy English ↗</button>
       </div>
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">💰 Refund Lookup</div>
-          <div class="quick-desc">Search refund records and payment status</div>
-        </div>
-        <a href="portal.html"><button class="quick-btn">Search</button></a>
+      <div class="note-card">
+        <div class="note-label">🔄 Return Confirmation</div>
+        <div class="note-text">Hi [Customer Name], we have received your return request for order #[Order Number]. Our team will process this within 3–5 business days. You will receive a confirmation once completed.</div>
+        <div class="note-ar">أهلاً [اسم العميل]، استلمنا طلب الإرجاع للأوردر #[رقم الأوردر]. فريقنا هيعالجه خلال 3–5 أيام عمل. هتوصلك رسالة تأكيد لما يكتمل.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copy English ↗</button>
       </div>
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">🌳 Scenario Library</div>
-          <div class="quick-desc">Browse 62 customer scenarios with decision trees</div>
-        </div>
-        <a href="scenarios.html"><button class="quick-btn">Browse</button></a>
+      <div class="note-card">
+        <div class="note-label">💰 Refund Approved</div>
+        <div class="note-text">Hi [Customer Name], your refund for order #[Order Number] has been approved and is being processed. The amount will reflect in your account within 5–7 business days depending on your bank.</div>
+        <div class="note-ar">أهلاً [اسم العميل]، طلب الاسترداد للأوردر #[رقم الأوردر] اتوافق عليه وبيتعالج. المبلغ هيظهر في حسابك خلال 5–7 أيام عمل.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copy English ↗</button>
       </div>
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">⚡ CS Cheat Sheet</div>
-          <div class="quick-desc">Daily tags, views, and response templates</div>
-        </div>
-        <a href="sop-cheatsheet.html"><button class="quick-btn">Open</button></a>
+      <div class="note-card">
+        <div class="note-label">🚨 Escalation Notice</div>
+        <div class="note-text">Hi [Customer Name], we understand your concern. We are escalating your case to our senior team who will follow up with you within 24 hours. We appreciate your patience.</div>
+        <div class="note-ar">أهلاً [اسم العميل]، فاهمين قلقك. بنصعّد قضيتك للفريق المتخصص اللي هيتواصل معاك خلال 24 ساعة. شكراً لصبرك.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copy English ↗</button>
       </div>
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">⭐ QA Audit</div>
-          <div class="quick-desc">Quality scoring and evaluation guidelines</div>
-        </div>
-        <a href="qa.html"><button class="quick-btn">View</button></a>
-      </div>
-
-      <div class="quick-item">
-        <div>
-          <div class="quick-title">📋 All Scenarios</div>
-          <div class="quick-desc">Full scenario library with filters</div>
-        </div>
-        <a href="scenarios.html"><button class="quick-btn">View</button></a>
-      </div>
-
     </div>
-  </section>
+  </div>
+
+  <!-- VIEWS -->
+  <div id="tab-views" class="section">
+    <div class="alert alert-info">
+      <span class="alert-icon">👁️</span>
+      <div>Save these views in Shopify: Orders → Add filter → Save as view.</div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📌 Essential Daily Views</div>
+        <div class="steps">
+          <div class="step"><div class="step-num" style="background:#ef4444;">!</div><div><div class="step-title">Priority Queue</div><div class="step-desc">Filter: cs-pending + cs-follow-up — Main working view every shift.</div><div class="step-ar">الـ view الرئيسي بتاعتك كل شيفت</div></div></div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;">↑</div><div><div class="step-title">Escalated Cases</div><div class="step-desc">Filter: cs-escalated — Check at start and end of shift.</div><div class="step-ar">راجعيها أول وآخر الشيفت</div></div></div>
+          <div class="step"><div class="step-num" style="background:#10b981;">✓</div><div><div class="step-title">Today's Resolved</div><div class="step-desc">Filter: cs-resolved + today's date — Track daily resolution count.</div><div class="step-ar">تتبعي إنجازك اليومي</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📦 Delivery Views</div>
+        <div class="steps">
+          <div class="step"><div class="step-num" style="background:#f59e0b;">⏱</div><div><div class="step-title">Delayed Deliveries</div><div class="step-desc">Filter: delivery-delayed — Follow up with Bosta daily.</div><div class="step-ar">راجعيها مع Bosta كل يوم</div></div></div>
+          <div class="step"><div class="step-num" style="background:#ef4444;">✗</div><div><div class="step-title">Failed Deliveries</div><div class="step-desc">Filter: delivery-failed — Immediate action needed.</div><div class="step-ar">دي محتاجة action فوري</div></div></div>
+          <div class="step"><div class="step-num" style="background:#7c3aed;">↩</div><div><div class="step-title">Returned Packages</div><div class="step-desc">Filter: delivery-returned — Trigger return flow and notify customer.</div><div class="step-ar">افتحي Return Flow وابعتي للعميل</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="footer">
     Mavin Wear Operations Hub · Powered by <span>EverGPT</span>
   </div>
-
 </main>
+
+<script>
+  function switchTab(name, el){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    el.classList.add('active');
+  }
+  function copyText(btn){
+    const text = btn.previousElementSibling.previousElementSibling.innerText;
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.innerText='Copied ✓';
+      setTimeout(()=>btn.innerText='Copy English ↗',2000);
+    });
+  }
+</script>
 </body>
 </html>
+    
