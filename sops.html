@@ -1,857 +1,546 @@
- <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MAVIN OPS HUB — SOP Library</title>
-
+  <title>Mavin Wear — SOP Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --fd-indigo:#4b4bf9;
-      --fd-midnight:#09092d;
-      --fd-white:#ffffff;
-      --fd-light:#f3f3f7;
-      --fd-border:#e5e7eb;
-      --fd-text:#1f2937;
-      --fd-muted:#6b7280;
-      --fd-success:#10b981;
-      --fd-warning:#f59e0b;
-      --fd-danger:#ef4444;
-      --fd-info:#3b82f6;
-      --radius:18px;
+      --indigo:#4b4bf9;
+      --midnight:#09092d;
+      --white:#ffffff;
+      --light:#f3f3f7;
+      --border:#e5e7eb;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --success:#10b981;
+      --warning:#f59e0b;
+      --danger:#ef4444;
     }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
+    a{text-decoration:none;color:inherit;}
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    body{
-      font-family:'Inter',sans-serif;
-      background:var(--fd-light);
-      color:var(--fd-text);
-    }
-
-    .layout{
-      display:flex;
-      min-height:100vh;
-    }
-
-    /* Sidebar */
-
+    /* SIDEBAR */
     .sidebar{
-      width:270px;
-      background:var(--fd-midnight);
-      color:#fff;
-      padding:24px 18px;
-      position:fixed;
-      height:100vh;
-      overflow:auto;
+      width:260px;background:var(--midnight);color:#fff;
+      padding:28px 18px;position:fixed;height:100vh;
+      overflow-y:auto;z-index:100;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:34px;
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
+    .brand-logo{
+      width:44px;height:44px;border-radius:12px;
+      background:var(--indigo);color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:20px;
     }
+    .brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
+    .brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
 
-    .brand img{
-      width:120px;
-      filter:brightness(0) invert(1);
+    .sidebar-label{
+      font-size:10px;font-weight:700;letter-spacing:1.5px;
+      text-transform:uppercase;color:#8f90c7;
+      margin:24px 0 10px 6px;
     }
-
-    .brand-badge{
-      width:42px;
-      height:42px;
-      border-radius:12px;
-      background:#fff;
-      color:var(--fd-midnight);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      font-size:18px;
-    }
-
-    .sidebar-section{
-      margin-bottom:28px;
-    }
-
-    .sidebar-title{
-      font-size:11px;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-      color:#8f90c7;
-      margin-bottom:12px;
-      font-weight:700;
-    }
-
     .nav-item{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px 14px;
-      border-radius:12px;
-      color:#d5d7ff;
-      text-decoration:none;
-      font-size:14px;
-      font-weight:600;
-      margin-bottom:6px;
-      transition:.2s;
+      display:flex;align-items:center;gap:12px;
+      padding:11px 14px;border-radius:12px;
+      color:#c7c9f0;font-size:13.5px;font-weight:600;
+      margin-bottom:4px;transition:.15s;cursor:pointer;
     }
+    .nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+    .nav-item.active{background:var(--indigo);color:#fff;}
+    .nav-icon{font-size:16px;width:20px;text-align:center;}
 
-    .nav-item:hover{
-      background:rgba(255,255,255,.08);
-    }
+    /* MAIN */
+    .main{margin-left:260px;min-height:100vh;padding:32px;}
 
-    .nav-item.active{
-      background:var(--fd-indigo);
-      color:#fff;
-    }
-
-    /* Main */
-
-    .main{
-      margin-left:270px;
-      width:calc(100% - 270px);
-      padding:28px;
-    }
-
+    /* TOPBAR */
     .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:28px;
+      display:flex;justify-content:space-between;
+      align-items:center;margin-bottom:30px;gap:16px;
     }
-
-    .search-box{
-      background:#fff;
-      border:1px solid var(--fd-border);
-      border-radius:14px;
-      width:420px;
-      display:flex;
-      align-items:center;
-      padding:14px 18px;
-      gap:10px;
+    .search-wrap{
+      flex:1;max-width:480px;
+      background:#fff;border:1.5px solid var(--border);
+      border-radius:14px;display:flex;
+      align-items:center;padding:13px 18px;gap:10px;
     }
-
-    .search-box input{
-      border:none;
-      outline:none;
-      width:100%;
-      font-size:14px;
-      background:none;
+    .search-wrap input{
+      border:none;outline:none;width:100%;
+      font-size:14px;font-family:'Inter',sans-serif;background:none;
     }
-
-    .top-actions{
-      display:flex;
-      align-items:center;
-      gap:14px;
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .lang-btn{
+      background:#fff;border:1.5px solid var(--border);
+      border-radius:10px;padding:10px 16px;
+      font-size:13px;font-weight:700;cursor:pointer;
+      transition:.15s;
     }
-
-    .lang-switch{
-      background:#fff;
-      border:1px solid var(--fd-border);
-      padding:10px 14px;
-      border-radius:12px;
-      font-size:13px;
-      font-weight:700;
+    .lang-btn:hover{border-color:var(--indigo);color:var(--indigo);}
+    .profile-pill{
+      background:#fff;border:1.5px solid var(--border);
+      border-radius:14px;padding:8px 14px;
+      display:flex;align-items:center;gap:10px;
     }
-
-    .profile{
-      background:#fff;
-      border:1px solid var(--fd-border);
-      padding:8px 12px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
     .avatar{
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      background:var(--fd-midnight);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
+      width:34px;height:34px;border-radius:50%;
+      background:var(--midnight);color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:13px;
     }
+    .profile-name{font-size:13px;font-weight:700;}
+    .profile-role{font-size:11px;color:var(--muted);}
 
-    /* Hero */
-
+    /* HERO */
     .hero{
-      background:linear-gradient(135deg,#09092d 0%,#1d1d63 100%);
-      color:#fff;
-      border-radius:28px;
-      padding:34px;
-      margin-bottom:28px;
-      position:relative;
-      overflow:hidden;
+      background:linear-gradient(130deg,#09092d 0%,#16165a 100%);
+      border-radius:24px;padding:40px;
+      margin-bottom:28px;position:relative;overflow:hidden;
     }
-
+    .hero::before{
+      content:'';position:absolute;right:-60px;top:-60px;
+      width:260px;height:260px;
+      background:rgba(75,75,249,.15);border-radius:50%;
+    }
     .hero::after{
-      content:'';
-      position:absolute;
-      right:-80px;
-      top:-80px;
-      width:240px;
-      height:240px;
-      background:rgba(255,255,255,.05);
-      border-radius:50%;
+      content:'';position:absolute;right:80px;bottom:-80px;
+      width:180px;height:180px;
+      background:rgba(191,161,255,.08);border-radius:50%;
     }
-
-    .hero-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.08);
-      padding:8px 14px;
-      border-radius:100px;
-      font-size:12px;
-      font-weight:700;
-      margin-bottom:18px;
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+      padding:7px 16px;border-radius:100px;
+      font-size:11px;font-weight:700;color:#bfa1ff;
+      letter-spacing:.5px;margin-bottom:20px;
     }
-
     .hero h1{
-      font-size:38px;
-      line-height:1.1;
-      margin-bottom:12px;
+      font-size:36px;font-weight:900;color:#fff;
+      line-height:1.15;margin-bottom:14px;
     }
+    .hero h1 span{color:#bfa1ff;}
+    .hero p{color:#a5b4fc;font-size:15px;line-height:1.7;max-width:600px;}
 
-    .hero h1 span{
-      color:#bfa1ff;
-    }
-
-    .hero p{
-      color:#d1d5db;
-      max-width:700px;
-      line-height:1.7;
-      font-size:15px;
-    }
-
-    /* KPI */
-
+    /* KPIS */
     .kpis{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-bottom:28px;
+      display:grid;grid-template-columns:repeat(4,1fr);
+      gap:18px;margin-bottom:30px;
     }
-
     .kpi{
-      background:#fff;
-      border-radius:20px;
-      border:1px solid var(--fd-border);
-      padding:22px;
+      background:#fff;border-radius:18px;
+      border:1.5px solid var(--border);padding:22px 24px;
     }
+    .kpi-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;}
+    .kpi-value{font-size:34px;font-weight:900;color:var(--midnight);}
+    .kpi-sub{font-size:11px;color:var(--success);font-weight:700;margin-top:6px;}
 
-    .kpi-label{
-      color:var(--fd-muted);
-      font-size:13px;
-      margin-bottom:10px;
-      font-weight:600;
+    /* SECTION HEADER */
+    .sec-head{
+      display:flex;justify-content:space-between;
+      align-items:flex-end;margin-bottom:20px;
     }
-
-    .kpi-value{
-      font-size:32px;
-      font-weight:800;
-      color:var(--fd-midnight);
-    }
-
-    /* Sections */
-
-    .section{
-      margin-bottom:32px;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:18px;
-    }
-
-    .section-title{
-      font-size:22px;
-      font-weight:800;
-      color:var(--fd-midnight);
-    }
-
-    .section-sub{
-      color:var(--fd-muted);
-      font-size:14px;
-      margin-top:4px;
-    }
-
-    /* SOP Cards */
-
-    .sop-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:20px;
-    }
-
-    .sop-card{
-      background:#fff;
-      border-radius:22px;
-      border:1px solid var(--fd-border);
-      padding:24px;
-      transition:.2s;
+    .sec-title{font-size:20px;font-weight:800;color:var(--midnight);}
+    .sec-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+    .view-all{
+      font-size:13px;font-weight:700;color:var(--indigo);
       cursor:pointer;
     }
 
-    .sop-card:hover{
+    /* CARDS GRID */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:20px;margin-bottom:32px;
+    }
+    .card{
+      background:#fff;border-radius:22px;
+      border:1.5px solid var(--border);
+      padding:26px;transition:.2s;
+      display:flex;flex-direction:column;
+    }
+    .card:hover{
       transform:translateY(-4px);
-      border-color:var(--fd-indigo);
-      box-shadow:0 10px 30px rgba(75,75,249,.08);
+      border-color:var(--indigo);
+      box-shadow:0 12px 32px rgba(75,75,249,.1);
     }
-
-    .sop-top{
-      display:flex;
-      justify-content:space-between;
-      margin-bottom:18px;
+    .card-top{
+      display:flex;justify-content:space-between;
+      align-items:flex-start;margin-bottom:18px;
     }
-
-    .sop-icon{
-      width:56px;
-      height:56px;
-      border-radius:16px;
-      background:#eef2ff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
+    .card-icon{
+      width:52px;height:52px;border-radius:16px;
+      background:#eef2ff;display:flex;
+      align-items:center;justify-content:center;font-size:22px;
     }
-
-    .status{
-      padding:7px 12px;
-      border-radius:100px;
-      font-size:11px;
-      font-weight:700;
-      height:fit-content;
+    .badge{
+      padding:6px 12px;border-radius:100px;
+      font-size:11px;font-weight:700;
     }
+    .badge-active{background:#ecfdf5;color:#047857;}
+    .badge-review{background:#fff7ed;color:#b45309;}
+    .badge-new{background:#eef2ff;color:#4338ca;}
 
-    .status.active{
-      background:#ecfdf5;
-      color:#047857;
-    }
+    .card-title{font-size:17px;font-weight:800;color:var(--midnight);margin-bottom:8px;}
+    .card-desc{font-size:13.5px;color:var(--muted);line-height:1.7;flex:1;margin-bottom:18px;}
 
-    .status.review{
-      background:#fff7ed;
-      color:#b45309;
-    }
-
-    .sop-title{
-      font-size:20px;
-      font-weight:800;
-      margin-bottom:10px;
-      color:var(--fd-midnight);
-    }
-
-    .sop-desc{
-      color:var(--fd-muted);
-      line-height:1.7;
-      font-size:14px;
-      margin-bottom:18px;
-    }
-
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-bottom:18px;
-    }
-
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
     .tag{
-      padding:6px 10px;
-      border-radius:100px;
-      background:#f4f4f5;
-      font-size:11px;
-      font-weight:700;
-      color:#52525b;
+      padding:5px 10px;border-radius:100px;
+      background:#f4f4f5;font-size:11px;
+      font-weight:700;color:#52525b;
     }
 
     .card-footer{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding-top:16px;
-      border-top:1px solid #f1f1f1;
+      display:flex;justify-content:space-between;
+      align-items:center;padding-top:16px;
+      border-top:1px solid #f1f1f1;margin-top:auto;
     }
-
-    .flow{
-      font-size:13px;
-      font-weight:700;
-      color:var(--fd-indigo);
+    .card-link{font-size:13px;font-weight:700;color:var(--indigo);}
+    .card-arrow{
+      width:32px;height:32px;border-radius:50%;
+      background:var(--indigo);color:#fff;
+      display:flex;align-items:center;
+      justify-content:center;font-size:14px;
+      transition:.15s;
     }
+    .card:hover .card-arrow{background:var(--midnight);}
 
-    .arrow{
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      background:var(--fd-indigo);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
+    /* QUICK ACTIONS */
+    .quick{
+      background:#fff;border-radius:22px;
+      border:1.5px solid var(--border);
+      padding:28px;margin-bottom:32px;
     }
-
-    /* Quick Panel */
-
-    .quick-panel{
-      background:#fff;
-      border-radius:22px;
-      border:1px solid var(--fd-border);
-      padding:24px;
+    .quick-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:14px;margin-top:20px;
     }
-
-    .quick-list{
-      display:grid;
-      gap:14px;
-      margin-top:18px;
-    }
-
     .quick-item{
-      padding:16px;
-      border-radius:16px;
-      background:#f9fafb;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      background:#f9fafb;border-radius:16px;
+      border:1.5px solid var(--border);
+      padding:18px;display:flex;
+      justify-content:space-between;align-items:center;gap:12px;
     }
-
-    .quick-left h4{
-      font-size:14px;
-      margin-bottom:4px;
-    }
-
-    .quick-left p{
-      font-size:12px;
-      color:var(--fd-muted);
-    }
-
+    .quick-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+    .quick-desc{font-size:12px;color:var(--muted);}
     .quick-btn{
-      background:var(--fd-indigo);
-      color:#fff;
-      border:none;
-      border-radius:10px;
-      padding:10px 14px;
-      font-size:12px;
-      font-weight:700;
+      background:var(--indigo);color:#fff;
+      border:none;border-radius:10px;
+      padding:10px 16px;font-size:12px;
+      font-weight:700;cursor:pointer;
+      white-space:nowrap;font-family:'Inter',sans-serif;
+      transition:.15s;
     }
+    .quick-btn:hover{background:var(--midnight);}
 
+    /* FOOTER */
     .footer{
-      margin-top:40px;
-      text-align:center;
-      color:#9ca3af;
-      font-size:12px;
-      padding-bottom:20px;
+      text-align:center;padding:24px 0 8px;
+      color:#9ca3af;font-size:12px;
     }
+    .footer span{color:var(--indigo);font-weight:700;}
 
-    .footer span{
-      color:var(--fd-indigo);
-      font-weight:700;
-    }
-
+    /* RESPONSIVE */
     @media(max-width:1100px){
-      .kpis{
-        grid-template-columns:repeat(2,1fr);
-      }
+      .kpis{grid-template-columns:repeat(2,1fr);}
     }
-
     @media(max-width:900px){
-
-      .sidebar{
-        display:none;
-      }
-
-      .main{
-        margin-left:0;
-        width:100%;
-      }
-
-      .topbar{
-        flex-direction:column;
-        gap:14px;
-        align-items:stretch;
-      }
-
-      .search-box{
-        width:100%;
-      }
-
-      .kpis{
-        grid-template-columns:1fr;
-      }
-
-      .sop-grid{
-        grid-template-columns:1fr;
-      }
+      .sidebar{display:none;}
+      .main{margin-left:0;}
+      .topbar{flex-wrap:wrap;}
+      .search-wrap{max-width:100%;}
+      .kpis{grid-template-columns:1fr 1fr;}
     }
-
+    @media(max-width:600px){
+      .kpis{grid-template-columns:1fr;}
+      .hero h1{font-size:26px;}
+      .main{padding:18px;}
+    }
   </style>
 </head>
-
 <body>
 
-<div class="layout">
-
-  <!-- Sidebar -->
-
-  <aside class="sidebar">
-
-    <div class="brand">
-      <div class="brand-badge">M</div>
-
-      <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Foundever_logo.svg" alt="Foundever">
-      </div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo">M</div>
+    <div>
+      <div class="brand-name">Mavin Wear</div>
+      <div class="brand-sub">Operations Hub</div>
     </div>
+  </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-title">Workspace</div>
+  <div class="sidebar-label">Workspace</div>
+  <a href="sops.html" class="nav-item active">
+    <span class="nav-icon">📚</span> SOP Library
+  </a>
+  <a href="scenarios.html" class="nav-item">
+    <span class="nav-icon">🌳</span> Scenarios
+  </a>
+  <a href="portal.html" class="nav-item">
+    <span class="nav-icon">💰</span> Refunds
+  </a>
+  <a href="escalation.html" class="nav-item">
+    <span class="nav-icon">🚨</span> Escalations
+  </a>
+  <a href="qa.html" class="nav-item">
+    <span class="nav-icon">⭐</span> QA Audit
+  </a>
 
-      <a class="nav-item active" href="#">
-        📚 SOP Library
-      </a>
+  <div class="sidebar-label">Quick Access</div>
+  <a href="scenarios.html#delivery" class="nav-item">
+    <span class="nav-icon">📦</span> Delivery Issues
+  </a>
+  <a href="scenarios.html#returns" class="nav-item">
+    <span class="nav-icon">🔄</span> Return Process
+  </a>
+  <a href="scenarios.html#cancel" class="nav-item">
+    <span class="nav-icon">❌</span> Cancel Order
+  </a>
+  <a href="sop-cheatsheet.html" class="nav-item">
+    <span class="nav-icon">📞</span> CS Cheat Sheet
+  </a>
+</aside>
 
-      <a class="nav-item" href="#">
-        🌳 Scenarios
-      </a>
+<!-- MAIN -->
+<main class="main">
 
-      <a class="nav-item" href="#">
-        💰 Refunds
-      </a>
-
-      <a class="nav-item" href="#">
-        🚨 Escalations
-      </a>
-
-      <a class="nav-item" href="#">
-        ⭐ QA Audit
-      </a>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="search-wrap">
+      <span>🔍</span>
+      <input type="text" placeholder="Search SOPs, scenarios, policies..." />
     </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Quick Access</div>
-
-      <a class="nav-item" href="#">
-        📦 Delivery Issues
-      </a>
-
-      <a class="nav-item" href="#">
-        🔄 Return Process
-      </a>
-
-      <a class="nav-item" href="#">
-        ❌ Cancel Order
-      </a>
-
-      <a class="nav-item" href="#">
-        📞 Customer Replies
-      </a>
-    </div>
-
-  </aside>
-
-  <!-- Main -->
-
-  <main class="main">
-
-    <!-- Top -->
-
-    <div class="topbar">
-
-      <div class="search-box">
-        🔍
-        <input type="text" placeholder="Search SOPs, scenarios, policies..." />
-      </div>
-
-      <div class="top-actions">
-
-        <div class="lang-switch">
-          EN / AR
-        </div>
-
-        <div class="profile">
-          <div class="avatar">A</div>
-
-          <div>
-            <div style="font-size:13px;font-weight:700;">Agent Support</div>
-            <div style="font-size:11px;color:#6b7280;">CS Operations</div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- Hero -->
-
-    <section class="hero">
-
-      <div class="hero-badge">
-        ⚡ Operations Knowledge Hub
-      </div>
-
-      <h1>
-        Operational Knowledge <span>Workspace</span>
-      </h1>
-
-      <p>
-        Centralized SOPs, scenarios, policies, escalation paths, and operational workflows for Customer Support, Operations, QA, and Finance teams.
-      </p>
-
-    </section>
-
-    <!-- KPI -->
-
-    <section class="kpis">
-
-      <div class="kpi">
-        <div class="kpi-label">Total SOPs</div>
-        <div class="kpi-value">48</div>
-      </div>
-
-      <div class="kpi">
-        <div class="kpi-label">Active Scenarios</div>
-        <div class="kpi-value">62</div>
-      </div>
-
-      <div class="kpi">
-        <div class="kpi-label">Daily Searches</div>
-        <div class="kpi-value">146</div>
-      </div>
-
-      <div class="kpi">
-        <div class="kpi-label">Escalations Today</div>
-        <div class="kpi-value">12</div>
-      </div>
-
-    </section>
-
-    <!-- SOP Section -->
-
-    <section class="section">
-
-      <div class="section-head">
-
+    <div class="topbar-right">
+      <button class="lang-btn">EN / AR</button>
+      <div class="profile-pill">
+        <div class="avatar">A</div>
         <div>
-          <div class="section-title">
-            SOP Library
-          </div>
-
-          <div class="section-sub">
-            Standard operating procedures, workflows, and operational references.
-          </div>
+          <div class="profile-name">Agent Support</div>
+          <div class="profile-role">CS Operations</div>
         </div>
-
       </div>
+    </div>
+  </div>
 
-      <div class="sop-grid">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">⚡ Operations Knowledge Hub</div>
+    <h1>Operational Knowledge <span>Workspace</span></h1>
+    <p>Centralized SOPs, scenarios, policies, escalation paths, and operational workflows for CS, Operations, QA, and Finance teams.</p>
+  </section>
 
-        <!-- Card -->
+  <!-- KPIS -->
+  <section class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Total SOPs</div>
+      <div class="kpi-value">48</div>
+      <div class="kpi-sub">↑ 4 this month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Active Scenarios</div>
+      <div class="kpi-value">62</div>
+      <div class="kpi-sub">↑ 8 this month</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Daily Searches</div>
+      <div class="kpi-value">146</div>
+      <div class="kpi-sub">↑ 12% vs last week</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Escalations Today</div>
+      <div class="kpi-value">12</div>
+      <div class="kpi-sub">↓ 3 vs yesterday</div>
+    </div>
+  </section>
 
-        <div class="sop-card">
-
-          <div class="sop-top">
-
-            <div class="sop-icon">
-              ⚡
-            </div>
-
-            <div class="status active">
-              Active
-            </div>
-
-          </div>
-
-          <div class="sop-title">
-            CS Daily Cheat Sheet
-          </div>
-
-          <div class="sop-desc">
-            Quick operational guide for Shopify tags, daily routines, notes, refunds, and saved views used by CS teams every day.
-          </div>
-
-          <div class="tags">
-            <div class="tag">CS</div>
-            <div class="tag">Shopify</div>
-            <div class="tag">Daily Ops</div>
-            <div class="tag">Tags</div>
-          </div>
-
-          <div class="card-footer">
-            <div class="flow">
-              Open SOP →
-            </div>
-
-            <div class="arrow">
-              →
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Card -->
-
-        <div class="sop-card">
-
-          <div class="sop-top">
-
-            <div class="sop-icon">
-              🌳
-            </div>
-
-            <div class="status review">
-              Review
-            </div>
-
-          </div>
-
-          <div class="sop-title">
-            Delivery Decision Flow
-          </div>
-
-          <div class="sop-desc">
-            Interactive customer issue flow covering delayed delivery, missing items, damaged packages, and escalation paths.
-          </div>
-
-          <div class="tags">
-            <div class="tag">Scenarios</div>
-            <div class="tag">Delivery</div>
-            <div class="tag">Escalation</div>
-          </div>
-
-          <div class="card-footer">
-            <div class="flow">
-              Open Flow →
-            </div>
-
-            <div class="arrow">
-              →
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Card -->
-
-        <div class="sop-card">
-
-          <div class="sop-top">
-
-            <div class="sop-icon">
-              💰
-            </div>
-
-            <div class="status active">
-              Active
-            </div>
-
-          </div>
-
-          <div class="sop-title">
-            Refund Operations
-          </div>
-
-          <div class="sop-desc">
-            Refund policies, processing timelines, customer communication templates, and finance escalation handling.
-          </div>
-
-          <div class="tags">
-            <div class="tag">Finance</div>
-            <div class="tag">Refunds</div>
-            <div class="tag">Policies</div>
-          </div>
-
-          <div class="card-footer">
-            <div class="flow">
-              Open SOP →
-            </div>
-
-            <div class="arrow">
-              →
-            </div>
-          </div>
-
-        </div>
-
+  <!-- SOP LIBRARY -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">SOP Library</div>
+        <div class="sec-sub">Standard operating procedures, workflows, and operational references</div>
       </div>
-
-    </section>
-
-    <!-- Quick Actions -->
-
-    <section class="quick-panel">
-
-      <div class="section-title">
-        Quick Actions
-      </div>
-
-      <div class="quick-list">
-
-        <div class="quick-item">
-
-          <div class="quick-left">
-            <h4>Open Escalation Form</h4>
-            <p>Submit operational or customer escalation requests.</p>
-          </div>
-
-          <button class="quick-btn">
-            Open
-          </button>
-
-        </div>
-
-        <div class="quick-item">
-
-          <div class="quick-left">
-            <h4>Refund Lookup</h4>
-            <p>Search refund records and payment status.</p>
-          </div>
-
-          <button class="quick-btn">
-            Search
-          </button>
-
-        </div>
-
-        <div class="quick-item">
-
-          <div class="quick-left">
-            <h4>Customer Response Templates</h4>
-            <p>Copy approved bilingual customer responses.</p>
-          </div>
-
-          <button class="quick-btn">
-            View
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <div class="footer">
-      Powered by <span>EverGPT</span>
+      <span class="view-all">View all →</span>
     </div>
 
-  </main>
+    <div class="cards">
 
-</div>
+      <a href="sop-cheatsheet.html" class="card">
+        <div class="card-top">
+          <div class="card-icon">⚡</div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-title">CS Daily Cheat Sheet</div>
+        <div class="card-desc">Quick operational guide for Shopify tags, daily routines, notes, refunds, and saved views used by CS teams every day.</div>
+        <div class="tags">
+          <span class="tag">CS</span>
+          <span class="tag">Shopify</span>
+          <span class="tag">Daily Ops</span>
+          <span class="tag">Tags</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open SOP →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
 
+      <a href="scenarios.html#delivery" class="card">
+        <div class="card-top">
+          <div class="card-icon">📦</div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-title">Delivery Decision Flow</div>
+        <div class="card-desc">Interactive customer issue flow covering delayed delivery, missing items, damaged packages, and escalation paths step by step.</div>
+        <div class="tags">
+          <span class="tag">Scenarios</span>
+          <span class="tag">Delivery</span>
+          <span class="tag">Escalation</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open Flow →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="portal.html" class="card">
+        <div class="card-top">
+          <div class="card-icon">💰</div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-title">Refund Operations</div>
+        <div class="card-desc">Refund policies, processing timelines, customer communication templates, and finance escalation handling.</div>
+        <div class="tags">
+          <span class="tag">Finance</span>
+          <span class="tag">Refunds</span>
+          <span class="tag">Policies</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open SOP →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="scenarios.html#returns" class="card">
+        <div class="card-top">
+          <div class="card-icon">🔄</div>
+          <span class="badge badge-review">Review</span>
+        </div>
+        <div class="card-title">Returns & Exchanges</div>
+        <div class="card-desc">Step-by-step return and exchange handling process including customer communication, Bosta coordination, and refund triggers.</div>
+        <div class="tags">
+          <span class="tag">Returns</span>
+          <span class="tag">Bosta</span>
+          <span class="tag">Exchange</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open Flow →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="escalation.html" class="card">
+        <div class="card-top">
+          <div class="card-icon">🚨</div>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-title">Escalation Protocol</div>
+        <div class="card-desc">When and how to escalate customer issues to team leads, operations, or product. Includes escalation form and decision criteria.</div>
+        <div class="tags">
+          <span class="tag">Escalation</span>
+          <span class="tag">TL</span>
+          <span class="tag">Operations</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open Protocol →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="qa.html" class="card">
+        <div class="card-top">
+          <div class="card-icon">⭐</div>
+          <span class="badge badge-new">New</span>
+        </div>
+        <div class="card-title">QA Audit Guidelines</div>
+        <div class="card-desc">Quality assurance criteria, scoring rubrics, evaluation categories, and feedback protocols for CS team performance.</div>
+        <div class="tags">
+          <span class="tag">QA</span>
+          <span class="tag">Quality</span>
+          <span class="tag">Audit</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-link">Open Guidelines →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- QUICK ACTIONS -->
+  <section class="quick">
+    <div class="sec-title">Quick Actions</div>
+    <div class="quick-grid">
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">🚨 Escalation Form</div>
+          <div class="quick-desc">Submit a customer or operational escalation</div>
+        </div>
+        <a href="escalation.html"><button class="quick-btn">Open</button></a>
+      </div>
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">💰 Refund Lookup</div>
+          <div class="quick-desc">Search refund records and payment status</div>
+        </div>
+        <a href="portal.html"><button class="quick-btn">Search</button></a>
+      </div>
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">🌳 Scenario Library</div>
+          <div class="quick-desc">Browse 62 customer scenarios with decision trees</div>
+        </div>
+        <a href="scenarios.html"><button class="quick-btn">Browse</button></a>
+      </div>
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">⚡ CS Cheat Sheet</div>
+          <div class="quick-desc">Daily tags, views, and response templates</div>
+        </div>
+        <a href="sop-cheatsheet.html"><button class="quick-btn">Open</button></a>
+      </div>
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">⭐ QA Audit</div>
+          <div class="quick-desc">Quality scoring and evaluation guidelines</div>
+        </div>
+        <a href="qa.html"><button class="quick-btn">View</button></a>
+      </div>
+
+      <div class="quick-item">
+        <div>
+          <div class="quick-title">📋 All Scenarios</div>
+          <div class="quick-desc">Full scenario library with filters</div>
+        </div>
+        <a href="scenarios.html"><button class="quick-btn">View</button></a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer">
+    Mavin Wear Operations Hub · Powered by <span>EverGPT</span>
+  </div>
+
+</main>
 </body>
 </html>
-    
