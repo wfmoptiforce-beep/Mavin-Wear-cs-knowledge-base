@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --indigo:#4b4bf9;--midnight:#09092d;--light:#f3f3f7;
-      --border:#e5e7eb;--text:#1f2937;--muted:#6b7280;
-      --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+      --indigo:#4b4bf9;--midnight:#09092d;--white:#ffffff;
+      --light:#f3f3f7;--border:#e5e7eb;--text:#1f2937;
+      --muted:#6b7280;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
@@ -32,7 +32,7 @@
     .topbar-right{display:flex;align-items:center;gap:12px;}
     .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;}
     .lang-btn:hover{border-color:var(--indigo);color:var(--indigo);}
-    .lang-btn.active-ar{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+    .lang-btn.ar-active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
     .profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
     .avatar{width:34px;height:34px;border-radius:50%;background:var(--midnight);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
     .profile-name{font-size:13px;font-weight:700;}
@@ -55,9 +55,8 @@
     .card-title{font-size:16px;font-weight:800;color:var(--midnight);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
     .tag-row{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid #f1f5f9;}
     .tag-row:last-child{border-bottom:none;}
-    .tag-pill{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap;min-width:140px;text-align:center;}
+    .tag-pill{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap;min-width:120px;text-align:center;}
     .tag-desc{font-size:13px;color:var(--muted);line-height:1.6;}
-    .tag-ar{font-size:12px;color:#8f90c7;margin-top:3px;font-style:italic;display:none;}
     .t-purple{background:#f3e8ff;color:#7c3aed;}
     .t-blue{background:#dbeafe;color:#1d4ed8;}
     .t-green{background:#dcfce7;color:#15803d;}
@@ -71,7 +70,6 @@
     .step-num{width:32px;height:32px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
     .step-title{font-size:14px;font-weight:700;margin-bottom:4px;}
     .step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
-    .step-ar{font-size:12px;color:#8f90c7;margin-top:4px;font-style:italic;display:none;}
     .flow{display:flex;flex-direction:column;gap:0;align-items:flex-start;}
     .flow-node{background:#eef2ff;border:1.5px solid #c7d2fe;border-radius:14px;padding:14px 20px;font-size:13px;font-weight:700;color:var(--midnight);width:100%;}
     .flow-node.decision{background:#fff7ed;border-color:#fed7aa;color:#c2410c;}
@@ -84,7 +82,6 @@
     .note-card{background:#f9fafb;border-radius:14px;border:1.5px solid var(--border);padding:18px;margin-bottom:14px;}
     .note-label{font-size:11px;font-weight:800;color:var(--indigo);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
     .note-text{font-size:13px;line-height:1.8;color:var(--text);font-family:monospace;background:#fff;border-radius:10px;padding:14px;border:1px solid var(--border);}
-    .note-ar{font-size:13px;line-height:1.8;color:#52525b;margin-top:10px;direction:rtl;text-align:right;display:none;font-family:'Inter',sans-serif;}
     .copy-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px;font-family:'Inter',sans-serif;transition:.15s;}
     .copy-btn:hover{background:var(--midnight);}
     .alert{border-radius:14px;padding:16px 20px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6;}
@@ -94,26 +91,17 @@
     .alert-icon{font-size:18px;flex-shrink:0;}
     .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:16px;}
     .footer span{color:var(--indigo);font-weight:700;}
-
-    /* Arabic mode */
-    body.ar-mode{direction:rtl;}
-    body.ar-mode .sidebar{right:0;left:auto;}
-    body.ar-mode .main{margin-left:0;margin-right:260px;}
-    body.ar-mode .tag-ar{display:block;}
-    body.ar-mode .step-ar{display:block;}
-    body.ar-mode .note-ar{display:block;}
-
+    [lang="ar"] .en-only{display:none;}
+    [lang="en"] .ar-only{display:none;}
     @media(max-width:900px){
-      .sidebar{display:none;}
-      .main{margin-left:0!important;margin-right:0!important;}
+      .sidebar{display:none;}.main{margin-left:0;}
       .grid-2{grid-template-columns:1fr;}
-      .topbar{flex-wrap:wrap;}
-      .search-wrap{max-width:100%;}
+      .topbar{flex-wrap:wrap;}.search-wrap{max-width:100%;}
     }
     @media(max-width:600px){.main{padding:18px;}.hero h1{font-size:24px;}}
   </style>
 </head>
-<body>
+<body id="page-body">
 
 <aside class="sidebar">
   <div class="brand">
@@ -157,7 +145,8 @@
   <section class="hero">
     <div class="hero-tag">⚡ CS Daily Reference</div>
     <h1>CS Daily <span>Cheat Sheet</span></h1>
-    <p>Your everyday operational guide — Shopify tags, daily routine, response templates, saved views, and escalation rules. Open this first every shift.</p>
+    <p class="en-only">Your everyday operational guide — Shopify tags, daily routine, response templates, saved views, and escalation rules. Open this first every shift.</p>
+    <p class="ar-only" style="display:none;direction:rtl;">دليلك التشغيلي اليومي — تاجات Shopify، الروتين اليومي، قوالب الردود، الـ Views المحفوظة، وقواعد التصعيد. افتح ده أول كل شيفت.</p>
   </section>
 
   <div class="tabs">
@@ -172,7 +161,8 @@
   <div id="tab-tags" class="section active">
     <div class="alert alert-info">
       <span class="alert-icon">ℹ️</span>
-      <div>Tags are applied in Shopify on every order. Use the correct tag to trigger automation and keep the team aligned. One tag per status — do not stack conflicting tags.</div>
+      <div class="en-only">Tags are applied in Shopify on every order. Use the correct tag to trigger automation and keep the team aligned. One tag per status.</div>
+      <div class="ar-only" style="display:none;direction:rtl;">التاجات بتتحط في Shopify على كل أوردر. استخدمي التاج الصح لتشغيل الأتوماتيك وتنسيق الفريق. تاج واحد لكل حالة.</div>
     </div>
     <div class="grid-2">
       <div class="card">
@@ -180,29 +170,29 @@
         <div class="tag-row">
           <div><div class="tag-pill t-blue">cs-pending</div></div>
           <div>
-            <div class="tag-desc">Order is waiting for CS action or customer reply</div>
-            <div class="tag-ar">الأوردر بيستنى رد أو إجراء من CS</div>
+            <div class="tag-desc en-only">Order waiting for CS action or customer reply</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">الأوردر بيستنى رد أو إجراء من CS</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-green">cs-resolved</div></div>
           <div>
-            <div class="tag-desc">Issue fully resolved — no further action needed</div>
-            <div class="tag-ar">المشكلة اتحلت — مفيش إجراء تاني</div>
+            <div class="tag-desc en-only">Issue fully resolved — no further action needed</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">المشكلة اتحلت — مفيش إجراء تاني</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-yellow">cs-follow-up</div></div>
           <div>
-            <div class="tag-desc">Requires a follow-up within 24 hours</div>
-            <div class="tag-ar">محتاج متابعة خلال 24 ساعة</div>
+            <div class="tag-desc en-only">Requires a follow-up within 24 hours</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">محتاج متابعة خلال 24 ساعة</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-red">cs-escalated</div></div>
           <div>
-            <div class="tag-desc">Escalated to TL or Operations — do not touch until response</div>
-            <div class="tag-ar">اتصعّد للـ TL — ماتلمهوش</div>
+            <div class="tag-desc en-only">Escalated to TL or Operations — do not touch until response</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">اتصعّد للـ TL — ماتلمهوش</div>
           </div>
         </div>
       </div>
@@ -212,29 +202,29 @@
         <div class="tag-row">
           <div><div class="tag-pill t-orange">delivery-delayed</div></div>
           <div>
-            <div class="tag-desc">Order delayed beyond expected delivery window</div>
-            <div class="tag-ar">الأوردر متأخر عن موعد التوصيل</div>
+            <div class="tag-desc en-only">Order delayed beyond expected delivery window</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">الأوردر متأخر عن موعد التوصيل</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-red">delivery-failed</div></div>
           <div>
-            <div class="tag-desc">Delivery attempt failed — coordinate with Bosta</div>
-            <div class="tag-ar">التوصيل فشل — تنسقي مع Bosta</div>
+            <div class="tag-desc en-only">Delivery attempt failed — coordinate with Bosta</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">التوصيل فشل — تنسقي مع Bosta</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-purple">delivery-returned</div></div>
           <div>
-            <div class="tag-desc">Package returned to warehouse — trigger return flow</div>
-            <div class="tag-ar">الطرد رجع للمخزن — افتحي Return Flow</div>
+            <div class="tag-desc en-only">Package returned to warehouse — trigger return flow</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">الطرد رجع للمخزن — افتحي Return Flow</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-indigo">delivery-rescheduled</div></div>
           <div>
-            <div class="tag-desc">Customer requested rescheduled delivery date</div>
-            <div class="tag-ar">العميل طلب موعد توصيل جديد</div>
+            <div class="tag-desc en-only">Customer requested rescheduled delivery date</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">العميل طلب موعد توصيل جديد</div>
           </div>
         </div>
       </div>
@@ -244,29 +234,29 @@
         <div class="tag-row">
           <div><div class="tag-pill t-yellow">refund-requested</div></div>
           <div>
-            <div class="tag-desc">Customer submitted refund request — awaiting approval</div>
-            <div class="tag-ar">العميل طلب استرداد — بيستنى موافقة</div>
+            <div class="tag-desc en-only">Customer submitted refund request — awaiting approval</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">العميل طلب استرداد — بيستنى موافقة</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-green">refund-approved</div></div>
           <div>
-            <div class="tag-desc">Refund approved — processing initiated</div>
-            <div class="tag-ar">الاسترداد اتوافق عليه — بيتعالج</div>
+            <div class="tag-desc en-only">Refund approved — processing initiated</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">الاسترداد اتوافق عليه — بيتعالج</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-red">refund-rejected</div></div>
           <div>
-            <div class="tag-desc">Refund rejected — communicate reason to customer</div>
-            <div class="tag-ar">الطلب اترفض — وضحي السبب للعميل</div>
+            <div class="tag-desc en-only">Refund rejected — communicate reason to customer</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">الطلب اترفض — وضحي السبب للعميل</div>
           </div>
         </div>
         <div class="tag-row">
           <div><div class="tag-pill t-purple">exchange-requested</div></div>
           <div>
-            <div class="tag-desc">Customer requested a product exchange</div>
-            <div class="tag-ar">العميل طلب استبدال منتج</div>
+            <div class="tag-desc en-only">Customer requested a product exchange</div>
+            <div class="tag-desc ar-only" style="display:none;direction:rtl;">العميل طلب استبدال منتج</div>
           </div>
         </div>
       </div>
@@ -275,15 +265,24 @@
         <div class="card-title">⚠️ Tag Rules</div>
         <div class="alert alert-warn" style="margin-bottom:12px;">
           <span class="alert-icon">⚠️</span>
-          <div><strong>Never stack conflicting tags.</strong> Don't use cs-resolved and cs-pending on the same order.</div>
+          <div>
+            <div class="en-only"><strong>Never stack conflicting tags.</strong> Don't use cs-resolved and cs-pending on the same order.</div>
+            <div class="ar-only" style="display:none;direction:rtl;"><strong>لا تجمعي تاجات متضاربة.</strong> متستخدميش cs-resolved و cs-pending على نفس الأوردر.</div>
+          </div>
         </div>
         <div class="alert alert-info" style="margin-bottom:12px;">
           <span class="alert-icon">🔄</span>
-          <div><strong>Always update the tag</strong> when order status changes. Outdated tags break automation.</div>
+          <div>
+            <div class="en-only"><strong>Always update the tag</strong> when order status changes. Outdated tags break automation.</div>
+            <div class="ar-only" style="display:none;direction:rtl;"><strong>حدّثي التاج دايماً</strong> لما الستاتس يتغير. التاجات القديمة بتكسر الأتوماتيك.</div>
+          </div>
         </div>
         <div class="alert alert-success">
           <span class="alert-icon">✅</span>
-          <div><strong>cs-resolved</strong> is the final tag. Only apply when the case is 100% closed.</div>
+          <div>
+            <div class="en-only"><strong>cs-resolved</strong> is the final tag. Only apply when the case is 100% closed.</div>
+            <div class="ar-only" style="display:none;direction:rtl;"><strong>cs-resolved</strong> هو التاج النهائي. حطيه بس لما الكيس يتحل 100%.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -295,75 +294,59 @@
       <div class="card">
         <div class="card-title">🌅 Start of Shift</div>
         <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div>
-              <div class="step-title">Open Shopify — CS View</div>
-              <div class="step-desc">Filter: cs-pending + cs-follow-up. These are your priority orders for the day.</div>
-              <div class="step-ar">افتحي Shopify وفلتري: cs-pending + cs-follow-up</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div>
-              <div class="step-title">Check Escalated Orders</div>
-              <div class="step-desc">Review cs-escalated orders. Check if TL responded and update accordingly.</div>
-              <div class="step-ar">راجعي الـ cs-escalated — فيه رد من TL؟</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div>
-              <div class="step-title">Check Bosta Dashboard</div>
-              <div class="step-desc">Review failed and delayed deliveries. Flag accordingly.</div>
-              <div class="step-ar">راجعي Bosta وابعتيلها Flag للمتأخرة والفاشلة</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div>
-              <div class="step-title">Open Customer Messages</div>
-              <div class="step-desc">Reply to all pending messages within the first 30 minutes of your shift.</div>
-              <div class="step-ar">ردي على كل الرسايل الـ pending في أول 30 دقيقة</div>
-            </div>
-          </div>
+          <div class="step"><div class="step-num">1</div><div>
+            <div class="step-title en-only">Open Shopify — CS View</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">افتحي Shopify — CS View</div>
+            <div class="step-desc en-only">Filter: cs-pending + cs-follow-up. Priority orders for the day.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتري: cs-pending + cs-follow-up. دي الأوردرات الأولوية.</div>
+          </div></div>
+          <div class="step"><div class="step-num">2</div><div>
+            <div class="step-title en-only">Check Escalated Orders</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">راجعي الأوردرات المصعّدة</div>
+            <div class="step-desc en-only">Review cs-escalated orders. Check if TL responded and update.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">راجعي cs-escalated — فيه رد من TL؟ حدّثي بناءً على ده.</div>
+          </div></div>
+          <div class="step"><div class="step-num">3</div><div>
+            <div class="step-title en-only">Check Bosta Dashboard</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">راجعي Bosta Dashboard</div>
+            <div class="step-desc en-only">Review failed and delayed deliveries. Flag accordingly.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">راجعي التوصيلات الفاشلة والمتأخرة. ضعي Flag للمناسب.</div>
+          </div></div>
+          <div class="step"><div class="step-num">4</div><div>
+            <div class="step-title en-only">Open Customer Messages</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">افتحي رسايل العملاء</div>
+            <div class="step-desc en-only">Reply to all pending messages within first 30 minutes.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">ردي على كل الرسايل الـ pending في أول 30 دقيقة.</div>
+          </div></div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">🌇 End of Shift</div>
         <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div>
-              <div class="step-title">Update All Open Orders</div>
-              <div class="step-desc">Every order you touched today needs the correct tag and a note explaining the status.</div>
-              <div class="step-ar">كل أوردر لمستيه النهارده — تاق صح + نوت</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div>
-              <div class="step-title">Resolve or Follow Up</div>
-              <div class="step-desc">If an issue can be closed, mark it cs-resolved. If it needs tomorrow, tag it cs-follow-up with a note.</div>
-              <div class="step-ar">اغلقي اللي ممكن — cs-resolved. لو بكره — cs-follow-up</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div>
-              <div class="step-title">Escalation Summary</div>
-              <div class="step-desc">Send a short summary to your TL of any escalated cases from today with the order numbers.</div>
-              <div class="step-ar">ابعتي سمري للـ TL بالـ escalations النهارده</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div>
-              <div class="step-title">Log Refund Requests</div>
-              <div class="step-desc">All refund requests from today must be logged in the Refund Portal with correct status.</div>
-              <div class="step-ar">كل طلبات الاسترداد النهارده — في Refund Portal</div>
-            </div>
-          </div>
+          <div class="step"><div class="step-num">1</div><div>
+            <div class="step-title en-only">Update All Open Orders</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">حدّثي كل الأوردرات المفتوحة</div>
+            <div class="step-desc en-only">Every order you touched needs correct tag and note.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">كل أوردر لمستيه محتاج تاج صح + نوت.</div>
+          </div></div>
+          <div class="step"><div class="step-num">2</div><div>
+            <div class="step-title en-only">Resolve or Follow Up</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">اغلقي أو تابعي</div>
+            <div class="step-desc en-only">Close what you can. Tag tomorrow's work as cs-follow-up.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">اغلقي اللي ممكن. الباقي تاجيه cs-follow-up لبكره.</div>
+          </div></div>
+          <div class="step"><div class="step-num">3</div><div>
+            <div class="step-title en-only">Escalation Summary</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">ملخص التصعيدات</div>
+            <div class="step-desc en-only">Send TL a short summary of today's escalations with order numbers.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">ابعتي للـ TL ملخص قصير بتصعيدات النهارده مع أرقام الأوردرات.</div>
+          </div></div>
+          <div class="step"><div class="step-num">4</div><div>
+            <div class="step-title en-only">Log Refund Requests</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">سجّلي طلبات الاسترداد</div>
+            <div class="step-desc en-only">All refund requests must be logged in Refund Portal.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">كل طلبات الاسترداد لازم تتسجل في Refund Portal.</div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -373,37 +356,49 @@
   <div id="tab-flow" class="section">
     <div class="alert alert-info">
       <span class="alert-icon">🌳</span>
-      <div>Follow each step in order during live customer conversations. Do not skip to resolution before completing the diagnosis.</div>
+      <div class="en-only">Follow each step in order during live customer conversations. Do not skip to resolution before completing diagnosis.</div>
+      <div class="ar-only" style="display:none;direction:rtl;">اتبعي كل خطوة بالترتيب في المحادثات. لا تقفزي للحل قبل تشخيص المشكلة.</div>
     </div>
     <div class="grid-2">
       <div class="card">
         <div class="card-title">📦 Delivery Issue Flow</div>
         <div class="flow">
-          <div class="flow-node">Customer reports: Order not received / delayed</div>
+          <div class="flow-node en-only">Customer reports: Order not received / delayed</div>
+          <div class="flow-node ar-only" style="display:none;direction:rtl;">العميل بيبلّغ: الأوردر مش وصله / متأخر</div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-node decision">Check Bosta — What is the current status?</div>
+          <div class="flow-node decision en-only">Check Bosta — What is the current status?</div>
+          <div class="flow-node decision ar-only" style="display:none;direction:rtl;">راجعي Bosta — إيه الستاتس الحالي؟</div>
           <div class="flow-arrow">↓</div>
           <div class="flow-branch">
             <div class="flow-branch-item">
-              <div class="flow-label">In Transit</div>
-              <div class="flow-node action">Share ETA — Tag: delivery-delayed — Follow up in 24h</div>
+              <div class="flow-label en-only">In Transit</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">في الطريق</div>
+              <div class="flow-node action en-only">Share ETA — Tag: delivery-delayed — Follow up 24h</div>
+              <div class="flow-node action ar-only" style="display:none;direction:rtl;">شاركي ETA — تاج: delivery-delayed — تابعي خلال 24 ساعة</div>
             </div>
             <div class="flow-branch-item">
-              <div class="flow-label">Failed</div>
-              <div class="flow-node escalate">Reschedule — Tag: delivery-failed — Notify Bosta</div>
+              <div class="flow-label en-only">Failed</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">فشل</div>
+              <div class="flow-node escalate en-only">Reschedule — Tag: delivery-failed — Notify Bosta</div>
+              <div class="flow-node escalate ar-only" style="display:none;direction:rtl;">جدولي من جديد — تاج: delivery-failed — بلّغي Bosta</div>
             </div>
           </div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-node decision">Was the issue resolved?</div>
+          <div class="flow-node decision en-only">Was the issue resolved?</div>
+          <div class="flow-node decision ar-only" style="display:none;direction:rtl;">اتحلت المشكلة؟</div>
           <div class="flow-arrow">↓</div>
           <div class="flow-branch">
             <div class="flow-branch-item">
-              <div class="flow-label">Yes</div>
-              <div class="flow-node action">Tag: cs-resolved — Add closing note</div>
+              <div class="flow-label en-only">Yes</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">أيوه</div>
+              <div class="flow-node action en-only">Tag: cs-resolved — Add closing note</div>
+              <div class="flow-node action ar-only" style="display:none;direction:rtl;">تاج: cs-resolved — أضيفي نوت ختامي</div>
             </div>
             <div class="flow-branch-item">
-              <div class="flow-label">No</div>
-              <div class="flow-node escalate">Tag: cs-escalated — Notify TL</div>
+              <div class="flow-label en-only">No</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">لأ</div>
+              <div class="flow-node escalate en-only">Tag: cs-escalated — Notify TL</div>
+              <div class="flow-node escalate ar-only" style="display:none;direction:rtl;">تاج: cs-escalated — بلّغي TL</div>
             </div>
           </div>
         </div>
@@ -411,31 +406,42 @@
       <div class="card">
         <div class="card-title">💰 Refund Request Flow</div>
         <div class="flow">
-          <div class="flow-node">Customer requests a refund</div>
+          <div class="flow-node en-only">Customer requests a refund</div>
+          <div class="flow-node ar-only" style="display:none;direction:rtl;">العميل بيطلب استرداد</div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-node decision">Is order eligible per policy?</div>
+          <div class="flow-node decision en-only">Is order eligible per policy?</div>
+          <div class="flow-node decision ar-only" style="display:none;direction:rtl;">الأوردر مؤهل للاسترداد حسب السياسة؟</div>
           <div class="flow-arrow">↓</div>
           <div class="flow-branch">
             <div class="flow-branch-item">
-              <div class="flow-label">Yes</div>
-              <div class="flow-node action">Log in Portal — Tag: refund-requested — Notify finance</div>
+              <div class="flow-label en-only">Yes</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">أيوه</div>
+              <div class="flow-node action en-only">Log in Portal — Tag: refund-requested</div>
+              <div class="flow-node action ar-only" style="display:none;direction:rtl;">سجّلي في Portal — تاج: refund-requested</div>
             </div>
             <div class="flow-branch-item">
-              <div class="flow-label">No</div>
-              <div class="flow-node escalate">Explain policy — Tag: refund-rejected — Offer alternative</div>
+              <div class="flow-label en-only">No</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">لأ</div>
+              <div class="flow-node escalate en-only">Explain policy — Tag: refund-rejected</div>
+              <div class="flow-node escalate ar-only" style="display:none;direction:rtl;">وضحي السياسة — تاج: refund-rejected</div>
             </div>
           </div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-node decision">Has refund been processed?</div>
+          <div class="flow-node decision en-only">Has refund been processed?</div>
+          <div class="flow-node decision ar-only" style="display:none;direction:rtl;">اتعالج الاسترداد؟</div>
           <div class="flow-arrow">↓</div>
           <div class="flow-branch">
             <div class="flow-branch-item">
-              <div class="flow-label">Yes</div>
-              <div class="flow-node action">Tag: refund-approved — Confirm with customer — cs-resolved</div>
+              <div class="flow-label en-only">Yes</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">أيوه</div>
+              <div class="flow-node action en-only">Tag: refund-approved — cs-resolved</div>
+              <div class="flow-node action ar-only" style="display:none;direction:rtl;">تاج: refund-approved — cs-resolved</div>
             </div>
             <div class="flow-branch-item">
-              <div class="flow-label">Pending</div>
-              <div class="flow-node escalate">Tag: cs-follow-up — Check again in 24h</div>
+              <div class="flow-label en-only">Pending</div>
+              <div class="flow-label ar-only" style="display:none;direction:rtl;">قيد الانتظار</div>
+              <div class="flow-node escalate en-only">Tag: cs-follow-up — Check in 24h</div>
+              <div class="flow-node escalate ar-only" style="display:none;direction:rtl;">تاج: cs-follow-up — تابعي خلال 24 ساعة</div>
             </div>
           </div>
         </div>
@@ -447,32 +453,33 @@
   <div id="tab-templates" class="section">
     <div class="alert alert-success">
       <span class="alert-icon">💬</span>
-      <div>Always personalize with the customer name and order number before sending.</div>
+      <div class="en-only">Always personalize with customer name and order number before sending.</div>
+      <div class="ar-only" style="display:none;direction:rtl;">دايماً خصصي الرسالة باسم العميل ورقم الأوردر قبل الإرسال.</div>
     </div>
     <div class="grid-1">
       <div class="note-card">
         <div class="note-label">📦 Delayed Delivery</div>
-        <div class="note-text" id="tpl-delay-en">Hi [Customer Name], thank you for reaching out. We have checked your order #[Order Number] and it is currently in transit. Expected delivery within [X] business days. We apologize for the delay.</div>
-        <div class="note-ar" id="tpl-delay-ar">أهلاً [اسم العميل]، شكراً على تواصلك. راجعنا طلبك رقم #[رقم الأوردر] وهو في الطريق. التسليم المتوقع خلال [X] أيام عمل. نعتذر عن التأخير.</div>
-        <button class="copy-btn" onclick="copyTemplate('tpl-delay-en',this)">Copy English ↗</button>
+        <div class="note-text en-only" id="tpl-1-en">Hi [Customer Name], thank you for reaching out. We have checked your order #[Order Number] and it is currently in transit. Expected delivery within [X] business days. We apologize for the delay.</div>
+        <div class="note-text ar-only" id="tpl-1-ar" style="display:none;direction:rtl;">أهلاً [اسم العميل]، شكراً على تواصلك. راجعنا طلبك رقم #[رقم الأوردر] وهو في الطريق. التسليم المتوقع خلال [X] أيام عمل. نعتذر عن التأخير.</div>
+        <button class="copy-btn" onclick="copyTemplate('tpl-1',this)">Copy ↗</button>
       </div>
       <div class="note-card">
         <div class="note-label">🔄 Return Confirmation</div>
-        <div class="note-text" id="tpl-return-en">Hi [Customer Name], we have received your return request for order #[Order Number]. Our team will process this within 3–5 business days. You will receive a confirmation once completed.</div>
-        <div class="note-ar" id="tpl-return-ar">أهلاً [اسم العميل]، استلمنا طلب الإرجاع للأوردر #[رقم الأوردر]. فريقنا هيعالجه خلال 3–5 أيام عمل. هتوصلك رسالة تأكيد لما يكتمل.</div>
-        <button class="copy-btn" onclick="copyTemplate('tpl-return-en',this)">Copy English ↗</button>
+        <div class="note-text en-only" id="tpl-2-en">Hi [Customer Name], we have received your return request for order #[Order Number]. Our team will process this within 3–5 business days. You will receive a confirmation once completed.</div>
+        <div class="note-text ar-only" id="tpl-2-ar" style="display:none;direction:rtl;">أهلاً [اسم العميل]، استلمنا طلب الإرجاع للأوردر #[رقم الأوردر]. فريقنا هيعالجه خلال 3–5 أيام عمل. هتوصلك رسالة تأكيد لما يكتمل.</div>
+        <button class="copy-btn" onclick="copyTemplate('tpl-2',this)">Copy ↗</button>
       </div>
       <div class="note-card">
         <div class="note-label">💰 Refund Approved</div>
-        <div class="note-text" id="tpl-refund-en">Hi [Customer Name], your refund for order #[Order Number] has been approved and is being processed. The amount will reflect in your account within 5–7 business days depending on your bank.</div>
-        <div class="note-ar" id="tpl-refund-ar">أهلاً [اسم العميل]، طلب الاسترداد للأوردر #[رقم الأوردر] اتوافق عليه وبيتعالج. المبلغ هيظهر في حسابك خلال 5–7 أيام عمل.</div>
-        <button class="copy-btn" onclick="copyTemplate('tpl-refund-en',this)">Copy English ↗</button>
+        <div class="note-text en-only" id="tpl-3-en">Hi [Customer Name], your refund for order #[Order Number] has been approved and is being processed. The amount will reflect in your account within 5–7 business days depending on your bank.</div>
+        <div class="note-text ar-only" id="tpl-3-ar" style="display:none;direction:rtl;">أهلاً [اسم العميل]، طلب الاسترداد للأوردر #[رقم الأوردر] اتوافق عليه وبيتعالج. المبلغ هيظهر في حسابك خلال 5–7 أيام عمل حسب البنك.</div>
+        <button class="copy-btn" onclick="copyTemplate('tpl-3',this)">Copy ↗</button>
       </div>
       <div class="note-card">
         <div class="note-label">🚨 Escalation Notice</div>
-        <div class="note-text" id="tpl-esc-en">Hi [Customer Name], we understand your concern. We are escalating your case to our senior team who will follow up with you within 24 hours. We appreciate your patience.</div>
-        <div class="note-ar" id="tpl-esc-ar">أهلاً [اسم العميل]، فاهمين قلقك. بنصعّد قضيتك للفريق المتخصص اللي هيتواصل معاك خلال 24 ساعة. شكراً لصبرك.</div>
-        <button class="copy-btn" onclick="copyTemplate('tpl-esc-en',this)">Copy English ↗</button>
+        <div class="note-text en-only" id="tpl-4-en">Hi [Customer Name], we understand your concern. We are escalating your case to our senior team who will follow up with you within 24 hours. We appreciate your patience.</div>
+        <div class="note-text ar-only" id="tpl-4-ar" style="display:none;direction:rtl;">أهلاً [اسم العميل]، فاهمين قلقك. بنصعّد قضيتك للفريق المتخصص اللي هيتواصل معاك خلال 24 ساعة. شكراً لصبرك.</div>
+        <button class="copy-btn" onclick="copyTemplate('tpl-4',this)">Copy ↗</button>
       </div>
     </div>
   </div>
@@ -481,65 +488,54 @@
   <div id="tab-views" class="section">
     <div class="alert alert-info">
       <span class="alert-icon">👁️</span>
-      <div>Save these views in Shopify: Orders → Add filter → Save as view.</div>
+      <div class="en-only">Save these views in Shopify: Orders → Add filter → Save as view.</div>
+      <div class="ar-only" style="display:none;direction:rtl;">احفظي الـ Views دي في Shopify: Orders → Add filter → Save as view.</div>
     </div>
     <div class="grid-2">
       <div class="card">
         <div class="card-title">📌 Essential Daily Views</div>
         <div class="steps">
-          <div class="step">
-            <div class="step-num" style="background:#ef4444;">!</div>
-            <div>
-              <div class="step-title">Priority Queue</div>
-              <div class="step-desc">Filter: cs-pending + cs-follow-up — Your main working view every shift.</div>
-              <div class="step-ar">الـ view الرئيسي بتاعتك كل شيفت</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" style="background:#f59e0b;">↑</div>
-            <div>
-              <div class="step-title">Escalated Cases</div>
-              <div class="step-desc">Filter: cs-escalated — Check at start and end of shift for TL responses.</div>
-              <div class="step-ar">راجعيها أول وآخر الشيفت</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" style="background:#10b981;">✓</div>
-            <div>
-              <div class="step-title">Today's Resolved</div>
-              <div class="step-desc">Filter: cs-resolved + today's date — Track your daily resolution count.</div>
-              <div class="step-ar">تتبعي إنجازك اليومي</div>
-            </div>
-          </div>
+          <div class="step"><div class="step-num" style="background:#ef4444;">!</div><div>
+            <div class="step-title en-only">Priority Queue</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">قائمة الأولوية</div>
+            <div class="step-desc en-only">Filter: cs-pending + cs-follow-up — Main working view every shift.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: cs-pending + cs-follow-up — الـ View الرئيسي كل شيفت.</div>
+          </div></div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;">↑</div><div>
+            <div class="step-title en-only">Escalated Cases</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">الكيسات المصعّدة</div>
+            <div class="step-desc en-only">Filter: cs-escalated — Check at start and end of shift.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: cs-escalated — راجعيها أول وآخر الشيفت.</div>
+          </div></div>
+          <div class="step"><div class="step-num" style="background:#10b981;">✓</div><div>
+            <div class="step-title en-only">Today's Resolved</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">المحلولة النهارده</div>
+            <div class="step-desc en-only">Filter: cs-resolved + today's date — Track daily resolution count.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: cs-resolved + تاريخ النهارده — تتبعي إنجازك اليومي.</div>
+          </div></div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">📦 Delivery Views</div>
         <div class="steps">
-          <div class="step">
-            <div class="step-num" style="background:#f59e0b;">⏱</div>
-            <div>
-              <div class="step-title">Delayed Deliveries</div>
-              <div class="step-desc">Filter: delivery-delayed — Review and follow up with Bosta daily.</div>
-              <div class="step-ar">راجعيها مع Bosta كل يوم</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" style="background:#ef4444;">✗</div>
-            <div>
-              <div class="step-title">Failed Deliveries</div>
-              <div class="step-desc">Filter: delivery-failed — Immediate action needed. Reschedule or escalate.</div>
-              <div class="step-ar">دي محتاجة action فوري</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num" style="background:#7c3aed;">↩</div>
-            <div>
-              <div class="step-title">Returned Packages</div>
-              <div class="step-desc">Filter: delivery-returned — Trigger return flow and notify the customer.</div>
-              <div class="step-ar">افتحي Return Flow وابعتي للعميل</div>
-            </div>
-          </div>
+          <div class="step"><div class="step-num" style="background:#f59e0b;">⏱</div><div>
+            <div class="step-title en-only">Delayed Deliveries</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">التوصيلات المتأخرة</div>
+            <div class="step-desc en-only">Filter: delivery-delayed — Follow up with Bosta daily.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: delivery-delayed — تابعي مع Bosta يومياً.</div>
+          </div></div>
+          <div class="step"><div class="step-num" style="background:#ef4444;">✗</div><div>
+            <div class="step-title en-only">Failed Deliveries</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">التوصيلات الفاشلة</div>
+            <div class="step-desc en-only">Filter: delivery-failed — Immediate action needed.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: delivery-failed — محتاجة إجراء فوري.</div>
+          </div></div>
+          <div class="step"><div class="step-num" style="background:#7c3aed;">↩</div><div>
+            <div class="step-title en-only">Returned Packages</div>
+            <div class="step-title ar-only" style="display:none;direction:rtl;">الطرود الراجعة</div>
+            <div class="step-desc en-only">Filter: delivery-returned — Trigger return flow and notify customer.</div>
+            <div class="step-desc ar-only" style="display:none;direction:rtl;">فلتر: delivery-returned — افتحي Return Flow وبلّغي العميل.</div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -551,18 +547,24 @@
 </main>
 
 <script>
-  let isAr = false;
+  let currentLang = 'en';
 
   function toggleLang(){
-    isAr = !isAr;
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
     const btn = document.getElementById('langBtn');
-    if(isAr){
-      document.body.classList.add('ar-mode');
-      btn.classList.add('active-ar');
+    const enEls = document.querySelectorAll('.en-only');
+    const arEls = document.querySelectorAll('.ar-only');
+    if(currentLang === 'ar'){
+      enEls.forEach(el=>el.style.display='none');
+      arEls.forEach(el=>el.style.display='block');
+      document.body.setAttribute('dir','rtl');
+      btn.classList.add('ar-active');
       btn.innerText = 'AR / EN';
     } else {
-      document.body.classList.remove('ar-mode');
-      btn.classList.remove('active-ar');
+      enEls.forEach(el=>el.style.display='block');
+      arEls.forEach(el=>el.style.display='none');
+      document.body.setAttribute('dir','ltr');
+      btn.classList.remove('ar-active');
       btn.innerText = 'EN / AR';
     }
   }
@@ -575,11 +577,14 @@
   }
 
   function copyTemplate(id, btn){
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text).then(()=>{
-      btn.innerText='Copied ✓';
-      setTimeout(()=>btn.innerText='Copy English ↗',2000);
-    });
+    const suffix = currentLang === 'ar' ? '-ar' : '-en';
+    const el = document.getElementById(id+suffix);
+    if(el){
+      navigator.clipboard.writeText(el.innerText).then(()=>{
+        btn.innerText='Copied ✓';
+        setTimeout(()=>btn.innerText='Copy ↗',2000);
+      });
+    }
   }
 </script>
 </body>
