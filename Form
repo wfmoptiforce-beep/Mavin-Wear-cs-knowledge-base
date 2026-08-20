@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mavin Wear — Refund Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#4b4bf9;
+  --midnight:#09092d;
+  --white:#ffffff;
+  --light-grey:#f3f3f7;
+  --lemon:#f9ef77;
+  --coral:#ff8d96;
+  --lavender:#bfa1ff;
+  --mint:#8bf0bb;
+  --border:rgba(255,255,255,0.08);
+  --card:rgba(255,255,255,0.04);
+  --text:#ffffff;
+  --muted:#8f90c7;
+  --green:#8bf0bb;
+  --red:#ff8d96;
+  --yellow:#f9ef77;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--midnight);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.topnav{background:rgba(9,9,45,0.95);backdrop-filter:blur(12px);padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:68px;border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:28px;filter:brightness(0) invert(1)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{padding:8px 14px;border-radius:10px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none}
+.nav-link:hover{background:rgba(255,255,255,0.06);color:#fff}
+.nav-link.active{background:var(--indigo);color:#fff}
+.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:100px;padding:6px 14px 6px 8px}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.user-name{font-size:12px;font-weight:700;color:#fff}
+.user-role{font-size:10px;color:var(--muted)}
+
+/* TABS */
+.tab-bar{background:rgba(9,9,45,0.8);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:4px}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:8px}
+.tab-btn:hover{color:#fff}
+.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+
+/* PAGE */
+.page{padding:32px;max-width:1100px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* HERO */
+.hero{background:linear-gradient(130deg,rgba(75,75,249,0.15) 0%,rgba(9,9,45,0) 100%);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:28px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(75,75,249,0.15);border:1px solid rgba(75,75,249,0.3);padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;color:var(--lavender);letter-spacing:.5px;margin-bottom:16px}
+.hero h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px}
+.hero h1 span{color:var(--indigo)}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6}
+
+/* SEARCH CARD */
+.search-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
+.search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.search-field{display:flex;flex-direction:column;gap:6px}
+.search-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
+.search-input{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif}
+.search-input:focus{border-color:var(--indigo);background:rgba(75,75,249,0.08)}
+.search-input::placeholder{color:rgba(255,255,255,0.25)}
+.search-actions{display:flex;gap:10px;align-items:center}
+.btn-search{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif}
+.btn-search:hover{background:#3a3ae8}
+.btn-search:disabled{opacity:.6;cursor:not-allowed}
+.btn-clear{background:transparent;color:var(--muted);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
+.btn-clear:hover{border-color:rgba(255,255,255,0.25);color:#fff}
+
+/* STATS */
+.stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.stat-chip{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:12px}
+.stat-num{font-size:24px;font-weight:900;color:#fff}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600}
+
+/* RESULTS */
+.results-wrap{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.results-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03)}
+.results-title{font-size:13px;font-weight:800;color:#fff}
+.results-count{font-size:12px;font-weight:700;color:var(--muted);background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:100px;padding:3px 12px}
+
+/* RESULT CARD */
+.result-card{padding:20px;border-bottom:1px solid var(--border);transition:.15s}
+.result-card:last-child{border-bottom:none}
+.result-card:hover{background:rgba(75,75,249,0.05)}
+.result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.result-order{font-size:17px;font-weight:900;color:#fff}
+.result-customer{font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);margin-top:3px}
+.result-phone{font-size:12px;color:var(--muted);margin-top:2px}
+.result-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+
+/* SOURCE BADGE */
+.source-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:800;letter-spacing:.5px}
+.source-export2{background:rgba(75,75,249,0.2);color:var(--lavender);border:1px solid rgba(75,75,249,0.3)}
+.source-return{background:rgba(139,240,187,0.15);color:var(--mint);border:1px solid rgba(139,240,187,0.3)}
+.source-search{background:rgba(249,239,119,0.15);color:var(--lemon);border:1px solid rgba(249,239,119,0.3)}
+.source-export{background:rgba(255,141,150,0.15);color:var(--coral);border:1px solid rgba(255,141,150,0.3)}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:800}
+.status-success{background:rgba(139,240,187,0.15);color:var(--mint);border:1px solid rgba(139,240,187,0.3)}
+.status-pending{background:rgba(249,239,119,0.15);color:var(--lemon);border:1px solid rgba(249,239,119,0.3)}
+.status-rejected{background:rgba(255,141,150,0.15);color:var(--coral);border:1px solid rgba(255,141,150,0.3)}
+.status-default{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
+
+/* RESULT GRID */
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.result-item{display:flex;flex-direction:column;gap:4px}
+.result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.result-item-val{font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.85)}
+.result-note{margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:10px;font-size:12px;color:var(--muted);border:1px solid var(--border);line-height:1.5}
+.result-note strong{color:rgba(255,255,255,0.6)}
+
+/* EMPTY / LOADING */
+.empty-state{padding:52px 20px;text-align:center;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:14px}
+.empty-text{font-size:14px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.empty-sub{font-size:12.5px}
+.loading-wrap{display:none;align-items:center;justify-content:center;padding:52px;gap:14px;flex-direction:column}
+.loading-wrap.show{display:flex}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--indigo);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--muted);font-weight:600}
+
+/* FORM */
+.form-section{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.form-section-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.03)}
+.section-icon{font-size:18px}
+.section-title{font-size:13px;font-weight:800;color:#fff}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
+.form-label span{color:var(--coral);margin-left:2px}
+.form-input{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif}
+.form-input:focus{border-color:var(--indigo);background:rgba(75,75,249,0.08)}
+.form-input::placeholder{color:rgba(255,255,255,0.25)}
+select.form-input option{background:#09092d;color:#fff}
+.form-span3{grid-column:1/-1}
+.form-span2{grid-column:span 2}
+
+/* DUP ALERT */
+.dup-alert{background:rgba(249,239,119,0.08);border:1.5px solid rgba(249,239,119,0.3);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none;gap:12px;align-items:flex-start}
+.dup-alert.show{display:flex}
+.dup-title{font-size:13px;font-weight:800;color:var(--lemon);margin-bottom:4px}
+.dup-text{font-size:12.5px;color:rgba(249,239,119,0.7);line-height:1.5}
+
+/* SUBMIT ROW */
+.submit-row{display:flex;gap:10px;margin-bottom:40px}
+.btn-submit{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center;font-family:'Inter',sans-serif}
+.btn-submit:hover{background:#3a3ae8}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.btn-reset{background:transparent;color:var(--muted);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
+.btn-reset:hover{border-color:rgba(255,255,255,0.25);color:#fff}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;display:none;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.4);max-width:380px}
+.toast.show{display:flex}
+.toast.success{background:var(--mint);color:var(--midnight)}
+.toast.error{background:var(--coral);color:var(--midnight)}
+.toast.warn{background:var(--lemon);color:var(--midnight)}
+.spin-sm{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+
+.footer{text-align:center;padding:24px 0 12px;color:var(--muted);font-size:12px}
+.footer span{color:var(--indigo);font-weight:700}
+
+@media(max-width:900px){
+  .search-grid{grid-template-columns:repeat(2,1fr)}
+  .result-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .page{padding:16px}
+  .topnav{padding:0 16px}
+  .tab-bar{padding:0 16px}
+}
+@media(max-width:560px){
+  .nav-links{display:none}
+  .search-grid{grid-template-columns:1fr}
+  .stats-row{gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="index.html" class="nav-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Foundever_logo.svg" alt="Foundever">
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">🏠 Home</a>
+    <a href="sops.html" class="nav-link">📚 SOPs</a>
+    <a href="scenarios.html" class="nav-link">🌳 Scenarios</a>
+    <a href="portal.html" class="nav-link active">💰 Refunds</a>
+    <a href="escalation.html" class="nav-link">🚨 Escalations</a>
+    <a href="qa.html" class="nav-link">⭐ QA</a>
+  </div>
+  <div class="user-badge">
+    <div class="user-avatar">A</div>
+    <div>
+      <div class="user-name">Agent Support</div>
+      <div class="user-role">CS · Operations</div>
+    </div>
+  </div>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('search',this)">🔍 Search Refunds</button>
+  <button class="tab-btn" onclick="switchTab('submit',this)">➕ Submit New Request</button>
+</div>
+
+<!-- ══ SEARCH TAB ══ -->
+<div class="page tab-content active" id="tab-search">
+  <div class="hero">
+    <div class="hero-tag">💰 Refund Portal · Live Data</div>
+    <h1>Search <span>Refund Requests</span></h1>
+    <p>Search by customer name, order number, or phone — results pull live from all sheet tabs and show the source.</p>
+  </div>
+
+  <div class="search-card">
+    <div class="search-grid">
+      <div class="search-field">
+        <label class="search-label">Customer Name</label>
+        <input class="search-input" id="sName" type="text" placeholder="e.g. Mohamed Ahmed" onkeydown="if(event.key==='Enter')doSearch()">
+      </div>
+      <div class="search-field">
+        <label class="search-label">Order Number</label>
+        <input class="search-input" id="sOrder" type="text" placeholder="e.g. 154929" onkeydown="if(event.key==='Enter')doSearch()">
+      </div>
+      <div class="search-field">
+        <label class="search-label">Phone Number</label>
+        <input class="search-input" id="sPhone" type="text" placeholder="e.g. 01144504238" onkeydown="if(event.key==='Enter')doSearch()">
+      </div>
+    </div>
+    <div class="search-actions">
+      <button class="btn-search" id="searchBtn" onclick="doSearch()">🔍 Search</button>
+      <button class="btn-clear" onclick="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row" id="statsRow" style="display:none">
+    <div class="stat-chip"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Results</div></div>
+    <div class="stat-chip"><div class="stat-num" id="statPending">0</div><div class="stat-label">Pending</div></div>
+    <div class="stat-chip"><div class="stat-num" id="statDone">0</div><div class="stat-label">Completed</div></div>
+    <div class="stat-chip"><div class="stat-num" id="statSheets">0</div><div class="stat-label">Sheets Found In</div></div>
+  </div>
+
+  <div class="results-wrap">
+    <div class="results-header">
+      <span class="results-title">Results</span>
+      <span class="results-count" id="resultsCount">—</span>
+    </div>
+    <div id="resultsList">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Ready to search</div>
+        <div class="empty-sub">Enter any field above and press Search</div>
+      </div>
+    </div>
+    <div class="loading-wrap" id="loadingWrap">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">Searching all sheets...</div>
+    </div>
+  </div>
+
+  <div class="footer">Mavin Wear Operations · Powered by <span>EverGPT</span></div>
+</div>
+
+<!-- ══ SUBMIT TAB ══ -->
+<div class="page tab-content" id="tab-submit">
+  <div class="hero">
+    <div class="hero-tag">➕ New Request</div>
+    <h1>Submit <span>Refund / Exchange</span></h1>
+    <p>Fill all required fields. Duplicate orders within 5 days will be flagged automatically.</p>
+  </div>
+
+  <div class="dup-alert" id="dupAlert">
+    <div style="font-size:20px">⚠️</div>
+    <div>
+      <div class="dup-title">Duplicate Case Detected</div>
+      <div class="dup-text" id="dupText"></div>
+    </div>
+  </div>
+
+  <!-- AGENT -->
+  <div class="form-section">
+    <div class="form-section-header">
+      <span class="section-icon">👤</span>
+      <span class="section-title">Agent Information</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Agent Email <span>*</span></label>
+        <input class="form-input" id="fEmail" type="email" placeholder="agent@mavinwear.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Agent Name <span>*</span></label>
+        <input class="form-input" id="fAgentName" type="text" placeholder="e.g. Asmaa Hassan">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Date & Time</label>
+        <input class="form-input" id="fDate" type="datetime-local">
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER -->
+  <div class="form-section">
+    <div class="form-section-header">
+      <span class="section-icon">👥</span>
+      <span class="section-title">Customer Information</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Customer Name <span>*</span></label>
+        <input class="form-input" id="fCustName" type="text" placeholder="e.g. Mohamed Ahmed">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Customer Phone <span>*</span></label>
+        <input class="form-input" id="fCustPhone" type="tel" placeholder="e.g. 01144504238">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Order Number <span>*</span></label>
+        <input class="form-input" id="fOrderNum" type="text" placeholder="e.g. 154929" oninput="checkDup()">
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUEST -->
+  <div class="form-section">
+    <div class="form-section-header">
+      <span class="section-icon">📋</span>
+      <span class="section-title">Request Details</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">Request Type <span>*</span></label>
+        <select class="form-input" id="fReqType">
+          <option value="">Select type</option>
+          <option>Return Request</option>
+          <option>Exchange - 1st exchange</option>
+          <option>Exchange - 2nd exchange</option>
+          <option>Refund Request</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Reason <span>*</span></label>
+        <select class="form-input" id="fReason">
+          <option value="">Select reason</option>
+          <option>Size issue (Fitting Issue)</option>
+          <option>Customer Changed mind</option>
+          <option>Customer Return</option>
+          <option>Defective / Damaged item</option>
+          <option>Wrong item received</option>
+          <option>2nd Exchange request</option>
+          <option>Prepaid order</option>
+          <option>Refund (failed order)</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Number of Items</label>
+        <input class="form-input" id="fNumItems" type="number" min="1" placeholder="e.g. 2">
+      </div>
+      <div class="form-field form-span3">
+        <label class="form-label">Product Name & SKU</label>
+        <input class="form-input" id="fProduct" type="text" placeholder="e.g. Lounge Stripe Sweatpants / M / SS26-STEE-S-01">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Original Item SKU</label>
+        <input class="form-input" id="fOrigSKU" type="text" placeholder="Original SKU">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Requested Item SKU</label>
+        <input class="form-input" id="fReqSKU" type="text" placeholder="Requested SKU">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Shipping Fees</label>
+        <select class="form-input" id="fShipping">
+          <option value="">Select</option>
+          <option>Shipping Fees Apply</option>
+          <option>No Shipping Fees</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Refund Amount (EGP)</label>
+        <input class="form-input" id="fRefund" type="text" placeholder="e.g. 450.00">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Bosta Ticket ID</label>
+        <input class="form-input" id="fBosta" type="text" placeholder="e.g. 7506992329">
+      </div>
+      <div class="form-field form-span3">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" id="fNotes" rows="3" placeholder="Any additional notes..." style="resize:vertical;line-height:1.6"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-row">
+    <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
+    <button class="btn-submit" id="submitBtn" onclick="submitRefund()">✉️ Submit Request</button>
+  </div>
+
+  <div class="footer">Mavin Wear Operations · Powered by <span>EverGPT</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────
+const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
+const GAS_URL  = '';
+
+const TABS = [
+  { name: 'Export2',       label: 'Export2',       cls: 'source-export2' },
+  { name: 'Return & Exch', label: 'Return & Exch', cls: 'source-return'  },
+  { name: 'SEARCH',        label: 'SEARCH',        cls: 'source-search'  },
+  { name: 'Export',        label: 'Export',        cls: 'source-export'  },
+];
+
+let cache = {};
+
+// ── FETCH ─────────────────────────────────────────────────────────────────
+async function fetchTab(tabName) {
+  if (cache[tabName]) return cache[tabName];
+  const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
+  const res  = await fetch(url);
+  const text = await res.text();
+  const json = JSON.parse(text.substring(47).slice(0,-2));
+  if (!json.table || !json.table.cols) return { headers:[], data:[] };
+  const headers = json.table.cols.map(c => (c.label||'').trim());
+  const data    = json.table.rows
+    .map(r => r.c ? r.c.map(cell => cell ? (cell.f||cell.v||'').toString() : '') : [])
+    .filter(r => r.some(v => v.trim()));
+  cache[tabName] = { headers, data };
+  return { headers, data };
+}
+
+// ── COLUMN DETECTION ──────────────────────────────────────────────────────
+function detectCols(headers) {
+  const find = (...terms) => {
+    const i = headers.findIndex(h => terms.some(t => h.toLowerCase().includes(t.toLowerCase())));
+    return i >= 0 ? i : null;
+  };
+  return {
+    timestamp:   find('timestamp','date','time'),
+    agentName:   find('agent name','agent'),
+    agentEmail:  find('email'),
+    custName:    find('customer name','customer n'),
+    custPhone:   find('phone','mobile'),
+    orderNum:    find('order num','order'),
+    reqType:     find('request type'),
+    reason:      find('reason'),
+    numItems:    find('number of','num item'),
+    product:     find('product name','product','8 original'),
+    origSKU:     find('original item'),
+    reqSKU:      find('requested item'),
+    shipping:    find('shipping fee'),
+    refund:      find('refund amount','refund'),
+    bosta:       find('bosta','ticket'),
+    notes:       find('notes'),
+    status:      find('exchange status','status','success'),
+    fulfilNote:  find('fulfilment','fulfil'),
+  };
+}
+
+function g(row, idx) {
+  if (idx === null || idx === undefined || idx < 0) return '';
+  return (row[idx] || '').toString().trim();
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
+async function doSearch() {
+  const name  = document.getElementById('sName').value.trim().toLowerCase();
+  const order = document.getElementById('sOrder').value.trim().toLowerCase();
+  const phone = document.getElementById('sPhone').value.trim().toLowerCase();
+
+  if (!name && !order && !phone) {
+    showToast('Enter at least one field to search.', 'warn');
+    return;
+  }
+
+  // UI loading
+  document.getElementById('resultsList').innerHTML = '';
+  document.getElementById('loadingWrap').classList.add('show');
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('resultsCount').textContent = '—';
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-sm"></span> Searching...';
+
+  let allResults = [];
+
+  for (const tab of TABS) {
+    try {
+      document.getElementById('loadingText').textContent = `Searching ${tab.label}...`;
+      const { headers, data } = await fetchTab(tab.name);
+      const idx = detectCols(headers);
+
+      const matches = data.filter(row => {
+        const rName  = g(row, idx.custName).toLowerCase();
+        const rOrder = g(row, idx.orderNum).toLowerCase();
+        const rPhone = g(row, idx.custPhone).toLowerCase();
+        if (name  && !rName.includes(name))   return false;
+        if (order && !rOrder.includes(order)) return false;
+        if (phone && !rPhone.includes(phone)) return false;
+        return true;
+      });
+
+      matches.forEach(row => allResults.push({ row, idx, tab }));
+    } catch(e) {
+      console.warn(`Failed to fetch ${tab.name}:`, e);
+    }
+  }
+
+  document.getElementById('loadingWrap').classList.remove('show');
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Search';
+
+  renderResults(allResults);
+  renderStats(allResults);
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function renderResults(allResults) {
+  const list  = document.getElementById('resultsList');
+  const count = document.getElementById('resultsCount');
+
+  if (!allResults.length) {
+    count.textContent = '0 results';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
+    return;
+  }
+
+  count.textContent = `${allResults.length} result${allResults.length > 1 ? 's' : ''}`;
+
+  list.innerHTML = allResults.map(({ row, idx, tab }) => {
+    const status   = g(row, idx.status);
+    const stCls    = getStatusCls(status);
+    const date     = g(row, idx.timestamp).split('T')[0] || g(row, idx.timestamp).substring(0,10) || '—';
+    const orderNum = g(row, idx.orderNum);
+    const custName = g(row, idx.custName);
+    const phone    = g(row, idx.custPhone);
+    const agent    = g(row, idx.agentName);
+    const reqType  = g(row, idx.reqType);
+    const reason   = g(row, idx.reason);
+    const product  = g(row, idx.product);
+    const refund   = g(row, idx.refund);
+    const shipping = g(row, idx.shipping);
+    const items    = g(row, idx.numItems);
+    const bosta    = g(row, idx.bosta);
+    const notes    = g(row, idx.notes);
+    const origSKU  = g(row, idx.origSKU);
+    const reqSKU   = g(row, idx.reqSKU);
+    const fulfilN  = g(row, idx.fulfilNote);
+
+    return `
+    <div class="result-card">
+      <div class="result-top">
+        <div>
+          <div class="result-order">Order #${orderNum || '—'}</div>
+          <div class="result-customer">${custName || '—'}</div>
+          <div class="result-phone">${phone || '—'}</div>
+        </div>
+        <div class="result-right">
+          <span class="source-badge ${tab.cls}">📊 ${tab.label}</span>
+          <span class="status-badge ${stCls}">${status || 'Pending'}</span>
+          <span style="font-size:11px;color:var(--muted)">${date}</span>
+        </div>
+      </div>
+      <div class="result-grid">
+        <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${reqType||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${reason||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${agent||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${bosta||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${product||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${refund ? 'EGP '+refund : '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${shipping||'—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${items||'—'}</span></div>
+        ${origSKU ? `<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${origSKU}</span></div>` : ''}
+        ${reqSKU  ? `<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${reqSKU}</span></div>` : ''}
+      </div>
+      ${notes   ? `<div class="result-note"><strong>Note:</strong> ${notes}</div>` : ''}
+      ${fulfilN ? `<div class="result-note" style="color:var(--lavender);border-color:rgba(191,161,255,0.2)"><strong>Fulfilment:</strong> ${fulfilN}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderStats(allResults) {
+  const statsRow = document.getElementById('statsRow');
+  statsRow.style.display = 'flex';
+  document.getElementById('statTotal').textContent   = allResults.length;
+  document.getElementById('statPending').textContent = allResults.filter(({row,idx}) => {
+    const s = g(row,idx.status).toLowerCase();
+    return !s || s.includes('pending');
+  }).length;
+  document.getElementById('statDone').textContent = allResults.filter(({row,idx}) => {
+    const s = g(row,idx.status).toLowerCase();
+    return s.includes('success')||s.includes('done')||s.includes('approved')||s.includes('completed');
+  }).length;
+  const sheets = new Set(allResults.map(r => r.tab.name));
+  document.getElementById('statSheets').textContent = sheets.size;
+}
+
+function getStatusCls(s) {
+  const v = (s||'').toLowerCase();
+  if (v.includes('success')||v.includes('done')||v.includes('approved')||v.includes('completed')) return 'status-success';
+  if (v.includes('rejected')||v.includes('declined')) return 'status-rejected';
+  if (v.includes('processing')||v.includes('progress')) return 'status-pending';
+  return 'status-default';
+}
+
+function clearSearch() {
+  ['sName','sOrder','sPhone'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('resultsList').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ready to search</div><div class="empty-sub">Enter any field above and press Search</div></div>`;
+  document.getElementById('resultsCount').textContent = '—';
+  document.getElementById('statsRow').style.display = 'none';
+  cache = {};
+}
+
+// ── DUPLICATE CHECK ───────────────────────────────────────────────────────
+let dupTimer;
+async function checkDup() {
+  clearTimeout(dupTimer);
+  dupTimer = setTimeout(async () => {
+    const orderNum = document.getElementById('fOrderNum').value.trim();
+    if (!orderNum) { hideDup(); return; }
+    try {
+      const { headers, data } = await fetchTab('Export2');
+      const idx = detectCols(headers);
+      const now = new Date();
+      const matches = data.filter(row => {
+        if (g(row,idx.orderNum).trim() !== orderNum) return false;
+        const d = parseDate(g(row,idx.timestamp));
+        return !d || (now-d)/86400000 <= 5;
+      });
+      if (matches.length) {
+        const st = g(matches[0], idx.status) || 'Pending';
+        showDup(`Order #${orderNum} already has an active case. Status: ${st}. Please follow up on the existing case.`);
+      } else hideDup();
+    } catch(e) { hideDup(); }
+  }, 600);
+}
+
+function parseDate(val) {
+  if (!val) return null;
+  const s = val.toString();
+  if (s.startsWith('Date(')) {
+    const p = s.replace('Date(','').replace(')','').split(',').map(Number);
+    return new Date(p[0],p[1],p[2],p[3]||0,p[4]||0);
+  }
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function showDup(msg) {
+  document.getElementById('dupText').textContent = msg;
+  document.getElementById('dupAlert').classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
+}
+function hideDup() {
+  document.getElementById('dupAlert').classList.remove('show');
+  document.getElementById('submitBtn').disabled = false;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────
+async function submitRefund() {
+  const required = [
+    {id:'fEmail',    label:'Agent email'},
+    {id:'fAgentName',label:'Agent name'},
+    {id:'fCustName', label:'Customer name'},
+    {id:'fCustPhone',label:'Customer phone'},
+    {id:'fOrderNum', label:'Order number'},
+    {id:'fReqType',  label:'Request type'},
+    {id:'fReason',   label:'Reason'},
+  ];
+  for (const f of required) {
+    if (!document.getElementById(f.id).value.trim())
+      return showToast(`${f.label} is required.`, 'error');
+  }
+
+  const row = [
+    new Date().toLocaleString('en-GB',{timeZone:'Africa/Cairo'}),
+    document.getElementById('fEmail').value.trim(),
+    document.getElementById('fAgentName').value.trim(),
+    document.getElementById('fCustName').value.trim(),
+    document.getElementById('fCustPhone').value.trim(),
+    document.getElementById('fOrderNum').value.trim(),
+    document.getElementById('fReqType').value,
+    document.getElementById('fReason').value,
+    document.getElementById('fNumItems').value,
+    document.getElementById('fProduct').value,
+    document.getElementById('fOrigSKU').value,
+    document.getElementById('fReqSKU').value,
+    document.getElementById('fShipping').value,
+    document.getElementById('fRefund').value,
+    document.getElementById('fBosta').value,
+    '',
+    document.getElementById('fNotes').value,
+    'Pending',
+    ''
+  ];
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-sm"></span> Submitting...';
+
+  if (!GAS_URL) {
+    const tsv = row.map(v=>`"${(v||'').replace(/"/g,'""')}"`).join('\t');
+    try { await navigator.clipboard.writeText(tsv); } catch(e){}
+    btn.disabled = false;
+    btn.textContent = '✉️ Submit Request';
+    showToast('⚠️ Apps Script not set up. Data copied — paste into Export2.', 'warn');
+    return;
+  }
+
+  try {
+    const res    = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({sheet:'Export2',row}),headers:{'Content-Type':'application/json'}});
+    const result = await res.json();
+    if (result.status==='ok') {
+      showToast('✅ Request submitted!', 'success');
+      resetForm();
+      cache = {};
+    } else throw new Error(result.message||'Error');
+  } catch(e) {
+    showToast('Submit failed: '+e.message, 'error');
+  }
+  btn.disabled = false;
+  btn.textContent = '✉️ Submit Request';
+}
+
+function resetForm() {
+  ['fEmail','fAgentName','fCustName','fCustPhone','fOrderNum',
+   'fNumItems','fProduct','fOrigSKU','fReqSKU','fRefund','fBosta','fNotes'
+  ].forEach(id => document.getElementById(id).value='');
+  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value='');
+  hideDup();
+  setNow();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.className = `toast show ${type}`;
+  t.textContent = msg;
+  setTimeout(()=>t.classList.remove('show'), 5000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+function setNow() {
+  const now   = new Date();
+  const cairo = new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
+  const pad   = n => n.toString().padStart(2,'0');
+  document.getElementById('fDate').value =
+    `${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
+}
+setNow();
+</script>
+</body>
+</html>
+    
