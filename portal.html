@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
@@ -16,10 +16,24 @@
     body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
     a{text-decoration:none;color:inherit;}
 
+    /* ======= LANG SYSTEM ======= */
+    .ar-only{display:none !important;}
+    .en-only{display:block;}
+    body.lang-ar .ar-only{display:block !important;}
+    body.lang-ar .en-only{display:none !important;}
+    body.lang-ar{direction:rtl;}
+    body.lang-ar .main{margin-left:0;margin-right:260px;}
+    body.lang-ar .sidebar{left:auto;right:0;}
+    /* inline elements */
+    span.ar-only{display:none !important;}
+    span.en-only{display:inline !important;}
+    body.lang-ar span.ar-only{display:inline !important;}
+    body.lang-ar span.en-only{display:none !important;}
+
     /* SIDEBAR */
-    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;}
+    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
     .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
-    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;}
+    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
     .brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
     .brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
     .sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
@@ -34,7 +48,7 @@
     .search-wrap{flex:1;max-width:480px;background:#fff;border:1.5px solid var(--border);border-radius:14px;display:flex;align-items:center;padding:13px 18px;gap:10px;}
     .search-wrap input{border:none;outline:none;width:100%;font-size:14px;font-family:'Inter',sans-serif;background:none;}
     .topbar-right{display:flex;align-items:center;gap:12px;}
-    .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;}
+    .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
     .lang-btn:hover{border-color:var(--indigo);color:var(--indigo);}
     .lang-btn.ar-active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
     .profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
@@ -50,7 +64,7 @@
     .hero h1 span{color:#6ee7b7;}
     .hero p{color:#a7f3d0;font-size:15px;line-height:1.7;max-width:600px;}
 
-    /* STATS ROW */
+    /* STATS */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;}
     .stat{background:#fff;border-radius:18px;border:1.5px solid var(--border);padding:22px 24px;}
     .stat-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;}
@@ -73,17 +87,15 @@
     .card-title{font-size:17px;font-weight:800;color:var(--midnight);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
     .card-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px;}
 
     /* SCENARIO CARDS */
-    .scenario-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;transition:.2s;}
+    .scenario-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;transition:.2s;margin-bottom:20px;}
     .scenario-card:hover{border-color:var(--indigo);box-shadow:0 8px 28px rgba(75,75,249,.1);}
     .sc-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
     .sc-icon-title{display:flex;align-items:center;gap:12px;}
     .sc-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
     .sc-icon.green{background:#dcfce7;}
     .sc-icon.red{background:#fee2e2;}
-    .sc-icon.yellow{background:#fef9c3;}
     .sc-icon.purple{background:#f3e8ff;}
     .sc-icon.blue{background:#dbeafe;}
     .sc-title{font-size:15px;font-weight:800;color:var(--midnight);}
@@ -91,10 +103,8 @@
     .sc-tag{padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap;}
     .tag-green{background:#dcfce7;color:#15803d;}
     .tag-red{background:#fee2e2;color:#b91c1c;}
-    .tag-yellow{background:#fef9c3;color:#a16207;}
     .tag-purple{background:#f3e8ff;color:#7c3aed;}
     .tag-blue{background:#dbeafe;color:#1d4ed8;}
-    .tag-orange{background:#ffedd5;color:#c2410c;}
     .sc-body{padding:20px 24px;}
     .sc-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
     .sc-meta-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
@@ -107,38 +117,32 @@
     .step-num{width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;margin-top:1px;}
     .step-text{font-size:13px;color:var(--text);line-height:1.6;}
 
-    /* DONTS */
     .donts{margin-top:14px;background:#fff8f8;border-radius:12px;padding:14px;border:1px solid #fecaca;}
     .donts-title{font-size:11px;font-weight:800;color:#b91c1c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
     .dont-item{display:flex;gap:8px;font-size:12px;color:#7f1d1d;margin-bottom:6px;line-height:1.5;}
     .dont-item:last-child{margin-bottom:0;}
     .dont-x{color:#ef4444;font-weight:900;flex-shrink:0;}
 
-    /* DEFINITION */
     .definition{margin-top:12px;background:#f0fdf4;border-radius:12px;padding:14px;border:1px solid #a7f3d0;}
     .def-title{font-size:11px;font-weight:800;color:#065f46;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
     .def-text{font-size:12px;color:#065f46;line-height:1.6;}
 
-    /* NOTE */
     .example-note{margin-top:12px;background:#eff6ff;border-radius:12px;padding:14px;border:1px solid #bfdbfe;}
     .note-label{font-size:10px;font-weight:800;color:#1e40af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
     .note-text{font-size:12px;color:#1e40af;font-family:monospace;line-height:1.6;}
     .copy-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:8px;font-family:'Inter',sans-serif;transition:.15s;}
     .copy-btn:hover{background:var(--midnight);}
 
-    /* ESCALATE BOX */
     .escalate-box{margin-top:12px;background:#fff7ed;border-radius:12px;padding:14px;border:1px solid #fed7aa;}
     .esc-title{font-size:11px;font-weight:800;color:#c2410c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
     .esc-text{font-size:12px;color:#92400e;line-height:1.6;}
 
-    /* META BOX */
     .meta-box{margin-top:12px;background:#faf5ff;border-radius:12px;padding:14px;border:1px solid #d8b4fe;}
     .meta-title{font-size:11px;font-weight:800;color:#7c3aed;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
     .meta-item{display:flex;gap:8px;margin-bottom:6px;font-size:12px;align-items:flex-start;}
     .meta-field{font-family:monospace;background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:6px;font-size:11px;white-space:nowrap;flex-shrink:0;}
     .meta-desc{color:#6b21a8;line-height:1.5;}
 
-    /* ALERT */
     .alert{border-radius:14px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6;}
     .alert-warn{background:#fff7ed;border:1.5px solid #fed7aa;color:#92400e;}
     .alert-info{background:#eff6ff;border:1.5px solid #bfdbfe;color:#1e40af;}
@@ -146,7 +150,6 @@
     .alert-danger{background:#fef2f2;border:1.5px solid #fecaca;color:#991b1b;}
     .alert-icon{font-size:18px;flex-shrink:0;}
 
-    /* POLICY TABLE */
     .policy-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px;}
     .policy-table th{background:var(--midnight);color:#fff;padding:12px 16px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.5px;}
     .policy-table th:first-child{border-radius:12px 0 0 0;}
@@ -159,23 +162,19 @@
     .p-red{background:#fee2e2;color:#b91c1c;}
     .p-yellow{background:#fef9c3;color:#a16207;}
 
-    /* SECTION HEADER */
     .sec-title{font-size:20px;font-weight:800;color:var(--midnight);margin-bottom:6px;}
     .sec-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
 
-    /* LANG */
-    .en-only{display:block;}
-    .ar-only{display:none;}
-
-    /* FOOTER */
     .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:16px;}
     .footer span{color:var(--indigo);font-weight:700;}
 
     @media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr);}}
     @media(max-width:900px){
-      .sidebar{display:none;}.main{margin-left:0;}
-      .grid-2,.grid-3{grid-template-columns:1fr;}
-      .topbar{flex-wrap:wrap;}.search-wrap{max-width:100%;}
+      .sidebar{display:none;}
+      .main{margin-left:0!important;margin-right:0!important;}
+      .grid-2{grid-template-columns:1fr;}
+      .topbar{flex-wrap:wrap;}
+      .search-wrap{max-width:100%;}
       .stats{grid-template-columns:1fr 1fr;}
     }
     @media(max-width:600px){.main{padding:18px;}.hero h1{font-size:24px;}.stats{grid-template-columns:1fr;}}
@@ -183,7 +182,6 @@
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-logo">M</div>
@@ -193,6 +191,7 @@
     </div>
   </div>
   <div class="sidebar-label">Workspace</div>
+  <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span> Home</a>
   <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
   <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
   <a href="portal.html" class="nav-item active"><span class="nav-icon">💰</span> Refunds</a>
@@ -205,7 +204,6 @@
   <a href="sop-cheatsheet.html" class="nav-item"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
   <div class="topbar">
     <div class="search-wrap">
@@ -224,107 +222,138 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-tag">💰 Finance & Returns</div>
-    <h1>Refund & Returns <span>Operations</span></h1>
+    <h1><span class="en-only">Refund & Returns</span><span class="ar-only">الاسترداد والمرتجعات</span> <span style="color:#6ee7b7;">Operations</span></h1>
     <p class="en-only">Finance-owned workflows for refunds, exchanges, card-risk orders, and return QC. Always confirm RETURNED status before issuing any refund.</p>
-    <p class="ar-only" style="direction:rtl;">سير عمل Finance للاستردادات والاستبدالات وأوردرات card-risk وجودة المرتجعات. دايماً تأكدي من ستاتس RETURNED قبل أي استرداد.</p>
+    <p class="ar-only">سير عمل Finance للاستردادات والاستبدالات وأوردرات card-risk وجودة المرتجعات. دايماً تأكدي من ستاتس RETURNED قبل أي استرداد.</p>
   </section>
 
-  <!-- STATS -->
   <div class="stats">
     <div class="stat">
       <div class="stat-label en-only">Pending Refunds</div>
-      <div class="stat-label ar-only" style="direction:rtl;">استردادات معلقة</div>
+      <div class="stat-label ar-only">استردادات معلقة</div>
       <div class="stat-value">8</div>
       <div class="stat-sub red">↑ 2 vs yesterday</div>
     </div>
     <div class="stat">
       <div class="stat-label en-only">Card at Risk</div>
-      <div class="stat-label ar-only" style="direction:rtl;">كارت في خطر</div>
+      <div class="stat-label ar-only">كارت في خطر</div>
       <div class="stat-value">3</div>
       <div class="stat-sub yellow">⚠ Needs decision</div>
     </div>
     <div class="stat">
       <div class="stat-label en-only">Returns — Failed</div>
-      <div class="stat-label ar-only" style="direction:rtl;">مرتجعات فاشلة</div>
+      <div class="stat-label ar-only">مرتجعات فاشلة</div>
       <div class="stat-value">2</div>
       <div class="stat-sub red">↑ Recovery needed</div>
     </div>
     <div class="stat">
       <div class="stat-label en-only">Exchange Returned</div>
-      <div class="stat-label ar-only" style="direction:rtl;">استبدالات راجعة</div>
+      <div class="stat-label ar-only">استبدالات راجعة</div>
       <div class="stat-value">5</div>
       <div class="stat-sub green">↓ 1 vs yesterday</div>
     </div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('refunds',this)">💰 Refunds</div>
-    <div class="tab" onclick="switchTab('returns',this)">🔄 Returns & Exchanges</div>
-    <div class="tab" onclick="switchTab('cardrisk',this)">💳 Card at Risk</div>
-    <div class="tab" onclick="switchTab('policy',this)">📋 Policy Reference</div>
+    <div class="tab active" onclick="switchTab('refunds',this)">💰 <span class="en-only">Refunds</span><span class="ar-only">الاستردادات</span></div>
+    <div class="tab" onclick="switchTab('returns',this)">🔄 <span class="en-only">Returns & Exchanges</span><span class="ar-only">المرتجعات والاستبدالات</span></div>
+    <div class="tab" onclick="switchTab('cardrisk',this)">💳 <span class="en-only">Card at Risk</span><span class="ar-only">كارت في خطر</span></div>
+    <div class="tab" onclick="switchTab('policy',this)">📋 <span class="en-only">Policy Reference</span><span class="ar-only">مرجع السياسات</span></div>
   </div>
 
-  <!-- ===== REFUNDS TAB ===== -->
+  <!-- REFUNDS TAB -->
   <div id="tab-refunds" class="section active">
     <div class="sec-title en-only">💰 Refund Scenarios</div>
-    <div class="sec-title ar-only" style="direction:rtl;">💰 سيناريوهات الاسترداد</div>
+    <div class="sec-title ar-only">💰 سيناريوهات الاسترداد</div>
     <div class="sec-sub en-only">Finance-owned. Always confirm item physically returned before issuing refund.</div>
-    <div class="sec-sub ar-only" style="direction:rtl;">ملك Finance. دايماً تأكدي من رجوع المنتج فعلياً قبل الاسترداد.</div>
+    <div class="sec-sub ar-only">ملك Finance. دايماً تأكدي من رجوع المنتج فعلياً قبل الاسترداد.</div>
 
     <div class="alert alert-warn">
       <span class="alert-icon">⚠️</span>
       <div>
-        <div class="en-only"><strong>Finance manual tags:</strong> pending-refund, exchange-returned, return-failed — These are the ONLY tags you remove manually. All others are worker-managed.</div>
-        <div class="ar-only" style="direction:rtl;"><strong>تاجات Finance اليدوية:</strong> pending-refund، exchange-returned، return-failed — دي التاجات الوحيدة اللي بتشيليها يدوياً. كل التاني Worker-managed.</div>
+        <span class="en-only"><strong>Finance manual tags:</strong> pending-refund, exchange-returned, return-failed — These are the ONLY tags you remove manually.</span>
+        <span class="ar-only"><strong>تاجات Finance اليدوية:</strong> pending-refund، exchange-returned، return-failed — دي التاجات الوحيدة اللي بتشيليها يدوياً.</span>
       </div>
     </div>
 
     <div class="grid-2">
-
-      <!-- PENDING REFUND -->
       <div class="scenario-card">
         <div class="sc-header">
           <div class="sc-icon-title">
             <div class="sc-icon green">💰</div>
             <div>
               <div class="sc-title en-only">Pending Refund — Item Returned</div>
-              <div class="sc-title ar-only" style="direction:rtl;">استرداد معلق — منتج رجع</div>
+              <div class="sc-title ar-only">استرداد معلق — منتج رجع</div>
               <div class="sc-trigger en-only">Finance · Refunds Owed tab</div>
-              <div class="sc-trigger ar-only" style="direction:rtl;">تاب Finance · Refunds Owed</div>
+              <div class="sc-trigger ar-only">تاب Finance · Refunds Owed</div>
             </div>
           </div>
           <span class="sc-tag tag-green">pending-refund</span>
         </div>
         <div class="sc-body">
           <div class="sc-meta">
-            <div><div class="sc-meta-label en-only">Owner</div><div class="sc-meta-label ar-only" style="direction:rtl;">المسؤول</div><div class="sc-meta-value">Finance</div></div>
-            <div><div class="sc-meta-label en-only">Tag Removal</div><div class="sc-meta-label ar-only" style="direction:rtl;">إزالة التاج</div><div class="sc-meta-value">✋ Manual</div></div>
+            <div>
+              <div class="sc-meta-label en-only">Owner</div>
+              <div class="sc-meta-label ar-only">المسؤول</div>
+              <div class="sc-meta-value">Finance</div>
+            </div>
+            <div>
+              <div class="sc-meta-label en-only">Tag Removal</div>
+              <div class="sc-meta-label ar-only">إزالة التاج</div>
+              <div class="sc-meta-value">✋ Manual</div>
+            </div>
           </div>
           <div class="meta-box">
             <div class="meta-title">Metafields to Check</div>
-            <div class="meta-item"><span class="meta-field">custom.return_details</span><span class="meta-desc en-only">Confirm status = RETURNED</span><span class="meta-desc ar-only" style="direction:rtl;">تأكدي إن الستاتس = RETURNED</span></div>
+            <div class="meta-item">
+              <span class="meta-field">custom.return_details</span>
+              <span class="meta-desc en-only">Confirm status = RETURNED</span>
+              <span class="meta-desc ar-only">تأكدي إن الستاتس = RETURNED</span>
+            </div>
           </div>
           <div class="steps" style="margin-top:14px;">
-            <div class="step"><div class="step-num">1</div><div class="step-text en-only">Open order from Finance · Refunds Owed tab.</div><div class="step-text ar-only" style="direction:rtl;">افتحي الأوردر من تاب Finance · Refunds Owed.</div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-text en-only">Confirm via custom.return_details that status = RETURNED.</div><div class="step-text ar-only" style="direction:rtl;">تأكدي من custom.return_details إن الستاتس = RETURNED.</div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-text en-only">Issue the refund directly in Shopify.</div><div class="step-text ar-only" style="direction:rtl;">اعملي الاسترداد مباشرة في Shopify.</div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-text en-only">Add a Note with refund amount.</div><div class="step-text ar-only" style="direction:rtl;">أضيفي نوت بمبلغ الاسترداد.</div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-text en-only">Remove pending-refund tag manually.</div><div class="step-text ar-only" style="direction:rtl;">شيلي تاج pending-refund يدوياً.</div></div>
+            <div class="step"><div class="step-num">1</div>
+              <div class="step-text en-only">Open order from Finance · Refunds Owed tab.</div>
+              <div class="step-text ar-only">افتحي الأوردر من تاب Finance · Refunds Owed.</div>
+            </div>
+            <div class="step"><div class="step-num">2</div>
+              <div class="step-text en-only">Confirm via custom.return_details that status = RETURNED.</div>
+              <div class="step-text ar-only">تأكدي من custom.return_details إن الستاتس = RETURNED.</div>
+            </div>
+            <div class="step"><div class="step-num">3</div>
+              <div class="step-text en-only">Issue the refund directly in Shopify.</div>
+              <div class="step-text ar-only">اعملي الاسترداد مباشرة في Shopify.</div>
+            </div>
+            <div class="step"><div class="step-num">4</div>
+              <div class="step-text en-only">Add a Note with refund amount.</div>
+              <div class="step-text ar-only">أضيفي نوت بمبلغ الاسترداد.</div>
+            </div>
+            <div class="step"><div class="step-num">5</div>
+              <div class="step-text en-only">Remove pending-refund tag manually.</div>
+              <div class="step-text ar-only">شيلي تاج pending-refund يدوياً.</div>
+            </div>
           </div>
           <div class="donts">
             <div class="donts-title">❌ Do NOT</div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Refund without confirming RETURNED status first.</span><span class="ar-only" style="direction:rtl;">تستردي من غير تأكيد ستاتس RETURNED.</span></div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Forget to remove the tag — worker will NOT do it.</span><span class="ar-only" style="direction:rtl;">تنسي تشيلي التاج — الـ Worker مش هيعملها.</span></div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Skip the Note — finance reconciliation depends on it.</span><span class="ar-only" style="direction:rtl;">تتخطي النوت — المحاسبة بتعتمد عليه.</span></div>
+            <div class="dont-item"><span class="dont-x">✗</span>
+              <span class="en-only">Refund without confirming RETURNED status first.</span>
+              <span class="ar-only">تستردي من غير تأكيد ستاتس RETURNED.</span>
+            </div>
+            <div class="dont-item"><span class="dont-x">✗</span>
+              <span class="en-only">Forget to remove the tag — worker will NOT do it.</span>
+              <span class="ar-only">تنسي تشيلي التاج — الـ Worker مش هيعملها.</span>
+            </div>
+            <div class="dont-item"><span class="dont-x">✗</span>
+              <span class="en-only">Skip the Note — finance reconciliation depends on it.</span>
+              <span class="ar-only">تتخطي النوت — المحاسبة بتعتمد عليه.</span>
+            </div>
           </div>
           <div class="definition">
             <div class="def-title">✅ Definition of Done</div>
             <div class="def-text en-only">Refund issued + Note stamped + pending-refund tag manually removed.</div>
-            <div class="def-text ar-only" style="direction:rtl;">الاسترداد اتعمل + نوت متحط + تاج pending-refund اتشال يدوياً.</div>
+            <div class="def-text ar-only">الاسترداد اتعمل + نوت متحط + تاج pending-refund اتشال يدوياً.</div>
           </div>
           <div class="example-note">
             <div class="note-label">📝 Example Note</div>
@@ -334,50 +363,82 @@
         </div>
       </div>
 
-      <!-- RETURN FAILED -->
       <div class="scenario-card">
         <div class="sc-header">
           <div class="sc-icon-title">
             <div class="sc-icon red">🚨</div>
             <div>
               <div class="sc-title en-only">Return Failed — Missing Item</div>
-              <div class="sc-title ar-only" style="direction:rtl;">مرتجع فاشل — منتج مش موجود</div>
+              <div class="sc-title ar-only">مرتجع فاشل — منتج مش موجود</div>
               <div class="sc-trigger en-only">Finance · Returns tab</div>
-              <div class="sc-trigger ar-only" style="direction:rtl;">تاب Finance · Returns</div>
+              <div class="sc-trigger ar-only">تاب Finance · Returns</div>
             </div>
           </div>
           <span class="sc-tag tag-red">return-failed</span>
         </div>
         <div class="sc-body">
           <div class="sc-meta">
-            <div><div class="sc-meta-label en-only">Owner</div><div class="sc-meta-label ar-only" style="direction:rtl;">المسؤول</div><div class="sc-meta-value">Finance</div></div>
-            <div><div class="sc-meta-label en-only">Risk</div><div class="sc-meta-label ar-only" style="direction:rtl;">الخطر</div><div class="sc-meta-value">🔴 Financial Loss</div></div>
+            <div>
+              <div class="sc-meta-label en-only">Owner</div>
+              <div class="sc-meta-label ar-only">المسؤول</div>
+              <div class="sc-meta-value">Finance</div>
+            </div>
+            <div>
+              <div class="sc-meta-label en-only">Risk</div>
+              <div class="sc-meta-label ar-only">الخطر</div>
+              <div class="sc-meta-value">🔴 Financial Loss</div>
+            </div>
           </div>
           <div class="meta-box">
             <div class="meta-title">Metafields to Check</div>
-            <div class="meta-item"><span class="meta-field">custom.return_details</span><span class="meta-desc en-only">Confirm item NOT received (Terminated)</span><span class="meta-desc ar-only" style="direction:rtl;">تأكدي إن المنتج مش موجود (Terminated)</span></div>
+            <div class="meta-item">
+              <span class="meta-field">custom.return_details</span>
+              <span class="meta-desc en-only">Confirm item NOT received (Terminated)</span>
+              <span class="meta-desc ar-only">تأكدي إن المنتج مش موجود (Terminated)</span>
+            </div>
           </div>
           <div class="steps" style="margin-top:14px;">
-            <div class="step"><div class="step-num">1</div><div class="step-text en-only">Verify return details — item never came back.</div><div class="step-text ar-only" style="direction:rtl;">تحققي من تفاصيل الإرجاع — المنتج مرجعش.</div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-text en-only">Contact the customer immediately.</div><div class="step-text ar-only" style="direction:rtl;">كلمي العميل فوراً.</div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-text en-only">Request recovery of item or payment per Mavin Wear policy.</div><div class="step-text ar-only" style="direction:rtl;">اطلبي المنتج أو المبلغ حسب سياسة Mavin Wear.</div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-text en-only">Log recovery action in the Note.</div><div class="step-text ar-only" style="direction:rtl;">سجلي الإجراء في النوت.</div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-text en-only">Remove tag ONLY after item or money is recovered.</div><div class="step-text ar-only" style="direction:rtl;">شيلي التاج بس بعد استرداد المنتج أو المبلغ.</div></div>
+            <div class="step"><div class="step-num">1</div>
+              <div class="step-text en-only">Verify return details — item never came back.</div>
+              <div class="step-text ar-only">تحققي من تفاصيل الإرجاع — المنتج مرجعش.</div>
+            </div>
+            <div class="step"><div class="step-num">2</div>
+              <div class="step-text en-only">Contact the customer immediately.</div>
+              <div class="step-text ar-only">كلمي العميل فوراً.</div>
+            </div>
+            <div class="step"><div class="step-num">3</div>
+              <div class="step-text en-only">Request recovery of item or payment per Mavin Wear policy.</div>
+              <div class="step-text ar-only">اطلبي المنتج أو المبلغ حسب سياسة Mavin Wear.</div>
+            </div>
+            <div class="step"><div class="step-num">4</div>
+              <div class="step-text en-only">Log recovery action in the Note.</div>
+              <div class="step-text ar-only">سجلي الإجراء في النوت.</div>
+            </div>
+            <div class="step"><div class="step-num">5</div>
+              <div class="step-text en-only">Remove tag ONLY after item or money is recovered.</div>
+              <div class="step-text ar-only">شيلي التاج بس بعد استرداد المنتج أو المبلغ.</div>
+            </div>
           </div>
           <div class="donts">
             <div class="donts-title">❌ Do NOT</div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Clear the tag until case is 100% resolved.</span><span class="ar-only" style="direction:rtl;">تشيلي التاج غير لما الكيس يتحل 100%.</span></div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Expect the tag to auto-clear.</span><span class="ar-only" style="direction:rtl;">تستني التاج يتشال لوحده.</span></div>
+            <div class="dont-item"><span class="dont-x">✗</span>
+              <span class="en-only">Clear the tag until case is 100% resolved.</span>
+              <span class="ar-only">تشيلي التاج غير لما الكيس يتحل 100%.</span>
+            </div>
+            <div class="dont-item"><span class="dont-x">✗</span>
+              <span class="en-only">Expect the tag to auto-clear.</span>
+              <span class="ar-only">تستني التاج يتشال لوحده.</span>
+            </div>
           </div>
           <div class="escalate-box">
             <div class="esc-title">⚡ When to Escalate</div>
             <div class="esc-text en-only">Escalate to management if customer refuses to return item they were already refunded for.</div>
-            <div class="esc-text ar-only" style="direction:rtl;">صعّدي للإدارة لو العميل رفض يرجع المنتج اللي اتردت عليه فلوسه.</div>
+            <div class="esc-text ar-only">صعّدي للإدارة لو العميل رفض يرجع المنتج اللي اتردت عليه فلوسه.</div>
           </div>
           <div class="definition">
             <div class="def-title">✅ Definition of Done</div>
             <div class="def-text en-only">Recovery action logged + item/payment recovered + tag manually removed.</div>
-            <div class="def-text ar-only" style="direction:rtl;">الإجراء متسجل + المنتج/المبلغ اتسترد + التاج اتشال يدوياً.</div>
+            <div class="def-text ar-only">الإجراء متسجل + المنتج/المبلغ اتسترد + التاج اتشال يدوياً.</div>
           </div>
           <div class="example-note">
             <div class="note-label">📝 Example Note</div>
@@ -386,58 +447,68 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ===== RETURNS & EXCHANGES TAB ===== -->
+  <!-- RETURNS TAB -->
   <div id="tab-returns" class="section">
     <div class="sec-title en-only">🔄 Returns & Exchanges</div>
-    <div class="sec-title ar-only" style="direction:rtl;">🔄 المرتجعات والاستبدالات</div>
+    <div class="sec-title ar-only">🔄 المرتجعات والاستبدالات</div>
     <div class="sec-sub en-only">Handle exchange returns, blocked pickups, and return QC decisions.</div>
-    <div class="sec-sub ar-only" style="direction:rtl;">تعاملي مع استبدالات المرتجعات والاستلام المحجوب وقرارات جودة المرتجعات.</div>
-
+    <div class="sec-sub ar-only">تعاملي مع استبدالات المرتجعات والاستلام المحجوب وقرارات جودة المرتجعات.</div>
     <div class="grid-2">
-
-      <!-- EXCHANGE RETURNED -->
       <div class="scenario-card">
         <div class="sc-header">
           <div class="sc-icon-title">
             <div class="sc-icon purple">🔁</div>
             <div>
               <div class="sc-title en-only">Exchange Returned</div>
-              <div class="sc-title ar-only" style="direction:rtl;">استبدال رجع</div>
+              <div class="sc-title ar-only">استبدال رجع</div>
               <div class="sc-trigger en-only">Finance · Returns tab</div>
-              <div class="sc-trigger ar-only" style="direction:rtl;">تاب Finance · Returns</div>
+              <div class="sc-trigger ar-only">تاب Finance · Returns</div>
             </div>
           </div>
           <span class="sc-tag tag-purple">exchange-returned</span>
         </div>
         <div class="sc-body">
           <div class="sc-meta">
-            <div><div class="sc-meta-label en-only">Owner</div><div class="sc-meta-label ar-only" style="direction:rtl;">المسؤول</div><div class="sc-meta-value">Finance / CS</div></div>
-            <div><div class="sc-meta-label en-only">Tag Removal</div><div class="sc-meta-label ar-only" style="direction:rtl;">إزالة التاج</div><div class="sc-meta-value">✋ Manual</div></div>
-          </div>
-          <div class="meta-box">
-            <div class="meta-title">Metafields to Check</div>
-            <div class="meta-item"><span class="meta-field">custom.return_details</span><span class="meta-desc en-only">Confirm swapped item is back</span><span class="meta-desc ar-only" style="direction:rtl;">تأكدي إن المنتج المستبدل رجع</span></div>
+            <div>
+              <div class="sc-meta-label en-only">Owner</div>
+              <div class="sc-meta-label ar-only">المسؤول</div>
+              <div class="sc-meta-value">Finance / CS</div>
+            </div>
+            <div>
+              <div class="sc-meta-label en-only">Tag Removal</div>
+              <div class="sc-meta-label ar-only">إزالة التاج</div>
+              <div class="sc-meta-value">✋ Manual</div>
+            </div>
           </div>
           <div class="steps" style="margin-top:14px;">
-            <div class="step"><div class="step-num">1</div><div class="step-text en-only">Confirm original item physically returned.</div><div class="step-text ar-only" style="direction:rtl;">تأكدي إن المنتج الأصلي رجع فعلياً.</div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-text en-only">Check balance: top-up owed? Partial refund? No balance?</div><div class="step-text ar-only" style="direction:rtl;">راجعي الرصيد: فيه فرق؟ استرداد جزئي؟ أم لا؟</div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-text en-only">Settle the financial balance in Shopify.</div><div class="step-text ar-only" style="direction:rtl;">سوّي الرصيد المالي في Shopify.</div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-text en-only">Add a Note detailing the resolution.</div><div class="step-text ar-only" style="direction:rtl;">أضيفي نوت بتفاصيل الحل.</div></div>
-            <div class="step"><div class="step-num">5</div><div class="step-text en-only">Remove the tag manually.</div><div class="step-text ar-only" style="direction:rtl;">شيلي التاج يدوياً.</div></div>
-          </div>
-          <div class="donts">
-            <div class="donts-title">❌ Do NOT</div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Assume exchange is financially square without checking both ways.</span><span class="ar-only" style="direction:rtl;">تفترضي إن الاستبدال متوازن مالياً من غير مراجعة الاتجاهين.</span></div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Expect tag to auto-clear.</span><span class="ar-only" style="direction:rtl;">تستني التاج يتشال لوحده.</span></div>
+            <div class="step"><div class="step-num">1</div>
+              <div class="step-text en-only">Confirm original item physically returned.</div>
+              <div class="step-text ar-only">تأكدي إن المنتج الأصلي رجع فعلياً.</div>
+            </div>
+            <div class="step"><div class="step-num">2</div>
+              <div class="step-text en-only">Check balance: top-up owed? Partial refund? No balance?</div>
+              <div class="step-text ar-only">راجعي الرصيد: فيه فرق؟ استرداد جزئي؟ أم لا؟</div>
+            </div>
+            <div class="step"><div class="step-num">3</div>
+              <div class="step-text en-only">Settle the financial balance in Shopify.</div>
+              <div class="step-text ar-only">سوّي الرصيد المالي في Shopify.</div>
+            </div>
+            <div class="step"><div class="step-num">4</div>
+              <div class="step-text en-only">Add a Note detailing the resolution.</div>
+              <div class="step-text ar-only">أضيفي نوت بتفاصيل الحل.</div>
+            </div>
+            <div class="step"><div class="step-num">5</div>
+              <div class="step-text en-only">Remove the tag manually.</div>
+              <div class="step-text ar-only">شيلي التاج يدوياً.</div>
+            </div>
           </div>
           <div class="definition">
             <div class="def-title">✅ Definition of Done</div>
             <div class="def-text en-only">Financial balance settled + Note stamped + tag manually removed.</div>
-            <div class="def-text ar-only" style="direction:rtl;">الرصيد المالي اتسوّى + نوت متحط + تاج اتشال يدوياً.</div>
+            <div class="def-text ar-only">الرصيد المالي اتسوّى + نوت متحط + تاج اتشال يدوياً.</div>
           </div>
           <div class="example-note">
             <div class="note-label">📝 Example Note</div>
@@ -447,105 +518,119 @@
         </div>
       </div>
 
-      <!-- RETURN QC -->
       <div class="scenario-card">
         <div class="sc-header">
           <div class="sc-icon-title">
             <div class="sc-icon blue">🔬</div>
             <div>
               <div class="sc-title en-only">Return Quality Check (QC)</div>
-              <div class="sc-title ar-only" style="direction:rtl;">فحص جودة المرتجعات</div>
+              <div class="sc-title ar-only">فحص جودة المرتجعات</div>
               <div class="sc-trigger en-only">Bosta receives physical return and escalates unclear defects</div>
-              <div class="sc-trigger ar-only" style="direction:rtl;">Bosta بتستلم المرتجع وبتصعّد العيوب غير الواضحة</div>
+              <div class="sc-trigger ar-only">Bosta بتستلم المرتجع وبتصعّد العيوب غير الواضحة</div>
             </div>
           </div>
           <span class="sc-tag tag-blue">QC Decision</span>
         </div>
         <div class="sc-body">
           <div class="sc-meta">
-            <div><div class="sc-meta-label en-only">Owner</div><div class="sc-meta-label ar-only" style="direction:rtl;">المسؤول</div><div class="sc-meta-value">Operations</div></div>
-            <div><div class="sc-meta-label en-only">Decision SLA</div><div class="sc-meta-label ar-only" style="direction:rtl;">SLA القرار</div><div class="sc-meta-value">⏱ 12 Hours</div></div>
+            <div>
+              <div class="sc-meta-label en-only">Owner</div>
+              <div class="sc-meta-label ar-only">المسؤول</div>
+              <div class="sc-meta-value">Operations</div>
+            </div>
+            <div>
+              <div class="sc-meta-label en-only">Decision SLA</div>
+              <div class="sc-meta-label ar-only">SLA القرار</div>
+              <div class="sc-meta-value">⏱ 12 Hours</div>
+            </div>
           </div>
           <div class="steps" style="margin-top:14px;">
-            <div class="step"><div class="step-num">1</div><div class="step-text en-only">Bosta scans return and performs QC within 48h of receipt.</div><div class="step-text ar-only" style="direction:rtl;">Bosta بتفحص المرتجع خلال 48 ساعة من الاستلام.</div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-text en-only">For unclear defects, Bosta takes photos and escalates to Mavin Wear.</div><div class="step-text ar-only" style="direction:rtl;">للعيوب غير الواضحة، Bosta بتصور وتصعّد لـ Mavin Wear.</div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-text en-only">Mavin Wear reviews photos and documentation.</div><div class="step-text ar-only" style="direction:rtl;">Mavin Wear بتراجع الصور والتوثيق.</div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-text en-only">Decide within 12h: Accept resaleable / Classify defective / Replace.</div><div class="step-text ar-only" style="direction:rtl;">قرري في 12 ساعة: قابل للبيع / معيب / استبدال.</div></div>
-          </div>
-          <div class="donts">
-            <div class="donts-title">❌ Do NOT</div>
-            <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Delay decision beyond 12 hours — stalls process and voids Bosta SLA.</span><span class="ar-only" style="direction:rtl;">تأخري القرار لأكتر من 12 ساعة — هيوقف العملية ويلغي SLA Bosta.</span></div>
+            <div class="step"><div class="step-num">1</div>
+              <div class="step-text en-only">Bosta scans return and performs QC within 48h of receipt.</div>
+              <div class="step-text ar-only">Bosta بتفحص المرتجع خلال 48 ساعة من الاستلام.</div>
+            </div>
+            <div class="step"><div class="step-num">2</div>
+              <div class="step-text en-only">For unclear defects, Bosta takes photos and escalates to Mavin Wear.</div>
+              <div class="step-text ar-only">للعيوب غير الواضحة، Bosta بتصور وتصعّد لـ Mavin Wear.</div>
+            </div>
+            <div class="step"><div class="step-num">3</div>
+              <div class="step-text en-only">Decide within 12h: Accept resaleable / Classify defective / Replace.</div>
+              <div class="step-text ar-only">قرري في 12 ساعة: قابل للبيع / معيب / استبدال.</div>
+            </div>
           </div>
           <div class="definition">
             <div class="def-title">✅ Definition of Done</div>
-            <div class="def-text en-only">Clear decision sent back to Bosta within 12 hours for every escalated QC case.</div>
-            <div class="def-text ar-only" style="direction:rtl;">قرار واضح اتبعت لـ Bosta في 12 ساعة لكل كيس QC مصعّد.</div>
+            <div class="def-text en-only">Clear decision sent to Bosta within 12 hours.</div>
+            <div class="def-text ar-only">قرار واضح اتبعت لـ Bosta في 12 ساعة.</div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ===== CARD AT RISK TAB ===== -->
+  <!-- CARD RISK TAB -->
   <div id="tab-cardrisk" class="section">
     <div class="sec-title en-only">💳 Card at Risk</div>
-    <div class="sec-title ar-only" style="direction:rtl;">💳 كارت في خطر</div>
-    <div class="sec-sub en-only">Fully prepaid orders that failed delivery completely. Every row needs a logged decision — do not leave overnight.</div>
-    <div class="sec-sub ar-only" style="direction:rtl;">أوردرات مدفوعة مسبقاً بالكامل وفشل توصيلها تماماً. كل سطر محتاج قرار موثق — لا تسيبيها لليوم التاني.</div>
-
+    <div class="sec-title ar-only">💳 كارت في خطر</div>
+    <div class="sec-sub en-only">Fully prepaid orders that failed delivery completely. Every row needs a logged decision.</div>
+    <div class="sec-sub ar-only">أوردرات مدفوعة مسبقاً وفشل توصيلها. كل سطر محتاج قرار موثق.</div>
     <div class="alert alert-danger">
       <span class="alert-icon">🚨</span>
       <div>
-        <div class="en-only"><strong>Zero overnight tolerance.</strong> Every card-risk order must have a logged decision before end of shift. No exceptions.</div>
-        <div class="ar-only" style="direction:rtl;"><strong>تسامح صفري للبيات.</strong> كل أوردر card-risk لازم يكون ليه قرار موثق قبل نهاية الشيفت. بدون استثناءات.</div>
+        <span class="en-only"><strong>Zero overnight tolerance.</strong> Every card-risk order must have a logged decision before end of shift.</span>
+        <span class="ar-only"><strong>تسامح صفري للبيات.</strong> كل أوردر card-risk لازم يكون ليه قرار موثق قبل نهاية الشيفت.</span>
       </div>
     </div>
-
-    <div class="scenario-card" style="margin-bottom:20px;">
+    <div class="scenario-card">
       <div class="sc-header">
         <div class="sc-icon-title">
           <div class="sc-icon red">💳</div>
           <div>
             <div class="sc-title en-only">Card at Risk — Prepaid Complete Failure</div>
-            <div class="sc-title ar-only" style="direction:rtl;">كارت في خطر — فشل كامل للأوردر المدفوع</div>
+            <div class="sc-title ar-only">كارت في خطر — فشل كامل للأوردر المدفوع</div>
             <div class="sc-trigger en-only">Finance · Card at Risk tab — Bosta codes 46/48</div>
-            <div class="sc-trigger ar-only" style="direction:rtl;">تاب Finance · Card at Risk — كودات Bosta 46/48</div>
+            <div class="sc-trigger ar-only">تاب Finance · Card at Risk — كودات Bosta 46/48</div>
           </div>
         </div>
         <span class="sc-tag tag-red">card-risk</span>
       </div>
       <div class="sc-body">
         <div class="sc-meta">
-          <div><div class="sc-meta-label en-only">Owner</div><div class="sc-meta-label ar-only" style="direction:rtl;">المسؤول</div><div class="sc-meta-value">Finance</div></div>
-          <div><div class="sc-meta-label en-only">Risk</div><div class="sc-meta-label ar-only" style="direction:rtl;">الخطر</div><div class="sc-meta-value">🔴 Refund/Chargeback Exposure</div></div>
-        </div>
-        <div class="meta-box">
-          <div class="meta-title">Metafields to Check</div>
-          <div class="meta-item"><span class="meta-field">custom.delivery_details</span><span class="meta-desc en-only">Determine failure reason and city</span><span class="meta-desc ar-only" style="direction:rtl;">حددي سبب الفشل والمدينة</span></div>
+          <div>
+            <div class="sc-meta-label en-only">Owner</div>
+            <div class="sc-meta-label ar-only">المسؤول</div>
+            <div class="sc-meta-value">Finance</div>
+          </div>
+          <div>
+            <div class="sc-meta-label en-only">Risk</div>
+            <div class="sc-meta-label ar-only">الخطر</div>
+            <div class="sc-meta-value">🔴 Chargeback Exposure</div>
+          </div>
         </div>
         <div class="steps" style="margin-top:14px;">
-          <div class="step"><div class="step-num">1</div><div class="step-text en-only">Open the Finance · Card at Risk tab — every row is a FULLY PREPAID failed order.</div><div class="step-text ar-only" style="direction:rtl;">افتحي تاب Finance · Card at Risk — كل سطر هو أوردر مدفوع بالكامل وفشل.</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text en-only">Read the failure reason via custom.delivery_details.</div><div class="step-text ar-only" style="direction:rtl;">اقري سبب الفشل عبر custom.delivery_details.</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text en-only">Make a decision: Re-ship / Refund / Hold pending investigation.</div><div class="step-text ar-only" style="direction:rtl;">قرري: إعادة شحن / استرداد / تعليق للتحقيق.</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text en-only">Action the decision in Shopify.</div><div class="step-text ar-only" style="direction:rtl;">نفّذي القرار في Shopify.</div></div>
-          <div class="step"><div class="step-num">5</div><div class="step-text en-only">Add a Note logging the decision before end of shift.</div><div class="step-text ar-only" style="direction:rtl;">أضيفي نوت بالقرار قبل نهاية الشيفت.</div></div>
+          <div class="step"><div class="step-num">1</div>
+            <div class="step-text en-only">Open Finance · Card at Risk tab — every row is a FULLY PREPAID failed order.</div>
+            <div class="step-text ar-only">افتحي تاب Finance · Card at Risk — كل سطر أوردر مدفوع بالكامل وفشل.</div>
+          </div>
+          <div class="step"><div class="step-num">2</div>
+            <div class="step-text en-only">Read the failure reason via custom.delivery_details.</div>
+            <div class="step-text ar-only">اقري سبب الفشل عبر custom.delivery_details.</div>
+          </div>
+          <div class="step"><div class="step-num">3</div>
+            <div class="step-text en-only">Decide: Re-ship / Refund / Hold pending investigation.</div>
+            <div class="step-text ar-only">قرري: إعادة شحن / استرداد / تعليق للتحقيق.</div>
+          </div>
+          <div class="step"><div class="step-num">4</div>
+            <div class="step-text en-only">Add a Note logging the decision before end of shift.</div>
+            <div class="step-text ar-only">أضيفي نوت بالقرار قبل نهاية الشيفت.</div>
+          </div>
         </div>
         <div class="donts">
           <div class="donts-title">❌ Do NOT</div>
-          <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Confuse with a single failed attempt — card-risk is COMPLETE failure only.</span><span class="ar-only" style="direction:rtl;">تخلطي مع محاولة فاشلة واحدة — card-risk هو الفشل الكامل فقط.</span></div>
-          <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Refund before confirming item wasn't quietly delivered.</span><span class="ar-only" style="direction:rtl;">تستردي قبل تأكيد إن المنتج مش اتوصل بصمت.</span></div>
-          <div class="dont-item"><span class="dont-x">✗</span><span class="en-only">Leave a prepaid failure overnight without a logged decision.</span><span class="ar-only" style="direction:rtl;">تسيبي فشل مدفوع مسبقاً من غير قرار موثق لليوم التاني.</span></div>
-        </div>
-        <div class="escalate-box">
-          <div class="esc-title">⚡ When to Escalate</div>
-          <div class="esc-text en-only">Escalate to management if same customer/address fails repeatedly or financial loss is large.</div>
-          <div class="esc-text ar-only" style="direction:rtl;">صعّدي للإدارة لو نفس العميل/العنوان بيفشل بشكل متكرر أو الخسارة المالية كبيرة.</div>
-        </div>
-        <div class="definition">
-          <div class="def-title">✅ Definition of Done</div>
-          <div class="def-text en-only">A specific decision (re-ship, refund, or hold) is logged in the order Note before end of shift.</div>
-          <div class="def-text ar-only" style="direction:rtl;">قرار محدد (إعادة شحن، استرداد، أو تعليق) متسجل في النوت قبل نهاية الشيفت.</div>
+          <div class="dont-item"><span class="dont-x">✗</span>
+            <span class="en-only">Leave a prepaid failure overnight without a logged decision.</span>
+            <span class="ar-only">تسيبي فشل مدفوع مسبقاً من غير قرار موثق لليوم التاني.</span>
+          </div>
         </div>
         <div class="example-note">
           <div class="note-label">📝 Example Note</div>
@@ -556,95 +641,98 @@
     </div>
   </div>
 
-  <!-- ===== POLICY TAB ===== -->
+  <!-- POLICY TAB -->
   <div id="tab-policy" class="section">
     <div class="sec-title en-only">📋 Policy Reference</div>
-    <div class="sec-title ar-only" style="direction:rtl;">📋 مرجع السياسات</div>
-    <div class="sec-sub en-only">Quick reference for refund eligibility, timelines, and responsibility matrix.</div>
-    <div class="sec-sub ar-only" style="direction:rtl;">مرجع سريع لأهلية الاسترداد والجداول الزمنية ومصفوفة المسؤوليات.</div>
-
+    <div class="sec-title ar-only">📋 مرجع السياسات</div>
     <div class="card">
-      <div class="card-title">📊
-        <span class="en-only">Refund Eligibility Matrix</span>
-        <span class="ar-only" style="direction:rtl;">مصفوفة أهلية الاسترداد</span>
-      </div>
+      <div class="card-title">📊 <span class="en-only">Refund Eligibility Matrix</span><span class="ar-only">مصفوفة أهلية الاسترداد</span></div>
       <table class="policy-table">
         <thead>
           <tr>
-            <th><span class="en-only">Scenario</span><span class="ar-only" style="direction:rtl;">الحالة</span></th>
-            <th><span class="en-only">Eligible?</span><span class="ar-only" style="direction:rtl;">مؤهل؟</span></th>
-            <th><span class="en-only">Condition</span><span class="ar-only" style="direction:rtl;">الشرط</span></th>
-            <th><span class="en-only">Timeline</span><span class="ar-only" style="direction:rtl;">المدة</span></th>
+            <th><span class="en-only">Scenario</span><span class="ar-only">الحالة</span></th>
+            <th><span class="en-only">Eligible?</span><span class="ar-only">مؤهل؟</span></th>
+            <th><span class="en-only">Condition</span><span class="ar-only">الشرط</span></th>
+            <th><span class="en-only">Timeline</span><span class="ar-only">المدة</span></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong><span class="en-only">Item returned to warehouse</span><span class="ar-only" style="direction:rtl;">منتج رجع للمخزن</span></strong></td>
+            <td><strong><span class="en-only">Item returned to warehouse</span><span class="ar-only">منتج رجع للمخزن</span></strong></td>
             <td><span class="p-badge p-green">✅ Yes</span></td>
-            <td><span class="en-only">custom.return_details = RETURNED</span><span class="ar-only" style="direction:rtl;">custom.return_details = RETURNED</span></td>
-            <td><span class="en-only">Same day as confirmation</span><span class="ar-only" style="direction:rtl;">نفس يوم التأكيد</span></td>
+            <td>custom.return_details = RETURNED</td>
+            <td><span class="en-only">Same day</span><span class="ar-only">نفس اليوم</span></td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Prepaid complete failure</span><span class="ar-only" style="direction:rtl;">فشل كامل للمدفوع مسبقاً</span></strong></td>
-            <td><span class="p-badge p-yellow">⚠ Decision needed</span></td>
-            <td><span class="en-only">Finance must review card-risk tab</span><span class="ar-only" style="direction:rtl;">Finance لازم تراجع تاب card-risk</span></td>
-            <td><span class="en-only">Before end of shift</span><span class="ar-only" style="direction:rtl;">قبل نهاية الشيفت</span></td>
+            <td><strong><span class="en-only">Prepaid complete failure</span><span class="ar-only">فشل كامل للمدفوع مسبقاً</span></strong></td>
+            <td><span class="p-badge p-yellow">⚠ Decision</span></td>
+            <td><span class="en-only">Finance must review card-risk tab</span><span class="ar-only">Finance لازم تراجع تاب card-risk</span></td>
+            <td><span class="en-only">Before EOD</span><span class="ar-only">قبل نهاية الشيفت</span></td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Customer request only (no return)</span><span class="ar-only" style="direction:rtl;">طلب عميل فقط (بدون إرجاع)</span></strong></td>
+            <td><strong><span class="en-only">Customer request only</span><span class="ar-only">طلب عميل فقط</span></strong></td>
             <td><span class="p-badge p-red">❌ No</span></td>
-            <td><span class="en-only">Must confirm physical return first</span><span class="ar-only" style="direction:rtl;">لازم تأكيد الإرجاع الفعلي أولاً</span></td>
+            <td><span class="en-only">Must confirm physical return first</span><span class="ar-only">لازم تأكيد الإرجاع الفعلي أولاً</span></td>
             <td>—</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Exchange with balance difference</span><span class="ar-only" style="direction:rtl;">استبدال بفرق في الرصيد</span></strong></td>
-            <td><span class="p-badge p-yellow">⚠ Partial</span></td>
-            <td><span class="en-only">Check balance both ways before settling</span><span class="ar-only" style="direction:rtl;">راجعي الرصيد في الاتجاهين قبل التسوية</span></td>
-            <td><span class="en-only">Same day as return confirmation</span><span class="ar-only" style="direction:rtl;">نفس يوم تأكيد الإرجاع</span></td>
-          </tr>
-          <tr>
-            <td><strong><span class="en-only">Item lost by Bosta</span><span class="ar-only" style="direction:rtl;">منتج ضاع عند Bosta</span></strong></td>
+            <td><strong><span class="en-only">Item lost by Bosta</span><span class="ar-only">منتج ضاع عند Bosta</span></strong></td>
             <td><span class="p-badge p-yellow">⚠ After investigation</span></td>
-            <td><span class="en-only">Wait for Bosta official confirmation</span><span class="ar-only" style="direction:rtl;">استني تأكيد رسمي من Bosta</span></td>
-            <td><span class="en-only">After investigation closes</span><span class="ar-only" style="direction:rtl;">بعد إغلاق التحقيق</span></td>
+            <td><span class="en-only">Wait for Bosta official confirmation</span><span class="ar-only">استني تأكيد رسمي من Bosta</span></td>
+            <td><span class="en-only">After investigation closes</span><span class="ar-only">بعد إغلاق التحقيق</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="card">
-      <div class="card-title">👥
-        <span class="en-only">Responsibility Matrix</span>
-        <span class="ar-only" style="direction:rtl;">مصفوفة المسؤوليات</span>
-      </div>
+      <div class="card-title">👥 <span class="en-only">Responsibility Matrix</span><span class="ar-only">مصفوفة المسؤوليات</span></div>
       <div class="grid-2">
-        <div>
-          <div style="background:#eef2ff;border-radius:14px;padding:18px;">
-            <div style="font-size:13px;font-weight:800;color:var(--indigo);margin-bottom:14px;">
-              <span class="en-only">🏢 Mavin Wear Owns</span>
-              <span class="ar-only" style="direction:rtl;">🏢 Mavin Wear مسؤولة عن</span>
+        <div style="background:#eef2ff;border-radius:14px;padding:18px;">
+          <div style="font-size:13px;font-weight:800;color:var(--indigo);margin-bottom:14px;">
+            <span class="en-only">🏢 Mavin Wear Owns</span>
+            <span class="ar-only">🏢 Mavin Wear مسؤولة عن</span>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div>
+              <div class="step-text en-only">Order data accuracy</div>
+              <div class="step-text ar-only">دقة بيانات الأوردر</div>
             </div>
-            <div class="steps">
-              <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div><div class="step-text en-only">Order data accuracy</div><div class="step-text ar-only" style="direction:rtl;">دقة بيانات الأوردر</div></div>
-              <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div><div class="step-text en-only">OOS decisions (Substitute/Cancel/Hold)</div><div class="step-text ar-only" style="direction:rtl;">قرارات OOS (استبدال/كانسيل/تعليق)</div></div>
-              <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div><div class="step-text en-only">Contacting customers for bad addresses (12h)</div><div class="step-text ar-only" style="direction:rtl;">التواصل مع العملاء للعناوين الغلط (12 ساعة)</div></div>
-              <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div><div class="step-text en-only">NDR re-attempt/return decisions (12h)</div><div class="step-text ar-only" style="direction:rtl;">قرارات NDR (12 ساعة)</div></div>
-              <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div><div class="step-text en-only">Refund execution</div><div class="step-text ar-only" style="direction:rtl;">تنفيذ الاستردادات</div></div>
+            <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div>
+              <div class="step-text en-only">OOS decisions (Substitute/Cancel/Hold)</div>
+              <div class="step-text ar-only">قرارات OOS (استبدال/كانسيل/تعليق)</div>
+            </div>
+            <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div>
+              <div class="step-text en-only">NDR re-attempt/return decisions (12h)</div>
+              <div class="step-text ar-only">قرارات NDR (12 ساعة)</div>
+            </div>
+            <div class="step"><div class="step-num" style="background:var(--indigo);">✓</div>
+              <div class="step-text en-only">Refund execution</div>
+              <div class="step-text ar-only">تنفيذ الاستردادات</div>
             </div>
           </div>
         </div>
-        <div>
-          <div style="background:#fff7ed;border-radius:14px;padding:18px;">
-            <div style="font-size:13px;font-weight:800;color:#c2410c;margin-bottom:14px;">
-              <span class="en-only">🚚 Bosta Owns</span>
-              <span class="ar-only" style="direction:rtl;">🚚 Bosta مسؤولة عن</span>
+        <div style="background:#fff7ed;border-radius:14px;padding:18px;">
+          <div style="font-size:13px;font-weight:800;color:#c2410c;margin-bottom:14px;">
+            <span class="en-only">🚚 Bosta Owns</span>
+            <span class="ar-only">🚚 Bosta مسؤولة عن</span>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="step-num" style="background:#c2410c;">✓</div>
+              <div class="step-text en-only">Inventory storage & Pick/Pack</div>
+              <div class="step-text ar-only">تخزين المخزون والتعبئة</div>
             </div>
-            <div class="steps">
-              <div class="step"><div class="step-num" style="background:#c2410c;">✓</div><div class="step-text en-only">Inventory storage & Pick/Pack</div><div class="step-text ar-only" style="direction:rtl;">تخزين المخزون والتعبئة</div></div>
-              <div class="step"><div class="step-num" style="background:#c2410c;">✓</div><div class="step-text en-only">Last-mile delivery</div><div class="step-text ar-only" style="direction:rtl;">التوصيل للعميل</div></div>
-              <div class="step"><div class="step-num" style="background:#c2410c;">✓</div><div class="step-text en-only">Flagging bad addresses (within 2h)</div><div class="step-text ar-only" style="direction:rtl;">إبلاغ العناوين الغلط (في 2 ساعة)</div></div>
-              <div class="step"><div class="step-num" style="background:#c2410c;">✓</div><div class="step-text en-only">Raising NDRs (within 24h)</div><div class="step-text ar-only" style="direction:rtl;">رفع NDRs (خلال 24 ساعة)</div></div>
-              <div class="step"><div class="step-num" style="background:#c2410c;">✓</div><div class="step-text en-only">Return QC (within 48h)</div><div class="step-text ar-only" style="direction:rtl;">فحص جودة المرتجعات (خلال 48 ساعة)</div></div>
+            <div class="step"><div class="step-num" style="background:#c2410c;">✓</div>
+              <div class="step-text en-only">Last-mile delivery</div>
+              <div class="step-text ar-only">التوصيل للعميل</div>
+            </div>
+            <div class="step"><div class="step-num" style="background:#c2410c;">✓</div>
+              <div class="step-text en-only">Flagging bad addresses (within 2h)</div>
+              <div class="step-text ar-only">إبلاغ العناوين الغلط (في 2 ساعة)</div>
+            </div>
+            <div class="step"><div class="step-num" style="background:#c2410c;">✓</div>
+              <div class="step-text en-only">Return QC (within 48h)</div>
+              <div class="step-text ar-only">فحص جودة المرتجعات (خلال 48 ساعة)</div>
             </div>
           </div>
         </div>
@@ -652,8 +740,8 @@
       <div class="alert alert-info" style="margin-top:16px;margin-bottom:0;">
         <span class="alert-icon">💡</span>
         <div>
-          <div class="en-only"><strong>Key principle:</strong> Mavin Wear owns the decision — Bosta owns the execution. Do NOT assume Bosta will decide on a stuck order.</div>
-          <div class="ar-only" style="direction:rtl;"><strong>المبدأ الأساسي:</strong> Mavin Wear بتملك القرار — Bosta بتنفذ. لا تفترضي إن Bosta هتقرر في أوردر واقف.</div>
+          <span class="en-only"><strong>Key principle:</strong> Mavin Wear owns the decision — Bosta owns the execution.</span>
+          <span class="ar-only"><strong>المبدأ الأساسي:</strong> Mavin Wear بتملك القرار — Bosta بتنفذ.</span>
         </div>
       </div>
     </div>
@@ -670,20 +758,14 @@
   function toggleLang(){
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     const btn = document.getElementById('langBtn');
-    const enEls = document.querySelectorAll('.en-only');
-    const arEls = document.querySelectorAll('.ar-only');
     if(currentLang === 'ar'){
-      enEls.forEach(el=>el.style.display='none');
-      arEls.forEach(el=>el.style.display='block');
-      document.body.setAttribute('dir','rtl');
+      document.body.classList.add('lang-ar');
       btn.classList.add('ar-active');
-      btn.innerText='AR / EN';
+      btn.innerText = 'AR / EN';
     } else {
-      enEls.forEach(el=>el.style.display='block');
-      arEls.forEach(el=>el.style.display='none');
-      document.body.setAttribute('dir','ltr');
+      document.body.classList.remove('lang-ar');
       btn.classList.remove('ar-active');
-      btn.innerText='EN / AR';
+      btn.innerText = 'EN / AR';
     }
   }
 
