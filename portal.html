@@ -1,189 +1,186 @@
   <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mavin Wear — Refund Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --indigo:#4b4bf9;
-  --midnight:#09092d;
-  --white:#ffffff;
-  --light-grey:#f3f3f7;
-  --lemon:#f9ef77;
-  --coral:#ff8d96;
-  --lavender:#bfa1ff;
-  --mint:#8bf0bb;
-  --border:rgba(255,255,255,0.08);
-  --card:rgba(255,255,255,0.04);
-  --text:#ffffff;
-  --muted:#8f90c7;
+  --indigo:#4b4bf9;--midnight:#09092d;--light:#f3f3f7;
+  --border:#e5e7eb;--text:#1f2937;--muted:#6b7280;
+  --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+  --purple:#7c3aed;--purple-light:#f5f3ff;--purple-border:#ddd6fe;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:var(--midnight);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
+a{text-decoration:none;color:inherit;}
 
 /* SIDEBAR */
-.sidebar{width:260px;background:rgba(9,9,45,0.98);border-right:1px solid var(--border);padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:36px}
-.brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}
-.brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2}
-.brand-sub{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:24px 0 10px 6px}
-.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:rgba(255,255,255,0.5);font-size:13.5px;font-weight:600;margin-bottom:4px;transition:.15s;text-decoration:none}
-.nav-item:hover{background:rgba(255,255,255,0.07);color:#fff}
-.nav-item.active{background:var(--indigo);color:#fff}
+.sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
+.brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
+.brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
+.brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:#c7c9f0;font-size:13.5px;font-weight:600;margin-bottom:4px;transition:.15s;}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.nav-item.active{background:var(--indigo);color:#fff;}
+.nav-icon{font-size:16px;width:20px;text-align:center;}
 
 /* MAIN */
-.main{margin-left:260px;min-height:100vh}
+.main{margin-left:260px;min-height:100vh;}
 
 /* TOPBAR */
-.topbar{background:rgba(9,9,45,0.95);backdrop-filter:blur(12px);padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;height:64px;border-bottom:1px solid var(--border)}
-.topbar-title{font-size:14px;color:var(--muted);font-weight:600}
-.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:100px;padding:6px 14px 6px 8px}
-.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
-.user-name{font-size:12px;font-weight:700;color:#fff}
-.user-role{font-size:10px;color:var(--muted)}
+.topbar{background:#fff;border-bottom:1.5px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;height:64px;}
+.topbar-title{font-size:14px;color:var(--muted);font-weight:600;}
+.profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+.profile-name{font-size:13px;font-weight:700;}
+.profile-role{font-size:11px;color:var(--muted);}
 
 /* TAB BAR */
-.tab-bar{background:rgba(9,9,45,0.8);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:4px}
-.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:8px;font-family:'Inter',sans-serif}
-.tab-btn:hover{color:#fff}
-.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
+.tab-bar{background:#fff;border-bottom:1.5px solid var(--border);padding:0 32px;display:flex;gap:4px;}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;font-family:'Inter',sans-serif;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo);}
 
 /* PAGE */
-.page{padding:32px;max-width:1100px;margin:0 auto}
-.tab-content{display:none}
-.tab-content.active{display:block}
+.page{padding:32px;max-width:1100px;margin:0 auto;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
 
 /* HERO */
-.hero{background:linear-gradient(130deg,rgba(75,75,249,0.15) 0%,rgba(9,9,45,0) 100%);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:28px}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(75,75,249,0.15);border:1px solid rgba(75,75,249,0.3);padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;color:var(--lavender);letter-spacing:.5px;margin-bottom:16px}
-.hero h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px}
-.hero h1 span{color:var(--indigo)}
-.hero p{color:var(--muted);font-size:14px;line-height:1.6}
+.hero{background:linear-gradient(130deg,#09092d 0%,#1a0a2e 100%);border-radius:24px;padding:36px;margin-bottom:28px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;background:rgba(124,58,237,.15);border-radius:50%;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:100px;font-size:11px;font-weight:700;color:#c4b5fd;letter-spacing:.5px;margin-bottom:18px;}
+.hero h1{font-size:30px;font-weight:900;color:#fff;margin-bottom:10px;}
+.hero h1 span{color:#a78bfa;}
+.hero p{color:#c4b5fd;font-size:14px;line-height:1.7;max-width:600px;}
 
 /* SEARCH CARD */
-.search-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
-.search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-.search-field{display:flex;flex-direction:column;gap:6px}
-.search-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.search-input{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif}
-.search-input:focus{border-color:var(--indigo);background:rgba(75,75,249,0.08)}
-.search-input::placeholder{color:rgba(255,255,255,0.25)}
-.search-actions{display:flex;gap:10px;align-items:center}
-.btn-search{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif}
-.btn-search:hover{background:#3a3ae8}
-.btn-search:disabled{opacity:.6;cursor:not-allowed}
-.btn-clear{background:transparent;color:var(--muted);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
-.btn-clear:hover{border-color:rgba(255,255,255,0.25);color:#fff}
+.search-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.search-field{display:flex;flex-direction:column;gap:6px;}
+.search-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;}
+.search-input{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif;}
+.search-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08);}
+.search-input::placeholder{color:#d1d5db;}
+.search-actions{display:flex;gap:10px;}
+.btn-search{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif;}
+.btn-search:hover{background:#3a3ae8;}
+.btn-search:disabled{opacity:.6;cursor:not-allowed;}
+.btn-clear{background:#fff;color:var(--muted);border:1.5px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
+.btn-clear:hover{border-color:#9ca3af;color:var(--text);}
 
 /* STATS */
-.stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.stat-chip{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:12px}
-.stat-num{font-size:24px;font-weight:900;color:#fff}
-.stat-label{font-size:11px;color:var(--muted);font-weight:600}
+.stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.stat-chip{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:12px 18px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.stat-num{font-size:22px;font-weight:900;color:var(--midnight);}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600;}
 
 /* RESULTS */
-.results-wrap{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.results-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03)}
-.results-title{font-size:13px;font-weight:800;color:#fff}
-.results-count{font-size:12px;font-weight:700;color:var(--muted);background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:100px;padding:3px 12px}
+.results-wrap{background:#fff;border:1.5px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.results-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa;}
+.results-title{font-size:13px;font-weight:800;color:var(--midnight);}
+.results-count{font-size:12px;font-weight:700;color:var(--muted);background:#f3f4f6;border:1px solid var(--border);border-radius:100px;padding:3px 12px;}
 
 /* RESULT CARD */
-.result-card{padding:20px;border-bottom:1px solid var(--border);transition:.15s}
-.result-card:last-child{border-bottom:none}
-.result-card:hover{background:rgba(75,75,249,0.05)}
-.result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
-.result-order{font-size:17px;font-weight:900;color:#fff}
-.result-customer{font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);margin-top:3px}
-.result-phone{font-size:12px;color:var(--muted);margin-top:2px}
-.result-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.result-card{padding:20px;border-bottom:1px solid #f3f4f6;transition:.1s;}
+.result-card:last-child{border-bottom:none;}
+.result-card:hover{background:#fafafa;}
+.result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.result-left{}
+.result-order{font-size:16px;font-weight:900;color:var(--midnight);}
+.result-customer{font-size:13px;font-weight:600;color:var(--text);margin-top:3px;}
+.result-phone{font-size:12px;color:var(--muted);margin-top:2px;}
+.result-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
 
 /* SOURCE BADGE */
-.source-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:800;letter-spacing:.5px}
-.source-export2{background:rgba(75,75,249,0.2);color:var(--lavender);border:1px solid rgba(75,75,249,0.3)}
-.source-return{background:rgba(139,240,187,0.15);color:var(--mint);border:1px solid rgba(139,240,187,0.3)}
-.source-search{background:rgba(249,239,119,0.15);color:var(--lemon);border:1px solid rgba(249,239,119,0.3)}
-.source-export{background:rgba(255,141,150,0.15);color:var(--coral);border:1px solid rgba(255,141,150,0.3)}
+.source-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:800;}
+.source-export2{background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;}
+.source-return{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
+.source-search{background:#fefce8;color:#a16207;border:1px solid #fde68a;}
+.source-export{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff;}
 
 /* STATUS BADGE */
-.status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:800}
-.status-success{background:rgba(139,240,187,0.15);color:var(--mint);border:1px solid rgba(139,240,187,0.3)}
-.status-pending{background:rgba(249,239,119,0.15);color:var(--lemon);border:1px solid rgba(249,239,119,0.3)}
-.status-rejected{background:rgba(255,141,150,0.15);color:var(--coral);border:1px solid rgba(255,141,150,0.3)}
-.status-default{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
+.status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:800;}
+.status-success{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;}
+.status-pending{background:#fef9c3;color:#a16207;border:1px solid #fde68a;}
+.status-failed{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;}
+.status-processing{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+.status-default{background:#f3f4f6;color:var(--muted);border:1px solid var(--border);}
 
 /* RESULT GRID */
-.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.result-item{display:flex;flex-direction:column;gap:4px}
-.result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
-.result-item-val{font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.85)}
-.result-note{margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:10px;font-size:12px;color:var(--muted);border:1px solid var(--border);line-height:1.5}
-.result-note strong{color:rgba(255,255,255,0.6)}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px;}
+.result-item{display:flex;flex-direction:column;gap:3px;}
+.result-item-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;}
+.result-item-val{font-size:12.5px;font-weight:600;color:var(--text);}
+.result-note-box{padding:10px 14px;background:#f9fafb;border-radius:10px;font-size:12px;color:var(--muted);border:1px solid var(--border);line-height:1.5;margin-top:8px;}
+.result-note-box strong{color:var(--text);}
 
 /* EMPTY / LOADING */
-.empty-state{padding:52px 20px;text-align:center;color:var(--muted)}
-.empty-icon{font-size:40px;margin-bottom:14px}
-.empty-text{font-size:14px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:6px}
-.empty-sub{font-size:12.5px}
-.loading-wrap{display:none;align-items:center;justify-content:center;padding:52px;gap:14px;flex-direction:column}
-.loading-wrap.show{display:flex}
-.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--indigo);border-radius:50%;animation:spin .7s linear infinite}
+.empty-state{padding:52px 20px;text-align:center;color:var(--muted);}
+.empty-icon{font-size:40px;margin-bottom:14px;}
+.empty-text{font-size:14px;font-weight:700;color:#6b7280;margin-bottom:6px;}
+.empty-sub{font-size:12.5px;}
+.loading-wrap{display:none;align-items:center;justify-content:center;padding:52px;gap:14px;flex-direction:column;}
+.loading-wrap.show{display:flex;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--indigo);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:13px;color:var(--muted);font-weight:600}
+.loading-text{font-size:13px;color:var(--muted);font-weight:600;}
 
 /* FORM */
-.form-section{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
-.form-section-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.03)}
-.section-icon{font-size:18px}
-.section-title{font-size:13px;font-weight:800;color:#fff}
-.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px}
-.form-field{display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.form-label span{color:var(--coral);margin-left:2px}
-.form-input{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif}
-.form-input:focus{border-color:var(--indigo);background:rgba(75,75,249,0.08)}
-.form-input::placeholder{color:rgba(255,255,255,0.25)}
-select.form-input option{background:#09092d;color:#fff}
-.form-span3{grid-column:1/-1}
+.form-section{background:#fff;border:1.5px solid var(--border);border-radius:18px;margin-bottom:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.form-section-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa;}
+.section-icon{font-size:18px;}
+.section-title{font-size:13px;font-weight:800;color:var(--midnight);}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px;}
+.form-field{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;}
+.form-label span{color:var(--danger);margin-left:2px;}
+.form-input{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif;}
+.form-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08);}
+.form-input::placeholder{color:#d1d5db;}
+select.form-input option{background:#fff;color:var(--text);}
+.form-span3{grid-column:1/-1;}
 
 /* DUP ALERT */
-.dup-alert{background:rgba(249,239,119,0.08);border:1.5px solid rgba(249,239,119,0.3);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none;gap:12px;align-items:flex-start}
-.dup-alert.show{display:flex}
-.dup-title{font-size:13px;font-weight:800;color:var(--lemon);margin-bottom:4px}
-.dup-text{font-size:12.5px;color:rgba(249,239,119,0.7);line-height:1.5}
+.dup-alert{background:#fffbeb;border:1.5px solid #fde68a;border-radius:12px;padding:16px 20px;margin-bottom:16px;display:none;gap:12px;align-items:flex-start;}
+.dup-alert.show{display:flex;}
+.dup-title{font-size:13px;font-weight:800;color:#92400e;margin-bottom:4px;}
+.dup-text{font-size:12.5px;color:#92400e;line-height:1.5;}
 
 /* SUBMIT ROW */
-.submit-row{display:flex;gap:10px;margin-bottom:40px}
-.btn-submit{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center;font-family:'Inter',sans-serif}
-.btn-submit:hover{background:#3a3ae8}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed}
-.btn-reset{background:transparent;color:var(--muted);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
-.btn-reset:hover{border-color:rgba(255,255,255,0.25);color:#fff}
+.submit-row{display:flex;gap:10px;margin-bottom:40px;}
+.btn-submit{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:14px;font-weight:800;cursor:pointer;flex:1;justify-content:center;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif;}
+.btn-submit:hover{background:#3a3ae8;}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;}
+.btn-reset{background:#fff;color:var(--muted);border:1.5px solid var(--border);border-radius:10px;padding:14px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
+.btn-reset:hover{border-color:#9ca3af;color:var(--text);}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;display:none;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.4);max-width:380px}
-.toast.show{display:flex}
-.toast.success{background:var(--mint);color:var(--midnight)}
-.toast.error{background:var(--coral);color:var(--midnight)}
-.toast.warn{background:var(--lemon);color:var(--midnight)}
-.spin-sm{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;display:none;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.15);max-width:380px;}
+.toast.show{display:flex;}
+.toast.success{background:var(--success);color:#fff;}
+.toast.error{background:var(--danger);color:#fff;}
+.toast.warn{background:var(--warning);color:#fff;}
+.spin-sm{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
 
-.footer{text-align:center;padding:24px 0 12px;color:var(--muted);font-size:12px}
-.footer span{color:var(--indigo);font-weight:700}
+.footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:8px;}
 
 @media(max-width:900px){
-  .sidebar{display:none}
-  .main{margin-left:0}
-  .search-grid{grid-template-columns:repeat(2,1fr)}
-  .result-grid{grid-template-columns:repeat(2,1fr)}
-  .form-grid{grid-template-columns:1fr}
-  .page{padding:16px}
+  .sidebar{display:none;}
+  .main{margin-left:0;}
+  .search-grid{grid-template-columns:1fr 1fr;}
+  .result-grid{grid-template-columns:1fr 1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .page{padding:16px;}
 }
 @media(max-width:560px){
-  .search-grid{grid-template-columns:1fr}
-  .stats-row{gap:8px}
+  .search-grid{grid-template-columns:1fr;}
+  .stats-row{gap:8px;}
 }
 </style>
 </head>
@@ -199,29 +196,29 @@ select.form-input option{background:#09092d;color:#fff}
     </div>
   </div>
   <div class="sidebar-label">Workspace</div>
-  <a href="index.html" class="nav-item">🏠 Home</a>
-  <a href="sops.html" class="nav-item">📚 SOP Library</a>
-  <a href="scenarios.html" class="nav-item">🌳 Scenarios</a>
-  <a href="portal.html" class="nav-item active">💰 Refunds</a>
-  <a href="refund-sops.html" class="nav-item">📋 Refund SOPs</a>
-  <a href="escalation.html" class="nav-item">🚨 Escalations</a>
-  <a href="qa.html" class="nav-item">⭐ QA Audit</a>
+  <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span> Home</a>
+  <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
+  <a href="portal.html" class="nav-item active"><span class="nav-icon">💰</span> Refunds</a>
+  <a href="refund-sops.html" class="nav-item"><span class="nav-icon">📋</span> Refund SOPs</a>
+  <a href="escalation.html" class="nav-item"><span class="nav-icon">🚨</span> Escalations</a>
+  <a href="qa.html" class="nav-item"><span class="nav-icon">⭐</span> QA Audit</a>
   <div class="sidebar-label">Quick Access</div>
-  <a href="scenarios.html" class="nav-item">📦 Delivery Issues</a>
-  <a href="scenarios.html" class="nav-item">🔄 Return Process</a>
-  <a href="scenarios.html" class="nav-item">❌ Cancel Order</a>
-  <a href="sop-cheatsheet.html" class="nav-item">⚡ CS Cheat Sheet</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
+  <a href="sop-cheatsheet.html" class="nav-item"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
 </aside>
 
 <main class="main">
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-title">💰 Refund Portal — Search & Submit</div>
-    <div class="user-badge">
-      <div class="user-avatar">A</div>
+    <div class="profile-pill">
+      <div class="avatar">A</div>
       <div>
-        <div class="user-name">Agent Support</div>
-        <div class="user-role">CS Operations</div>
+        <div class="profile-name">Agent Support</div>
+        <div class="profile-role">CS Operations</div>
       </div>
     </div>
   </div>
@@ -285,7 +282,7 @@ select.form-input option{background:#09092d;color:#fff}
         <div class="loading-text" id="loadingText">Searching all sheets...</div>
       </div>
     </div>
-    <div class="footer">Mavin Wear Operations · Powered by <span>EverGPT</span></div>
+    <div class="footer">Mavin Wear Operations Hub</div>
   </div>
 
   <!-- SUBMIT TAB -->
@@ -372,7 +369,7 @@ select.form-input option{background:#09092d;color:#fff}
       <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
       <button class="btn-submit" id="submitBtn" onclick="submitRefund()">✉️ Submit Request</button>
     </div>
-    <div class="footer">Mavin Wear Operations · Powered by <span>EverGPT</span></div>
+    <div class="footer">Mavin Wear Operations Hub</div>
   </div>
 </main>
 
@@ -381,230 +378,345 @@ select.form-input option{background:#09092d;color:#fff}
 <script>
 const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
 const GAS_URL  = '';
+
+// ── TABS CONFIG ───────────────────────────────────────────────────────────
+// Each tab has its own column mapping based on actual sheet headers
 const TABS = [
-  {name:'Export2',       label:'Export2',       cls:'source-export2'},
-  {name:'Return & Exch', label:'Return & Exch', cls:'source-return'},
-  {name:'SEARCH',        label:'SEARCH',        cls:'source-search'},
-  {name:'Export',        label:'Export',        cls:'source-export'},
+  {
+    name: 'Export',
+    label: 'Export',
+    cls: 'source-export',
+    // Export sheet column names
+    cols: {
+      timestamp:    'Timestamp',
+      agentEmail:   'Email address',
+      agentName:    'Agent Name',
+      custName:     'Customer Name',
+      custPhone:    'Customer Mobile Number',
+      orderNum:     'Order number',
+      reason:       'Refund Reason',
+      refundAmt:    'Refund amount in EGP',
+      refundType:   'Refund Type',
+      refundMethod: 'Refund method',
+      notes:        'Notes',
+      status:       'Refund Status',
+      fulfilNote:   'Fulfillment Team notes',
+      transactionId:'Transaction ID',
+      submissionDate:'Refund Submission Date',
+    }
+  },
+  {
+    name: 'Export2',
+    label: 'Export2',
+    cls: 'source-export2',
+    cols: {
+      timestamp:   'ff',
+      agentEmail:  'Email address',
+      agentName:   'Agent name',
+      custName:    'Customer name',
+      custPhone:   'Customer Phone number',
+      orderNum:    'Order number',
+      reqType:     'Request type',
+      reason:      'Reason for Request',
+      numItems:    'Number of returned items',
+      product:     'Product name  & SKU',
+      origSKU:     'Original item name & SKU',
+      reqSKU:      'Requested item name & SKU',
+      shipping:    'Shipping Fees',
+      refundAmt:   'Refund',
+      bosta:       'Bosta Ticket ID',
+      notes:       'Notes',
+      status:      'Exchange status',
+      fulfilNote:  'Fulfilment team note',
+    }
+  },
+  {
+    name: 'Return & Exch',
+    label: 'Return & Exch',
+    cls: 'source-return',
+    cols: {
+      timestamp:  'ff',
+      agentEmail: 'Email address',
+      agentName:  'Agent name',
+      custName:   'Customer name',
+      custPhone:  'Customer Phone number',
+      orderNum:   'Order number',
+      reqType:    'Request type',
+      reason:     'Reason for Request',
+      numItems:   'Number of returned items',
+      product:    'Product name  & SKU',
+      origSKU:    'Original item name & SKU',
+      reqSKU:     'Requested item name & SKU',
+      shipping:   'Shipping Fees',
+      refundAmt:  'Refund',
+      bosta:      'Bosta Ticket ID',
+      notes:      'Notes',
+      status:     'Exchange status',
+      fulfilNote: 'Fulfilment team note',
+    }
+  },
+  {
+    name: 'SEARCH',
+    label: 'SEARCH',
+    cls: 'source-search',
+    cols: {
+      timestamp:  'ff',
+      agentEmail: 'Email address',
+      agentName:  'Agent name',
+      custName:   'Customer name',
+      custPhone:  'Customer Phone number',
+      orderNum:   'Order number',
+      reqType:    'Request type',
+      reason:     'Reason for Request',
+      numItems:   'Number of returned items',
+      product:    'Product name  & SKU',
+      origSKU:    'Original item name & SKU',
+      reqSKU:     'Requested item name & SKU',
+      shipping:   'Shipping Fees',
+      refundAmt:  'Refund',
+      bosta:      'Bosta Ticket ID',
+      notes:      'Notes',
+      status:     'Exchange status',
+      fulfilNote: 'Fulfilment team note',
+    }
+  },
 ];
-let cache={};
 
-async function fetchTab(tabName){
-  if(cache[tabName]) return cache[tabName];
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
-  const res=await fetch(url);
-  const text=await res.text();
-  const json=JSON.parse(text.substring(47).slice(0,-2));
-  if(!json.table||!json.table.cols) return {headers:[],data:[]};
-  const headers=json.table.cols.map(c=>(c.label||'').trim());
-  const data=json.table.rows
-    .map(r=>r.c?r.c.map(cell=>cell?(cell.f||cell.v||'').toString():''):[])
-    .filter(r=>r.some(v=>v.trim()));
-  cache[tabName]={headers,data};
-  return {headers,data};
+let cache = {};
+
+// ── FETCH ─────────────────────────────────────────────────────────────────
+async function fetchTab(tabName) {
+  if (cache[tabName]) return cache[tabName];
+  const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
+  const res  = await fetch(url);
+  const text = await res.text();
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  if (!json.table || !json.table.cols) return { headers: [], data: [] };
+  const headers = json.table.cols.map(c => (c.label || '').trim());
+  const data    = json.table.rows
+    .map(r => r.c ? r.c.map(cell => cell ? (cell.f || cell.v || '').toString() : '') : [])
+    .filter(r => r.some(v => v.trim()));
+  cache[tabName] = { headers, data };
+  return { headers, data };
 }
 
-function detectCols(headers){
-  const find=(...terms)=>{
-    const i=headers.findIndex(h=>terms.some(t=>h.toLowerCase().includes(t.toLowerCase())));
-    return i>=0?i:null;
-  };
-  return{
-    timestamp:  find('timestamp','date','time'),
-    agentName:  find('agent name','agent'),
-    agentEmail: find('email'),
-    custName:   find('customer name','customer n'),
-    custPhone:  find('phone','mobile'),
-    orderNum:   find('order num','order'),
-    reqType:    find('request type'),
-    reason:     find('reason'),
-    numItems:   find('number of','num item'),
-    product:    find('product name','product','8 original'),
-    origSKU:    find('original item'),
-    reqSKU:     find('requested item'),
-    shipping:   find('shipping fee'),
-    refund:     find('refund amount','refund'),
-    bosta:      find('bosta','ticket'),
-    notes:      find('notes'),
-    status:     find('exchange status','status','success'),
-    fulfilNote: find('fulfilment','fulfil'),
-  };
+// ── GET COL INDEX ─────────────────────────────────────────────────────────
+function buildIdx(headers, colsMap) {
+  const idx = {};
+  for (const [key, colName] of Object.entries(colsMap)) {
+    // Try exact match first, then partial
+    let i = headers.findIndex(h => h.trim().toLowerCase() === colName.toLowerCase());
+    if (i < 0) i = headers.findIndex(h => h.toLowerCase().includes(colName.toLowerCase().substring(0, 10)));
+    idx[key] = i >= 0 ? i : null;
+  }
+  return idx;
 }
 
-function g(row,idx){
-  if(idx===null||idx===undefined||idx<0) return '';
-  return (row[idx]||'').toString().trim();
+function g(row, idx, key) {
+  const i = idx[key];
+  if (i === null || i === undefined || i < 0) return '';
+  return (row[i] || '').toString().trim();
 }
 
-async function doSearch(){
+// ── SEARCH ────────────────────────────────────────────────────────────────
+async function doSearch() {
   const name  = document.getElementById('sName').value.trim().toLowerCase();
   const order = document.getElementById('sOrder').value.trim().toLowerCase();
   const phone = document.getElementById('sPhone').value.trim().toLowerCase();
-  if(!name&&!order&&!phone){showToast('Enter at least one field.','warn');return;}
+  if (!name && !order && !phone) { showToast('Enter at least one field.', 'warn'); return; }
 
-  document.getElementById('resultsList').innerHTML='';
+  document.getElementById('resultsList').innerHTML = '';
   document.getElementById('loadingWrap').classList.add('show');
-  document.getElementById('statsRow').style.display='none';
-  document.getElementById('resultsCount').textContent='—';
-  const btn=document.getElementById('searchBtn');
-  btn.disabled=true;
-  btn.innerHTML='<span class="spin-sm"></span> Searching...';
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('resultsCount').textContent = '—';
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-sm"></span> Searching...';
 
-  let allResults=[];
-  for(const tab of TABS){
-    try{
-      document.getElementById('loadingText').textContent=`Searching ${tab.label}...`;
-      const {headers,data}=await fetchTab(tab.name);
-      const idx=detectCols(headers);
-      const matches=data.filter(row=>{
-        const rName  =g(row,idx.custName).toLowerCase();
-        const rOrder =g(row,idx.orderNum).toLowerCase();
-        const rPhone =g(row,idx.custPhone).toLowerCase();
-        if(name  &&!rName.includes(name))   return false;
-        if(order &&!rOrder.includes(order)) return false;
-        if(phone &&!rPhone.includes(phone)) return false;
+  let allResults = [];
+
+  for (const tab of TABS) {
+    try {
+      document.getElementById('loadingText').textContent = `Searching ${tab.label}...`;
+      const { headers, data } = await fetchTab(tab.name);
+      const idx = buildIdx(headers, tab.cols);
+
+      const matches = data.filter(row => {
+        const rName  = g(row, idx, 'custName').toLowerCase();
+        const rOrder = g(row, idx, 'orderNum').toLowerCase();
+        const rPhone = g(row, idx, 'custPhone').toLowerCase();
+        if (name  && !rName.includes(name))   return false;
+        if (order && !rOrder.includes(order)) return false;
+        if (phone && !rPhone.includes(phone)) return false;
         return true;
       });
-      matches.forEach(row=>allResults.push({row,idx,tab}));
-    }catch(e){console.warn(`Failed ${tab.name}:`,e);}
+
+      matches.forEach(row => allResults.push({ row, idx, tab }));
+    } catch(e) { console.warn(`Failed ${tab.name}:`, e); }
   }
 
   document.getElementById('loadingWrap').classList.remove('show');
-  btn.disabled=false;
-  btn.innerHTML='🔍 Search';
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Search';
   renderResults(allResults);
   renderStats(allResults);
 }
 
-function renderResults(allResults){
-  const list =document.getElementById('resultsList');
-  const count=document.getElementById('resultsCount');
-  if(!allResults.length){
-    count.textContent='0 results';
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
+// ── RENDER ────────────────────────────────────────────────────────────────
+function renderResults(allResults) {
+  const list  = document.getElementById('resultsList');
+  const count = document.getElementById('resultsCount');
+
+  if (!allResults.length) {
+    count.textContent = '0 results';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
     return;
   }
-  count.textContent=`${allResults.length} result${allResults.length>1?'s':''}`;
-  list.innerHTML=allResults.map(({row,idx,tab})=>{
-    const status  =g(row,idx.status);
-    const stCls   =getStatusCls(status);
-    const rawDate =g(row,idx.timestamp);
-    const date    =rawDate.includes('T')?rawDate.split('T')[0]:rawDate.substring(0,10)||'—';
-    const orderNum=g(row,idx.orderNum);
-    const custName=g(row,idx.custName);
-    const phone   =g(row,idx.custPhone);
-    const agent   =g(row,idx.agentName);
-    const reqType =g(row,idx.reqType);
-    const reason  =g(row,idx.reason);
-    const product =g(row,idx.product);
-    const refund  =g(row,idx.refund);
-    const shipping=g(row,idx.shipping);
-    const items   =g(row,idx.numItems);
-    const bosta   =g(row,idx.bosta);
-    const notes   =g(row,idx.notes);
-    const origSKU =g(row,idx.origSKU);
-    const reqSKU  =g(row,idx.reqSKU);
-    const fulfilN =g(row,idx.fulfilNote);
-    return`
+
+  count.textContent = `${allResults.length} result${allResults.length > 1 ? 's' : ''}`;
+
+  list.innerHTML = allResults.map(({ row, idx, tab }) => {
+    const status    = g(row, idx, 'status');
+    const stCls     = getStatusCls(status);
+    const rawDate   = g(row, idx, 'timestamp');
+    const date      = formatDate(rawDate);
+    const orderNum  = g(row, idx, 'orderNum');
+    const custName  = g(row, idx, 'custName');
+    const phone     = g(row, idx, 'custPhone');
+    const agent     = g(row, idx, 'agentName');
+    const reqType   = g(row, idx, 'reqType') || g(row, idx, 'refundType') || '—';
+    const reason    = g(row, idx, 'reason');
+    const product   = g(row, idx, 'product');
+    const refund    = g(row, idx, 'refundAmt');
+    const shipping  = g(row, idx, 'shipping');
+    const items     = g(row, idx, 'numItems');
+    const bosta     = g(row, idx, 'bosta');
+    const notes     = g(row, idx, 'notes');
+    const origSKU   = g(row, idx, 'origSKU');
+    const reqSKU    = g(row, idx, 'reqSKU');
+    const fulfilN   = g(row, idx, 'fulfilNote');
+    const refMethod = g(row, idx, 'refundMethod');
+    const transId   = g(row, idx, 'transactionId');
+
+    return `
     <div class="result-card">
       <div class="result-top">
-        <div>
-          <div class="result-order">Order #${orderNum||'—'}</div>
-          <div class="result-customer">${custName||'—'}</div>
-          <div class="result-phone">${phone||'—'}</div>
+        <div class="result-left">
+          <div class="result-order">Order #${orderNum || '—'}</div>
+          <div class="result-customer">${custName || '—'}</div>
+          <div class="result-phone">${phone || '—'}</div>
         </div>
         <div class="result-right">
           <span class="source-badge ${tab.cls}">📊 ${tab.label}</span>
-          <span class="status-badge ${stCls}">${status||'Pending'}</span>
+          <span class="status-badge ${stCls}">${status || 'Pending'}</span>
           <span style="font-size:11px;color:var(--muted)">${date}</span>
         </div>
       </div>
       <div class="result-grid">
-        <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${reqType||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${reason||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${agent||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${bosta||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${product||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${refund?'EGP '+refund:'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${shipping||'—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${items||'—'}</span></div>
-        ${origSKU?`<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${origSKU}</span></div>`:''}
-        ${reqSKU?`<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${reqSKU}</span></div>`:''}
+        <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${reqType}</span></div>
+        <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${reason || '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${agent || '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${bosta || '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${product || '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${refund ? 'EGP ' + refund : '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${shipping || '—'}</span></div>
+        <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${items || '—'}</span></div>
+        ${refMethod ? `<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${refMethod}</span></div>` : ''}
+        ${transId   ? `<div class="result-item"><span class="result-item-label">Transaction ID</span><span class="result-item-val">${transId}</span></div>` : ''}
+        ${origSKU   ? `<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${origSKU}</span></div>` : ''}
+        ${reqSKU    ? `<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${reqSKU}</span></div>` : ''}
       </div>
-      ${notes?`<div class="result-note"><strong>Note:</strong> ${notes}</div>`:''}
-      ${fulfilN?`<div class="result-note" style="color:var(--lavender);border-color:rgba(191,161,255,0.2)"><strong>Fulfilment:</strong> ${fulfilN}</div>`:''}
+      ${notes   ? `<div class="result-note-box"><strong>Note:</strong> ${notes}</div>` : ''}
+      ${fulfilN ? `<div class="result-note-box" style="background:#f5f3ff;border-color:#ddd6fe;color:#7c3aed"><strong>Fulfilment:</strong> ${fulfilN}</div>` : ''}
     </div>`;
   }).join('');
 }
 
-function renderStats(allResults){
-  document.getElementById('statsRow').style.display='flex';
-  document.getElementById('statTotal').textContent=allResults.length;
-  document.getElementById('statPending').textContent=allResults.filter(({row,idx})=>{
-    const s=g(row,idx.status).toLowerCase();
-    return !s||s.includes('pending');
+function formatDate(val) {
+  if (!val) return '—';
+  const s = val.toString();
+  if (s.startsWith('Date(')) {
+    const p = s.replace('Date(','').replace(')','').split(',').map(Number);
+    const d = new Date(p[0], p[1], p[2]);
+    return d.toLocaleDateString('en-GB');
+  }
+  if (s.includes('T')) return s.split('T')[0];
+  if (s.length >= 10) return s.substring(0, 10);
+  return s;
+}
+
+function renderStats(allResults) {
+  document.getElementById('statsRow').style.display = 'flex';
+  document.getElementById('statTotal').textContent   = allResults.length;
+  document.getElementById('statPending').textContent = allResults.filter(({row, idx}) => {
+    const s = g(row, idx, 'status').toLowerCase();
+    return !s || s.includes('pending');
   }).length;
-  document.getElementById('statDone').textContent=allResults.filter(({row,idx})=>{
-    const s=g(row,idx.status).toLowerCase();
-    return s.includes('success')||s.includes('done')||s.includes('approved')||s.includes('completed');
+  document.getElementById('statDone').textContent = allResults.filter(({row, idx}) => {
+    const s = g(row, idx, 'status').toLowerCase();
+    return s.includes('success') || s.includes('done') || s.includes('approved') || s.includes('completed') || s.includes('refunded');
   }).length;
-  document.getElementById('statSheets').textContent=new Set(allResults.map(r=>r.tab.name)).size;
+  document.getElementById('statSheets').textContent = new Set(allResults.map(r => r.tab.name)).size;
 }
 
-function getStatusCls(s){
-  const v=(s||'').toLowerCase();
-  if(v.includes('success')||v.includes('done')||v.includes('approved')||v.includes('completed')) return 'status-success';
-  if(v.includes('rejected')||v.includes('declined')) return 'status-rejected';
-  return 'status-pending';
+function getStatusCls(s) {
+  const v = (s || '').toLowerCase();
+  if (v.includes('success') || v.includes('done') || v.includes('approved') || v.includes('completed') || v.includes('refunded')) return 'status-success';
+  if (v.includes('failed') || v.includes('rejected') || v.includes('declined')) return 'status-failed';
+  if (v.includes('processing') || v.includes('progress') || v.includes('review')) return 'status-processing';
+  if (v.includes('pending')) return 'status-pending';
+  return 'status-default';
 }
 
-function clearSearch(){
-  ['sName','sOrder','sPhone'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ready to search</div><div class="empty-sub">Enter any field above and press Search</div></div>`;
-  document.getElementById('resultsCount').textContent='—';
-  document.getElementById('statsRow').style.display='none';
-  cache={};
+function clearSearch() {
+  ['sName','sOrder','sPhone'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('resultsList').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ready to search</div><div class="empty-sub">Enter any field above and press Search</div></div>`;
+  document.getElementById('resultsCount').textContent = '—';
+  document.getElementById('statsRow').style.display = 'none';
+  cache = {};
 }
 
+// ── DUPLICATE CHECK ───────────────────────────────────────────────────────
 let dupTimer;
-async function checkDup(){
+async function checkDup() {
   clearTimeout(dupTimer);
-  dupTimer=setTimeout(async()=>{
-    const orderNum=document.getElementById('fOrderNum').value.trim();
-    if(!orderNum){hideDup();return;}
-    try{
-      const {headers,data}=await fetchTab('Export2');
-      const idx=detectCols(headers);
-      const now=new Date();
-      const matches=data.filter(row=>{
-        if(g(row,idx.orderNum).trim()!==orderNum) return false;
-        const d=parseDate(g(row,idx.timestamp));
-        return !d||(now-d)/86400000<=5;
+  dupTimer = setTimeout(async () => {
+    const orderNum = document.getElementById('fOrderNum').value.trim();
+    if (!orderNum) { hideDup(); return; }
+    try {
+      const { headers, data } = await fetchTab('Export2');
+      const idx = buildIdx(headers, TABS.find(t => t.name === 'Export2').cols);
+      const now = new Date();
+      const matches = data.filter(row => {
+        if (g(row, idx, 'orderNum').trim() !== orderNum) return false;
+        const d = parseDate(g(row, idx, 'timestamp'));
+        return !d || (now - d) / 86400000 <= 5;
       });
-      if(matches.length){
-        const st=g(matches[0],idx.status)||'Pending';
+      if (matches.length) {
+        const st = g(matches[0], idx, 'status') || 'Pending';
         showDup(`Order #${orderNum} already has an active case. Status: ${st}. Please follow up on the existing case.`);
       } else hideDup();
-    }catch(e){hideDup();}
-  },600);
+    } catch(e) { hideDup(); }
+  }, 600);
 }
 
-function parseDate(val){
-  if(!val) return null;
-  const s=val.toString();
-  if(s.startsWith('Date(')){
-    const p=s.replace('Date(','').replace(')','').split(',').map(Number);
-    return new Date(p[0],p[1],p[2],p[3]||0,p[4]||0);
+function parseDate(val) {
+  if (!val) return null;
+  const s = val.toString();
+  if (s.startsWith('Date(')) {
+    const p = s.replace('Date(','').replace(')','').split(',').map(Number);
+    return new Date(p[0], p[1], p[2], p[3]||0, p[4]||0);
   }
-  const d=new Date(s);
-  return isNaN(d)?null:d;
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
 }
 
-function showDup(msg){document.getElementById('dupText').textContent=msg;document.getElementById('dupAlert').classList.add('show');document.getElementById('submitBtn').disabled=true;}
-function hideDup(){document.getElementById('dupAlert').classList.remove('show');document.getElementById('submitBtn').disabled=false;}
+function showDup(msg) { document.getElementById('dupText').textContent = msg; document.getElementById('dupAlert').classList.add('show'); document.getElementById('submitBtn').disabled = true; }
+function hideDup()    { document.getElementById('dupAlert').classList.remove('show'); document.getElementById('submitBtn').disabled = false; }
 
-async function submitRefund(){
-  const required=[
+// ── SUBMIT ────────────────────────────────────────────────────────────────
+async function submitRefund() {
+  const required = [
     {id:'fEmail',    label:'Agent email'},
     {id:'fAgentName',label:'Agent name'},
     {id:'fCustName', label:'Customer name'},
@@ -613,8 +725,10 @@ async function submitRefund(){
     {id:'fReqType',  label:'Request type'},
     {id:'fReason',   label:'Reason'},
   ];
-  for(const f of required){if(!document.getElementById(f.id).value.trim()) return showToast(`${f.label} is required.`,'error');}
-  const row=[
+  for (const f of required) {
+    if (!document.getElementById(f.id).value.trim()) return showToast(`${f.label} is required.`, 'error');
+  }
+  const row = [
     new Date().toLocaleString('en-GB',{timeZone:'Africa/Cairo'}),
     document.getElementById('fEmail').value.trim(),
     document.getElementById('fAgentName').value.trim(),
@@ -630,53 +744,51 @@ async function submitRefund(){
     document.getElementById('fShipping').value,
     document.getElementById('fRefund').value,
     document.getElementById('fBosta').value,
-    '',
-    document.getElementById('fNotes').value,
-    'Pending',''
+    '', document.getElementById('fNotes').value, 'Pending', ''
   ];
-  const btn=document.getElementById('submitBtn');
-  btn.disabled=true;
-  btn.innerHTML='<span class="spin-sm"></span> Submitting...';
-  if(!GAS_URL){
-    const tsv=row.map(v=>`"${(v||'').replace(/"/g,'""')}"`).join('\t');
-    try{await navigator.clipboard.writeText(tsv);}catch(e){}
-    btn.disabled=false;btn.textContent='✉️ Submit Request';
-    showToast('⚠️ Apps Script not set. Data copied — paste into Export2.','warn');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-sm"></span> Submitting...';
+  if (!GAS_URL) {
+    const tsv = row.map(v => `"${(v||'').replace(/"/g,'""')}"`).join('\t');
+    try { await navigator.clipboard.writeText(tsv); } catch(e) {}
+    btn.disabled = false; btn.textContent = '✉️ Submit Request';
+    showToast('⚠️ Apps Script not set. Data copied — paste into Export2.', 'warn');
     return;
   }
-  try{
-    const res=await fetch(GAS_URL,{method:'POST',body:JSON.stringify({sheet:'Export2',row}),headers:{'Content-Type':'application/json'}});
-    const result=await res.json();
-    if(result.status==='ok'){showToast('✅ Request submitted!','success');resetForm();cache={};}
-    else throw new Error(result.message||'Error');
-  }catch(e){showToast('Submit failed: '+e.message,'error');}
-  btn.disabled=false;btn.textContent='✉️ Submit Request';
+  try {
+    const res    = await fetch(GAS_URL, {method:'POST', body:JSON.stringify({sheet:'Export2', row}), headers:{'Content-Type':'application/json'}});
+    const result = await res.json();
+    if (result.status === 'ok') { showToast('✅ Request submitted!', 'success'); resetForm(); cache = {}; }
+    else throw new Error(result.message || 'Error');
+  } catch(e) { showToast('Submit failed: ' + e.message, 'error'); }
+  btn.disabled = false; btn.textContent = '✉️ Submit Request';
 }
 
-function resetForm(){
-  ['fEmail','fAgentName','fCustName','fCustPhone','fOrderNum','fNumItems','fProduct','fOrigSKU','fReqSKU','fRefund','fBosta','fNotes'].forEach(id=>document.getElementById(id).value='');
-  ['fReqType','fReason','fShipping'].forEach(id=>document.getElementById(id).value='');
-  hideDup();setNow();
+function resetForm() {
+  ['fEmail','fAgentName','fCustName','fCustPhone','fOrderNum','fNumItems','fProduct','fOrigSKU','fReqSKU','fRefund','fBosta','fNotes'].forEach(id => document.getElementById(id).value = '');
+  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value = '');
+  hideDup(); setNow();
 }
 
-function switchTab(name,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
 }
 
-function showToast(msg,type='success'){
-  const t=document.getElementById('toast');
-  t.className=`toast show ${type}`;t.textContent=msg;
-  setTimeout(()=>t.classList.remove('show'),5000);
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.className = `toast show ${type}`; t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 5000);
 }
 
-function setNow(){
-  const now=new Date();
-  const cairo=new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
-  const pad=n=>n.toString().padStart(2,'0');
-  document.getElementById('fDate').value=`${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
+function setNow() {
+  const now   = new Date();
+  const cairo = new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
+  const pad   = n => n.toString().padStart(2,'0');
+  document.getElementById('fDate').value = `${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
 }
 setNow();
 </script>
