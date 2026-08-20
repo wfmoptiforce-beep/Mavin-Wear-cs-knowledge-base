@@ -1,503 +1,457 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAVIN OPS HUB - QA Audit</title>
+<title>Mavin Wear — QA Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#f3f3f7; --dark:#0a0a0a; --card:#ffffff;
-  --border:#e5e5e5; --border2:#d0d0d0; --text:#111111; --muted:#888;
-  --muted2:#bbb; --indigo:#4b4bf9;
-  --green:#16a34a; --green-bg:#f0fdf4; --green-bd:#bbf7d0;
-  --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
-  --yellow:#d97706; --yellow-bg:#fffbeb; --yellow-bd:#fde68a;
-  --blue:#2563eb; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
-  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
-  --orange:#ea580c; --orange-bg:#fff7ed; --orange-bd:#fed7aa;
+  --bg:#f3f3f7;
+  --indigo:#4b4bf9;--midnight:#09092d;
+  --card:#ffffff;--border:#e5e5e5;--border2:#d0d0d0;
+  --text:#111111;--muted:#888;--muted2:#bbb;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+  --red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;
+  --yellow:#d97706;--yellow-bg:#fffbeb;--yellow-bd:#fde68a;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
+  --orange:#ea580c;--orange-bg:#fff7ed;--orange-bd:#fed7aa;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit;}
 
-/* NAV */
-.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
-.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
-.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
-.nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
-.nav-link{padding:8px 14px;border-radius:8px;color:#666;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none;display:flex;align-items:center;gap:7px}
-.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
-.nav-link.active{background:#fff;color:#0a0a0a}
-.nav-link svg{width:15px;height:15px;flex-shrink:0}
-.nav-right{z-index:2}
-.user-badge{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
-.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
-.user-name{font-size:12px;font-weight:700;color:#fff}
-.user-role{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px}
+/* ── SIDEBAR ── */
+.sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
+.brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
+.brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
+.brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:#c7c9f0;font-size:13.5px;font-weight:600;margin-bottom:4px;transition:.15s;}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.nav-item.active{background:var(--indigo);color:#fff;}
+.nav-icon{font-size:16px;width:20px;text-align:center;}
 
-/* TABS */
-.tab-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex}
-.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px}
-.tab-btn:hover{color:var(--text)}
-.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo)}
-.tab-btn svg{width:15px;height:15px}
+/* ── MAIN WRAPPER ── */
+.main-wrap{margin-left:260px;min-height:100vh;display:flex;flex-direction:column;}
 
-/* PAGE */
-.page{padding:32px;max-width:1000px;margin:0 auto}
-.tab-content{display:none}
-.tab-content.active{display:block}
+/* ── TOP BAR (inside main) ── */
+.topbar{background:#fff;border-bottom:1.5px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:50;}
+.topbar-left{display:flex;flex-direction:column;}
+.topbar-title{font-size:16px;font-weight:800;color:var(--midnight);}
+.topbar-sub{font-size:11px;color:var(--muted);}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.profile-pill{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--midnight);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+.profile-name{font-size:13px;font-weight:700;}
+.profile-role{font-size:11px;color:var(--muted);}
 
-/* HEADER */
-.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff}
-.page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%}
-.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px}
-.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px}
+/* ── TAB BAR ── */
+.tab-bar{background:#fff;border-bottom:1.5px solid var(--border);padding:0 32px;display:flex;}
+.tab-btn{padding:16px 20px;font-size:13px;font-weight:700;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--indigo);border-bottom-color:var(--indigo);}
+.tab-btn svg{width:15px;height:15px;}
 
-/* CARDS */
-.form-card{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden}
-.form-card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa}
-.card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.card-icon svg{width:17px;height:17px}
-.card-title{font-size:13px;font-weight:800;flex:1}
-.card-pts{font-size:11.5px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px}
+/* ── PAGE ── */
+.page{padding:32px;max-width:1000px;width:100%;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
 
-/* META */
-.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px}
-.meta-field{display:flex;flex-direction:column;gap:5px}
-.meta-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.meta-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%}
-.meta-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08)}
-.meta-input::placeholder{color:var(--muted2)}
+/* ── HEADER ── */
+.page-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;background:#fff;}
+.page-badge-dot{width:6px;height:6px;background:var(--indigo);border-radius:50%;}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:5px;}
+.page-sub{color:var(--muted);font-size:13.5px;margin-bottom:28px;}
 
-/* CRITERIA ROWS */
-.criteria-grid{padding:4px 0}
-.criteria-row{display:flex;align-items:center;padding:13px 22px;border-bottom:1px solid #f5f5f5;gap:14px;transition:.1s}
-.criteria-row:last-child{border-bottom:none}
-.criteria-row:hover{background:#fafafa}
-.criteria-info{flex:1;display:flex;align-items:center;gap:10px}
-.criteria-name{font-size:13px;font-weight:600;color:#222}
-.criteria-pts-tag{font-size:10px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:2px 8px;white-space:nowrap}
+/* ── CARDS ── */
+.form-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;margin-bottom:16px;overflow:hidden;}
+.form-card-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:#fafafa;}
+.card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-icon svg{width:17px;height:17px;}
+.card-title{font-size:13px;font-weight:800;flex:1;}
+.card-pts{font-size:11.5px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:3px 10px;}
 
-/* YES / NO / NA BUTTONS */
-.yn-group{display:flex;gap:6px}
-.yn-btn{padding:6px 16px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap}
-.yn-btn:hover{border-color:#999;color:var(--text)}
-.yn-btn.sel-yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
-.yn-btn.sel-no{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-.yn-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple)}
+/* ── META ── */
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 22px;}
+.meta-field{display:flex;flex-direction:column;gap:5px;}
+.meta-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;}
+.meta-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;transition:.15s;width:100%;font-family:'Inter',sans-serif;}
+.meta-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(75,75,249,.08);}
+.meta-input::placeholder{color:var(--muted2);}
 
-/* CRITICAL */
-.critical-card{background:#fff;border:1.5px solid var(--red-bd);border-radius:16px;margin-bottom:16px;overflow:hidden}
-.critical-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--red-bd);background:var(--red-bg)}
-.critical-title{font-size:13px;font-weight:800;color:var(--red);flex:1}
-.critical-badge{font-size:10px;font-weight:800;color:var(--red);background:#fee2e2;border:1px solid var(--red-bd);border-radius:100px;padding:3px 10px;letter-spacing:1px}
-.critical-row{display:flex;align-items:center;padding:14px 22px;border-bottom:1px solid #fef2f2;gap:14px}
-.critical-row:last-child{border-bottom:none}
-.crit-name{font-size:13px;font-weight:700}
-.crit-desc{font-size:11.5px;color:var(--muted);margin-top:2px}
+/* ── CRITERIA ── */
+.criteria-grid{padding:4px 0;}
+.criteria-row{display:flex;align-items:center;padding:13px 22px;border-bottom:1px solid #f5f5f5;gap:14px;transition:.1s;}
+.criteria-row:last-child{border-bottom:none;}
+.criteria-row:hover{background:#fafafa;}
+.criteria-info{flex:1;display:flex;align-items:center;gap:10px;}
+.criteria-name{font-size:13px;font-weight:600;color:#222;}
+.criteria-pts-tag{font-size:10px;font-weight:700;color:var(--muted);background:#f3f3f7;border:1px solid var(--border);border-radius:100px;padding:2px 8px;white-space:nowrap;}
+.yn-group{display:flex;gap:6px;}
+.yn-btn{padding:6px 16px;border-radius:8px;border:1.5px solid var(--border2);background:#fff;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.yn-btn:hover{border-color:#999;color:var(--text);}
+.yn-btn.sel-yes{background:var(--green-bg);border-color:var(--green);color:var(--green);}
+.yn-btn.sel-no{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.yn-btn.sel-na{background:var(--purple-bg);border-color:var(--purple);color:var(--purple);}
 
-/* LIVE SCORE PANEL */
-.score-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:28px}
-.score-circle{width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;transition:.3s;position:relative}
-.score-num{font-size:30px;font-weight:900;line-height:1;transition:.3s}
-.score-pct{font-size:12px;font-weight:700;color:var(--muted);margin-top:1px}
-.score-breakdown{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.score-item{background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:10px 14px}
-.score-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.score-item-name{font-size:11px;color:var(--muted);font-weight:600}
-.score-item-val{font-size:13px;font-weight:800}
-.score-bar-bg{height:3px;background:#f0f0f0;border-radius:10px;overflow:hidden}
-.score-bar-fill{height:100%;border-radius:10px;transition:.3s;background:var(--green)}
+/* ── CRITICAL ── */
+.critical-card{background:#fff;border:1.5px solid var(--red-bd);border-radius:20px;margin-bottom:16px;overflow:hidden;}
+.critical-header{padding:16px 22px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--red-bd);background:var(--red-bg);}
+.critical-title{font-size:13px;font-weight:800;color:var(--red);flex:1;}
+.critical-badge{font-size:10px;font-weight:800;color:var(--red);background:#fee2e2;border:1px solid var(--red-bd);border-radius:100px;padding:3px 10px;letter-spacing:1px;}
+.critical-row{display:flex;align-items:center;padding:14px 22px;border-bottom:1px solid #fef2f2;gap:14px;}
+.critical-row:last-child{border-bottom:none;}
+.crit-name{font-size:13px;font-weight:700;}
+.crit-desc{font-size:11.5px;color:var(--muted);margin-top:2px;}
 
-/* TARGET / PASS INDICATORS */
-.thresholds{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.threshold-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid}
-.chip-pass{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
-.chip-target{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)}
-.chip-fail{background:var(--red-bg);border-color:var(--red-bd);color:var(--red)}
-.chip-dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+/* ── SCORE PANEL ── */
+.score-panel{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:28px;}
+.score-circle{width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid var(--border);flex-shrink:0;transition:.3s;}
+.score-num{font-size:30px;font-weight:900;line-height:1;transition:.3s;}
+.score-pct{font-size:12px;font-weight:700;color:var(--muted);margin-top:1px;}
+.score-breakdown{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.score-item{background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:10px 14px;}
+.score-item-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.score-item-name{font-size:11px;color:var(--muted);font-weight:600;}
+.score-item-val{font-size:13px;font-weight:800;}
+.score-bar-bg{height:3px;background:#f0f0f0;border-radius:10px;overflow:hidden;}
+.score-bar-fill{height:100%;border-radius:10px;transition:.3s;background:var(--green);}
 
-/* SUBMIT */
-.submit-row{display:flex;gap:10px;margin-bottom:40px;margin-top:20px}
-.btn-submit{background:#111;color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center}
-.btn-submit:hover{background:#333}
-.btn-submit:disabled{background:#555;cursor:not-allowed}
-.btn-reset{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:13px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
-.btn-reset:hover{border-color:#999;color:var(--text)}
+/* ── THRESHOLDS ── */
+.thresholds{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.threshold-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid;}
+.chip-pass{background:var(--green-bg);border-color:var(--green-bd);color:var(--green);}
+.chip-target{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue);}
+.chip-fail{background:var(--red-bg);border-color:var(--red-bd);color:var(--red);}
+.chip-dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
 
-/* HISTORY */
-.history-controls{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.hist-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;min-width:200px}
-.hist-input:focus{border-color:var(--indigo)}
-.hist-btn{background:#111;color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s}
-.hist-btn:hover{background:#333}
-.hist-btn-sec{background:#fff;color:var(--text);border:1.5px solid var(--border2);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
-.hist-btn-sec:hover{border-color:#999}
+/* ── SUBMIT ── */
+.submit-row{display:flex;gap:10px;margin-bottom:40px;margin-top:20px;}
+.btn-submit{background:var(--indigo);color:#fff;border:none;border-radius:12px;padding:13px 28px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;flex:1;justify-content:center;font-family:'Inter',sans-serif;}
+.btn-submit:hover{background:#3a3ae8;}
+.btn-submit:disabled{background:#8888f9;cursor:not-allowed;}
+.btn-reset{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:12px;padding:13px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
+.btn-reset:hover{border-color:#999;color:var(--text);}
 
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-.stat-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
-.stat-value{font-size:24px;font-weight:900}
-.stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
+/* ── HISTORY ── */
+.history-controls{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+.hist-input{background:#fff;border:1.5px solid var(--border2);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px;font-weight:500;outline:none;min-width:200px;font-family:'Inter',sans-serif;}
+.hist-input:focus{border-color:var(--indigo);}
+.hist-btn{background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s;font-family:'Inter',sans-serif;}
+.hist-btn:hover{background:#3a3ae8;}
+.hist-btn-sec{background:#fff;color:var(--text);border:1.5px solid var(--border2);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
+.hist-btn-sec:hover{border-color:#999;}
 
-/* TABLE */
-.table-wrap{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:auto}
-.qa-table{width:100%;border-collapse:collapse;min-width:900px}
-.qa-table th{padding:11px 14px;font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;background:#fafafa;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-.qa-table td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
-.qa-table tr:last-child td{border-bottom:none}
-.qa-table tr:hover td{background:#fafafa}
+/* ── STATS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;}
+.stat-label{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;}
+.stat-value{font-size:24px;font-weight:900;}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;}
 
-/* GRADE BADGES */
-.score-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap}
-.b-target{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
-.b-pass{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
-.b-improve{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd)}
-.b-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+/* ── TABLE ── */
+.table-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:auto;}
+.qa-table{width:100%;border-collapse:collapse;min-width:900px;}
+.qa-table th{padding:11px 14px;font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;background:#fafafa;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+.qa-table td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid #f5f5f5;vertical-align:middle;}
+.qa-table tr:last-child td{border-bottom:none;}
+.qa-table tr:hover td{background:#fafafa;}
+.score-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:800;white-space:nowrap;}
+.b-target{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+.b-pass{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);}
+.b-improve{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd);}
+.b-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);}
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty-icon{font-size:36px;margin-bottom:12px;}
+.empty-text{font-size:14px;font-weight:600;}
+.empty-sub{font-size:12.5px;margin-top:4px;}
 
-.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
-.empty-icon{font-size:36px;margin-bottom:12px}
-.empty-text{font-size:14px;font-weight:600}
-.empty-sub{font-size:12.5px;margin-top:4px}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-width:380px;}
+.toast.show{display:flex;}
+.toast.success{background:var(--green);color:#fff;}
+.toast.error{background:var(--red);color:#fff;}
+.toast.warn{background:var(--yellow);color:#fff;}
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-width:380px}
-.toast.show{display:flex}
-.toast.success{background:var(--green);color:#fff}
-.toast.error{background:var(--red);color:#fff}
-.toast.warn{background:var(--yellow);color:#fff}
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.show{display:flex;}
+.modal{background:#fff;border-radius:24px;padding:36px;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.15);}
+.modal-score-big{font-size:72px;font-weight:900;line-height:1;margin-bottom:4px;}
+.modal-pct{font-size:18px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+.modal-grade{font-size:13px;font-weight:800;margin-bottom:16px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:100px;display:inline-block;}
+.modal-agent{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.modal-ztp{background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:10px 14px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:16px;display:none;}
+.modal-breakdown{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;display:flex;flex-direction:column;gap:8px;}
+.modal-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;}
+.modal-row-name{color:var(--muted);}
+.modal-row-right{display:flex;align-items:center;gap:8px;}
+.modal-row-val{font-weight:700;}
+.modal-row-bar{width:80px;height:4px;background:#e5e5e5;border-radius:10px;overflow:hidden;}
+.modal-row-fill{height:100%;border-radius:10px;background:var(--green);transition:.3s;}
+.modal-btns{display:flex;gap:8px;justify-content:center;}
+.modal-btn-close{background:var(--indigo);color:#fff;border:none;border-radius:12px;padding:11px 24px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;}
+.modal-btn-new{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:12px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.modal-btn-new:hover{color:var(--text);border-color:#999;}
 
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:#fff;border-radius:20px;padding:36px;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.15)}
-.modal-score-big{font-size:72px;font-weight:900;line-height:1;margin-bottom:4px}
-.modal-pct{font-size:18px;font-weight:700;color:var(--muted);margin-bottom:8px}
-.modal-grade{font-size:13px;font-weight:800;margin-bottom:16px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:100px;display:inline-block}
-.modal-agent{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.modal-ztp{background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:10px 14px;color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:16px;display:none}
-.modal-breakdown{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:20px;text-align:left;display:flex;flex-direction:column;gap:8px}
-.modal-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
-.modal-row-name{color:var(--muted)}
-.modal-row-right{display:flex;align-items:center;gap:8px}
-.modal-row-val{font-weight:700}
-.modal-row-bar{width:80px;height:4px;background:#e5e5e5;border-radius:10px;overflow:hidden}
-.modal-row-fill{height:100%;border-radius:10px;background:var(--green);transition:.3s}
-.modal-btns{display:flex;gap:8px;justify-content:center}
-.modal-btn-close{background:#111;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:800;cursor:pointer}
-.modal-btn-new{background:#fff;color:var(--muted);border:1.5px solid var(--border2);border-radius:10px;padding:11px 24px;font-size:13px;font-weight:700;cursor:pointer}
-.modal-btn-new:hover{color:var(--text);border-color:#999}
+/* ── FOOTER ── */
+.footer{text-align:center;padding:24px 32px;color:#9ca3af;font-size:12px;border-top:1px solid var(--border);}
+.footer span{color:var(--indigo);font-weight:700;}
 
-.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-@media(max-width:768px){
-  .meta-grid{grid-template-columns:1fr;padding:16px}
-  .score-panel{flex-direction:column}
-  .score-breakdown{grid-template-columns:1fr}
-  .stats-row{grid-template-columns:repeat(2,1fr)}
-  .page{padding:16px}
-  .topnav{height:auto;padding:12px 16px;flex-wrap:wrap;gap:8px}
-  .nav-brand{position:static;transform:none}
+@media(max-width:900px){
+  .sidebar{display:none;}
+  .main-wrap{margin-left:0;}
+  .meta-grid{grid-template-columns:1fr;}
+  .score-panel{flex-direction:column;}
+  .score-breakdown{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .page{padding:18px;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="topnav">
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
-    </a>
-    <a href="sops.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
-    </a>
-    <a href="scenarios.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
-    </a>
-    <a href="portal.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Return Portal
-    </a>
-    <a href="qa.html" class="nav-link active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
-    </a>
-  </div>
-  <a href="index.html" class="nav-brand">
-    <div class="nav-brand-icon">M</div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo">M</div>
     <div>
-      <div class="nav-brand-text">MAVIN OPS HUB</div>
-      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
-    </div>
-  </a>
-  <div class="nav-right">
-    <div class="user-badge">
-      <div class="user-avatar">A</div>
-      <div>
-        <div class="user-name">Agent Support</div>
-        <div class="user-role">CS · Operations</div>
-      </div>
+      <div class="brand-name">Mavin Wear</div>
+      <div class="brand-sub">Operations Hub</div>
     </div>
   </div>
-</nav>
+  <div class="sidebar-label">Workspace</div>
+  <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span> Home</a>
+  <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
+  <a href="portal.html" class="nav-item"><span class="nav-icon">💰</span> Refunds</a>
+  <a href="escalation.html" class="nav-item"><span class="nav-icon">🚨</span> Escalations</a>
+  <a href="qa.html" class="nav-item active"><span class="nav-icon">⭐</span> QA Audit</a>
+  <div class="sidebar-label">Quick Access</div>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
+  <a href="sop-cheatsheet.html" class="nav-item"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
+</aside>
 
-<!-- TABS -->
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('audit',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    New Audit
-  </button>
-  <button class="tab-btn" onclick="switchTab('history',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    History & Analytics
-  </button>
-</div>
+<!-- MAIN WRAPPER -->
+<div class="main-wrap">
 
-<!-- ══ AUDIT TAB ══ -->
-<div class="page tab-content active" id="tab-audit">
-  <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
-  <div class="page-title">QA Audit Form</div>
-  <div class="page-sub">Yes = Full points · No = 0 pts · N/A = Excluded & redistributed · Pass ≥ 70% · Target ≥ 85%</div>
-
-  <!-- THRESHOLDS -->
-  <div class="thresholds">
-    <div class="threshold-chip chip-target"><span class="chip-dot"></span>Target ≥ 85%</div>
-    <div class="threshold-chip chip-pass"><span class="chip-dot"></span>Pass ≥ 70%</div>
-    <div class="threshold-chip chip-fail"><span class="chip-dot"></span>Fail &lt; 70%</div>
-  </div>
-
-  <!-- META -->
-  <div class="form-card">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:#f0f0ff"><svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <span class="card-title">Audit Information</span>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title">⭐ QA Audit</div>
+      <div class="topbar-sub">Quality Assurance · Mavin Wear Operations</div>
     </div>
-    <div class="meta-grid">
-      <div class="meta-field">
-        <label class="meta-label">Agent Email *</label>
-        <input class="meta-input" id="agentEmail" type="email" placeholder="agent@mavinwear.com">
-      </div>
-      <div class="meta-field">
-        <label class="meta-label">Agent Name</label>
-        <input class="meta-input" id="agentName" type="text" placeholder="e.g. Nour Tamer">
-      </div>
-      <div class="meta-field">
-        <label class="meta-label">Evaluator Name *</label>
-        <input class="meta-input" id="evalName" type="text" placeholder="e.g. Zahraa">
-      </div>
-      <div class="meta-field">
-        <label class="meta-label">Ticket Number *</label>
-        <input class="meta-input" id="ticketNum" type="text" placeholder="e.g. #156688">
-      </div>
-      <div class="meta-field">
-        <label class="meta-label">Date</label>
-        <input class="meta-input" id="auditDate" type="date">
-      </div>
-      <div class="meta-field">
-        <label class="meta-label">Channel</label>
-        <select class="meta-input" id="channel">
-          <option value="">Select channel</option>
-          <option>WhatsApp</option>
-          <option>Email</option>
-          <option>Instagram DM</option>
-          <option>Facebook DM</option>
-          <option>Phone Call</option>
-        </select>
-      </div>
-      <div class="meta-field" style="grid-column:1/-1">
-        <label class="meta-label">Contact Reason</label>
-        <select class="meta-input" id="contactReason">
-          <option value="">Select reason</option>
-          <option>Product Inquiry (Pre-purchase)</option>
-          <option>Stock & Availability</option>
-          <option>Discounts & Promotions</option>
-          <option>Late Return</option>
-          <option>Policy / Exchanges</option>
-          <option>Refund not received</option>
-          <option>Courier Issues</option>
-          <option>Order Status & Tracking</option>
-          <option>Wrong Item / Damaged</option>
-          <option>Exchanges</option>
-          <option>Refunds</option>
-          <option>Account & Website Issues</option>
-          <option>Payment Issues / Policy</option>
-          <option>Complaint & Escalation</option>
-        </select>
+    <div class="topbar-right">
+      <div class="profile-pill">
+        <div class="avatar">A</div>
+        <div>
+          <div class="profile-name">Agent Support</div>
+          <div class="profile-role">CS Operations</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- LIVE SCORE -->
-  <div class="score-panel">
-    <div class="score-circle" id="scoreCircle">
-      <span class="score-num" id="liveScore">—</span>
-      <span class="score-pct" id="livePct">/ 100</span>
-    </div>
-    <div class="score-breakdown">
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Issue Understanding</span><span class="score-item-val" id="s1">—</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b1" style="width:0%"></div></div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Solution Quality</span><span class="score-item-val" id="s2">—</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b2" style="width:0%"></div></div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Customer Experience</span><span class="score-item-val" id="s3">—</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b3" style="width:0%"></div></div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Communication</span><span class="score-item-val" id="s4">—</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b4" style="width:0%"></div></div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Process Compliance</span><span class="score-item-val" id="s5">—</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b5" style="width:0%"></div></div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-top"><span class="score-item-name">Critical Errors</span><span class="score-item-val" id="s6" style="color:var(--red)">None</span></div>
-        <div class="score-bar-bg"><div class="score-bar-fill" id="b6" style="width:0%;background:var(--red)"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTIONS built by JS -->
-  <div class="form-card" id="card-sec1">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:var(--blue-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <span class="card-title">Issue Understanding</span>
-      <span class="card-pts" id="pts1">— / 8 pts</span>
-    </div>
-    <div class="criteria-grid" id="sec1"></div>
-  </div>
-
-  <div class="form-card" id="card-sec2">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:var(--green-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <span class="card-title">Solution Quality</span>
-      <span class="card-pts" id="pts2">— / 8 pts</span>
-    </div>
-    <div class="criteria-grid" id="sec2"></div>
-  </div>
-
-  <div class="form-card" id="card-sec3">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:var(--yellow-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-      <span class="card-title">Customer Experience</span>
-      <span class="card-pts" id="pts3">— / 8 pts</span>
-    </div>
-    <div class="criteria-grid" id="sec3"></div>
-  </div>
-
-  <div class="form-card" id="card-sec4">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:var(--purple-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-      <span class="card-title">Communication</span>
-      <span class="card-pts" id="pts4">— / 5 pts</span>
-    </div>
-    <div class="criteria-grid" id="sec4"></div>
-  </div>
-
-  <div class="form-card" id="card-sec5">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:#f8f8f8"><svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-      <span class="card-title">Process Compliance</span>
-      <span class="card-pts" id="pts5">— / 5 pts</span>
-    </div>
-    <div class="criteria-grid" id="sec5"></div>
-  </div>
-
-  <!-- CRITICAL -->
-  <div class="critical-card">
-    <div class="critical-header">
-      <div class="card-icon" style="background:#fee2e2"><svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <span class="critical-title">Critical Errors</span>
-      <span class="critical-badge">AUTO-FAIL RISK</span>
-    </div>
-    <div id="sec-critical"></div>
-  </div>
-
-  <!-- NOTES -->
-  <div class="form-card">
-    <div class="form-card-header">
-      <div class="card-icon" style="background:#f8f8f8"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-      <span class="card-title">Evaluator Notes</span>
-    </div>
-    <div style="padding:16px 22px">
-      <textarea class="meta-input" id="evalNotes" rows="3" placeholder="Coaching notes, observations..." style="resize:vertical;font-family:inherit;line-height:1.5"></textarea>
-    </div>
-  </div>
-
-  <div class="submit-row">
-    <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
-    <button class="btn-submit" id="submitBtn" onclick="submitAudit()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      Submit QA Audit
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('audit',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      New Audit
+    </button>
+    <button class="tab-btn" onclick="switchTab('history',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      History & Analytics
     </button>
   </div>
-</div>
 
-<!-- ══ HISTORY TAB ══ -->
-<div class="page tab-content" id="tab-history">
-  <div class="page-badge"><span class="page-badge-dot"></span>Analytics</div>
-  <div class="page-title">QA History & Analytics</div>
-  <div class="page-sub">Filter by agent email / name and month. Export to Excel.</div>
+  <!-- ══ AUDIT TAB ══ -->
+  <div class="page tab-content active" id="tab-audit">
+    <div class="page-badge"><span class="page-badge-dot"></span>Quality Assurance</div>
+    <div class="page-title">QA Audit Form</div>
+    <div class="page-sub">Yes = Full points · No = 0 pts · N/A = Excluded & redistributed · Pass ≥ 70% · Target ≥ 85%</div>
 
-  <div class="history-controls">
-    <input class="hist-input" id="histSearch" type="text" placeholder="Agent email or name...">
-    <input class="hist-input" id="histMonth" type="month" style="min-width:160px">
-    <button class="hist-btn" onclick="loadHistory()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search
-    </button>
-    <button class="hist-btn-sec" onclick="loadHistory(true)">Show All</button>
-    <button class="hist-btn-sec" onclick="exportCSV()">⬇ Export Excel</button>
+    <div class="thresholds">
+      <div class="threshold-chip chip-target"><span class="chip-dot"></span>Target ≥ 85%</div>
+      <div class="threshold-chip chip-pass"><span class="chip-dot"></span>Pass ≥ 70%</div>
+      <div class="threshold-chip chip-fail"><span class="chip-dot"></span>Fail &lt; 70%</div>
+    </div>
+
+    <!-- META -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:#f0f0ff"><svg viewBox="0 0 24 24" fill="none" stroke="#4b4bf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <span class="card-title">Audit Information</span>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-field"><label class="meta-label">Agent Email *</label><input class="meta-input" id="agentEmail" type="email" placeholder="agent@mavinwear.com"></div>
+        <div class="meta-field"><label class="meta-label">Agent Name</label><input class="meta-input" id="agentName" type="text" placeholder="e.g. Nour Tamer"></div>
+        <div class="meta-field"><label class="meta-label">Evaluator Name *</label><input class="meta-input" id="evalName" type="text" placeholder="e.g. Zahraa"></div>
+        <div class="meta-field"><label class="meta-label">Ticket Number *</label><input class="meta-input" id="ticketNum" type="text" placeholder="e.g. #156688"></div>
+        <div class="meta-field"><label class="meta-label">Date</label><input class="meta-input" id="auditDate" type="date"></div>
+        <div class="meta-field"><label class="meta-label">Channel</label>
+          <select class="meta-input" id="channel">
+            <option value="">Select channel</option>
+            <option>WhatsApp</option><option>Email</option><option>Instagram DM</option>
+            <option>Facebook DM</option><option>Phone Call</option>
+          </select>
+        </div>
+        <div class="meta-field" style="grid-column:1/-1"><label class="meta-label">Contact Reason</label>
+          <select class="meta-input" id="contactReason">
+            <option value="">Select reason</option>
+            <option>Product Inquiry (Pre-purchase)</option><option>Stock & Availability</option>
+            <option>Discounts & Promotions</option><option>Late Return</option>
+            <option>Policy / Exchanges</option><option>Refund not received</option>
+            <option>Courier Issues</option><option>Order Status & Tracking</option>
+            <option>Wrong Item / Damaged</option><option>Exchanges</option>
+            <option>Refunds</option><option>Account & Website Issues</option>
+            <option>Payment Issues / Policy</option><option>Complaint & Escalation</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE SCORE -->
+    <div class="score-panel">
+      <div class="score-circle" id="scoreCircle">
+        <span class="score-num" id="liveScore">—</span>
+        <span class="score-pct" id="livePct">/ 100</span>
+      </div>
+      <div class="score-breakdown">
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Issue Understanding</span><span class="score-item-val" id="s1">—</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b1" style="width:0%"></div></div></div>
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Solution Quality</span><span class="score-item-val" id="s2">—</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b2" style="width:0%"></div></div></div>
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Customer Experience</span><span class="score-item-val" id="s3">—</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b3" style="width:0%"></div></div></div>
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Communication</span><span class="score-item-val" id="s4">—</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b4" style="width:0%"></div></div></div>
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Process Compliance</span><span class="score-item-val" id="s5">—</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b5" style="width:0%"></div></div></div>
+        <div class="score-item"><div class="score-item-top"><span class="score-item-name">Critical Errors</span><span class="score-item-val" id="s6" style="color:var(--red)">None</span></div><div class="score-bar-bg"><div class="score-bar-fill" id="b6" style="width:0%;background:var(--red)"></div></div></div>
+      </div>
+    </div>
+
+    <!-- SECTION CARDS -->
+    <div class="form-card" id="card-sec1">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:var(--blue-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="card-title">Issue Understanding</span><span class="card-pts" id="pts1">— / 8 pts</span>
+      </div>
+      <div class="criteria-grid" id="sec1"></div>
+    </div>
+
+    <div class="form-card" id="card-sec2">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:var(--green-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <span class="card-title">Solution Quality</span><span class="card-pts" id="pts2">— / 8 pts</span>
+      </div>
+      <div class="criteria-grid" id="sec2"></div>
+    </div>
+
+    <div class="form-card" id="card-sec3">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:var(--yellow-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <span class="card-title">Customer Experience</span><span class="card-pts" id="pts3">— / 8 pts</span>
+      </div>
+      <div class="criteria-grid" id="sec3"></div>
+    </div>
+
+    <div class="form-card" id="card-sec4">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:var(--purple-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <span class="card-title">Communication</span><span class="card-pts" id="pts4">— / 5 pts</span>
+      </div>
+      <div class="criteria-grid" id="sec4"></div>
+    </div>
+
+    <div class="form-card" id="card-sec5">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:#f8f8f8"><svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <span class="card-title">Process Compliance</span><span class="card-pts" id="pts5">— / 5 pts</span>
+      </div>
+      <div class="criteria-grid" id="sec5"></div>
+    </div>
+
+    <!-- CRITICAL -->
+    <div class="critical-card">
+      <div class="critical-header">
+        <div class="card-icon" style="background:#fee2e2"><svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <span class="critical-title">Critical Errors</span>
+        <span class="critical-badge">AUTO-FAIL RISK</span>
+      </div>
+      <div id="sec-critical"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="card-icon" style="background:#f8f8f8"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <span class="card-title">Evaluator Notes</span>
+      </div>
+      <div style="padding:16px 22px">
+        <textarea class="meta-input" id="evalNotes" rows="3" placeholder="Coaching notes, observations..." style="resize:vertical;line-height:1.5"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn-reset" onclick="resetForm()">↺ Reset</button>
+      <button class="btn-submit" id="submitBtn" onclick="submitAudit()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Submit QA Audit
+      </button>
+    </div>
   </div>
 
-  <div class="stats-row" id="statsRow" style="display:none">
-    <div class="stat-card">
-      <div class="stat-label">Total Audits</div>
-      <div class="stat-value" id="statTotal">0</div>
-      <div class="stat-sub">This period</div>
+  <!-- ══ HISTORY TAB ══ -->
+  <div class="page tab-content" id="tab-history">
+    <div class="page-badge"><span class="page-badge-dot"></span>Analytics</div>
+    <div class="page-title">QA History & Analytics</div>
+    <div class="page-sub">Filter by agent email / name and month. Export to Excel.</div>
+
+    <div class="history-controls">
+      <input class="hist-input" id="histSearch" type="text" placeholder="Agent email or name...">
+      <input class="hist-input" id="histMonth" type="month" style="min-width:160px">
+      <button class="hist-btn" onclick="loadHistory()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search
+      </button>
+      <button class="hist-btn-sec" onclick="loadHistory(true)">Show All</button>
+      <button class="hist-btn-sec" onclick="exportCSV()">⬇ Export Excel</button>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Average Score</div>
-      <div class="stat-value" id="statAvg" style="color:var(--indigo)">—</div>
-      <div class="stat-sub">Out of 100</div>
+
+    <div class="stats-row" id="statsRow" style="display:none">
+      <div class="stat-card"><div class="stat-label">Total Audits</div><div class="stat-value" id="statTotal">0</div><div class="stat-sub">This period</div></div>
+      <div class="stat-card"><div class="stat-label">Average Score</div><div class="stat-value" id="statAvg" style="color:var(--indigo)">—</div><div class="stat-sub">Out of 100</div></div>
+      <div class="stat-card"><div class="stat-label">Pass Rate</div><div class="stat-value" id="statPass" style="color:var(--green)">—</div><div class="stat-sub">Score ≥ 70%</div></div>
+      <div class="stat-card"><div class="stat-label">Target Rate</div><div class="stat-value" id="statTarget" style="color:var(--blue)">—</div><div class="stat-sub">Score ≥ 85%</div></div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Pass Rate</div>
-      <div class="stat-value" id="statPass" style="color:var(--green)">—</div>
-      <div class="stat-sub">Score ≥ 70%</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Target Rate</div>
-      <div class="stat-value" id="statTarget" style="color:var(--blue)">—</div>
-      <div class="stat-sub">Score ≥ 85%</div>
+
+    <div class="table-wrap">
+      <table class="qa-table">
+        <thead>
+          <tr>
+            <th>Date</th><th>Agent</th><th>Ticket #</th><th>Channel</th>
+            <th>Issue</th><th>Solution</th><th>CX</th><th>Comms</th><th>Process</th>
+            <th>Score</th><th>Grade</th><th>Critical</th>
+          </tr>
+        </thead>
+        <tbody id="histBody">
+          <tr><td colspan="12">
+            <div class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <div class="empty-text">Search to load history</div>
+              <div class="empty-sub">Enter agent email or name and click Search</div>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div class="table-wrap">
-    <table class="qa-table">
-      <thead>
-        <tr>
-          <th>Date</th><th>Agent</th><th>Ticket #</th><th>Channel</th>
-          <th>Issue</th><th>Solution</th><th>CX</th><th>Comms</th><th>Process</th>
-          <th>Score</th><th>Grade</th><th>Critical</th>
-        </tr>
-      </thead>
-      <tbody id="histBody">
-        <tr><td colspan="12">
-          <div class="empty-state">
-            <div class="empty-icon">🔍</div>
-            <div class="empty-text">Search to load history</div>
-            <div class="empty-sub">Enter agent email or name and click Search</div>
-          </div>
-        </td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="footer">Mavin Wear Operations Hub · Powered by <span>Mavin Wear</span></div>
 </div>
 
 <!-- MODAL -->
@@ -520,7 +474,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────
 const SB_URL = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 const TABLE  = 'qa_audits';
@@ -537,45 +490,17 @@ const sbFetch = (path, opts={}) => fetch(`${SB_URL}/rest/v1/${path}`, {
   body: opts.body
 });
 
-// ── SECTIONS ────────────────────────────────────────────────────────────
-// Each criterion has a weight (pts). Yes = full pts, No = 0, N/A = excluded.
-// Section score = (earned / possible) * section_max → then total / 34 * 100
 const SECTIONS = [
   { id:'sec1', ptsId:'pts1', scoreId:'s1', barId:'b1', max:8, db:'score_issue_understanding', label:'Issue Understanding',
-    items:[
-      {name:'Identified the customer issue correctly', pts:2},
-      {name:'Asked relevant clarification questions', pts:2, hasNA:true},
-      {name:'Investigated the issue properly before responding', pts:2, hasNA:true},
-      {name:'Did not assume or jump to conclusions', pts:2}
-    ]},
+    items:[{name:'Identified the customer issue correctly',pts:2},{name:'Asked relevant clarification questions',pts:2,hasNA:true},{name:'Investigated the issue properly before responding',pts:2,hasNA:true},{name:'Did not assume or jump to conclusions',pts:2}]},
   { id:'sec2', ptsId:'pts2', scoreId:'s2', barId:'b2', max:8, db:'score_solution_quality', label:'Solution Quality',
-    items:[
-      {name:'Provided the correct and complete solution', pts:2},
-      {name:'Explained the solution clearly to the customer', pts:2},
-      {name:'Shared accurate information (policy, process, etc.)', pts:2},
-      {name:'Confirmed resolution before closing', pts:2}
-    ]},
+    items:[{name:'Provided the correct and complete solution',pts:2},{name:'Explained the solution clearly to the customer',pts:2},{name:'Shared accurate information (policy, process, etc.)',pts:2},{name:'Confirmed resolution before closing',pts:2}]},
   { id:'sec3', ptsId:'pts3', scoreId:'s3', barId:'b3', max:8, db:'score_customer_experience', label:'Customer Experience',
-    items:[
-      {name:'Acknowledged the customer\'s concern or frustration', pts:2},
-      {name:'Used empathy statements appropriately', pts:2},
-      {name:'Showed genuine willingness to help', pts:2},
-      {name:'Handled negative emotions professionally', pts:2}
-    ]},
+    items:[{name:"Acknowledged the customer's concern or frustration",pts:2},{name:'Used empathy statements appropriately',pts:2},{name:'Showed genuine willingness to help',pts:2},{name:'Handled negative emotions professionally',pts:2}]},
   { id:'sec4', ptsId:'pts4', scoreId:'s4', barId:'b4', max:5, db:'score_communication', label:'Communication',
-    items:[
-      {name:'Used clear and professional language throughout', pts:1},
-      {name:'Communicated efficiently (no unnecessary back-and-forth)', pts:1},
-      {name:'Proper greeting and professional closure', pts:2},
-      {name:'No grammar or spelling errors', pts:1, hasNA:true}
-    ]},
+    items:[{name:'Used clear and professional language throughout',pts:1},{name:'Communicated efficiently (no unnecessary back-and-forth)',pts:1},{name:'Proper greeting and professional closure',pts:2},{name:'No grammar or spelling errors',pts:1,hasNA:true}]},
   { id:'sec5', ptsId:'pts5', scoreId:'s5', barId:'b5', max:5, db:'score_process_compliance', label:'Process Compliance',
-    items:[
-      {name:'Used correct macros or response templates', pts:2, hasNA:true},
-      {name:'Followed the correct internal process / SOP', pts:1},
-      {name:'Documented the interaction correctly', pts:1},
-      {name:'Set the correct case / ticket status', pts:1}
-    ]}
+    items:[{name:'Used correct macros or response templates',pts:2,hasNA:true},{name:'Followed the correct internal process / SOP',pts:1},{name:'Documented the interaction correctly',pts:1},{name:'Set the correct case / ticket status',pts:1}]}
 ];
 
 const CRITS = [
@@ -585,61 +510,34 @@ const CRITS = [
   {id:'ztp', name:'Zero-Tolerance Policy (ZTP)', desc:'Any ZTP breach → automatic FAIL regardless of score'}
 ];
 
-// State: 'yes' | 'no' | 'na' | null
 const state = {};
 const critState = {};
 let histData = [];
 
-// ── BUILD FORM ──────────────────────────────────────────────────────────
 function buildForm() {
   SECTIONS.forEach(sec => {
     const el = document.getElementById(sec.id);
     sec.items.forEach((item, i) => {
       const key = `${sec.id}_${i}`;
       state[key] = null;
-      const naBtn = item.hasNA
-        ? `<button class="yn-btn" onclick="pickYN('${key}','na',this)">N/A</button>` : '';
-      el.innerHTML += `
-        <div class="criteria-row">
-          <div class="criteria-info">
-            <span class="criteria-name">${item.name}</span>
-            <span class="criteria-pts-tag">${item.pts} pt${item.pts>1?'s':''}</span>
-          </div>
-          <div class="yn-group">
-            <button class="yn-btn" onclick="pickYN('${key}','yes',this)">✓ Yes</button>
-            <button class="yn-btn" onclick="pickYN('${key}','no',this)">✗ No</button>
-            ${naBtn}
-          </div>
-        </div>`;
+      const naBtn = item.hasNA ? `<button class="yn-btn" onclick="pickYN('${key}','na',this)">N/A</button>` : '';
+      el.innerHTML += `<div class="criteria-row"><div class="criteria-info"><span class="criteria-name">${item.name}</span><span class="criteria-pts-tag">${item.pts} pt${item.pts>1?'s':''}</span></div><div class="yn-group"><button class="yn-btn" onclick="pickYN('${key}','yes',this)">✓ Yes</button><button class="yn-btn" onclick="pickYN('${key}','no',this)">✗ No</button>${naBtn}</div></div>`;
     });
   });
-
   CRITS.forEach(c => {
     critState[c.id] = null;
-    document.getElementById('sec-critical').innerHTML += `
-      <div class="critical-row">
-        <div style="flex:1">
-          <div class="crit-name">${c.name}</div>
-          <div class="crit-desc">${c.desc}</div>
-        </div>
-        <div class="yn-group">
-          <button class="yn-btn" onclick="pickCrit('${c.id}','yes',this)">✓ Yes</button>
-          <button class="yn-btn" onclick="pickCrit('${c.id}','no',this)">✗ No</button>
-          <button class="yn-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button>
-        </div>
-      </div>`;
+    document.getElementById('sec-critical').innerHTML += `<div class="critical-row"><div style="flex:1"><div class="crit-name">${c.name}</div><div class="crit-desc">${c.desc}</div></div><div class="yn-group"><button class="yn-btn" onclick="pickCrit('${c.id}','yes',this)">✓ Yes</button><button class="yn-btn" onclick="pickCrit('${c.id}','no',this)">✗ No</button><button class="yn-btn" onclick="pickCrit('${c.id}','na',this)">N/A</button></div></div>`;
   });
-
   document.getElementById('auditDate').valueAsDate = new Date();
 }
 
-// ── PICK ────────────────────────────────────────────────────────────────
 function pickYN(key, val, btn) {
   state[key] = val;
   btn.closest('.yn-group').querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
   btn.classList.add(`sel-${val}`);
   recalc();
 }
+
 function pickCrit(id, val, btn) {
   critState[id] = val;
   btn.closest('.yn-group').querySelectorAll('.yn-btn').forEach(b => b.className = 'yn-btn');
@@ -647,177 +545,117 @@ function pickCrit(id, val, btn) {
   recalc();
 }
 
-// ── SCORING LOGIC ────────────────────────────────────────────────────────
-// Yes = full pts, No = 0, N/A = excluded from possible
-// Section % = earned / possible (only answered items)
-// Section score (out of max) = section% * max
-// Final % = sum of section scores / 34 * 100
 function calcSection(sec) {
   let earned = 0, possible = 0;
   sec.items.forEach((item, i) => {
     const v = state[`${sec.id}_${i}`];
-    if (v === null || v === 'na') return; // N/A & unanswered → excluded
+    if (v === null || v === 'na') return;
     possible += item.pts;
     if (v === 'yes') earned += item.pts;
   });
-  if (possible === 0) return null; // nothing answered yet
-  const pct = earned / possible;           // 0–1
-  const scaled = Math.round(pct * sec.max * 10) / 10; // score out of section max
+  if (possible === 0) return null;
+  const pct = earned / possible;
+  const scaled = Math.round(pct * sec.max * 10) / 10;
   return { earned, possible, pct, scaled };
 }
 
 function recalc() {
-  let totalScaled = 0;
-  let totalMax = 0;
+  let totalScaled = 0, totalMax = 0;
   const secResults = [];
-
-  SECTIONS.forEach((sec, si) => {
+  SECTIONS.forEach((sec) => {
     const r = calcSection(sec);
     secResults.push(r);
     const scoreEl = document.getElementById(sec.scoreId);
     const ptsEl   = document.getElementById(sec.ptsId);
     const barEl   = document.getElementById(sec.barId);
-
     if (r) {
-      totalScaled += r.scaled;
-      totalMax    += sec.max;
+      totalScaled += r.scaled; totalMax += sec.max;
       scoreEl.textContent = `${r.scaled}/${sec.max}`;
       ptsEl.textContent   = `${r.scaled} / ${sec.max} pts`;
       const barPct = r.pct * 100;
       barEl.style.width = barPct + '%';
       barEl.style.background = barPct >= 85 ? 'var(--green)' : barPct >= 70 ? 'var(--yellow)' : 'var(--red)';
     } else {
-      scoreEl.textContent = '—';
-      ptsEl.textContent   = `— / ${sec.max} pts`;
-      barEl.style.width   = '0%';
+      scoreEl.textContent = '—'; ptsEl.textContent = `— / ${sec.max} pts`; barEl.style.width = '0%';
     }
   });
-
-  // Critical
   const ztp = critState['ztp'] === 'yes';
   const critErrors = CRITS.filter(c => critState[c.id] === 'yes').map(c => c.name);
   document.getElementById('s6').textContent = critErrors.length ? critErrors.map(n=>n.split('(')[1]?.replace(')','') || n).join(', ') : 'None';
-
   if (totalMax === 0) {
     document.getElementById('liveScore').textContent = '—';
     document.getElementById('livePct').textContent = '/ 100';
     document.getElementById('scoreCircle').style.borderColor = 'var(--border)';
     return null;
   }
-
-  // Final score out of 100
   let finalPct = Math.round((totalScaled / 34) * 100);
   if (ztp) finalPct = 0;
-
-  const scoreEl  = document.getElementById('liveScore');
-  const circle   = document.getElementById('scoreCircle');
+  const scoreEl = document.getElementById('liveScore');
+  const circle  = document.getElementById('scoreCircle');
   scoreEl.textContent = finalPct;
   document.getElementById('livePct').textContent = '/ 100';
-
   const col = finalPct >= 85 ? 'var(--green)' : finalPct >= 70 ? 'var(--yellow)' : 'var(--red)';
-  scoreEl.style.color = col;
-  circle.style.borderColor = col;
-
+  scoreEl.style.color = col; circle.style.borderColor = col;
   return { finalPct, secResults, ztp, critErrors };
 }
 
-// ── GRADE ────────────────────────────────────────────────────────────────
 function getGrade(score, ztp) {
-  if (ztp)        return { label:'FAIL — ZTP',          color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',    border:'var(--red-bd)' };
+  if (ztp)         return { label:'FAIL — ZTP',         color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',    border:'var(--red-bd)' };
   if (score >= 85) return { label:'TARGET MET ✓',        color:'#1d4ed8',       cls:'b-target',  bg:'#eff6ff',          border:'#bfdbfe' };
   if (score >= 70) return { label:'PASS',                 color:'var(--green)',  cls:'b-pass',    bg:'var(--green-bg)', border:'var(--green-bd)' };
   if (score >= 60) return { label:'NEEDS IMPROVEMENT',   color:'var(--orange)', cls:'b-improve', bg:'var(--orange-bg)',border:'var(--orange-bd)' };
-  return              { label:'BELOW STANDARD',          color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',   border:'var(--red-bd)' };
+  return               { label:'BELOW STANDARD',         color:'var(--red)',    cls:'b-fail',    bg:'var(--red-bg)',   border:'var(--red-bd)' };
 }
 
-// ── SUBMIT ───────────────────────────────────────────────────────────────
 async function submitAudit() {
   const email  = document.getElementById('agentEmail').value.trim();
   const ticket = document.getElementById('ticketNum').value.trim();
   const eval_  = document.getElementById('evalName').value.trim();
-
   if (!email)  return showToast('Agent email is required.','error');
   if (!ticket) return showToast('Ticket number is required.','error');
   if (!eval_)  return showToast('Evaluator name is required.','error');
-
   const result = recalc();
   if (!result) return showToast('Please score at least one section.','error');
-
   const dateVal    = document.getElementById('auditDate').value || new Date().toISOString().slice(0,10);
   const monthStart = dateVal.slice(0,7) + '-01';
   const nextMonth  = new Date(monthStart); nextMonth.setMonth(nextMonth.getMonth()+1);
   const monthEnd   = nextMonth.toISOString().slice(0,10);
-
   setLoading(true);
   try {
-    // Duplicate check
-    const dupRes = await sbFetch(
-      `${TABLE}?agent_email=eq.${encodeURIComponent(email)}&ticket_number=eq.${encodeURIComponent(ticket)}&audit_date=gte.${monthStart}&audit_date=lt.${monthEnd}&select=id`,
-      { extraHeaders:{'Prefer':'return=representation'} }
-    );
+    const dupRes = await sbFetch(`${TABLE}?agent_email=eq.${encodeURIComponent(email)}&ticket_number=eq.${encodeURIComponent(ticket)}&audit_date=gte.${monthStart}&audit_date=lt.${monthEnd}&select=id`,{extraHeaders:{'Prefer':'return=representation'}});
     const dups = await dupRes.json();
-    if (Array.isArray(dups) && dups.length > 0) {
-      showToast(`Ticket ${ticket} already evaluated for this agent this month.`,'warn');
-      setLoading(false); return;
-    }
-
+    if (Array.isArray(dups) && dups.length > 0) { showToast(`Ticket ${ticket} already evaluated this month.`,'warn'); setLoading(false); return; }
     const { finalPct, secResults, ztp, critErrors } = result;
     const grade = getGrade(finalPct, ztp);
-
     const payload = {
-      agent_email:    email,
-      agent_name:     document.getElementById('agentName').value.trim(),
-      evaluator_name: eval_,
-      ticket_number:  ticket,
-      audit_date:     dateVal,
-      channel:        document.getElementById('channel').value,
-      contact_reason: document.getElementById('contactReason').value,
-      score_issue_understanding:  secResults[0]?.scaled ?? null,
-      score_solution_quality:     secResults[1]?.scaled ?? null,
-      score_customer_experience:  secResults[2]?.scaled ?? null,
-      score_communication:        secResults[3]?.scaled ?? null,
-      score_process_compliance:   secResults[4]?.scaled ?? null,
-      final_score:    finalPct,
-      grade:          grade.label,
-      critical_bc:    critState['bc']  === 'yes',
-      critical_ec:    critState['ec']  === 'yes',
-      critical_cc:    critState['cc']  === 'yes',
-      critical_ztp:   critState['ztp'] === 'yes',
+      agent_email: email, agent_name: document.getElementById('agentName').value.trim(),
+      evaluator_name: eval_, ticket_number: ticket, audit_date: dateVal,
+      channel: document.getElementById('channel').value, contact_reason: document.getElementById('contactReason').value,
+      score_issue_understanding: secResults[0]?.scaled ?? null, score_solution_quality: secResults[1]?.scaled ?? null,
+      score_customer_experience: secResults[2]?.scaled ?? null, score_communication: secResults[3]?.scaled ?? null,
+      score_process_compliance: secResults[4]?.scaled ?? null, final_score: finalPct, grade: grade.label,
+      critical_bc: critState['bc']==='yes', critical_ec: critState['ec']==='yes',
+      critical_cc: critState['cc']==='yes', critical_ztp: critState['ztp']==='yes',
       evaluator_notes: document.getElementById('evalNotes').value.trim()
     };
-
     const res = await sbFetch(TABLE, { method:'POST', body:JSON.stringify(payload) });
     if (!res.ok) throw new Error(await res.text());
-
     setLoading(false);
     showModal(finalPct, grade, secResults, ztp, critErrors, email, ticket, dateVal, eval_);
     showToast('Audit saved successfully!','success');
-
-  } catch(e) {
-    setLoading(false);
-    showToast('Error: ' + e.message,'error');
-    console.error(e);
-  }
+  } catch(e) { setLoading(false); showToast('Error: '+e.message,'error'); console.error(e); }
 }
 
-// ── HISTORY ───────────────────────────────────────────────────────────────
 async function loadHistory(all=false) {
   const search = document.getElementById('histSearch').value.trim();
   const month  = document.getElementById('histMonth').value;
   let q = `${TABLE}?select=*&order=audit_date.desc,id.desc`;
   if (!all) {
-    if (search) {
-      const enc = encodeURIComponent(search);
-      q += `&or=(agent_email.ilike.*${enc}*,agent_name.ilike.*${enc}*)`;
-    }
-    if (month) {
-      const start = month + '-01';
-      const end   = new Date(new Date(start).setMonth(new Date(start).getMonth()+1)).toISOString().slice(0,10);
-      q += `&audit_date=gte.${start}&audit_date=lt.${end}`;
-    }
+    if (search) { const enc = encodeURIComponent(search); q += `&or=(agent_email.ilike.*${enc}*,agent_name.ilike.*${enc}*)`; }
+    if (month)  { const start = month+'-01'; const end = new Date(new Date(start).setMonth(new Date(start).getMonth()+1)).toISOString().slice(0,10); q += `&audit_date=gte.${start}&audit_date=lt.${end}`; }
   }
   try {
-    const res = await sbFetch(q, {extraHeaders:{'Prefer':'return=representation'}});
+    const res = await sbFetch(q,{extraHeaders:{'Prefer':'return=representation'}});
     histData  = await res.json();
     if (!Array.isArray(histData)) { showToast('Load error','error'); return; }
     renderHistory(histData);
@@ -825,118 +663,60 @@ async function loadHistory(all=false) {
 }
 
 function renderHistory(data) {
-  const tbody    = document.getElementById('histBody');
+  const tbody = document.getElementById('histBody');
   const statsRow = document.getElementById('statsRow');
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="12"><div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No audits found</div><div class="empty-sub">Try a different filter</div></div></td></tr>`;
-    statsRow.style.display='none'; return;
-  }
-
+  if (!data.length) { tbody.innerHTML=`<tr><td colspan="12"><div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No audits found</div><div class="empty-sub">Try a different filter</div></div></td></tr>`; statsRow.style.display='none'; return; }
   statsRow.style.display='grid';
-  const scores  = data.map(r=>r.final_score);
-  const avg     = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
-  const passRate = Math.round(scores.filter(s=>s>=70).length/scores.length*100);
-  const targetRate = Math.round(scores.filter(s=>s>=85).length/scores.length*100);
-
+  const scores = data.map(r=>r.final_score);
+  const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
   document.getElementById('statTotal').textContent  = data.length;
-  document.getElementById('statAvg').textContent    = avg + '%';
-  document.getElementById('statPass').textContent   = passRate + '%';
-  document.getElementById('statTarget').textContent = targetRate + '%';
-
+  document.getElementById('statAvg').textContent    = avg+'%';
+  document.getElementById('statPass').textContent   = Math.round(scores.filter(s=>s>=70).length/scores.length*100)+'%';
+  document.getElementById('statTarget').textContent = Math.round(scores.filter(s=>s>=85).length/scores.length*100)+'%';
   tbody.innerHTML = data.map(r => {
     const g = getGrade(r.final_score, r.critical_ztp);
     const crits = [r.critical_bc&&'BC',r.critical_ec&&'EC',r.critical_cc&&'CC',r.critical_ztp&&'ZTP'].filter(Boolean).join(', ')||'—';
-    const scoreCol = r.final_score >= 85 ? '#1d4ed8' : r.final_score >= 70 ? 'var(--green)' : 'var(--red)';
-    return `<tr>
-      <td style="white-space:nowrap">${r.audit_date||'—'}</td>
-      <td><div style="font-weight:700;font-size:13px">${r.agent_name||'—'}</div><div style="font-size:11px;color:var(--muted)">${r.agent_email||''}</div></td>
-      <td style="font-weight:600">${r.ticket_number||'—'}</td>
-      <td>${r.channel||'—'}</td>
-      <td style="text-align:center">${r.score_issue_understanding??'—'}/8</td>
-      <td style="text-align:center">${r.score_solution_quality??'—'}/8</td>
-      <td style="text-align:center">${r.score_customer_experience??'—'}/8</td>
-      <td style="text-align:center">${r.score_communication??'—'}/5</td>
-      <td style="text-align:center">${r.score_process_compliance??'—'}/5</td>
-      <td style="text-align:center;font-size:17px;font-weight:900;color:${scoreCol}">${r.final_score}%</td>
-      <td><span class="score-badge ${g.cls}">${g.label}</span></td>
-      <td style="color:${crits!=='—'?'var(--red)':'var(--muted)'};font-weight:${crits!=='—'?'700':'400'}">${crits}</td>
-    </tr>`;
+    const scoreCol = r.final_score>=85?'#1d4ed8':r.final_score>=70?'var(--green)':'var(--red)';
+    return `<tr><td style="white-space:nowrap">${r.audit_date||'—'}</td><td><div style="font-weight:700;font-size:13px">${r.agent_name||'—'}</div><div style="font-size:11px;color:var(--muted)">${r.agent_email||''}</div></td><td style="font-weight:600">${r.ticket_number||'—'}</td><td>${r.channel||'—'}</td><td style="text-align:center">${r.score_issue_understanding??'—'}/8</td><td style="text-align:center">${r.score_solution_quality??'—'}/8</td><td style="text-align:center">${r.score_customer_experience??'—'}/8</td><td style="text-align:center">${r.score_communication??'—'}/5</td><td style="text-align:center">${r.score_process_compliance??'—'}/5</td><td style="text-align:center;font-size:17px;font-weight:900;color:${scoreCol}">${r.final_score}%</td><td><span class="score-badge ${g.cls}">${g.label}</span></td><td style="color:${crits!=='—'?'var(--red)':'var(--muted)'};font-weight:${crits!=='—'?'700':'400'}">${crits}</td></tr>`;
   }).join('');
 }
 
-// ── EXPORT ────────────────────────────────────────────────────────────────
 function exportCSV() {
   if (!histData.length) return showToast('No data. Search first.','warn');
-  const hdrs = ['Date','Agent Name','Agent Email','Ticket #','Channel','Contact Reason',
-    'Issue Understanding','Solution Quality','Customer Experience','Communication','Process Compliance',
-    'Final Score %','Grade','BC','EC','CC','ZTP','Notes'];
-  const rows = histData.map(r=>[
-    r.audit_date,r.agent_name,r.agent_email,r.ticket_number,r.channel,r.contact_reason,
-    r.score_issue_understanding,r.score_solution_quality,r.score_customer_experience,
-    r.score_communication,r.score_process_compliance,r.final_score+'%',r.grade,
-    r.critical_bc?'Yes':'No',r.critical_ec?'Yes':'No',r.critical_cc?'Yes':'No',r.critical_ztp?'Yes':'No',
-    r.evaluator_notes
-  ]);
+  const hdrs = ['Date','Agent Name','Agent Email','Ticket #','Channel','Contact Reason','Issue Understanding','Solution Quality','Customer Experience','Communication','Process Compliance','Final Score %','Grade','BC','EC','CC','ZTP','Notes'];
+  const rows = histData.map(r=>[r.audit_date,r.agent_name,r.agent_email,r.ticket_number,r.channel,r.contact_reason,r.score_issue_understanding,r.score_solution_quality,r.score_customer_experience,r.score_communication,r.score_process_compliance,r.final_score+'%',r.grade,r.critical_bc?'Yes':'No',r.critical_ec?'Yes':'No',r.critical_cc?'Yes':'No',r.critical_ztp?'Yes':'No',r.evaluator_notes]);
   const csv=[hdrs,...rows].map(r=>r.map(v=>`"${(v??'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download=`MAVIN_QA_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=`MAVIN_QA_${new Date().toISOString().slice(0,10)}.csv`; a.click();
   showToast('Exported!','success');
 }
 
-// ── MODAL ─────────────────────────────────────────────────────────────────
 function showModal(score, grade, secResults, ztp, critErrors, email, ticket, date, eval_) {
   document.getElementById('modalScore').textContent = score;
   document.getElementById('modalScore').style.color = grade.color;
   document.getElementById('modalPct').textContent   = '/ 100';
   const gradeEl = document.getElementById('modalGrade');
-  gradeEl.textContent       = grade.label;
-  gradeEl.style.color       = grade.color;
-  gradeEl.style.background  = grade.bg;
-  gradeEl.style.border      = `1.5px solid ${grade.border}`;
-  document.getElementById('modalAgent').innerHTML =
-    `Agent: <strong>${email}</strong><br>Ticket: ${ticket} &nbsp;·&nbsp; Date: ${date} &nbsp;·&nbsp; Evaluator: ${eval_}`;
+  gradeEl.textContent = grade.label; gradeEl.style.color = grade.color; gradeEl.style.background = grade.bg; gradeEl.style.border = `1.5px solid ${grade.border}`;
+  document.getElementById('modalAgent').innerHTML = `Agent: <strong>${email}</strong><br>Ticket: ${ticket} &nbsp;·&nbsp; Date: ${date} &nbsp;·&nbsp; Evaluator: ${eval_}`;
   document.getElementById('modalZtp').style.display = ztp ? 'block' : 'none';
-
   const breakdown = SECTIONS.map((sec,i) => {
-    const r = secResults[i];
-    const pct = r ? Math.round(r.pct*100) : 0;
+    const r = secResults[i]; const pct = r ? Math.round(r.pct*100) : 0;
     const col = pct>=85?'var(--green)':pct>=70?'var(--yellow)':'var(--red)';
-    return `<div class="modal-row">
-      <span class="modal-row-name">${sec.label}</span>
-      <div class="modal-row-right">
-        <div class="modal-row-bar"><div class="modal-row-fill" style="width:${pct}%;background:${col}"></div></div>
-        <span class="modal-row-val">${r?r.scaled+'pts':'—'} / ${sec.max}</span>
-      </div>
-    </div>`;
+    return `<div class="modal-row"><span class="modal-row-name">${sec.label}</span><div class="modal-row-right"><div class="modal-row-bar"><div class="modal-row-fill" style="width:${pct}%;background:${col}"></div></div><span class="modal-row-val">${r?r.scaled+'pts':'—'} / ${sec.max}</span></div></div>`;
   }).join('');
-
-  const critLine = critErrors.length
-    ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
-        <span class="modal-row-name" style="color:var(--red)">Critical</span>
-        <span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span>
-       </div>` : '';
-
+  const critLine = critErrors.length ? `<div class="modal-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)"><span class="modal-row-name" style="color:var(--red)">Critical</span><span class="modal-row-val" style="color:var(--red)">${critErrors.join(', ')}</span></div>` : '';
   document.getElementById('modalBreakdown').innerHTML = breakdown + critLine;
   document.getElementById('modalOverlay').classList.add('show');
 }
 
-// ── RESET ─────────────────────────────────────────────────────────────────
 function resetForm() {
   document.getElementById('modalOverlay').classList.remove('show');
-  Object.keys(state).forEach(k => state[k]=null);
-  Object.keys(critState).forEach(k => critState[k]=null);
-  document.querySelectorAll('.yn-btn').forEach(b => b.className='yn-btn');
-  const sc=document.getElementById('liveScore');
-  sc.textContent='—'; sc.style.color='var(--text)';
+  Object.keys(state).forEach(k=>state[k]=null);
+  Object.keys(critState).forEach(k=>critState[k]=null);
+  document.querySelectorAll('.yn-btn').forEach(b=>b.className='yn-btn');
+  const sc=document.getElementById('liveScore'); sc.textContent='—'; sc.style.color='var(--text)';
   document.getElementById('scoreCircle').style.borderColor='var(--border)';
   document.getElementById('livePct').textContent='/ 100';
-  SECTIONS.forEach(s=>{
-    document.getElementById(s.ptsId).textContent=`— / ${s.max} pts`;
-    document.getElementById(s.scoreId).textContent='—';
-    document.getElementById(s.barId).style.width='0%';
-  });
+  SECTIONS.forEach(s=>{ document.getElementById(s.ptsId).textContent=`— / ${s.max} pts`; document.getElementById(s.scoreId).textContent='—'; document.getElementById(s.barId).style.width='0%'; });
   document.getElementById('s6').textContent='None';
   ['agentEmail','agentName','evalName','ticketNum','evalNotes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('auditDate').valueAsDate=new Date();
@@ -944,7 +724,6 @@ function resetForm() {
   document.getElementById('contactReason').value='';
 }
 
-// ── TABS ──────────────────────────────────────────────────────────────────
 function switchTab(name,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
@@ -952,19 +731,15 @@ function switchTab(name,btn){
   document.getElementById('tab-'+name).classList.add('active');
 }
 
-// ── UTILS ─────────────────────────────────────────────────────────────────
 function showToast(msg,type='success'){
-  const t=document.getElementById('toast');
-  t.className=`toast show ${type}`;
+  const t=document.getElementById('toast'); t.className=`toast show ${type}`;
   t.innerHTML=`<span>${type==='success'?'✓':type==='error'?'✕':'⚠'}</span> ${msg}`;
   setTimeout(()=>t.classList.remove('show'),4000);
 }
+
 function setLoading(on){
-  const btn=document.getElementById('submitBtn');
-  btn.disabled=on;
-  btn.innerHTML=on
-    ?`<span class="spin"></span> Saving...`
-    :`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Submit QA Audit`;
+  const btn=document.getElementById('submitBtn'); btn.disabled=on;
+  btn.innerHTML=on?`<span class="spin"></span> Saving...`:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Submit QA Audit`;
 }
 
 buildForm();
