@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +11,6 @@
   --indigo:#4b4bf9;--midnight:#09092d;--light:#f3f3f7;
   --border:#e5e7eb;--text:#1f2937;--muted:#6b7280;
   --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
-  --purple:#7c3aed;--purple-light:#f5f3ff;--purple-border:#ddd6fe;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
@@ -91,7 +90,6 @@ a{text-decoration:none;color:inherit;}
 .result-card:last-child{border-bottom:none;}
 .result-card:hover{background:#fafafa;}
 .result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
-.result-left{}
 .result-order{font-size:16px;font-weight:900;color:var(--midnight);}
 .result-customer{font-size:13px;font-weight:600;color:var(--text);margin-top:3px;}
 .result-phone{font-size:12px;color:var(--muted);margin-top:2px;}
@@ -103,6 +101,7 @@ a{text-decoration:none;color:inherit;}
 .source-return{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
 .source-search{background:#fefce8;color:#a16207;border:1px solid #fde68a;}
 .source-export{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff;}
+.source-supabase{background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;}
 
 /* STATUS BADGE */
 .status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:800;}
@@ -211,7 +210,6 @@ select.form-input option{background:#fff;color:var(--text);}
 </aside>
 
 <main class="main">
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-title">💰 Refund Portal — Search & Submit</div>
     <div class="profile-pill">
@@ -223,7 +221,6 @@ select.form-input option{background:#fff;color:var(--text);}
     </div>
   </div>
 
-  <!-- TAB BAR -->
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('search',this)">🔍 Search Refunds</button>
     <button class="tab-btn" onclick="switchTab('submit',this)">➕ Submit New Request</button>
@@ -234,7 +231,7 @@ select.form-input option{background:#fff;color:var(--text);}
     <div class="hero">
       <div class="hero-tag">💰 Refund Portal · Live Data</div>
       <h1>Search <span>Refund Requests</span></h1>
-      <p>Search by customer name, order number, or phone — results pull live from all sheet tabs and show the source.</p>
+      <p>Search by customer name, order number, or phone — results pull live from all sources.</p>
     </div>
 
     <div class="search-card">
@@ -262,7 +259,7 @@ select.form-input option{background:#fff;color:var(--text);}
       <div class="stat-chip"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Results</div></div>
       <div class="stat-chip"><div class="stat-num" id="statPending">0</div><div class="stat-label">Pending</div></div>
       <div class="stat-chip"><div class="stat-num" id="statDone">0</div><div class="stat-label">Completed</div></div>
-      <div class="stat-chip"><div class="stat-num" id="statSheets">0</div><div class="stat-label">Sheets Found In</div></div>
+      <div class="stat-chip"><div class="stat-num" id="statSheets">0</div><div class="stat-label">Sources Found</div></div>
     </div>
 
     <div class="results-wrap">
@@ -279,7 +276,7 @@ select.form-input option{background:#fff;color:var(--text);}
       </div>
       <div class="loading-wrap" id="loadingWrap">
         <div class="spinner"></div>
-        <div class="loading-text" id="loadingText">Searching all sheets...</div>
+        <div class="loading-text" id="loadingText">Searching...</div>
       </div>
     </div>
     <div class="footer">Mavin Wear Operations Hub</div>
@@ -376,154 +373,139 @@ select.form-input option{background:#fff;color:var(--text);}
 <div class="toast" id="toast"></div>
 
 <script>
-const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
-const GAS_URL  = '';
+// ── SUPABASE CONFIG ───────────────────────────────────────────────────────
+const SUPA_URL = 'https://zaawbomxpxcjoglpyiuy.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYXdib214cHhjam9nbHB5aXV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MDI1MjEsImV4cCI6MjEwMjQ3ODUyMX0.p-pzUwQ2dX_OrBKNY-NuDd9_uv-u-czcXcQ0KuBVLT4';
 
-// ── TABS CONFIG ───────────────────────────────────────────────────────────
-// Each tab has its own column mapping based on actual sheet headers
+// ── GOOGLE SHEET CONFIG ───────────────────────────────────────────────────
+const SHEET_ID = '1BLUmFiO6FUwZ-0aiQYVfhVUFlkEmaShY4UdPQnq_1Fk';
 const TABS = [
   {
-    name: 'Export',
-    label: 'Export',
-    cls: 'source-export',
-    // Export sheet column names
-    cols: {
-      timestamp:    'Timestamp',
-      agentEmail:   'Email address',
-      agentName:    'Agent Name',
-      custName:     'Customer Name',
-      custPhone:    'Customer Mobile Number',
-      orderNum:     'Order number',
-      reason:       'Refund Reason',
-      refundAmt:    'Refund amount in EGP',
-      refundType:   'Refund Type',
-      refundMethod: 'Refund method',
-      notes:        'Notes',
-      status:       'Refund Status',
-      fulfilNote:   'Fulfillment Team notes',
-      transactionId:'Transaction ID',
-      submissionDate:'Refund Submission Date',
+    name:'Export', label:'Export', cls:'source-export',
+    cols:{
+      timestamp:'Timestamp', agentEmail:'Email address', agentName:'Agent Name',
+      custName:'Customer Name', custPhone:'Customer Mobile Number', orderNum:'Order number',
+      reason:'Refund Reason', refundAmt:'Refund amount in EGP', refundType:'Refund Type',
+      refundMethod:'Refund method', notes:'Notes', status:'Refund Status',
+      fulfilNote:'Fulfillment Team notes', transactionId:'Transaction ID',
     }
   },
   {
-    name: 'Export2',
-    label: 'Export2',
-    cls: 'source-export2',
-    cols: {
-      timestamp:   'ff',
-      agentEmail:  'Email address',
-      agentName:   'Agent name',
-      custName:    'Customer name',
-      custPhone:   'Customer Phone number',
-      orderNum:    'Order number',
-      reqType:     'Request type',
-      reason:      'Reason for Request',
-      numItems:    'Number of returned items',
-      product:     'Product name  & SKU',
-      origSKU:     'Original item name & SKU',
-      reqSKU:      'Requested item name & SKU',
-      shipping:    'Shipping Fees',
-      refundAmt:   'Refund',
-      bosta:       'Bosta Ticket ID',
-      notes:       'Notes',
-      status:      'Exchange status',
-      fulfilNote:  'Fulfilment team note',
+    name:'Export2', label:'Export2', cls:'source-export2',
+    cols:{
+      timestamp:'ff', agentEmail:'Email address', agentName:'Agent name',
+      custName:'Customer name', custPhone:'Customer Phone number', orderNum:'Order number',
+      reqType:'Request type', reason:'Reason for Request', numItems:'Number of returned items',
+      product:'Product name  & SKU', origSKU:'Original item name & SKU',
+      reqSKU:'Requested item name & SKU', shipping:'Shipping Fees', refundAmt:'Refund',
+      bosta:'Bosta Ticket ID', notes:'Notes', status:'Exchange status', fulfilNote:'Fulfilment team note',
     }
   },
   {
-    name: 'Return & Exch',
-    label: 'Return & Exch',
-    cls: 'source-return',
-    cols: {
-      timestamp:  'ff',
-      agentEmail: 'Email address',
-      agentName:  'Agent name',
-      custName:   'Customer name',
-      custPhone:  'Customer Phone number',
-      orderNum:   'Order number',
-      reqType:    'Request type',
-      reason:     'Reason for Request',
-      numItems:   'Number of returned items',
-      product:    'Product name  & SKU',
-      origSKU:    'Original item name & SKU',
-      reqSKU:     'Requested item name & SKU',
-      shipping:   'Shipping Fees',
-      refundAmt:  'Refund',
-      bosta:      'Bosta Ticket ID',
-      notes:      'Notes',
-      status:     'Exchange status',
-      fulfilNote: 'Fulfilment team note',
+    name:'Return & Exch', label:'Return & Exch', cls:'source-return',
+    cols:{
+      timestamp:'ff', agentEmail:'Email address', agentName:'Agent name',
+      custName:'Customer name', custPhone:'Customer Phone number', orderNum:'Order number',
+      reqType:'Request type', reason:'Reason for Request', numItems:'Number of returned items',
+      product:'Product name  & SKU', origSKU:'Original item name & SKU',
+      reqSKU:'Requested item name & SKU', shipping:'Shipping Fees', refundAmt:'Refund',
+      bosta:'Bosta Ticket ID', notes:'Notes', status:'Exchange status', fulfilNote:'Fulfilment team note',
     }
   },
   {
-    name: 'SEARCH',
-    label: 'SEARCH',
-    cls: 'source-search',
-    cols: {
-      timestamp:  'ff',
-      agentEmail: 'Email address',
-      agentName:  'Agent name',
-      custName:   'Customer name',
-      custPhone:  'Customer Phone number',
-      orderNum:   'Order number',
-      reqType:    'Request type',
-      reason:     'Reason for Request',
-      numItems:   'Number of returned items',
-      product:    'Product name  & SKU',
-      origSKU:    'Original item name & SKU',
-      reqSKU:     'Requested item name & SKU',
-      shipping:   'Shipping Fees',
-      refundAmt:  'Refund',
-      bosta:      'Bosta Ticket ID',
-      notes:      'Notes',
-      status:     'Exchange status',
-      fulfilNote: 'Fulfilment team note',
+    name:'SEARCH', label:'SEARCH', cls:'source-search',
+    cols:{
+      timestamp:'ff', agentEmail:'Email address', agentName:'Agent name',
+      custName:'Customer name', custPhone:'Customer Phone number', orderNum:'Order number',
+      reqType:'Request type', reason:'Reason for Request', numItems:'Number of returned items',
+      product:'Product name  & SKU', origSKU:'Original item name & SKU',
+      reqSKU:'Requested item name & SKU', shipping:'Shipping Fees', refundAmt:'Refund',
+      bosta:'Bosta Ticket ID', notes:'Notes', status:'Exchange status', fulfilNote:'Fulfilment team note',
     }
   },
 ];
 
-let cache = {};
+let sheetCache = {};
 
-// ── FETCH ─────────────────────────────────────────────────────────────────
+// ── SUPABASE HELPERS ──────────────────────────────────────────────────────
+async function supabaseInsert(payload) {
+  const res = await fetch(`${SUPA_URL}/rest/v1/refund_requests`, {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'apikey':        SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Prefer':        'return=representation',
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error || 'Supabase error');
+  return data;
+}
+
+async function supabaseSearch(filters) {
+  let url = `${SUPA_URL}/rest/v1/refund_requests?select=*&order=created_at.desc`;
+  if (filters.name)  url += `&customer_name=ilike.*${encodeURIComponent(filters.name)}*`;
+  if (filters.order) url += `&order_number=ilike.*${encodeURIComponent(filters.order)}*`;
+  if (filters.phone) url += `&customer_phone=ilike.*${encodeURIComponent(filters.phone)}*`;
+  const res = await fetch(url, {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Supabase search error');
+  return data;
+}
+
+async function supabaseCheckDup(orderNum) {
+  const fiveDaysAgo = new Date(Date.now() - 5*24*60*60*1000).toISOString();
+  const url = `${SUPA_URL}/rest/v1/refund_requests?order_number=eq.${encodeURIComponent(orderNum)}&created_at=gte.${fiveDaysAgo}&select=id,exchange_status,created_at`;
+  const res = await fetch(url, {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+  });
+  const data = await res.json();
+  if (!res.ok) return [];
+  return data;
+}
+
+// ── SHEET HELPERS ─────────────────────────────────────────────────────────
 async function fetchTab(tabName) {
-  if (cache[tabName]) return cache[tabName];
+  if (sheetCache[tabName]) return sheetCache[tabName];
   const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
   const res  = await fetch(url);
   const text = await res.text();
-  const json = JSON.parse(text.substring(47).slice(0, -2));
-  if (!json.table || !json.table.cols) return { headers: [], data: [] };
-  const headers = json.table.cols.map(c => (c.label || '').trim());
+  const json = JSON.parse(text.substring(47).slice(0,-2));
+  if (!json.table || !json.table.cols) return {headers:[],data:[]};
+  const headers = json.table.cols.map(c=>(c.label||'').trim());
   const data    = json.table.rows
-    .map(r => r.c ? r.c.map(cell => cell ? (cell.f || cell.v || '').toString() : '') : [])
-    .filter(r => r.some(v => v.trim()));
-  cache[tabName] = { headers, data };
-  return { headers, data };
+    .map(r=>r.c?r.c.map(cell=>cell?(cell.f||cell.v||'').toString():''):[])
+    .filter(r=>r.some(v=>v.trim()));
+  sheetCache[tabName] = {headers,data};
+  return {headers,data};
 }
 
-// ── GET COL INDEX ─────────────────────────────────────────────────────────
 function buildIdx(headers, colsMap) {
   const idx = {};
   for (const [key, colName] of Object.entries(colsMap)) {
-    // Try exact match first, then partial
-    let i = headers.findIndex(h => h.trim().toLowerCase() === colName.toLowerCase());
-    if (i < 0) i = headers.findIndex(h => h.toLowerCase().includes(colName.toLowerCase().substring(0, 10)));
-    idx[key] = i >= 0 ? i : null;
+    let i = headers.findIndex(h=>h.trim().toLowerCase()===colName.toLowerCase());
+    if (i<0) i = headers.findIndex(h=>h.toLowerCase().includes(colName.toLowerCase().substring(0,10)));
+    idx[key] = i>=0?i:null;
   }
   return idx;
 }
 
 function g(row, idx, key) {
   const i = idx[key];
-  if (i === null || i === undefined || i < 0) return '';
-  return (row[i] || '').toString().trim();
+  if (i===null||i===undefined||i<0) return '';
+  return (row[i]||'').toString().trim();
 }
 
 // ── SEARCH ────────────────────────────────────────────────────────────────
 async function doSearch() {
-  const name  = document.getElementById('sName').value.trim().toLowerCase();
-  const order = document.getElementById('sOrder').value.trim().toLowerCase();
-  const phone = document.getElementById('sPhone').value.trim().toLowerCase();
-  if (!name && !order && !phone) { showToast('Enter at least one field.', 'warn'); return; }
+  const name  = document.getElementById('sName').value.trim();
+  const order = document.getElementById('sOrder').value.trim();
+  const phone = document.getElementById('sPhone').value.trim();
+  if (!name && !order && !phone) { showToast('Enter at least one field.','warn'); return; }
 
   document.getElementById('resultsList').innerHTML = '';
   document.getElementById('loadingWrap').classList.add('show');
@@ -535,24 +517,37 @@ async function doSearch() {
 
   let allResults = [];
 
+  // 1️⃣ Search Supabase first
+  try {
+    document.getElementById('loadingText').textContent = 'Searching Supabase...';
+    const rows = await supabaseSearch({
+      name:  name.toLowerCase(),
+      order: order,
+      phone: phone,
+    });
+    rows.forEach(row => allResults.push({source:'supabase', row}));
+  } catch(e) { console.warn('Supabase search failed:', e); }
+
+  // 2️⃣ Search Google Sheets
   for (const tab of TABS) {
     try {
       document.getElementById('loadingText').textContent = `Searching ${tab.label}...`;
-      const { headers, data } = await fetchTab(tab.name);
+      const {headers,data} = await fetchTab(tab.name);
       const idx = buildIdx(headers, tab.cols);
-
+      const nameLow  = name.toLowerCase();
+      const orderLow = order.toLowerCase();
+      const phoneLow = phone.toLowerCase();
       const matches = data.filter(row => {
-        const rName  = g(row, idx, 'custName').toLowerCase();
-        const rOrder = g(row, idx, 'orderNum').toLowerCase();
-        const rPhone = g(row, idx, 'custPhone').toLowerCase();
-        if (name  && !rName.includes(name))   return false;
-        if (order && !rOrder.includes(order)) return false;
-        if (phone && !rPhone.includes(phone)) return false;
+        const rName  = g(row,idx,'custName').toLowerCase();
+        const rOrder = g(row,idx,'orderNum').toLowerCase();
+        const rPhone = g(row,idx,'custPhone').toLowerCase();
+        if (name  && !rName.includes(nameLow))   return false;
+        if (order && !rOrder.includes(orderLow)) return false;
+        if (phone && !rPhone.includes(phoneLow)) return false;
         return true;
       });
-
-      matches.forEach(row => allResults.push({ row, idx, tab }));
-    } catch(e) { console.warn(`Failed ${tab.name}:`, e); }
+      matches.forEach(row => allResults.push({source:'sheet', row, idx, tab}));
+    } catch(e) { console.warn(`Failed ${tab.name}:`,e); }
   }
 
   document.getElementById('loadingWrap').classList.remove('show');
@@ -566,70 +561,103 @@ async function doSearch() {
 function renderResults(allResults) {
   const list  = document.getElementById('resultsList');
   const count = document.getElementById('resultsCount');
-
   if (!allResults.length) {
     count.textContent = '0 results';
     list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">No results found</div><div class="empty-sub">Try different search criteria</div></div>`;
     return;
   }
+  count.textContent = `${allResults.length} result${allResults.length>1?'s':''}`;
+  list.innerHTML = allResults.map(r => r.source==='supabase' ? renderSupabaseCard(r.row) : renderSheetCard(r)).join('');
+}
 
-  count.textContent = `${allResults.length} result${allResults.length > 1 ? 's' : ''}`;
-
-  list.innerHTML = allResults.map(({ row, idx, tab }) => {
-    const status    = g(row, idx, 'status');
-    const stCls     = getStatusCls(status);
-    const rawDate   = g(row, idx, 'timestamp');
-    const date      = formatDate(rawDate);
-    const orderNum  = g(row, idx, 'orderNum');
-    const custName  = g(row, idx, 'custName');
-    const phone     = g(row, idx, 'custPhone');
-    const agent     = g(row, idx, 'agentName');
-    const reqType   = g(row, idx, 'reqType') || g(row, idx, 'refundType') || '—';
-    const reason    = g(row, idx, 'reason');
-    const product   = g(row, idx, 'product');
-    const refund    = g(row, idx, 'refundAmt');
-    const shipping  = g(row, idx, 'shipping');
-    const items     = g(row, idx, 'numItems');
-    const bosta     = g(row, idx, 'bosta');
-    const notes     = g(row, idx, 'notes');
-    const origSKU   = g(row, idx, 'origSKU');
-    const reqSKU    = g(row, idx, 'reqSKU');
-    const fulfilN   = g(row, idx, 'fulfilNote');
-    const refMethod = g(row, idx, 'refundMethod');
-    const transId   = g(row, idx, 'transactionId');
-
-    return `
-    <div class="result-card">
-      <div class="result-top">
-        <div class="result-left">
-          <div class="result-order">Order #${orderNum || '—'}</div>
-          <div class="result-customer">${custName || '—'}</div>
-          <div class="result-phone">${phone || '—'}</div>
-        </div>
-        <div class="result-right">
-          <span class="source-badge ${tab.cls}">📊 ${tab.label}</span>
-          <span class="status-badge ${stCls}">${status || 'Pending'}</span>
-          <span style="font-size:11px;color:var(--muted)">${date}</span>
-        </div>
+function renderSupabaseCard(r) {
+  const status  = r.exchange_status || 'Pending';
+  const stCls   = getStatusCls(status);
+  const date    = r.created_at ? new Date(r.created_at).toLocaleDateString('en-GB') : '—';
+  return `
+  <div class="result-card">
+    <div class="result-top">
+      <div>
+        <div class="result-order">Order #${r.order_number||'—'}</div>
+        <div class="result-customer">${r.customer_name||'—'}</div>
+        <div class="result-phone">${r.customer_phone||'—'}</div>
       </div>
-      <div class="result-grid">
-        <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${reqType}</span></div>
-        <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${reason || '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${agent || '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${bosta || '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${product || '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${refund ? 'EGP ' + refund : '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${shipping || '—'}</span></div>
-        <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${items || '—'}</span></div>
-        ${refMethod ? `<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${refMethod}</span></div>` : ''}
-        ${transId   ? `<div class="result-item"><span class="result-item-label">Transaction ID</span><span class="result-item-val">${transId}</span></div>` : ''}
-        ${origSKU   ? `<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${origSKU}</span></div>` : ''}
-        ${reqSKU    ? `<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${reqSKU}</span></div>` : ''}
+      <div class="result-right">
+        <span class="source-badge source-supabase">🗄️ Portal DB</span>
+        <span class="status-badge ${stCls}">${status}</span>
+        <span style="font-size:11px;color:var(--muted)">${date}</span>
       </div>
-      ${notes   ? `<div class="result-note-box"><strong>Note:</strong> ${notes}</div>` : ''}
-      ${fulfilN ? `<div class="result-note-box" style="background:#f5f3ff;border-color:#ddd6fe;color:#7c3aed"><strong>Fulfilment:</strong> ${fulfilN}</div>` : ''}
-    </div>`;
-  }).join('');
+    </div>
+    <div class="result-grid">
+      <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${r.request_type||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${r.reason||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${r.agent_name||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${r.bosta_ticket_id||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${r.product_sku||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${r.refund_amount?'EGP '+r.refund_amount:'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${r.shipping_fees||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${r.num_items||'—'}</span></div>
+      ${r.original_sku  ? `<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${r.original_sku}</span></div>` : ''}
+      ${r.requested_sku ? `<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${r.requested_sku}</span></div>` : ''}
+    </div>
+    ${r.notes       ? `<div class="result-note-box"><strong>Note:</strong> ${r.notes}</div>` : ''}
+    ${r.fulfilment_note ? `<div class="result-note-box" style="background:#f5f3ff;border-color:#ddd6fe;color:#7c3aed"><strong>Fulfilment:</strong> ${r.fulfilment_note}</div>` : ''}
+  </div>`;
+}
+
+function renderSheetCard({row,idx,tab}) {
+  const status   = g(row,idx,'status');
+  const stCls    = getStatusCls(status);
+  const rawDate  = g(row,idx,'timestamp');
+  const date     = formatDate(rawDate);
+  const orderNum = g(row,idx,'orderNum');
+  const custName = g(row,idx,'custName');
+  const phone    = g(row,idx,'custPhone');
+  const agent    = g(row,idx,'agentName');
+  const reqType  = g(row,idx,'reqType')||g(row,idx,'refundType')||'—';
+  const reason   = g(row,idx,'reason');
+  const product  = g(row,idx,'product');
+  const refund   = g(row,idx,'refundAmt');
+  const shipping = g(row,idx,'shipping');
+  const items    = g(row,idx,'numItems');
+  const bosta    = g(row,idx,'bosta');
+  const notes    = g(row,idx,'notes');
+  const origSKU  = g(row,idx,'origSKU');
+  const reqSKU   = g(row,idx,'reqSKU');
+  const fulfilN  = g(row,idx,'fulfilNote');
+  const refMeth  = g(row,idx,'refundMethod');
+  const transId  = g(row,idx,'transactionId');
+  return `
+  <div class="result-card">
+    <div class="result-top">
+      <div>
+        <div class="result-order">Order #${orderNum||'—'}</div>
+        <div class="result-customer">${custName||'—'}</div>
+        <div class="result-phone">${phone||'—'}</div>
+      </div>
+      <div class="result-right">
+        <span class="source-badge ${tab.cls}">📊 ${tab.label}</span>
+        <span class="status-badge ${stCls}">${status||'Pending'}</span>
+        <span style="font-size:11px;color:var(--muted)">${date}</span>
+      </div>
+    </div>
+    <div class="result-grid">
+      <div class="result-item"><span class="result-item-label">Request Type</span><span class="result-item-val">${reqType}</span></div>
+      <div class="result-item"><span class="result-item-label">Reason</span><span class="result-item-val">${reason||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Agent</span><span class="result-item-val">${agent||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Bosta Ticket</span><span class="result-item-val">${bosta||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Product / SKU</span><span class="result-item-val">${product||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Refund Amount</span><span class="result-item-val">${refund?'EGP '+refund:'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Shipping</span><span class="result-item-val">${shipping||'—'}</span></div>
+      <div class="result-item"><span class="result-item-label">Items</span><span class="result-item-val">${items||'—'}</span></div>
+      ${refMeth  ? `<div class="result-item"><span class="result-item-label">Refund Method</span><span class="result-item-val">${refMeth}</span></div>` : ''}
+      ${transId  ? `<div class="result-item"><span class="result-item-label">Transaction ID</span><span class="result-item-val">${transId}</span></div>` : ''}
+      ${origSKU  ? `<div class="result-item"><span class="result-item-label">Original SKU</span><span class="result-item-val">${origSKU}</span></div>` : ''}
+      ${reqSKU   ? `<div class="result-item"><span class="result-item-label">Requested SKU</span><span class="result-item-val">${reqSKU}</span></div>` : ''}
+    </div>
+    ${notes   ? `<div class="result-note-box"><strong>Note:</strong> ${notes}</div>` : ''}
+    ${fulfilN ? `<div class="result-note-box" style="background:#f5f3ff;border-color:#ddd6fe;color:#7c3aed"><strong>Fulfilment:</strong> ${fulfilN}</div>` : ''}
+  </div>`;
 }
 
 function formatDate(val) {
@@ -637,43 +665,43 @@ function formatDate(val) {
   const s = val.toString();
   if (s.startsWith('Date(')) {
     const p = s.replace('Date(','').replace(')','').split(',').map(Number);
-    const d = new Date(p[0], p[1], p[2]);
-    return d.toLocaleDateString('en-GB');
+    return new Date(p[0],p[1],p[2]).toLocaleDateString('en-GB');
   }
   if (s.includes('T')) return s.split('T')[0];
-  if (s.length >= 10) return s.substring(0, 10);
+  if (s.length>=10) return s.substring(0,10);
   return s;
 }
 
 function renderStats(allResults) {
   document.getElementById('statsRow').style.display = 'flex';
   document.getElementById('statTotal').textContent   = allResults.length;
-  document.getElementById('statPending').textContent = allResults.filter(({row, idx}) => {
-    const s = g(row, idx, 'status').toLowerCase();
-    return !s || s.includes('pending');
+  document.getElementById('statPending').textContent = allResults.filter(r => {
+    const s = (r.source==='supabase' ? r.row.exchange_status : (r.idx?g(r.row,r.idx,'status'):'')||'').toLowerCase();
+    return !s||s.includes('pending');
   }).length;
-  document.getElementById('statDone').textContent = allResults.filter(({row, idx}) => {
-    const s = g(row, idx, 'status').toLowerCase();
-    return s.includes('success') || s.includes('done') || s.includes('approved') || s.includes('completed') || s.includes('refunded');
+  document.getElementById('statDone').textContent = allResults.filter(r => {
+    const s = (r.source==='supabase' ? r.row.exchange_status : (r.idx?g(r.row,r.idx,'status'):'')||'').toLowerCase();
+    return s.includes('success')||s.includes('done')||s.includes('approved')||s.includes('completed')||s.includes('refunded');
   }).length;
-  document.getElementById('statSheets').textContent = new Set(allResults.map(r => r.tab.name)).size;
+  const sources = new Set(allResults.map(r => r.source==='supabase'?'supabase':r.tab.name));
+  document.getElementById('statSheets').textContent = sources.size;
 }
 
 function getStatusCls(s) {
-  const v = (s || '').toLowerCase();
-  if (v.includes('success') || v.includes('done') || v.includes('approved') || v.includes('completed') || v.includes('refunded')) return 'status-success';
-  if (v.includes('failed') || v.includes('rejected') || v.includes('declined')) return 'status-failed';
-  if (v.includes('processing') || v.includes('progress') || v.includes('review')) return 'status-processing';
+  const v = (s||'').toLowerCase();
+  if (v.includes('success')||v.includes('done')||v.includes('approved')||v.includes('completed')||v.includes('refunded')) return 'status-success';
+  if (v.includes('failed')||v.includes('rejected')||v.includes('declined')) return 'status-failed';
+  if (v.includes('processing')||v.includes('progress')||v.includes('review')) return 'status-processing';
   if (v.includes('pending')) return 'status-pending';
   return 'status-default';
 }
 
 function clearSearch() {
-  ['sName','sOrder','sPhone'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('resultsList').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ready to search</div><div class="empty-sub">Enter any field above and press Search</div></div>`;
-  document.getElementById('resultsCount').textContent = '—';
-  document.getElementById('statsRow').style.display = 'none';
-  cache = {};
+  ['sName','sOrder','sPhone'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('resultsList').innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ready to search</div><div class="empty-sub">Enter any field above and press Search</div></div>`;
+  document.getElementById('resultsCount').textContent='—';
+  document.getElementById('statsRow').style.display='none';
+  sheetCache={};
 }
 
 // ── DUPLICATE CHECK ───────────────────────────────────────────────────────
@@ -684,37 +712,19 @@ async function checkDup() {
     const orderNum = document.getElementById('fOrderNum').value.trim();
     if (!orderNum) { hideDup(); return; }
     try {
-      const { headers, data } = await fetchTab('Export2');
-      const idx = buildIdx(headers, TABS.find(t => t.name === 'Export2').cols);
-      const now = new Date();
-      const matches = data.filter(row => {
-        if (g(row, idx, 'orderNum').trim() !== orderNum) return false;
-        const d = parseDate(g(row, idx, 'timestamp'));
-        return !d || (now - d) / 86400000 <= 5;
-      });
-      if (matches.length) {
-        const st = g(matches[0], idx, 'status') || 'Pending';
-        showDup(`Order #${orderNum} already has an active case. Status: ${st}. Please follow up on the existing case.`);
+      const rows = await supabaseCheckDup(orderNum);
+      if (rows.length) {
+        const st = rows[0].exchange_status || 'Pending';
+        showDup(`Order #${orderNum} already has an active case (Status: ${st}). Please follow up on the existing case.`);
       } else hideDup();
     } catch(e) { hideDup(); }
   }, 600);
 }
 
-function parseDate(val) {
-  if (!val) return null;
-  const s = val.toString();
-  if (s.startsWith('Date(')) {
-    const p = s.replace('Date(','').replace(')','').split(',').map(Number);
-    return new Date(p[0], p[1], p[2], p[3]||0, p[4]||0);
-  }
-  const d = new Date(s);
-  return isNaN(d) ? null : d;
-}
+function showDup(msg) { document.getElementById('dupText').textContent=msg; document.getElementById('dupAlert').classList.add('show'); document.getElementById('submitBtn').disabled=true; }
+function hideDup()    { document.getElementById('dupAlert').classList.remove('show'); document.getElementById('submitBtn').disabled=false; }
 
-function showDup(msg) { document.getElementById('dupText').textContent = msg; document.getElementById('dupAlert').classList.add('show'); document.getElementById('submitBtn').disabled = true; }
-function hideDup()    { document.getElementById('dupAlert').classList.remove('show'); document.getElementById('submitBtn').disabled = false; }
-
-// ── SUBMIT ────────────────────────────────────────────────────────────────
+// ── SUBMIT TO SUPABASE ────────────────────────────────────────────────────
 async function submitRefund() {
   const required = [
     {id:'fEmail',    label:'Agent email'},
@@ -726,69 +736,69 @@ async function submitRefund() {
     {id:'fReason',   label:'Reason'},
   ];
   for (const f of required) {
-    if (!document.getElementById(f.id).value.trim()) return showToast(`${f.label} is required.`, 'error');
+    if (!document.getElementById(f.id).value.trim()) return showToast(`${f.label} is required.`,'error');
   }
-  const row = [
-    new Date().toLocaleString('en-GB',{timeZone:'Africa/Cairo'}),
-    document.getElementById('fEmail').value.trim(),
-    document.getElementById('fAgentName').value.trim(),
-    document.getElementById('fCustName').value.trim(),
-    document.getElementById('fCustPhone').value.trim(),
-    document.getElementById('fOrderNum').value.trim(),
-    document.getElementById('fReqType').value,
-    document.getElementById('fReason').value,
-    document.getElementById('fNumItems').value,
-    document.getElementById('fProduct').value,
-    document.getElementById('fOrigSKU').value,
-    document.getElementById('fReqSKU').value,
-    document.getElementById('fShipping').value,
-    document.getElementById('fRefund').value,
-    document.getElementById('fBosta').value,
-    '', document.getElementById('fNotes').value, 'Pending', ''
-  ];
+
+  const payload = {
+    agent_email:     document.getElementById('fEmail').value.trim(),
+    agent_name:      document.getElementById('fAgentName').value.trim(),
+    customer_name:   document.getElementById('fCustName').value.trim(),
+    customer_phone:  document.getElementById('fCustPhone').value.trim(),
+    order_number:    document.getElementById('fOrderNum').value.trim(),
+    request_type:    document.getElementById('fReqType').value,
+    reason:          document.getElementById('fReason').value,
+    num_items:       parseInt(document.getElementById('fNumItems').value)||null,
+    product_sku:     document.getElementById('fProduct').value.trim(),
+    original_sku:    document.getElementById('fOrigSKU').value.trim(),
+    requested_sku:   document.getElementById('fReqSKU').value.trim(),
+    shipping_fees:   document.getElementById('fShipping').value,
+    refund_amount:   document.getElementById('fRefund').value.trim(),
+    bosta_ticket_id: document.getElementById('fBosta').value.trim(),
+    notes:           document.getElementById('fNotes').value.trim(),
+    exchange_status: 'Pending',
+  };
+
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spin-sm"></span> Submitting...';
-  if (!GAS_URL) {
-    const tsv = row.map(v => `"${(v||'').replace(/"/g,'""')}"`).join('\t');
-    try { await navigator.clipboard.writeText(tsv); } catch(e) {}
-    btn.disabled = false; btn.textContent = '✉️ Submit Request';
-    showToast('⚠️ Apps Script not set. Data copied — paste into Export2.', 'warn');
-    return;
-  }
+
   try {
-    const res    = await fetch(GAS_URL, {method:'POST', body:JSON.stringify({sheet:'Export2', row}), headers:{'Content-Type':'application/json'}});
-    const result = await res.json();
-    if (result.status === 'ok') { showToast('✅ Request submitted!', 'success'); resetForm(); cache = {}; }
-    else throw new Error(result.message || 'Error');
-  } catch(e) { showToast('Submit failed: ' + e.message, 'error'); }
-  btn.disabled = false; btn.textContent = '✉️ Submit Request';
+    await supabaseInsert(payload);
+    showToast('✅ Request submitted successfully!','success');
+    resetForm();
+    sheetCache = {};
+  } catch(e) {
+    showToast('❌ Submit failed: ' + e.message,'error');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✉️ Submit Request';
 }
 
 function resetForm() {
-  ['fEmail','fAgentName','fCustName','fCustPhone','fOrderNum','fNumItems','fProduct','fOrigSKU','fReqSKU','fRefund','fBosta','fNotes'].forEach(id => document.getElementById(id).value = '');
-  ['fReqType','fReason','fShipping'].forEach(id => document.getElementById(id).value = '');
+  ['fEmail','fAgentName','fCustName','fCustPhone','fOrderNum','fNumItems','fProduct','fOrigSKU','fReqSKU','fRefund','fBosta','fNotes'].forEach(id=>document.getElementById(id).value='');
+  ['fReqType','fReason','fShipping'].forEach(id=>document.getElementById(id).value='');
   hideDup(); setNow();
 }
 
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+function switchTab(name,btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
 }
 
-function showToast(msg, type='success') {
+function showToast(msg,type='success') {
   const t = document.getElementById('toast');
-  t.className = `toast show ${type}`; t.textContent = msg;
-  setTimeout(() => t.classList.remove('show'), 5000);
+  t.className=`toast show ${type}`; t.textContent=msg;
+  setTimeout(()=>t.classList.remove('show'),5000);
 }
 
 function setNow() {
   const now   = new Date();
   const cairo = new Date(now.toLocaleString('en-US',{timeZone:'Africa/Cairo'}));
-  const pad   = n => n.toString().padStart(2,'0');
-  document.getElementById('fDate').value = `${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
+  const pad   = n=>n.toString().padStart(2,'0');
+  document.getElementById('fDate').value=`${cairo.getFullYear()}-${pad(cairo.getMonth()+1)}-${pad(cairo.getDate())}T${pad(cairo.getHours())}:${pad(cairo.getMinutes())}`;
 }
 setNow();
 </script>
