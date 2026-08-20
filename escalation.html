@@ -15,9 +15,24 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
     a{text-decoration:none;color:inherit;}
-    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;}
+
+    /* ======= LANG SYSTEM ======= */
+    .ar-only{display:none !important;}
+    .en-only{display:block;}
+    body.lang-ar .ar-only{display:block !important;}
+    body.lang-ar .en-only{display:none !important;}
+    body.lang-ar{direction:rtl;}
+    body.lang-ar .main{margin-left:0;margin-right:260px;}
+    body.lang-ar .sidebar{left:auto;right:0;}
+    span.ar-only{display:none !important;}
+    span.en-only{display:inline !important;}
+    body.lang-ar span.ar-only{display:inline !important;}
+    body.lang-ar span.en-only{display:none !important;}
+
+    /* SIDEBAR */
+    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
     .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
-    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;}
+    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
     .brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
     .brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
     .sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
@@ -25,48 +40,60 @@
     .nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
     .nav-item.active{background:var(--indigo);color:#fff;}
     .nav-icon{font-size:16px;width:20px;text-align:center;}
+
+    /* MAIN */
     .main{margin-left:260px;min-height:100vh;padding:32px;}
     .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px;}
     .search-wrap{flex:1;max-width:480px;background:#fff;border:1.5px solid var(--border);border-radius:14px;display:flex;align-items:center;padding:13px 18px;gap:10px;}
     .search-wrap input{border:none;outline:none;width:100%;font-size:14px;font-family:'Inter',sans-serif;background:none;}
     .topbar-right{display:flex;align-items:center;gap:12px;}
-    .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;}
+    .lang-btn{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;}
     .lang-btn:hover{border-color:var(--indigo);color:var(--indigo);}
     .lang-btn.ar-active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
     .profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
     .avatar{width:34px;height:34px;border-radius:50%;background:var(--midnight);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
     .profile-name{font-size:13px;font-weight:700;}
     .profile-role{font-size:11px;color:var(--muted);}
+
+    /* HERO */
     .hero{background:linear-gradient(130deg,#09092d 0%,#2d0a0a 100%);border-radius:24px;padding:40px;margin-bottom:28px;position:relative;overflow:hidden;}
     .hero::before{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;background:rgba(239,68,68,.1);border-radius:50%;}
     .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:100px;font-size:11px;font-weight:700;color:#fca5a5;letter-spacing:.5px;margin-bottom:20px;}
     .hero h1{font-size:34px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;}
     .hero h1 span{color:#fca5a5;}
     .hero p{color:#fecaca;font-size:15px;line-height:1.7;max-width:600px;}
+
+    /* TABS */
     .tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
     .tab{padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;background:#fff;border:1.5px solid var(--border);color:var(--muted);transition:.15s;}
     .tab:hover{border-color:var(--indigo);color:var(--indigo);}
     .tab.active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
     .section{display:none;}
     .section.active{display:block;}
+
+    /* CARDS */
     .card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:28px;margin-bottom:20px;}
     .card-title{font-size:18px;font-weight:800;color:var(--midnight);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
     .card-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+
+    /* STEPS */
     .steps{display:flex;flex-direction:column;gap:0;}
     .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f8fafc;}
     .step:last-child{border-bottom:none;}
     .step-num{width:30px;height:30px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;margin-top:2px;}
     .step-title{font-size:14px;font-weight:700;margin-bottom:4px;}
     .step-text{font-size:13px;color:var(--text);line-height:1.6;}
+
+    /* SLACK */
     .slack-format{background:#1a1d21;border-radius:16px;padding:20px 24px;margin:16px 0;}
     .slack-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
     .slack-icon{width:32px;height:32px;border-radius:8px;background:#4a154b;display:flex;align-items:center;justify-content:center;font-size:16px;}
     .slack-channel{color:#fff;font-weight:700;font-size:14px;}
     .slack-msg{font-family:monospace;font-size:13px;color:#e8e8e8;line-height:1.8;background:#0d0f11;border-radius:10px;padding:16px;}
     .slack-msg span{color:#f9ef77;font-weight:700;}
-    .copy-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:12px;font-family:'Inter',sans-serif;transition:.15s;}
-    .copy-btn:hover{background:var(--midnight);}
+
+    /* TIERS */
     .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px;}
     .tier-card{border-radius:18px;padding:22px;border:2px solid;}
     .tier-1{background:#f0fdf4;border-color:#a7f3d0;}
@@ -85,6 +112,8 @@
     .tier-1 .tier-sla{background:#dcfce7;color:#15803d;}
     .tier-2 .tier-sla{background:#ffedd5;color:#c2410c;}
     .tier-3 .tier-sla{background:#fee2e2;color:#b91c1c;}
+
+    /* CHANNELS */
     .channels{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:20px;}
     .channel-card{background:#fff;border-radius:18px;border:1.5px solid var(--border);padding:22px;}
     .ch-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
@@ -99,6 +128,8 @@
     .ch-item{display:flex;gap:8px;font-size:13px;color:var(--text);line-height:1.5;}
     .ch-dot{color:var(--indigo);font-weight:900;flex-shrink:0;}
     .ch-format{background:#f4f4f5;border-radius:10px;padding:10px 12px;font-family:monospace;font-size:12px;color:#374151;margin-top:10px;line-height:1.7;}
+
+    /* SLA TABLE */
     .sla-table{width:100%;border-collapse:collapse;font-size:13px;}
     .sla-table th{background:var(--midnight);color:#fff;padding:12px 16px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.5px;}
     .sla-table th:first-child{border-radius:12px 0 0 0;}
@@ -110,6 +141,8 @@
     .sla-green{background:#dcfce7;color:#15803d;}
     .sla-yellow{background:#fef9c3;color:#a16207;}
     .sla-red{background:#fee2e2;color:#b91c1c;}
+
+    /* MISC */
     .donts{background:#fff8f8;border-radius:12px;padding:16px;border:1px solid #fecaca;margin-top:16px;}
     .donts-title{font-size:11px;font-weight:800;color:#b91c1c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
     .dont-item{display:flex;gap:8px;font-size:13px;color:#7f1d1d;margin-bottom:6px;line-height:1.5;}
@@ -126,16 +159,19 @@
     .example-note{margin-top:12px;background:#eff6ff;border-radius:12px;padding:14px;border:1px solid #bfdbfe;}
     .note-label{font-size:10px;font-weight:800;color:#1e40af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
     .note-text{font-size:12px;color:#1e40af;font-family:monospace;line-height:1.6;}
+    .copy-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;margin-top:12px;font-family:'Inter',sans-serif;transition:.15s;}
+    .copy-btn:hover{background:var(--midnight);}
     .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:16px;}
     .footer span{color:var(--indigo);font-weight:700;}
-    .en-only{display:block;}
-    .ar-only{display:none;}
+
     @media(max-width:1100px){.tiers{grid-template-columns:1fr 1fr;}.channels{grid-template-columns:1fr;}}
     @media(max-width:900px){
-      .sidebar{display:none;}.main{margin-left:0;}
+      .sidebar{display:none;}
+      .main{margin-left:0!important;margin-right:0!important;}
       .grid-2{grid-template-columns:1fr;}
       .tiers{grid-template-columns:1fr;}
-      .topbar{flex-wrap:wrap;}.search-wrap{max-width:100%;}
+      .topbar{flex-wrap:wrap;}
+      .search-wrap{max-width:100%;}
     }
     @media(max-width:600px){.main{padding:18px;}.hero h1{font-size:24px;}}
   </style>
@@ -151,6 +187,7 @@
     </div>
   </div>
   <div class="sidebar-label">Workspace</div>
+  <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span> Home</a>
   <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
   <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
   <a href="portal.html" class="nav-item"><span class="nav-icon">💰</span> Refunds</a>
@@ -185,14 +222,14 @@
     <div class="hero-tag">🚨 Escalation Center</div>
     <h1>Escalation Protocol & <span>Slack Workflow</span></h1>
     <p class="en-only">Every escalation must have a paper trail. No tag without a Slack post. No Slack post without a reference. Follow the exact format — every time.</p>
-    <p class="ar-only" style="direction:rtl;">كل تصعيد لازم يكون ليه أثر موثق. مفيش تاج من غير Slack post. مفيش Slack post من غير reference. اتبعي الـ format بالظبط — كل مرة.</p>
+    <p class="ar-only">كل تصعيد لازم يكون ليه أثر موثق. مفيش تاج من غير Slack post. مفيش Slack post من غير reference. اتبعي الـ format بالظبط — كل مرة.</p>
   </section>
 
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('protocol',this)">🚨 Escalation Protocol</div>
-    <div class="tab" onclick="switchTab('tiers',this)">📊 Escalation Tiers</div>
-    <div class="tab" onclick="switchTab('channels',this)">📡 Communication Channels</div>
-    <div class="tab" onclick="switchTab('sla',this)">⏱ SLA Summary</div>
+    <div class="tab active" onclick="switchTab('protocol',this)">🚨 <span class="en-only">Escalation Protocol</span><span class="ar-only">بروتوكول التصعيد</span></div>
+    <div class="tab" onclick="switchTab('tiers',this)">📊 <span class="en-only">Escalation Tiers</span><span class="ar-only">مستويات التصعيد</span></div>
+    <div class="tab" onclick="switchTab('channels',this)">📡 <span class="en-only">Communication Channels</span><span class="ar-only">قنوات التواصل</span></div>
+    <div class="tab" onclick="switchTab('sla',this)">⏱ <span class="en-only">SLA Summary</span><span class="ar-only">ملخص SLA</span></div>
   </div>
 
   <!-- PROTOCOL -->
@@ -200,51 +237,48 @@
     <div class="alert alert-danger">
       <span class="alert-icon">🚨</span>
       <div>
-        <div class="en-only"><strong>Golden Rule:</strong> Post in #bosta-escalations FIRST — then add the escalated tag in Shopify. A tag without a Slack post is an invalid escalation.</div>
-        <div class="ar-only" style="direction:rtl;"><strong>القاعدة الذهبية:</strong> ابعتي في #bosta-escalations الأول — بعدين أضيفي تاج escalated في Shopify. تاج من غير Slack post = تصعيد غير صالح.</div>
+        <span class="en-only"><strong>Golden Rule:</strong> Post in #bosta-escalations FIRST — then add the escalated tag in Shopify. A tag without a Slack post is an invalid escalation.</span>
+        <span class="ar-only"><strong>القاعدة الذهبية:</strong> ابعتي في #bosta-escalations الأول — بعدين أضيفي تاج escalated في Shopify. تاج من غير Slack post = تصعيد غير صالح.</span>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">🔁
         <span class="en-only">When to Escalate</span>
-        <span class="ar-only" style="direction:rtl;">امتى تصعّدي</span>
+        <span class="ar-only">امتى تصعّدي</span>
       </div>
       <div class="card-sub en-only">These tags trigger the escalation protocol immediately</div>
-      <div class="card-sub ar-only" style="direction:rtl;">الـ tags دي بتشغّل بروتوكول التصعيد فوراً</div>
+      <div class="card-sub ar-only">الـ tags دي بتشغّل بروتوكول التصعيد فوراً</div>
       <div class="grid-2">
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="background:#fee2e2;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
             <div>
               <div style="font-weight:800;font-size:14px;color:#7f1d1d;">failed-2</div>
               <div class="en-only" style="font-size:12px;color:#991b1b;margin-top:3px;">2nd failed delivery attempt</div>
-              <div class="ar-only" style="font-size:12px;color:#991b1b;margin-top:3px;direction:rtl;">المحاولة الثانية الفاشلة للتوصيل</div>
+              <div class="ar-only" style="font-size:12px;color:#991b1b;margin-top:3px;">المحاولة الثانية الفاشلة للتوصيل</div>
             </div>
             <div style="background:#b91c1c;color:#fff;padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;">
-              <span class="en-only">Immediate</span>
-              <span class="ar-only" style="direction:rtl;">فوري</span>
+              <span class="en-only">Immediate</span><span class="ar-only">فوري</span>
             </div>
           </div>
           <div style="background:#fff7ed;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
             <div>
               <div style="font-weight:800;font-size:14px;color:#7c2d12;">sla-breach</div>
               <div class="en-only" style="font-size:12px;color:#9a3412;margin-top:3px;">Bosta SLA deadline passed</div>
-              <div class="ar-only" style="font-size:12px;color:#9a3412;margin-top:3px;direction:rtl;">انتهاء موعد SLA الخاص بـ Bosta</div>
+              <div class="ar-only" style="font-size:12px;color:#9a3412;margin-top:3px;">انتهاء موعد SLA الخاص بـ Bosta</div>
             </div>
             <div style="background:#c2410c;color:#fff;padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;">
-              <span class="en-only">Immediate</span>
-              <span class="ar-only" style="direction:rtl;">فوري</span>
+              <span class="en-only">Immediate</span><span class="ar-only">فوري</span>
             </div>
           </div>
           <div style="background:#fef9c3;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
             <div>
               <div style="font-weight:800;font-size:14px;color:#713f12;">stuck-3d</div>
               <div class="en-only" style="font-size:12px;color:#854d0e;margin-top:3px;">No movement for 3+ days</div>
-              <div class="ar-only" style="font-size:12px;color:#854d0e;margin-top:3px;direction:rtl;">مفيش حركة لمدة 3 أيام أو أكتر</div>
+              <div class="ar-only" style="font-size:12px;color:#854d0e;margin-top:3px;">مفيش حركة لمدة 3 أيام أو أكتر</div>
             </div>
             <div style="background:#a16207;color:#fff;padding:5px 12px;border-radius:100px;font-size:11px;font-weight:800;">
-              <span class="en-only">Same day</span>
-              <span class="ar-only" style="direction:rtl;">نفس اليوم</span>
+              <span class="en-only">Same day</span><span class="ar-only">نفس اليوم</span>
             </div>
           </div>
         </div>
@@ -258,7 +292,7 @@
                 • Manager must re-ping Bosta in the <strong>same Slack thread</strong>.<br><br>
                 • Never open a new thread for the same order.
               </div>
-              <div class="ar-only" style="direction:rtl;">
+              <div class="ar-only">
                 <strong>بعد التصعيد:</strong><br><br>
                 • الـ Worker بيضيف <strong>escalated-followup</strong> أوتوماتيك لو Bosta مش رادة في 12 ساعة.<br><br>
                 • الـ Manager لازم يتابع في <strong>نفس الـ Slack thread</strong>.<br><br>
@@ -273,54 +307,54 @@
     <div class="card">
       <div class="card-title">📋
         <span class="en-only">Step-by-Step Escalation Process</span>
-        <span class="ar-only" style="direction:rtl;">خطوات التصعيد بالترتيب</span>
+        <span class="ar-only">خطوات التصعيد بالترتيب</span>
       </div>
       <div class="card-sub en-only">Follow this exact sequence — do not skip or reorder steps</div>
-      <div class="card-sub ar-only" style="direction:rtl;">اتبعي التسلسل ده بالظبط — لا تتخطي أو تقدمي خطوة</div>
+      <div class="card-sub ar-only">اتبعي التسلسل ده بالظبط — لا تتخطي أو تقدمي خطوة</div>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div>
             <div class="step-title en-only">Collect Required Details</div>
-            <div class="step-title ar-only" style="direction:rtl;">اجمعي البيانات المطلوبة</div>
+            <div class="step-title ar-only">اجمعي البيانات المطلوبة</div>
             <div class="step-text en-only">Order ID, issue type, Bosta reference number (if already obtained).</div>
-            <div class="step-text ar-only" style="direction:rtl;">Order ID + نوع المشكلة + Bosta reference number (لو موجود).</div>
+            <div class="step-text ar-only">Order ID + نوع المشكلة + Bosta reference number (لو موجود).</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num" style="background:#ef4444;">2</div>
           <div>
             <div class="step-title en-only">Post in #bosta-escalations Slack — FIRST</div>
-            <div class="step-title ar-only" style="direction:rtl;">ابعتي في #bosta-escalations الأول</div>
+            <div class="step-title ar-only">ابعتي في #bosta-escalations الأول</div>
             <div class="step-text en-only">Use the exact format below. Screenshot required.</div>
-            <div class="step-text ar-only" style="direction:rtl;">استخدمي الـ format اللي تحت بالظبط. Screenshot مطلوب.</div>
+            <div class="step-text ar-only">استخدمي الـ format اللي تحت بالظبط. Screenshot مطلوب.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div>
             <div class="step-title en-only">Add escalated Tag in Shopify</div>
-            <div class="step-title ar-only" style="direction:rtl;">أضيفي تاج escalated في Shopify</div>
+            <div class="step-title ar-only">أضيفي تاج escalated في Shopify</div>
             <div class="step-text en-only">Only after the Slack post exists and is confirmed. Not before.</div>
-            <div class="step-text ar-only" style="direction:rtl;">بس بعد ما الـ Slack post موجود ومتأكد منه — مش قبله.</div>
+            <div class="step-text ar-only">بس بعد ما الـ Slack post موجود ومتأكد منه — مش قبله.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div>
             <div class="step-title en-only">Add Shopify Note</div>
-            <div class="step-title ar-only" style="direction:rtl;">أضيفي نوت في Shopify</div>
+            <div class="step-title ar-only">أضيفي نوت في Shopify</div>
             <div class="step-text en-only">Document: action taken + Bosta reference + date.</div>
-            <div class="step-text ar-only" style="direction:rtl;">وثّقي: الإجراء + Bosta reference + التاريخ.</div>
+            <div class="step-text ar-only">وثّقي: الإجراء + Bosta reference + التاريخ.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">5</div>
           <div>
             <div class="step-title en-only">Monitor for 12 Hours</div>
-            <div class="step-title ar-only" style="direction:rtl;">تابعي لمدة 12 ساعة</div>
+            <div class="step-title ar-only">تابعي لمدة 12 ساعة</div>
             <div class="step-text en-only">If no response — worker adds escalated-followup — Manager re-pings in same thread.</div>
-            <div class="step-text ar-only" style="direction:rtl;">لو مفيش رد — الـ Worker يضيف escalated-followup — الـ Manager يتابع في نفس الـ thread.</div>
+            <div class="step-text ar-only">لو مفيش رد — الـ Worker يضيف escalated-followup — الـ Manager يتابع في نفس الـ thread.</div>
           </div>
         </div>
       </div>
@@ -328,28 +362,28 @@
         <div class="donts-title">❌ Do NOT</div>
         <div class="dont-item"><span class="dont-x">✗</span>
           <span class="en-only">Add escalated tag without a matching Slack post — invalid escalation.</span>
-          <span class="ar-only" style="direction:rtl;">تضيفي تاج escalated من غير Slack post — تصعيد غير صالح.</span>
+          <span class="ar-only">تضيفي تاج escalated من غير Slack post — تصعيد غير صالح.</span>
         </div>
         <div class="dont-item"><span class="dont-x">✗</span>
           <span class="en-only">Open a new Slack thread for the same order — reply in existing one.</span>
-          <span class="ar-only" style="direction:rtl;">تفتحي thread جديد لنفس الأوردر — ردي في الموجود.</span>
+          <span class="ar-only">تفتحي thread جديد لنفس الأوردر — ردي في الموجود.</span>
         </div>
         <div class="dont-item"><span class="dont-x">✗</span>
           <span class="en-only">Manually remove escalated or escalated-followup tags.</span>
-          <span class="ar-only" style="direction:rtl;">تشيلي تاج escalated أو escalated-followup يدوياً.</span>
+          <span class="ar-only">تشيلي تاج escalated أو escalated-followup يدوياً.</span>
         </div>
       </div>
       <div class="definition">
         <div class="def-title">✅ Definition of Done</div>
         <div class="def-text en-only">Slack post exists in correct format + escalated tag applied + Note stamped with reference.</div>
-        <div class="def-text ar-only" style="direction:rtl;">Slack post موجود بالـ format الصح + تاج escalated متحط + نوت موثق بالـ reference.</div>
+        <div class="def-text ar-only">Slack post موجود بالـ format الصح + تاج escalated متحط + نوت موثق بالـ reference.</div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">💬 Slack Format — #bosta-escalations</div>
       <div class="card-sub en-only">Copy this exact format every time. No exceptions.</div>
-      <div class="card-sub ar-only" style="direction:rtl;">انسخي الـ format ده كل مرة بالظبط. بدون استثناءات.</div>
+      <div class="card-sub ar-only">انسخي الـ format ده كل مرة بالظبط. بدون استثناءات.</div>
       <div class="slack-format">
         <div class="slack-header">
           <div class="slack-icon">💬</div>
@@ -365,7 +399,7 @@
       <div class="example-note" style="margin-top:16px;">
         <div class="note-label">📝
           <span class="en-only">Shopify Note After Escalation</span>
-          <span class="ar-only" style="direction:rtl;">نوت Shopify بعد التصعيد</span>
+          <span class="ar-only">نوت Shopify بعد التصعيد</span>
         </div>
         <div class="note-text" id="note-esc">[CS 28/06] Escalated to Bosta — ref 7506992329 — posted in #bosta-escalations.</div>
         <button class="copy-btn" onclick="copyNote('note-esc',this)" style="margin-top:8px;">Copy Note ↗</button>
@@ -378,15 +412,15 @@
     <div class="alert alert-warn">
       <span class="alert-icon">⚠️</span>
       <div>
-        <div class="en-only">Do NOT bypass tiers. Always engage Tier 1 before Tier 2, and Tier 2 before Tier 3. Use named contacts only.</div>
-        <div class="ar-only" style="direction:rtl;">لا تتخطي الـ Tiers. دايماً Tier 1 الأول، بعدين Tier 2، بعدين Tier 3. استخدمي الأسماء المحددة بس.</div>
+        <span class="en-only">Do NOT bypass tiers. Always engage Tier 1 before Tier 2, and Tier 2 before Tier 3.</span>
+        <span class="ar-only">لا تتخطي الـ Tiers. دايماً Tier 1 الأول، بعدين Tier 2، بعدين Tier 3.</span>
       </div>
     </div>
     <div class="tiers">
       <div class="tier-card tier-1">
         <div class="tier-badge">🟢 Tier 1</div>
         <div class="tier-title en-only">Daily Issues</div>
-        <div class="tier-title ar-only" style="direction:rtl;">المشاكل اليومية</div>
+        <div class="tier-title ar-only">المشاكل اليومية</div>
         <div class="tier-row">
           <span class="tier-label">Mavin Wear</span>
           <span class="tier-value">Ops Manager</span>
@@ -396,18 +430,16 @@
           <span class="tier-value">Account Manager</span>
         </div>
         <div class="tier-row">
-          <span class="tier-label en-only">Trigger</span>
-          <span class="tier-label ar-only" style="direction:rtl;">متى</span>
-          <span class="tier-value en-only">Issue unresolved after first contact</span>
-          <span class="tier-value ar-only" style="direction:rtl;">مشكلة مش اتحلت بعد أول تواصل</span>
+          <span class="tier-label"><span class="en-only">Trigger</span><span class="ar-only">متى</span></span>
+          <span class="tier-value"><span class="en-only">Issue unresolved after first contact</span><span class="ar-only">مشكلة مش اتحلت بعد أول تواصل</span></span>
         </div>
         <div class="tier-sla en-only">⏱ SLA: 2 Hours</div>
-        <div class="tier-sla ar-only" style="direction:rtl;">⏱ SLA: ساعتين</div>
+        <div class="tier-sla ar-only">⏱ SLA: ساعتين</div>
       </div>
       <div class="tier-card tier-2">
         <div class="tier-badge">🟡 Tier 2</div>
         <div class="tier-title en-only">Unresolved After Tier 1</div>
-        <div class="tier-title ar-only" style="direction:rtl;">مش اتحل بعد Tier 1</div>
+        <div class="tier-title ar-only">مش اتحل بعد Tier 1</div>
         <div class="tier-row">
           <span class="tier-label">Mavin Wear</span>
           <span class="tier-value">Tech / Return Owner</span>
@@ -417,18 +449,16 @@
           <span class="tier-value">Warehouse / Field Lead</span>
         </div>
         <div class="tier-row">
-          <span class="tier-label en-only">Trigger</span>
-          <span class="tier-label ar-only" style="direction:rtl;">متى</span>
-          <span class="tier-value en-only">Still unresolved after 2 hours</span>
-          <span class="tier-value ar-only" style="direction:rtl;">لسه مش اتحل بعد ساعتين</span>
+          <span class="tier-label"><span class="en-only">Trigger</span><span class="ar-only">متى</span></span>
+          <span class="tier-value"><span class="en-only">Still unresolved after 2 hours</span><span class="ar-only">لسه مش اتحل بعد ساعتين</span></span>
         </div>
         <div class="tier-sla en-only">⏱ SLA: 4 Hours</div>
-        <div class="tier-sla ar-only" style="direction:rtl;">⏱ SLA: 4 ساعات</div>
+        <div class="tier-sla ar-only">⏱ SLA: 4 ساعات</div>
       </div>
       <div class="tier-card tier-3">
         <div class="tier-badge">🔴 Tier 3</div>
         <div class="tier-title en-only">SLA Breach / Critical</div>
-        <div class="tier-title ar-only" style="direction:rtl;">خرق SLA / حرج</div>
+        <div class="tier-title ar-only">خرق SLA / حرج</div>
         <div class="tier-row">
           <span class="tier-label">Mavin Wear</span>
           <span class="tier-value">Ahmad (Founder)</span>
@@ -438,24 +468,22 @@
           <span class="tier-value">Account Director</span>
         </div>
         <div class="tier-row">
-          <span class="tier-label en-only">Trigger</span>
-          <span class="tier-label ar-only" style="direction:rtl;">متى</span>
-          <span class="tier-value en-only">Unresolved after 4 hours or SLA breach</span>
-          <span class="tier-value ar-only" style="direction:rtl;">لسه مش اتحل بعد 4 ساعات أو SLA breach</span>
+          <span class="tier-label"><span class="en-only">Trigger</span><span class="ar-only">متى</span></span>
+          <span class="tier-value"><span class="en-only">Unresolved after 4 hours or SLA breach</span><span class="ar-only">لسه مش اتحل بعد 4 ساعات أو SLA breach</span></span>
         </div>
         <div class="tier-sla en-only">⏱ SLA: Same Day</div>
-        <div class="tier-sla ar-only" style="direction:rtl;">⏱ SLA: نفس اليوم</div>
+        <div class="tier-sla ar-only">⏱ SLA: نفس اليوم</div>
       </div>
     </div>
     <div class="donts">
       <div class="donts-title">❌ Do NOT</div>
       <div class="dont-item"><span class="dont-x">✗</span>
         <span class="en-only">Bypass tiers — engage Tier 1 and 2 before going to Tier 3.</span>
-        <span class="ar-only" style="direction:rtl;">تتخطي الـ Tiers — لازم Tier 1 و 2 الأول.</span>
+        <span class="ar-only">تتخطي الـ Tiers — لازم Tier 1 و 2 الأول.</span>
       </div>
       <div class="dont-item"><span class="dont-x">✗</span>
         <span class="en-only">Use generic "support" contacts — always use the named owner per tier.</span>
-        <span class="ar-only" style="direction:rtl;">تستخدمي جهات "Support" عامة — استخدمي الأسماء المحددة.</span>
+        <span class="ar-only">تستخدمي جهات "Support" عامة — استخدمي الأسماء المحددة.</span>
       </div>
     </div>
   </div>
@@ -465,8 +493,8 @@
     <div class="alert alert-info">
       <span class="alert-icon">📡</span>
       <div>
-        <div class="en-only">Use the right channel for the right issue. WhatsApp alone is NOT sufficient for formal claims.</div>
-        <div class="ar-only" style="direction:rtl;">استخدمي القناة الصح للمشكلة الصح. WhatsApp وحده مش كافي للمطالبات الرسمية.</div>
+        <span class="en-only">Use the right channel for the right issue. WhatsApp alone is NOT sufficient for formal claims.</span>
+        <span class="ar-only">استخدمي القناة الصح للمشكلة الصح. WhatsApp وحده مش كافي للمطالبات الرسمية.</span>
       </div>
     </div>
     <div class="channels">
@@ -476,17 +504,17 @@
           <div>
             <div class="ch-title">WhatsApp — Ops Group</div>
             <div class="ch-when en-only">Daily operational issues</div>
-            <div class="ch-when ar-only" style="direction:rtl;">المشاكل التشغيلية اليومية</div>
+            <div class="ch-when ar-only">المشاكل التشغيلية اليومية</div>
           </div>
         </div>
         <div class="ch-list">
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Awaiting Action updates (on-hold)</span><span class="ar-only" style="direction:rtl;">تحديثات Awaiting Action (on-hold)</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">OOS alerts and decisions</span><span class="ar-only" style="direction:rtl;">تنبيهات OOS والقرارات</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Urgent operational updates</span><span class="ar-only" style="direction:rtl;">التحديثات التشغيلية العاجلة</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Campaign / volume surge notifications</span><span class="ar-only" style="direction:rtl;">إشعارات الحملات وزيادة الحجم</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Awaiting Action updates (on-hold)</span><span class="ar-only">تحديثات Awaiting Action (on-hold)</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">OOS alerts and decisions</span><span class="ar-only">تنبيهات OOS والقرارات</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Urgent operational updates</span><span class="ar-only">التحديثات التشغيلية العاجلة</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Campaign / volume surge notifications</span><span class="ar-only">إشعارات الحملات وزيادة الحجم</span></div>
         </div>
         <div class="ch-format en-only">Must include: Order ID | Issue | What is required</div>
-        <div class="ch-format ar-only" style="direction:rtl;">لازم يحتوي: Order ID | المشكلة | المطلوب</div>
+        <div class="ch-format ar-only">لازم يحتوي: Order ID | المشكلة | المطلوب</div>
       </div>
       <div class="channel-card">
         <div class="ch-header">
@@ -494,7 +522,7 @@
           <div>
             <div class="ch-title">Slack — #bosta-escalations</div>
             <div class="ch-when en-only">Shopify escalation workflow only</div>
-            <div class="ch-when ar-only" style="direction:rtl;">بروتوكول تصعيد Shopify فقط</div>
+            <div class="ch-when ar-only">بروتوكول تصعيد Shopify فقط</div>
           </div>
         </div>
         <div class="ch-list">
@@ -510,17 +538,17 @@
           <div>
             <div class="ch-title">Email</div>
             <div class="ch-when en-only">Formal documentation required</div>
-            <div class="ch-when ar-only" style="direction:rtl;">لما مطلوب توثيق رسمي</div>
+            <div class="ch-when ar-only">لما مطلوب توثيق رسمي</div>
           </div>
         </div>
         <div class="ch-list">
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">SLA breach formal claims</span><span class="ar-only" style="direction:rtl;">مطالبات SLA الرسمية</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Damage / loss claims</span><span class="ar-only" style="direction:rtl;">مطالبات التلف أو الضياع</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Billing disputes</span><span class="ar-only" style="direction:rtl;">نزاعات الفواتير</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Quality escalations</span><span class="ar-only" style="direction:rtl;">تصعيدات الجودة</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">SLA breach formal claims</span><span class="ar-only">مطالبات SLA الرسمية</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Damage / loss claims</span><span class="ar-only">مطالبات التلف أو الضياع</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Billing disputes</span><span class="ar-only">نزاعات الفواتير</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Quality escalations</span><span class="ar-only">تصعيدات الجودة</span></div>
         </div>
         <div class="ch-format en-only">WhatsApp alone is NOT sufficient for formal claims</div>
-        <div class="ch-format ar-only" style="direction:rtl;">WhatsApp وحده مش كافي للمطالبات الرسمية</div>
+        <div class="ch-format ar-only">WhatsApp وحده مش كافي للمطالبات الرسمية</div>
       </div>
       <div class="channel-card">
         <div class="ch-header">
@@ -528,27 +556,27 @@
           <div>
             <div class="ch-title">Direct Call</div>
             <div class="ch-when en-only">Tier 2+ and live crises only</div>
-            <div class="ch-when ar-only" style="direction:rtl;">Tier 2+ والأزمات الحية فقط</div>
+            <div class="ch-when ar-only">Tier 2+ والأزمات الحية فقط</div>
           </div>
         </div>
         <div class="ch-list">
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Tier 2+ escalations</span><span class="ar-only" style="direction:rtl;">تصعيدات Tier 2+</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Live operational crises</span><span class="ar-only" style="direction:rtl;">الأزمات التشغيلية الحية</span></div>
-          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Urgent decisions needed immediately</span><span class="ar-only" style="direction:rtl;">قرارات عاجلة مطلوبة فوراً</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Tier 2+ escalations</span><span class="ar-only">تصعيدات Tier 2+</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Live operational crises</span><span class="ar-only">الأزمات التشغيلية الحية</span></div>
+          <div class="ch-item"><span class="ch-dot">•</span><span class="en-only">Urgent decisions needed immediately</span><span class="ar-only">قرارات عاجلة مطلوبة فوراً</span></div>
         </div>
         <div class="ch-format en-only">Do NOT use for routine issues — Tier 1 uses WhatsApp only</div>
-        <div class="ch-format ar-only" style="direction:rtl;">لا تستخدميه للمشاكل الروتينية — Tier 1 بيستخدم WhatsApp بس</div>
+        <div class="ch-format ar-only">لا تستخدميه للمشاكل الروتينية — Tier 1 بيستخدم WhatsApp بس</div>
       </div>
     </div>
     <div class="donts">
       <div class="donts-title">❌ Do NOT</div>
       <div class="dont-item"><span class="dont-x">✗</span>
         <span class="en-only">Use WhatsApp for formal claims — not legally sufficient.</span>
-        <span class="ar-only" style="direction:rtl;">تستخدمي WhatsApp للمطالبات الرسمية — مش كافي قانونياً.</span>
+        <span class="ar-only">تستخدمي WhatsApp للمطالبات الرسمية — مش كافي قانونياً.</span>
       </div>
       <div class="dont-item"><span class="dont-x">✗</span>
         <span class="en-only">Use Slack for anything other than the Shopify escalation workflow.</span>
-        <span class="ar-only" style="direction:rtl;">تستخدمي Slack لغير بروتوكول تصعيد Shopify.</span>
+        <span class="ar-only">تستخدمي Slack لغير بروتوكول تصعيد Shopify.</span>
       </div>
     </div>
   </div>
@@ -558,65 +586,65 @@
     <div class="alert alert-warn">
       <span class="alert-icon">⏱</span>
       <div>
-        <div class="en-only">SLA penalties are invoice credits — not punishments. Track weekly and document every breach via email.</div>
-        <div class="ar-only" style="direction:rtl;">عقوبات SLA هي credits على الفاتورة — مش عقوبات. تتبعي أسبوعياً ووثّقي كل خرق عبر email.</div>
+        <span class="en-only">SLA penalties are invoice credits — not punishments. Track weekly and document every breach via email.</span>
+        <span class="ar-only">عقوبات SLA هي credits على الفاتورة — مش عقوبات. تتبعي أسبوعياً ووثّقي كل خرق عبر email.</span>
       </div>
     </div>
     <div class="card">
       <div class="card-title">📊
         <span class="en-only">Key SLAs to Monitor</span>
-        <span class="ar-only" style="direction:rtl;">أهم الـ SLAs للمتابعة</span>
+        <span class="ar-only">أهم الـ SLAs للمتابعة</span>
       </div>
       <table class="sla-table">
         <thead>
           <tr>
-            <th><span class="en-only">SLA Metric</span><span class="ar-only" style="direction:rtl;">المقياس</span></th>
-            <th><span class="en-only">Target</span><span class="ar-only" style="direction:rtl;">الهدف</span></th>
-            <th><span class="en-only">Status</span><span class="ar-only" style="direction:rtl;">الحالة</span></th>
-            <th><span class="en-only">Owner</span><span class="ar-only" style="direction:rtl;">المسؤول</span></th>
+            <th><span class="en-only">SLA Metric</span><span class="ar-only">المقياس</span></th>
+            <th><span class="en-only">Target</span><span class="ar-only">الهدف</span></th>
+            <th><span class="en-only">Status</span><span class="ar-only">الحالة</span></th>
+            <th><span class="en-only">Owner</span><span class="ar-only">المسؤول</span></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong><span class="en-only">Same-day fulfillment rate</span><span class="ar-only" style="direction:rtl;">معدل التنفيذ في نفس اليوم</span></strong></td>
+            <td><strong><span class="en-only">Same-day fulfillment rate</span><span class="ar-only">معدل التنفيذ في نفس اليوم</span></strong></td>
             <td>95%+</td>
-            <td><span class="sla-badge sla-green"><span class="en-only">Tracked Weekly</span><span class="ar-only" style="direction:rtl;">متابَع أسبوعياً</span></span></td>
+            <td><span class="sla-badge sla-green"><span class="en-only">Tracked Weekly</span><span class="ar-only">متابَع أسبوعياً</span></span></td>
             <td>Bosta</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">First-attempt delivery rate</span><span class="ar-only" style="direction:rtl;">معدل التوصيل في أول محاولة</span></strong></td>
+            <td><strong><span class="en-only">First-attempt delivery rate</span><span class="ar-only">معدل التوصيل في أول محاولة</span></strong></td>
             <td>90%+</td>
-            <td><span class="sla-badge sla-green"><span class="en-only">Tracked Weekly</span><span class="ar-only" style="direction:rtl;">متابَع أسبوعياً</span></span></td>
+            <td><span class="sla-badge sla-green"><span class="en-only">Tracked Weekly</span><span class="ar-only">متابَع أسبوعياً</span></span></td>
             <td>Bosta</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">OOS unreported</span><span class="ar-only" style="direction:rtl;">OOS غير مُبلَّغ عنه</span></strong></td>
-            <td><span class="en-only">0 (within 24h)</span><span class="ar-only" style="direction:rtl;">0 (خلال 24 ساعة)</span></td>
-            <td><span class="sla-badge sla-red"><span class="en-only">Zero Tolerance</span><span class="ar-only" style="direction:rtl;">تسامح صفري</span></span></td>
+            <td><strong><span class="en-only">OOS unreported</span><span class="ar-only">OOS غير مُبلَّغ عنه</span></strong></td>
+            <td><span class="en-only">0 (within 24h)</span><span class="ar-only">0 (خلال 24 ساعة)</span></td>
+            <td><span class="sla-badge sla-red"><span class="en-only">Zero Tolerance</span><span class="ar-only">تسامح صفري</span></span></td>
             <td>Bosta</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">NDR notification</span><span class="ar-only" style="direction:rtl;">إشعار NDR</span></strong></td>
-            <td><span class="en-only">Within 24h</span><span class="ar-only" style="direction:rtl;">خلال 24 ساعة</span></td>
-            <td><span class="sla-badge sla-yellow"><span class="en-only">Monitored</span><span class="ar-only" style="direction:rtl;">مراقَب</span></span></td>
+            <td><strong><span class="en-only">NDR notification</span><span class="ar-only">إشعار NDR</span></strong></td>
+            <td><span class="en-only">Within 24h</span><span class="ar-only">خلال 24 ساعة</span></td>
+            <td><span class="sla-badge sla-yellow"><span class="en-only">Monitored</span><span class="ar-only">مراقَب</span></span></td>
             <td>Bosta</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Awaiting Action backlog</span><span class="ar-only" style="direction:rtl;">تراكم Awaiting Action</span></strong></td>
-            <td><span class="en-only">0 orders &gt;24h</span><span class="ar-only" style="direction:rtl;">0 أوردرات أكتر من 24 ساعة</span></td>
-            <td><span class="sla-badge sla-red"><span class="en-only">Zero Tolerance</span><span class="ar-only" style="direction:rtl;">تسامح صفري</span></span></td>
+            <td><strong><span class="en-only">Awaiting Action backlog</span><span class="ar-only">تراكم Awaiting Action</span></strong></td>
+            <td><span class="en-only">0 orders &gt;24h</span><span class="ar-only">0 أوردرات أكتر من 24 ساعة</span></td>
+            <td><span class="sla-badge sla-red"><span class="en-only">Zero Tolerance</span><span class="ar-only">تسامح صفري</span></span></td>
             <td>Bosta + CS</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Return QC turnaround</span><span class="ar-only" style="direction:rtl;">وقت QC للمرتجعات</span></strong></td>
-            <td><span class="en-only">Within 48h</span><span class="ar-only" style="direction:rtl;">خلال 48 ساعة</span></td>
-            <td><span class="sla-badge sla-yellow"><span class="en-only">Monitored</span><span class="ar-only" style="direction:rtl;">مراقَب</span></span></td>
+            <td><strong><span class="en-only">Return QC turnaround</span><span class="ar-only">وقت QC للمرتجعات</span></strong></td>
+            <td><span class="en-only">Within 48h</span><span class="ar-only">خلال 48 ساعة</span></td>
+            <td><span class="sla-badge sla-yellow"><span class="en-only">Monitored</span><span class="ar-only">مراقَب</span></span></td>
             <td>Bosta</td>
           </tr>
           <tr>
-            <td><strong><span class="en-only">Mavin Wear: bad address decision</span><span class="ar-only" style="direction:rtl;">قرار Mavin Wear على العنوان الغلط</span></strong></td>
-            <td><span class="en-only">Within 12h</span><span class="ar-only" style="direction:rtl;">خلال 12 ساعة</span></td>
-            <td><span class="sla-badge sla-green"><span class="en-only">Internal</span><span class="ar-only" style="direction:rtl;">داخلي</span></span></td>
+            <td><strong><span class="en-only">Mavin Wear: bad address decision</span><span class="ar-only">قرار Mavin Wear على العنوان الغلط</span></strong></td>
+            <td><span class="en-only">Within 12h</span><span class="ar-only">خلال 12 ساعة</span></td>
+            <td><span class="sla-badge sla-green"><span class="en-only">Internal</span><span class="ar-only">داخلي</span></span></td>
             <td>CS / Ops</td>
           </tr>
         </tbody>
@@ -626,34 +654,34 @@
     <div class="card">
       <div class="card-title">🔄
         <span class="en-only">Repeated Breach Protocol</span>
-        <span class="ar-only" style="direction:rtl;">بروتوكول الخروقات المتكررة</span>
+        <span class="ar-only">بروتوكول الخروقات المتكررة</span>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-num" style="background:#f59e0b;">3</div>
           <div>
             <div class="step-title en-only">3 breaches of same SLA in a month</div>
-            <div class="step-title ar-only" style="direction:rtl;">3 خروقات لنفس الـ SLA في شهر</div>
+            <div class="step-title ar-only">3 خروقات لنفس الـ SLA في شهر</div>
             <div class="step-text en-only">Bosta must submit a written Root Cause Analysis (RCA) within 5 business days.</div>
-            <div class="step-text ar-only" style="direction:rtl;">Bosta لازم تبعت RCA مكتوب خلال 5 أيام عمل.</div>
+            <div class="step-text ar-only">Bosta لازم تبعت RCA مكتوب خلال 5 أيام عمل.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num" style="background:#ef4444;">✗</div>
           <div>
             <div class="step-title en-only">RCA not submitted</div>
-            <div class="step-title ar-only" style="direction:rtl;">الـ RCA مش اتبعت</div>
+            <div class="step-title ar-only">الـ RCA مش اتبعت</div>
             <div class="step-text en-only">Penalty doubles the following month. Document via email.</div>
-            <div class="step-text ar-only" style="direction:rtl;">الـ penalty بتتضاعف الشهر الجاي. وثّقي عبر email.</div>
+            <div class="step-text ar-only">الـ penalty بتتضاعف الشهر الجاي. وثّقي عبر email.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num" style="background:#b91c1c;">5</div>
           <div>
             <div class="step-title en-only">5 cumulative breaches in a month</div>
-            <div class="step-title ar-only" style="direction:rtl;">5 خروقات متراكمة في شهر</div>
+            <div class="step-title ar-only">5 خروقات متراكمة في شهر</div>
             <div class="step-text en-only">Emergency joint review within 48 hours. Escalate to Tier 3.</div>
-            <div class="step-text ar-only" style="direction:rtl;">مراجعة طارئة مشتركة خلال 48 ساعة. صعّدي لـ Tier 3.</div>
+            <div class="step-text ar-only">مراجعة طارئة مشتركة خلال 48 ساعة. صعّدي لـ Tier 3.</div>
           </div>
         </div>
       </div>
@@ -671,20 +699,14 @@
   function toggleLang(){
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     const btn = document.getElementById('langBtn');
-    const enEls = document.querySelectorAll('.en-only');
-    const arEls = document.querySelectorAll('.ar-only');
     if(currentLang === 'ar'){
-      enEls.forEach(el=>el.style.display='none');
-      arEls.forEach(el=>el.style.display='block');
-      document.body.setAttribute('dir','rtl');
+      document.body.classList.add('lang-ar');
       btn.classList.add('ar-active');
-      btn.innerText='AR / EN';
+      btn.innerText = 'AR / EN';
     } else {
-      enEls.forEach(el=>el.style.display='block');
-      arEls.forEach(el=>el.style.display='none');
-      document.body.setAttribute('dir','ltr');
+      document.body.classList.remove('lang-ar');
       btn.classList.remove('ar-active');
-      btn.innerText='EN / AR';
+      btn.innerText = 'EN / AR';
     }
   }
 
