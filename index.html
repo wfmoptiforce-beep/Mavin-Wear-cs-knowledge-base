@@ -1,248 +1,380 @@
- <!DOCTYPE html>
-<html lang="en">
+   <!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAVIN OPS HUB - Home</title>
-<style>
-:root {
-  --bg:#f0f0f0;
-  --surface:#e8e8e8;
-  --card:#ffffff;
-  --border:#d8d8d8;
-  --border2:#c8c8c8;
-  --text:#111111;
-  --muted:#777777;
-  --muted2:#aaaaaa;
-  --dark:#0a0a0a;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mavin Wear — Operations Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --indigo:#4b4bf9;--midnight:#09092d;--light:#f3f3f7;
+      --border:#e5e7eb;--text:#1f2937;--muted:#6b7280;
+      --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
+    a{text-decoration:none;color:inherit;}
 
-/* NAV */
-.topnav{background:#0a0a0a;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:72px;border-bottom:1px solid #222}
-.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;position:absolute;left:50%;transform:translateX(-50%)}
-.nav-brand-icon{width:42px;height:42px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0a0a0a}
-.nav-brand-text{color:#fff;font-weight:800;font-size:15px;line-height:1.2}
-.nav-brand-sub{color:#555;font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.nav-links{display:flex;align-items:center;gap:2px;z-index:2}
-.nav-link{padding:8px 14px;border-radius:8px;color:#666;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;border:none;background:none;text-decoration:none;display:flex;align-items:center;gap:7px}
-.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
-.nav-link.active{background:#fff;color:#0a0a0a}
-.nav-link svg{width:15px;height:15px;flex-shrink:0}
-.nav-right{z-index:2}
-.user-badge{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid #333;border-radius:100px;padding:6px 14px 6px 8px}
-.user-avatar{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0a0a0a}
-.user-name{font-size:12px;font-weight:700;color:#fff}
-.user-role{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+    /* SIDEBAR */
+    .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
+    .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
+    .brand-name{font-size:16px;font-weight:800;color:#fff;line-height:1.2;}
+    .brand-sub{font-size:10px;color:#8f90c7;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+    .sidebar-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8f90c7;margin:24px 0 10px 6px;}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:#c7c9f0;font-size:13.5px;font-weight:600;margin-bottom:4px;transition:.15s;}
+    .nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+    .nav-item.active{background:var(--indigo);color:#fff;}
+    .nav-icon{font-size:16px;width:20px;text-align:center;}
 
-/* PAGE */
-.page{padding:40px 32px;max-width:1100px;margin:0 auto}
+    /* MAIN */
+    .main{margin-left:260px;min-height:100vh;padding:32px;}
 
-/* GREETING */
-.greeting{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.greeting-left{display:flex;align-items:center;gap:14px}
-.greeting-avatar{width:44px;height:44px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.greeting-text{font-size:15px;font-weight:700;color:var(--text)}
-.greeting-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
-.greeting-time{font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+    /* TOPBAR */
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px;}
+    .topbar-left{display:flex;flex-direction:column;}
+    .topbar-greeting{font-size:22px;font-weight:900;color:var(--midnight);}
+    .topbar-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .clock-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:10px 18px;font-size:14px;font-weight:800;color:var(--midnight);font-variant-numeric:tabular-nums;white-space:nowrap;}
+    .profile-pill{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:8px 14px;display:flex;align-items:center;gap:10px;}
+    .avatar{width:34px;height:34px;border-radius:50%;background:var(--midnight);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+    .profile-name{font-size:13px;font-weight:700;}
+    .profile-role{font-size:11px;color:var(--muted);}
 
-/* HERO */
-.hero{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:56px 40px;margin-bottom:28px;text-align:center;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:360px;height:360px;background:radial-gradient(circle,rgba(0,0,0,.03) 0%,transparent 70%);pointer-events:none}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:24px;background:var(--surface)}
-.hero-badge-dot{width:6px;height:6px;background:var(--dark);border-radius:50%}
-.hero-logo{width:68px;height:68px;background:var(--dark);border-radius:18px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:30px;color:#fff;margin:0 auto 22px}
-.hero-title{font-size:38px;font-weight:900;color:var(--text);margin-bottom:12px;letter-spacing:-1px;line-height:1.1}
-.hero-sub{color:var(--muted);font-size:14.5px;max-width:500px;margin:0 auto 32px;line-height:1.6}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:var(--dark);color:#fff;border:none;border-radius:10px;padding:12px 24px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.15s}
-.btn-primary:hover{background:#333}
-.btn-secondary{background:var(--surface);color:var(--text);border:1.5px solid var(--border2);border-radius:10px;padding:12px 24px;font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.15s}
-.btn-secondary:hover{background:var(--border);border-color:#bbb}
+    /* HERO */
+    .hero{background:linear-gradient(130deg,#09092d 0%,#16165a 100%);border-radius:24px;padding:48px 40px;margin-bottom:28px;position:relative;overflow:hidden;text-align:center;}
+    .hero::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:rgba(75,75,249,.15);border-radius:50%;}
+    .hero::after{content:'';position:absolute;left:-60px;bottom:-60px;width:220px;height:220px;background:rgba(75,75,249,.08);border-radius:50%;}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:7px 18px;border-radius:100px;font-size:11px;font-weight:700;color:#bfa1ff;letter-spacing:.5px;margin-bottom:24px;}
+    .hero-badge-dot{width:7px;height:7px;background:#bfa1ff;border-radius:50%;animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+    .hero-logo{width:72px;height:72px;background:var(--indigo);border-radius:20px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:32px;color:#fff;margin:0 auto 22px;position:relative;z-index:1;}
+    .hero h1{font-size:38px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;position:relative;z-index:1;}
+    .hero h1 span{color:#bfa1ff;}
+    .hero p{color:#a5b4fc;font-size:15px;line-height:1.7;max-width:520px;margin:0 auto 32px;position:relative;z-index:1;}
+    .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+    .btn-primary{background:var(--indigo);color:#fff;border:none;border-radius:12px;padding:13px 26px;font-size:13.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif;}
+    .btn-primary:hover{background:#3a3ae8;transform:translateY(-1px);}
+    .btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15);border-radius:12px;padding:13px 26px;font-size:13.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif;}
+    .btn-secondary:hover{background:rgba(255,255,255,.14);transform:translateY(-1px);}
 
-/* MODULES */
-.section-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
-.modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:40px}
-.module-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;text-decoration:none;color:var(--text);display:flex;align-items:flex-start;gap:18px;transition:.15s;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.module-card:hover{border-color:var(--border2);background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
-.module-card:hover .module-arrow{opacity:1;transform:translateY(-50%) translateX(0)}
-.module-icon{width:46px;height:46px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center}
-.module-icon svg{width:21px;height:21px;color:var(--text)}
-.module-content{flex:1}
-.module-title{font-size:15px;font-weight:800;margin-bottom:5px;color:var(--text)}
-.module-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
-.module-tag{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:100px;font-size:10.5px;font-weight:700;border:1px solid var(--border2);color:var(--muted);background:var(--surface)}
-.module-arrow{position:absolute;right:20px;top:50%;transform:translateY(-50%) translateX(6px);opacity:0;transition:.2s;color:var(--muted);font-size:18px}
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+    .stat{background:#fff;border-radius:18px;border:1.5px solid var(--border);padding:22px 24px;transition:.15s;}
+    .stat:hover{border-color:var(--indigo);box-shadow:0 4px 16px rgba(75,75,249,.08);}
+    .stat-icon{font-size:24px;margin-bottom:12px;}
+    .stat-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px;}
+    .stat-value{font-size:28px;font-weight:900;color:var(--midnight);}
+    .stat-sub{font-size:11px;font-weight:700;margin-top:6px;}
+    .stat-sub.green{color:var(--success);}
+    .stat-sub.yellow{color:var(--warning);}
+    .stat-sub.blue{color:var(--indigo);}
 
-/* FOOTER */
-.footer{text-align:center;padding:24px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--border)}
+    /* SECTION */
+    .sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+    .sec-title{font-size:18px;font-weight:800;color:var(--midnight);}
+    .sec-link{font-size:13px;font-weight:700;color:var(--indigo);}
+    .sec-link:hover{text-decoration:underline;}
 
-@media(max-width:992px){
-  .nav-brand{position:static;transform:none}
-  .topnav{height:auto;padding:14px 16px;flex-wrap:wrap;gap:10px}
-  .modules-grid{grid-template-columns:1fr}
-  .hero-title{font-size:28px}
-  .page{padding:24px 16px}
-  .greeting{flex-direction:column;align-items:flex-start}
-}
-@media(max-width:560px){
-  .nav-links{display:none}
-  .user-role{display:none}
-}
-</style>
+    /* MODULE CARDS */
+    .modules{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px;}
+    .module-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:26px;display:flex;align-items:flex-start;gap:18px;transition:.2s;position:relative;overflow:hidden;}
+    .module-card:hover{border-color:var(--indigo);box-shadow:0 8px 28px rgba(75,75,249,.1);transform:translateY(-2px);}
+    .module-icon{width:50px;height:50px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .mod-indigo{background:#eef2ff;}
+    .mod-green{background:#dcfce7;}
+    .mod-orange{background:#ffedd5;}
+    .mod-purple{background:#f3e8ff;}
+    .mod-red{background:#fee2e2;}
+    .mod-blue{background:#dbeafe;}
+    .module-content{flex:1;}
+    .module-title{font-size:16px;font-weight:800;color:var(--midnight);margin-bottom:6px;}
+    .module-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+    .module-tags{display:flex;gap:6px;flex-wrap:wrap;}
+    .module-tag{padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;background:var(--light);color:var(--muted);}
+    .module-arrow{position:absolute;bottom:20px;right:20px;width:32px;height:32px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transition:.2s;}
+    .module-card:hover .module-arrow{opacity:1;}
+
+    /* QUICK LINKS */
+    .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+    .quick-item{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:18px 20px;display:flex;align-items:center;gap:14px;transition:.15s;}
+    .quick-item:hover{border-color:var(--indigo);box-shadow:0 4px 16px rgba(75,75,249,.08);}
+    .quick-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+    .quick-title{font-size:13px;font-weight:800;color:var(--midnight);}
+    .quick-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+
+    /* FOOTER */
+    .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:8px;}
+    .footer span{color:var(--indigo);font-weight:700;}
+
+    @media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr);}.quick{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:900px){
+      .sidebar{display:none;}.main{margin-left:0;}
+      .modules{grid-template-columns:1fr;}
+      .stats{grid-template-columns:1fr 1fr;}
+      .topbar{flex-wrap:wrap;}
+    }
+    @media(max-width:600px){
+      .main{padding:18px;}
+      .hero{padding:32px 20px;}
+      .hero h1{font-size:26px;}
+      .stats{grid-template-columns:1fr;}
+      .quick{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="topnav">
-  <div class="nav-links">
-    <a href="index.html" class="nav-link active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Home
-    </a>
-    <a href="sops.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>SOP Library
-    </a>
-    <a href="scenarios.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Scenarios
-    </a>
-    <a href="portal.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Return Portal
-    </a>
-    <a href="qa.html" class="nav-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>QA Audit
-    </a>
-  </div>
-
-  <a href="index.html" class="nav-brand">
-    <div class="nav-brand-icon">M</div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo">M</div>
     <div>
-      <div class="nav-brand-text">MAVIN OPS HUB</div>
-      <div class="nav-brand-sub">BOSTA · SHOPIFY · QA</div>
-    </div>
-  </a>
-
-  <div class="nav-right">
-    <div class="user-badge">
-      <div class="user-avatar">A</div>
-      <div>
-        <div class="user-name">Agent Support</div>
-        <div class="user-role">CS · Operations</div>
-      </div>
+      <div class="brand-name">Mavin Wear</div>
+      <div class="brand-sub">Operations Hub</div>
     </div>
   </div>
-</nav>
+  <div class="sidebar-label">Workspace</div>
+  <a href="index.html" class="nav-item active"><span class="nav-icon">🏠</span> Home</a>
+  <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
+  <a href="portal.html" class="nav-item"><span class="nav-icon">💰</span> Refunds</a>
+  <a href="escalation.html" class="nav-item"><span class="nav-icon">🚨</span> Escalations</a>
+  <a href="qa.html" class="nav-item"><span class="nav-icon">⭐</span> QA Audit</a>
+  <div class="sidebar-label">Quick Access</div>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
+  <a href="scenarios.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
+  <a href="sop-cheatsheet.html" class="nav-item"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
+</aside>
 
-<!-- PAGE -->
-<div class="page">
+<!-- MAIN -->
+<main class="main">
 
-  <!-- GREETING -->
-  <div class="greeting">
-    <div class="greeting-left">
-      <div class="greeting-avatar">👋</div>
-      <div>
-        <div class="greeting-text" id="greetingText">Good morning, Agent Support</div>
-        <div class="greeting-sub">Welcome to MAVIN OPS HUB — Cairo time</div>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-greeting" id="greetingText">Good morning, Agent Support 👋</div>
+      <div class="topbar-sub">Welcome to Mavin Wear Operations Hub — Cairo time</div>
+    </div>
+    <div class="topbar-right">
+      <div class="clock-pill" id="liveClock">--:--:-- --</div>
+      <div class="profile-pill">
+        <div class="avatar">A</div>
+        <div>
+          <div class="profile-name">Agent Support</div>
+          <div class="profile-role">CS Operations</div>
+        </div>
       </div>
     </div>
-    <div class="greeting-time" id="liveClock">--:-- --</div>
   </div>
 
   <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge"><span class="hero-badge-dot"></span>Operations Dashboard</div>
+  <section class="hero">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> Operations Dashboard</div>
     <div class="hero-logo">M</div>
-    <div class="hero-title">MAVIN × BOSTA<br>Operations Hub</div>
-    <div class="hero-sub">Single source of truth for CS, Operations, Finance & QA — built for the Mavin Wear team.</div>
+    <h1>MAVIN × BOSTA<br><span>Operations Hub</span></h1>
+    <p>Single source of truth for CS, Operations, Finance & QA — built for the Mavin Wear team.</p>
     <div class="hero-actions">
-      <a href="sops.html" class="btn-primary">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        Browse SOPs
-      </a>
-      <a href="qa.html" class="btn-secondary">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Open QA Audit
-      </a>
+      <a href="sops.html" class="btn-primary">📚 Browse SOPs</a>
+      <a href="scenarios.html" class="btn-primary" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);">🌳 View Scenarios</a>
+      <a href="qa.html" class="btn-secondary">⭐ QA Audit</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-icon">📚</div>
+      <div class="stat-label">Total SOPs</div>
+      <div class="stat-value">48</div>
+      <div class="stat-sub blue">↑ 4 this month</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">🌳</div>
+      <div class="stat-label">Active Scenarios</div>
+      <div class="stat-value">62</div>
+      <div class="stat-sub green">↑ 8 this month</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">💰</div>
+      <div class="stat-label">Pending Refunds</div>
+      <div class="stat-value">8</div>
+      <div class="stat-sub yellow">⚠ Needs action</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">🚨</div>
+      <div class="stat-label">Escalations Today</div>
+      <div class="stat-value">12</div>
+      <div class="stat-sub green">↓ 3 vs yesterday</div>
     </div>
   </div>
 
   <!-- MODULES -->
-  <p class="section-label">Modules</p>
-  <div class="modules-grid">
+  <div class="sec-head">
+    <div class="sec-title">Modules</div>
+  </div>
+  <div class="modules">
 
     <a href="sops.html" class="module-card">
-      <div class="module-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      </div>
+      <div class="module-icon mod-indigo">📚</div>
       <div class="module-content">
         <div class="module-title">SOP Library</div>
         <div class="module-desc">Standard operating procedures for returns, shipping, escalations, and customer handling.</div>
-        <span class="module-tag">Procedures · Policy</span>
+        <div class="module-tags">
+          <span class="module-tag">Procedures</span>
+          <span class="module-tag">Policy</span>
+        </div>
       </div>
-      <span class="module-arrow">→</span>
+      <div class="module-arrow">→</div>
     </a>
 
     <a href="scenarios.html" class="module-card">
-      <div class="module-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </div>
+      <div class="module-icon mod-green">🌳</div>
       <div class="module-content">
         <div class="module-title">Scenarios</div>
         <div class="module-desc">Pre-built customer conversation flows and edge case handling for Bosta & Shopify orders.</div>
-        <span class="module-tag">CS · Escalation</span>
+        <div class="module-tags">
+          <span class="module-tag">CS</span>
+          <span class="module-tag">Escalation</span>
+          <span class="module-tag">Decision Trees</span>
+        </div>
       </div>
-      <span class="module-arrow">→</span>
+      <div class="module-arrow">→</div>
     </a>
 
     <a href="portal.html" class="module-card">
-      <div class="module-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </div>
+      <div class="module-icon mod-orange">💰</div>
       <div class="module-content">
-        <div class="module-title">Return Portal</div>
-        <div class="module-desc">Track, manage and process return requests linked to Bosta shipments in real time.</div>
-        <span class="module-tag">Returns · Ops</span>
+        <div class="module-title">Refund Portal</div>
+        <div class="module-desc">Track, manage and process refund and return requests linked to Bosta shipments.</div>
+        <div class="module-tags">
+          <span class="module-tag">Returns</span>
+          <span class="module-tag">Finance</span>
+          <span class="module-tag">Card Risk</span>
+        </div>
       </div>
-      <span class="module-arrow">→</span>
+      <div class="module-arrow">→</div>
+    </a>
+
+    <a href="escalation.html" class="module-card">
+      <div class="module-icon mod-red">🚨</div>
+      <div class="module-content">
+        <div class="module-title">Escalation Protocol</div>
+        <div class="module-desc">Slack workflow, escalation tiers, communication channels, and SLA tracking.</div>
+        <div class="module-tags">
+          <span class="module-tag">Slack</span>
+          <span class="module-tag">Bosta</span>
+          <span class="module-tag">SLA</span>
+        </div>
+      </div>
+      <div class="module-arrow">→</div>
+    </a>
+
+    <a href="sop-cheatsheet.html" class="module-card">
+      <div class="module-icon mod-blue">⚡</div>
+      <div class="module-content">
+        <div class="module-title">CS Cheat Sheet</div>
+        <div class="module-desc">Daily tags, Shopify views, decision flows, and response templates for every shift.</div>
+        <div class="module-tags">
+          <span class="module-tag">Shopify Tags</span>
+          <span class="module-tag">Daily Ops</span>
+          <span class="module-tag">Templates</span>
+        </div>
+      </div>
+      <div class="module-arrow">→</div>
     </a>
 
     <a href="qa.html" class="module-card">
-      <div class="module-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
+      <div class="module-icon mod-purple">⭐</div>
       <div class="module-content">
         <div class="module-title">QA Audit</div>
-        <div class="module-desc">Score and review agent interactions. Track quality metrics and identify coaching opportunities.</div>
-        <span class="module-tag">Quality · Review</span>
+        <div class="module-desc">Score and review agent interactions. Track quality metrics and coaching opportunities.</div>
+        <div class="module-tags">
+          <span class="module-tag">Quality</span>
+          <span class="module-tag">Review</span>
+          <span class="module-tag">Scoring</span>
+        </div>
       </div>
-      <span class="module-arrow">→</span>
+      <div class="module-arrow">→</div>
     </a>
 
   </div>
-</div>
 
-<footer class="footer">
-  MAVIN Wear Operations Hub · Built for internal use only
-</footer>
+  <!-- QUICK ACCESS -->
+  <div class="sec-head">
+    <div class="sec-title">Quick Access</div>
+  </div>
+  <div class="quick">
+    <a href="scenarios.html" class="quick-item">
+      <div class="quick-icon mod-orange">📦</div>
+      <div>
+        <div class="quick-title">Delivery Issues</div>
+        <div class="quick-desc">failed-2 · stuck-3d · sla-breach</div>
+      </div>
+    </a>
+    <a href="scenarios.html" class="quick-item">
+      <div class="quick-icon mod-purple">🔄</div>
+      <div>
+        <div class="quick-title">Return Process</div>
+        <div class="quick-desc">return-blocked · exchange-returned</div>
+      </div>
+    </a>
+    <a href="scenarios.html" class="quick-item">
+      <div class="quick-icon mod-red">❌</div>
+      <div>
+        <div class="quick-title">Cancel Order</div>
+        <div class="quick-desc">OOS · warehouse-hold · not-picked</div>
+      </div>
+    </a>
+    <a href="escalation.html" class="quick-item">
+      <div class="quick-icon mod-red">🚨</div>
+      <div>
+        <div class="quick-title">Escalation Protocol</div>
+        <div class="quick-desc">Slack format · Tier 1/2/3</div>
+      </div>
+    </a>
+    <a href="portal.html" class="quick-item">
+      <div class="quick-icon mod-green">💰</div>
+      <div>
+        <div class="quick-title">Pending Refunds</div>
+        <div class="quick-desc">pending-refund · card-risk</div>
+      </div>
+    </a>
+    <a href="sop-cheatsheet.html" class="quick-item">
+      <div class="quick-icon mod-blue">⚡</div>
+      <div>
+        <div class="quick-title">CS Cheat Sheet</div>
+        <div class="quick-desc">Tags · Views · Templates</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="footer">
+    Mavin Wear Operations Hub · Powered by <span>Mavin Wear</span>
+  </div>
+
+</main>
 
 <script>
-function updateClock() {
-  const now = new Date();
-  const cairo = new Intl.DateTimeFormat('en-US',{
-    timeZone:'Africa/Cairo',
-    hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true
-  }).format(now);
-  document.getElementById('liveClock').textContent = cairo + ' 🇪🇬';
-
-  const hourStr = new Intl.DateTimeFormat('en-US',{
-    timeZone:'Africa/Cairo',hour:'numeric',hour12:false
-  }).format(now);
-  const hour = parseInt(hourStr);
-  const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  document.getElementById('greetingText').textContent = `${greet}, Agent Support 👋`;
-}
-updateClock();
-setInterval(updateClock, 1000);
+  function updateClock(){
+    const now = new Date();
+    const cairo = new Intl.DateTimeFormat('en-US',{
+      timeZone:'Africa/Cairo',
+      hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true
+    }).format(now);
+    document.getElementById('liveClock').textContent = cairo + ' 🇪🇬';
+    const hourStr = new Intl.DateTimeFormat('en-US',{
+      timeZone:'Africa/Cairo',hour:'numeric',hour12:false
+    }).format(now);
+    const hour = parseInt(hourStr);
+    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greetingText').textContent = `${greet}, Agent Support 👋`;
+  }
+  updateClock();
+  setInterval(updateClock,1000);
 </script>
 </body>
 </html>
