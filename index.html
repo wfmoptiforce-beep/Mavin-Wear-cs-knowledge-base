@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
@@ -16,7 +16,6 @@
     body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);}
     a{text-decoration:none;color:inherit;}
 
-    /* SIDEBAR */
     .sidebar{width:260px;background:var(--midnight);color:#fff;padding:28px 18px;position:fixed;height:100vh;overflow-y:auto;z-index:100;top:0;left:0;}
     .brand{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
     .brand-logo{width:44px;height:44px;border-radius:12px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
@@ -28,10 +27,7 @@
     .nav-item.active{background:var(--indigo);color:#fff;}
     .nav-icon{font-size:16px;width:20px;text-align:center;}
 
-    /* MAIN */
     .main{margin-left:260px;min-height:100vh;padding:32px;}
-
-    /* TOPBAR */
     .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px;}
     .topbar-left{display:flex;flex-direction:column;}
     .topbar-greeting{font-size:22px;font-weight:900;color:var(--midnight);}
@@ -43,7 +39,6 @@
     .profile-name{font-size:13px;font-weight:700;}
     .profile-role{font-size:11px;color:var(--muted);}
 
-    /* HERO */
     .hero{background:linear-gradient(130deg,#09092d 0%,#16165a 100%);border-radius:24px;padding:48px 40px;margin-bottom:28px;position:relative;overflow:hidden;text-align:center;}
     .hero::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:rgba(75,75,249,.15);border-radius:50%;}
     .hero::after{content:'';position:absolute;left:-60px;bottom:-60px;width:220px;height:220px;background:rgba(75,75,249,.08);border-radius:50%;}
@@ -60,7 +55,6 @@
     .btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.15);border-radius:12px;padding:13px 26px;font-size:13.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.15s;font-family:'Inter',sans-serif;}
     .btn-secondary:hover{background:rgba(255,255,255,.14);transform:translateY(-1px);}
 
-    /* STATS */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
     .stat{background:#fff;border-radius:18px;border:1.5px solid var(--border);padding:22px 24px;transition:.15s;}
     .stat:hover{border-color:var(--indigo);box-shadow:0 4px 16px rgba(75,75,249,.08);}
@@ -72,13 +66,11 @@
     .stat-sub.yellow{color:var(--warning);}
     .stat-sub.blue{color:var(--indigo);}
 
-    /* SECTION */
     .sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
     .sec-title{font-size:18px;font-weight:800;color:var(--midnight);}
     .sec-link{font-size:13px;font-weight:700;color:var(--indigo);}
     .sec-link:hover{text-decoration:underline;}
 
-    /* MODULE CARDS */
     .modules{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px;}
     .module-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:26px;display:flex;align-items:flex-start;gap:18px;transition:.2s;position:relative;overflow:hidden;}
     .module-card:hover{border-color:var(--indigo);box-shadow:0 8px 28px rgba(75,75,249,.1);transform:translateY(-2px);}
@@ -97,7 +89,6 @@
     .module-arrow{position:absolute;bottom:20px;right:20px;width:32px;height:32px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transition:.2s;}
     .module-card:hover .module-arrow{opacity:1;}
 
-    /* QUICK LINKS */
     .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
     .quick-item{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:18px 20px;display:flex;align-items:center;gap:14px;transition:.15s;}
     .quick-item:hover{border-color:var(--indigo);box-shadow:0 4px 16px rgba(75,75,249,.08);}
@@ -105,7 +96,6 @@
     .quick-title{font-size:13px;font-weight:800;color:var(--midnight);}
     .quick-desc{font-size:11px;color:var(--muted);margin-top:2px;}
 
-    /* FOOTER */
     .footer{text-align:center;padding:24px 0 8px;color:#9ca3af;font-size:12px;margin-top:8px;}
     .footer span{color:var(--indigo);font-weight:700;}
 
@@ -139,21 +129,21 @@
   <div class="sidebar-label">Workspace</div>
   <a href="index.html" class="nav-item active"><span class="nav-icon">🏠</span> Home</a>
   <a href="sops.html" class="nav-item"><span class="nav-icon">📚</span> SOP Library</a>
-  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
+  <a href="playbook.html" class="nav-item"><span class="nav-icon">🌳</span> Scenarios</a>
   <a href="portal.html" class="nav-item"><span class="nav-icon">💰</span> Refunds</a>
+  <a href="refund-sops.html" class="nav-item"><span class="nav-icon">📋</span> Refund SOPs</a>
   <a href="escalation.html" class="nav-item"><span class="nav-icon">🚨</span> Escalations</a>
   <a href="qa.html" class="nav-item"><span class="nav-icon">⭐</span> QA Audit</a>
   <div class="sidebar-label">Quick Access</div>
-  <a href="scenarios.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
-  <a href="scenarios.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
-  <a href="scenarios.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
+  <a href="playbook.html" class="nav-item"><span class="nav-icon">📦</span> Delivery Issues</a>
+  <a href="playbook.html" class="nav-item"><span class="nav-icon">🔄</span> Return Process</a>
+  <a href="playbook.html" class="nav-item"><span class="nav-icon">❌</span> Cancel Order</a>
   <a href="sop-cheatsheet.html" class="nav-item"><span class="nav-icon">⚡</span> CS Cheat Sheet</a>
 </aside>
 
 <!-- MAIN -->
 <main class="main">
 
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
       <div class="topbar-greeting" id="greetingText">Good morning, Agent Support 👋</div>
@@ -171,7 +161,6 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-badge"><span class="hero-badge-dot"></span> Operations Dashboard</div>
     <div class="hero-logo">M</div>
@@ -179,12 +168,11 @@
     <p>Single source of truth for CS, Operations, Finance & QA — built for the Mavin Wear team.</p>
     <div class="hero-actions">
       <a href="sops.html" class="btn-primary">📚 Browse SOPs</a>
-      <a href="scenarios.html" class="btn-primary" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);">🌳 View Scenarios</a>
+      <a href="playbook.html" class="btn-primary" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);">🌳 View Scenarios</a>
       <a href="qa.html" class="btn-secondary">⭐ QA Audit</a>
     </div>
   </section>
 
-  <!-- STATS -->
   <div class="stats">
     <div class="stat">
       <div class="stat-icon">📚</div>
@@ -212,7 +200,6 @@
     </div>
   </div>
 
-  <!-- MODULES -->
   <div class="sec-head">
     <div class="sec-title">Modules</div>
   </div>
@@ -231,7 +218,7 @@
       <div class="module-arrow">→</div>
     </a>
 
-    <a href="scenarios.html" class="module-card">
+    <a href="playbook.html" class="module-card">
       <div class="module-icon mod-green">🌳</div>
       <div class="module-content">
         <div class="module-title">Scenarios</div>
@@ -303,26 +290,25 @@
 
   </div>
 
-  <!-- QUICK ACCESS -->
   <div class="sec-head">
     <div class="sec-title">Quick Access</div>
   </div>
   <div class="quick">
-    <a href="scenarios.html" class="quick-item">
+    <a href="playbook.html" class="quick-item">
       <div class="quick-icon mod-orange">📦</div>
       <div>
         <div class="quick-title">Delivery Issues</div>
         <div class="quick-desc">failed-2 · stuck-3d · sla-breach</div>
       </div>
     </a>
-    <a href="scenarios.html" class="quick-item">
+    <a href="playbook.html" class="quick-item">
       <div class="quick-icon mod-purple">🔄</div>
       <div>
         <div class="quick-title">Return Process</div>
         <div class="quick-desc">return-blocked · exchange-returned</div>
       </div>
     </a>
-    <a href="scenarios.html" class="quick-item">
+    <a href="playbook.html" class="quick-item">
       <div class="quick-icon mod-red">❌</div>
       <div>
         <div class="quick-title">Cancel Order</div>
@@ -353,7 +339,7 @@
   </div>
 
   <div class="footer">
-    Mavin Wear Operations Hub · Powered by <span>Mavin Wear</span>
+    Mavin Wear Operations Hub · Powered by <span>EverGPT</span>
   </div>
 
 </main>
